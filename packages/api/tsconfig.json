@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target":"es2016",
+    "module": "commonjs",
+    "noEmit": true,
+    "strict": true, 
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noUncheckedIndexedAccess": true
+  }
+}
