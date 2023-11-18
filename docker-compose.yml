@@ -1,0 +1,24 @@
+version: "3"
+
+networks:
+  stack:
+    name: stack
+    external: false
+
+services:
+  admin:
+    container_name: admin
+    build:
+      context: .
+      dockerfile: ./apps/admin/Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./packages/api/Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
