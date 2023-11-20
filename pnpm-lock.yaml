@@ -105,6 +105,9 @@ importers:
       cors:
         specifier: ^2.8.5
         version: 2.8.5
+      db:
+        specifier: workspace:*
+        version: link:../db
       express:
         specifier: ^4.18.2
         version: 4.18.2
