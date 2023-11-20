@@ -1,0 +1,39 @@
+version: "3"
+
+networks:
+  stack:
+    name: stack
+    external: false
+
+volumes:
+  db: 
+
+services:
+  admin:
+    container_name: admin
+    build:
+      context: .
+      dockerfile: ./apps/admin/Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./packages/api/Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
+  db:
+    container_name: db
+    image: postgres:12.2-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: knighthacks
+      POSTGRES_DB: knighthacks
+      POSTGRES_USER: knighthacks
+    ports:
+      - 5432:5432
+    volumes:
+      - db:/var/lib/postgresql/data

@@ -1,12 +1,21 @@
 {
   "compilerOptions": {
-    "target":"es2016",
-    "module": "commonjs",
-    "noEmit": true,
-    "strict": true, 
-    "forceConsistentCasingInFileNames": true,
+    /* Base Options: */
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "noUncheckedIndexedAccess": true
+    "target": "es2022",
+    "verbatimModuleSyntax": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    /* If NOT transpiling with TypeScript: */
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
+    "noEmit": true,
+    /* If your code doesn't run in the DOM: */
+    "lib": ["es2022"]
   }
 }

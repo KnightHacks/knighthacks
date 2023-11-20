@@ -12,6 +12,6 @@
     "tsconfig": "workspace:*",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@8.6.10",
-  "name": "frontend"
+  "packageManager": "pnpm@8.9.0",
+  "name": "knighthacks"
 }
