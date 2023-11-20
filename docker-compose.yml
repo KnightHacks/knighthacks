@@ -5,6 +5,9 @@ networks:
     name: stack
     external: false
 
+volumes:
+  db: 
+
 services:
   admin:
     container_name: admin
@@ -22,3 +25,15 @@ services:
     restart: always
     ports:
       - 8080:8080
+  db:
+    container_name: db
+    image: postgres:12.2-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: knighthacks
+      POSTGRES_DB: knighthacks
+      POSTGRES_USER: knighthacks
+    ports:
+      - 5432:5432
+    volumes:
+      - db:/var/lib/postgresql/data
