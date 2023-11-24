@@ -5,9 +5,13 @@ import superjson from "superjson";
 import { trpc } from "./trpc";
 
 function Ping() {
-  const { data } = trpc.example.ping.useQuery();
+  const { data, error, isLoading } = trpc.example.ping.useQuery();
 
-  return <div>{data}</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  if (isLoading) return <div>Loading...</div>;
+
+  return <div>{data?.map((p) => <div key={p.id}>{p.username}</div>)}</div>;
 }
 
 export function App() {
