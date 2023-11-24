@@ -6,7 +6,7 @@ networks:
     external: false
 
 volumes:
-  db: 
+  db:
 
 services:
   admin:
@@ -17,6 +17,8 @@ services:
     restart: always
     ports:
       - 3000:3000
+    depends_on:
+      - api
   api:
     container_name: api
     build:
@@ -25,6 +27,8 @@ services:
     restart: always
     ports:
       - 8080:8080
+    depends_on:
+      - db
   db:
     container_name: db
     image: postgres:12.2-alpine
