@@ -1,11 +1,11 @@
 import { type inferAsyncReturnType } from "@trpc/server";
 import * as trpcExpress from "@trpc/server/adapters/express";
-import { PrismaClient } from "db";
+import { db as drizzle } from "db";
 
-const prisma = new PrismaClient();
+const db = drizzle;
 
 export const createContext = ({}: trpcExpress.CreateExpressContextOptions) => ({
-  prisma,
+  db,
 }); // 👈 Add your context here
 
 export type Context = inferAsyncReturnType<typeof createContext>;
