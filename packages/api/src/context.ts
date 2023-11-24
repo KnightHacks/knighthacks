@@ -6,6 +6,6 @@ const db = drizzle;
 
 export const createContext = ({}: trpcExpress.CreateExpressContextOptions) => ({
   db,
-}); // 👈 Add your context here
+});
 
 export type Context = inferAsyncReturnType<typeof createContext>;
