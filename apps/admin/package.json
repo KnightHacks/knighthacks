@@ -11,14 +11,14 @@
     "start": "serve -s dist -p 3000"
   },
   "dependencies": {
+    "api": "workspace:*",
     "@tanstack/react-query": "^4.3.9",
-    "@trpc/client": "^10.13.0",
-    "@trpc/react-query": "^10.13.0",
+    "@trpc/client": "10.44.1",
+    "@trpc/react-query": "10.44.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "serve": "^14.2.1",
     "superjson": "1.9.1",
-    "api": "workspace:*",
     "wouter": "^2.12.1"
   },
   "devDependencies": {
