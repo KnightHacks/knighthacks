@@ -33,6 +33,8 @@ services:
       - db
     networks:
       - knighthacks
+    env_file:
+      - .env
   db:
     container_name: db
     image: postgres:12.2-alpine

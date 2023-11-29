@@ -5,7 +5,8 @@
   "types": "index.ts",
   "type": "module",
   "scripts": {
-    "db:push": "drizzle-kit push:pg"
+    "db:push": "drizzle-kit push:pg",
+    "db:preview": "drizzle-kit studio --port 5555"
   },
   "devDependencies": {
     "@types/pg": "^8.10.9",

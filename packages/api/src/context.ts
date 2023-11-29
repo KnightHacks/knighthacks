@@ -1,8 +1,6 @@
 import { type inferAsyncReturnType } from "@trpc/server";
 import * as trpcExpress from "@trpc/server/adapters/express";
-import { db as drizzle } from "db";
-
-const db = drizzle;
+import { db } from "db";
 
 export const createContext = ({}: trpcExpress.CreateExpressContextOptions) => ({
   db,

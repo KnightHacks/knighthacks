@@ -1,10 +1,13 @@
 {
   "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "dotenv --  turbo run dev",
+    "with-env": "dotenv -e .env --",
+    "build": "pnpm with-env turbo run build",
+    "dev": "pnpm with-env turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "db:push": "pnpm with-env turbo run db:push",
+    "db:preview": "pnpm with-env turbo run db:preview"
   },
   "devDependencies": {
     "eslint": "^8.54.0",
