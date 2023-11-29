@@ -1,8 +1,8 @@
 version: "3"
 
 networks:
-  stack:
-    name: stack
+  knighthacks:
+    name: knighthacks
     external: false
 
 volumes:
@@ -19,6 +19,8 @@ services:
       - 3000:3000
     depends_on:
       - api
+    networks:
+      - knighthacks
   api:
     container_name: api
     build:
@@ -29,6 +31,8 @@ services:
       - 8080:8080
     depends_on:
       - db
+    networks:
+      - knighthacks
   db:
     container_name: db
     image: postgres:12.2-alpine
@@ -41,3 +45,5 @@ services:
       - 5432:5432
     volumes:
       - db:/var/lib/postgresql/data
+    networks:
+      - knighthacks
