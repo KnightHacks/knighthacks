@@ -4,10 +4,7 @@ const app = fastify({
   logger: true,
 });
 
-app.register(async (fastify, options, done) => {
-  await import("./app");
-  done();
-});
+app.register(import("./app"));
 
 console.log("Starting server...");
 await app.listen({ port: 8080, host: "0.0.0.0" });
