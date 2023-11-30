@@ -2,7 +2,7 @@
 
 // Require the framework
 import { fastify } from "fastify";
-import routes from "../src/app";
+import routes from "../src/app.ts";
 
 // Instantiate Fastify with some config
 const app = fastify({
