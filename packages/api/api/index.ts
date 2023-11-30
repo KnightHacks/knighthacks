@@ -1,15 +1,15 @@
 "use strict";
 
 // Require the framework
-import Fastify from "fastify";
+import { fastify } from "fastify";
 
 // Instantiate Fastify with some config
-const app = Fastify({
+const app = fastify({
   logger: true,
 });
 
 // Register your application as a normal plugin.
-app.register(import("./app"));
+app.register(import("../src/app"));
 
 export default async (req: Request, res: Response) => {
   await app.ready();
