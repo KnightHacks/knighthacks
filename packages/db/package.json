@@ -6,11 +6,11 @@
   "type": "module",
   "scripts": {
     "db:push": "drizzle-kit push:pg",
-    "db:preview": "drizzle-kit studio --port 5555"
+    "db:preview": "drizzle-kit studio"
   },
   "devDependencies": {
     "@types/pg": "^8.10.9",
-    "drizzle-kit": "^0.20.4"
+    "drizzle-kit": "^0.20.6"
   },
   "dependencies": {
     "drizzle-orm": "^0.29.0",
