@@ -1,5 +1,14 @@
-import { app } from "./app";
+import fastify from "fastify";
 
-console.log("🚀 Starting server...");
-await app.listen({ port: 8080, host: "0.0.0.0" });
-console.log("🚀 Server ready at: http://localhost:8080/");
+const app = fastify({
+  logger: true,
+});
+
+app.register(async (fastify, options, done) => {
+  await import("./app");
+  done();
+});
+
+console.log("Starting server...");
+await app.listen({ port: 3000, host: "0.0.0.0" });
+console.log("Server started!");
