@@ -8,6 +8,7 @@
   "scripts": {
     "lint": "tsc",
     "build": "esbuild src/index.ts --bundle --platform=node --minify --outfile=dist/index.js --format=esm --banner:js='import { createRequire } from \"module\"; const require = createRequire(import.meta.url);'",
+    "vercel-build": "echo 'noop'",
     "start": "node dist/index.js",
     "dev": "tsx watch --clear-screen=false src/index.ts"
   },
