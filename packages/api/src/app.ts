@@ -10,7 +10,8 @@ import cors from "@fastify/cors";
 
 export default function app(
   fastify: FastifyInstance,
-  options: FastifyServerOptions
+  options: FastifyServerOptions,
+  done: (err?: Error) => void
 ) {
   fastify.register(cors);
   fastify.register(fastifyTRPCPlugin, {
@@ -26,4 +27,5 @@ export default function app(
   fastify.get("/", async () => {
     return { hello: "world" };
   });
+  done();
 }

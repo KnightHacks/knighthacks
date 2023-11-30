@@ -2,6 +2,7 @@
 
 // Require the framework
 import { fastify } from "fastify";
+import routes from "../src/app";
 
 // Instantiate Fastify with some config
 const app = fastify({
@@ -9,7 +10,7 @@ const app = fastify({
 });
 
 // Register your application as a normal plugin.
-app.register(import("../src/app.ts"));
+app.register(routes);
 
 export default async (req: Request, res: Response) => {
   await app.ready();
