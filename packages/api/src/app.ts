@@ -20,4 +20,7 @@ app.get("/ping", async () => {
   return "pong\n";
 });
 
-export { app };
+export default async (req: Request, res: Response) => {
+  await app.ready();
+  app.server.emit("request", req, res);
+};
