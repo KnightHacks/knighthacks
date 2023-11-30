@@ -5,15 +5,15 @@
   "types": "index.ts",
   "type": "module",
   "scripts": {
-    "db:push": "drizzle-kit push:pg",
-    "db:preview": "drizzle-kit studio"
+    "db:push": "drizzle-kit push:mysql",
+    "db:preview": "drizzle-kit studio --port 5555"
   },
   "devDependencies": {
-    "@types/pg": "^8.10.9",
     "drizzle-kit": "^0.20.6"
   },
   "dependencies": {
+    "@planetscale/database": "^1.11.0",
     "drizzle-orm": "^0.29.0",
-    "pg": "^8.11.3"
+    "mysql2": "^3.6.5"
   }
 }

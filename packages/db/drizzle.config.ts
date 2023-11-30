@@ -1,15 +1,14 @@
 import { defineConfig } from "drizzle-kit";
 import "dotenv/config";
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL is not set");
-}
-
 export default defineConfig({
   out: "./drizzle",
   schema: ["./schemas/schema.ts"],
-  driver: "pg",
+  driver: "mysql2",
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL,
+    host: process.env.DATABASE_HOST!,
+    password: process.env.DATABASE_PASSWORD!,
+    user: process.env.DATABASE_USERNAME!,
+    database: process.env.DATABASE_NAME!,
   },
 });

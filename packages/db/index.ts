@@ -1,16 +1,11 @@
-import { drizzle } from "drizzle-orm/node-postgres";
-import pg from "pg";
+import { connect } from "@planetscale/database";
 import * as schema from "./schemas";
+import { drizzle } from "drizzle-orm/planetscale-serverless";
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL not set");
-}
-
-const client = new pg.Client({
-  connectionString: process.env.DATABASE_URL,
+const connection = connect({
+  host: process.env.DATABASE_HOST,
+  username: process.env.DATABASE_USERNAME,
+  password: process.env.DATABASE_PASSWORD,
 });
 
-console.log("Connecting to ", process.env.DATABASE_URL);
-await client.connect();
-console.log("Connected!");
-export const db = drizzle(client, { schema });
+export const db = drizzle(connection, { schema });
