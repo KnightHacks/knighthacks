@@ -10,5 +10,5 @@ app.register(async (fastify, options, done) => {
 });
 
 console.log("Starting server...");
-await app.listen({ port: 3000, host: "0.0.0.0" });
+await app.listen({ port: 8080, host: "0.0.0.0" });
 console.log("Server started!");
