@@ -22,4 +22,8 @@ export default function app(
   fastify.get("/ping", async () => {
     return "pong\n";
   });
+
+  fastify.get("/", async () => {
+    return { hello: "world" };
+  });
 }
