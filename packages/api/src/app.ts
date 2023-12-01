@@ -1,31 +1,22 @@
-import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
-import {
-  type DoneFuncWithErrOrRes,
-  type FastifyInstance,
-  type FastifyServerOptions,
-} from "fastify";
+import { trpcServer } from "@hono/trpc-server";
+import { Hono } from "hono";
+import { appRouter } from "./routers";
 import { createContext } from "./context";
-import { appRouter } from "./router";
-import cors from "@fastify/cors";
+import { cors } from "hono/cors";
+import { logger } from "hono/logger";
 
-export default function app(
-  fastify: FastifyInstance,
-  options: FastifyServerOptions,
-  done: (err?: Error) => void
-) {
-  fastify.register(cors);
-  fastify.register(fastifyTRPCPlugin, {
-    prefix: "/trpc",
-    trpcOptions: { router: appRouter, createContext },
-    logLevel: "trace",
-  });
+const app = new Hono();
 
-  fastify.get("/ping", async () => {
-    return "pong\n";
-  });
+app.use("*", logger());
+app.use("*", cors());
+app.get("/", (c) => c.json({ message: "Hello Hono!" }));
 
-  fastify.get("/", async () => {
-    return { hello: "world" };
-  });
-  done();
-}
+app.use(
+  "/trpc/*",
+  trpcServer({
+    router: appRouter,
+    createContext,
+  })
+);
+
+export { app };
