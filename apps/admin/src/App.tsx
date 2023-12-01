@@ -21,7 +21,7 @@ export function App() {
       transformer: superjson,
       links: [
         httpBatchLink({
-          url: "http://localhost:8080/trpc",
+          url: import.meta.env.VITE_API_URL,
         }),
       ],
     })
