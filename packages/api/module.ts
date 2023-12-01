@@ -1,2 +1,2 @@
-export { AppRouter } from "./src/routers";
-export { Context } from "./src/context";
+export { type AppRouter } from "./src/routers";
+export { type Context } from "./src/context";
