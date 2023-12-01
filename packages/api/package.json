@@ -7,7 +7,8 @@
   "scripts": {
     "start": "vercel dev --listen 8080",
     "deploy": "vercel",
-    "dev": "tsx watch --clear-screen=false src/server.ts"
+    "dev": "tsx watch --clear-screen=false src/server.ts",
+    "vercel-build": "echo 'noop'"
   },
   "dependencies": {
     "@hono/node-server": "^1.3.1",
