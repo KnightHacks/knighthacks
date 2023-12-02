@@ -6,6 +6,7 @@ import { trpc } from "./trpc";
 import { Route } from "wouter";
 import { Hello } from "./pages/Hello";
 import { Home } from "./pages/Home";
+import { Nav } from "./components/Nav";
 
 export function App() {
   return (
@@ -38,6 +39,7 @@ function WithTrpc({ children }: { children: React.ReactNode }) {
 function Router() {
   return (
     <>
+      <Nav />
       <Route path="/hello" component={Hello} />
       <Route path="/" component={Home} />
     </>
