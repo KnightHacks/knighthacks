@@ -3,18 +3,19 @@ import { httpBatchLink } from "@trpc/client";
 import { useState } from "react";
 import superjson from "superjson";
 import { trpc } from "./trpc";
-
-function Ping() {
-  const { data, error, isLoading } = trpc.hello.useQuery();
-
-  if (error) return <div>Error: {error.message}</div>;
-
-  if (isLoading) return <div>Loading...</div>;
-
-  return <div>{data}</div>;
-}
+import { Route } from "wouter";
+import { Hello } from "./pages/Hello";
+import { Home } from "./pages/Home";
 
 export function App() {
+  return (
+    <WithTrpc>
+      <Router />
+    </WithTrpc>
+  );
+}
+
+function WithTrpc({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     trpc.createClient({
@@ -24,14 +25,21 @@ export function App() {
           url: import.meta.env.VITE_API_URL,
         }),
       ],
-    }),
+    })
   );
 
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
-        <Ping />
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </trpc.Provider>
+  );
+}
+
+function Router() {
+  return (
+    <>
+      <Route path="/hello" component={Hello} />
+      <Route path="/" component={Home} />
+    </>
   );
 }
