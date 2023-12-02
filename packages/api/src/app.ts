@@ -16,7 +16,7 @@ app.use(
   trpcServer({
     router: appRouter,
     createContext,
-  })
+  }),
 );
 
 export { app };
