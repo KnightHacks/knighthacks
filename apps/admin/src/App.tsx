@@ -5,7 +5,7 @@ import superjson from "superjson";
 import { trpc } from "./trpc";
 import { Route } from "wouter";
 import { Hello } from "./pages/Hello";
-import { Home } from "./pages/Home";
+import { Overview } from "./pages/Overview";
 import { Nav } from "./components/Nav";
 
 export function App() {
@@ -41,7 +41,7 @@ function Router() {
     <>
       <Nav />
       <Route path="/hello" component={Hello} />
-      <Route path="/" component={Home} />
+      <Route path="/" component={Overview} />
     </>
   );
 }
