@@ -8,7 +8,7 @@ import { logger } from "hono/logger";
 const app = new Hono();
 
 app.use("*", logger());
-app.use("*", cors());
+app.use("*", cors()); // Correctly configure cors when our app is ready for production
 app.get("/", (c) => c.json({ message: "Hello Hono!" }));
 
 app.use(
@@ -16,7 +16,7 @@ app.use(
   trpcServer({
     router: appRouter,
     createContext,
-  }),
+  })
 );
 
 export { app };
