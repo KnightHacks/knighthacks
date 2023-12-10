@@ -3,7 +3,7 @@ import { httpBatchLink } from "@trpc/client";
 import { useState } from "react";
 import superjson from "superjson";
 import { trpc } from "./trpc";
-import { Route } from "wouter";
+import { Route, Switch } from "wouter";
 import { Hello } from "./pages/Hello";
 import { Overview } from "./pages/Overview";
 import { Nav } from "./components/Nav";
@@ -40,8 +40,11 @@ function Router() {
   return (
     <>
       <Nav />
-      <Route path="/hello" component={Hello} />
-      <Route path="/" component={Overview} />
+      <Switch>
+        <Route path="/hello" component={Hello} />
+        <Route path="/" component={Overview} />
+        <Route>404, Not Found!</Route>
+      </Switch>
     </>
   );
 }
