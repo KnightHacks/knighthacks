@@ -7,11 +7,21 @@ import { Route, Switch } from "wouter";
 import { Hello } from "./pages/Hello";
 import { Overview } from "./pages/Overview";
 import { Nav } from "./components/Nav";
+import { ClerkProvider } from "@clerk/clerk-react";
+import { SignIn } from "./pages/SignIn";
+
+const clerkPublishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+
+if (!clerkPublishableKey) {
+  throw new Error("Missing Publishable Key");
+}
 
 export function App() {
   return (
     <WithTrpc>
-      <Router />
+      <ClerkProvider publishableKey={clerkPublishableKey}>
+        <Router />
+      </ClerkProvider>
     </WithTrpc>
   );
 }
@@ -43,6 +53,7 @@ function Router() {
       <Switch>
         <Route path="/hello" component={Hello} />
         <Route path="/" component={Overview} />
+        <Route path="/signin" component={SignIn} />
         <Route>404, Not Found!</Route>
       </Switch>
     </>
