@@ -7,28 +7,21 @@ import { Route, Switch } from "wouter";
 import { Hello } from "./pages/Hello";
 import { Overview } from "./pages/Overview";
 import { Nav } from "./components/Nav";
-import { ClerkProvider } from "@clerk/clerk-react";
 import { SignIn } from "./pages/SignIn";
-import { SignUp } from "./pages/SignUp";
-import { dark } from "@clerk/themes";
-
-const clerkPublishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-
-if (!clerkPublishableKey) {
-  throw new Error("Missing Publishable Key");
-}
+import { Auth0Provider } from "@auth0/auth0-react";
 
 export function App() {
   return (
     <WithTrpc>
-      <ClerkProvider
-        publishableKey={clerkPublishableKey}
-        appearance={{
-          baseTheme: dark,
+      <Auth0Provider
+        domain={import.meta.env.VITE_AUTH0_DOMAIN}
+        clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
+        authorizationParams={{
+          redirect_uri: window.location.origin,
         }}
       >
         <Router />
-      </ClerkProvider>
+      </Auth0Provider>
     </WithTrpc>
   );
 }
@@ -61,7 +54,6 @@ function Router() {
         <Route path="/hello" component={Hello} />
         <Route path="/" component={Overview} />
         <Route path="/signin" component={SignIn} />
-        <Route path="/signup" component={SignUp} />
         <Route>404, Not Found!</Route>
       </Switch>
     </>
