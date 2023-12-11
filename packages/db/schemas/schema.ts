@@ -1,6 +1,6 @@
 import { mysqlTable, int, varchar } from "drizzle-orm/mysql-core";
 
-const hackersTable = mysqlTable("hackers", {
+export  const hackersTable = mysqlTable("hackers", {
   id: int("id").primaryKey().autoincrement(),
   firstName: varchar("first_name", { length: 50 }),
   lastName: varchar("last_name", { length: 50 }),
