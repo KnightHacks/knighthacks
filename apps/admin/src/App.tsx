@@ -9,6 +9,8 @@ import { Overview } from "./pages/Overview";
 import { Nav } from "./components/Nav";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { SignIn } from "./pages/SignIn";
+import { SignUp } from "./pages/SignUp";
+import { dark } from "@clerk/themes";
 
 const clerkPublishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -19,7 +21,12 @@ if (!clerkPublishableKey) {
 export function App() {
   return (
     <WithTrpc>
-      <ClerkProvider publishableKey={clerkPublishableKey}>
+      <ClerkProvider
+        publishableKey={clerkPublishableKey}
+        appearance={{
+          baseTheme: dark,
+        }}
+      >
         <Router />
       </ClerkProvider>
     </WithTrpc>
@@ -54,6 +61,7 @@ function Router() {
         <Route path="/hello" component={Hello} />
         <Route path="/" component={Overview} />
         <Route path="/signin" component={SignIn} />
+        <Route path="/signup" component={SignUp} />
         <Route>404, Not Found!</Route>
       </Switch>
     </>

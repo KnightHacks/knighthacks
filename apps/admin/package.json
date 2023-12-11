@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@clerk/clerk-react": "^4.28.3",
+    "@clerk/themes": "^1.7.9",
     "@fontsource-variable/inter": "^5.0.15",
     "@tanstack/react-query": "^4.3.9",
     "@trpc/client": "10.44.1",
