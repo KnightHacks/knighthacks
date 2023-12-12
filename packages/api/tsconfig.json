@@ -1,10 +1,20 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "node",
+    /* Base Options: */
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "strict": true
+    "target": "es2022",
+    "verbatimModuleSyntax": true,
+    "allowJs": true,
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "module": "ESNext",
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    /* If your code doesn't run in the DOM: */
+    "lib": ["es2022"]
   }
 }

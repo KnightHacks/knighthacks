@@ -1,19 +1,16 @@
-import { trpcServer } from "@hono/trpc-server";
-import { Hono } from "hono";
-import { appRouter } from "./routers";
+import express from "express";
+import cors from "cors";
+import * as trpcExpress from "@trpc/server/adapters/express";
 import { createContext } from "./context";
-import { cors } from "hono/cors";
-import { logger } from "hono/logger";
+import { appRouter } from "./routers";
 
-const app = new Hono();
+const app = express();
 
-app.use("*", logger());
-app.use("*", cors()); // Correctly configure cors when our app is ready for production
-app.get("/", (c) => c.json({ message: "Hello Hono!" }));
+app.use(cors());
 
 app.use(
-  "/trpc/*",
-  trpcServer({
+  "/trpc",
+  trpcExpress.createExpressMiddleware({
     router: appRouter,
     createContext,
   })

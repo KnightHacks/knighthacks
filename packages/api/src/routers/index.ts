@@ -2,7 +2,7 @@ import { t } from "../trpc";
 
 export const appRouter = t.router({
   hello: t.procedure.query(() => {
-    return "Hello Hono!";
+    return "Hello Express!";
   }),
 });
 
