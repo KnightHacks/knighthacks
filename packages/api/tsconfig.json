@@ -6,7 +6,7 @@
     "target": "es2022",
     "verbatimModuleSyntax": true,
     "allowJs": true,
-    "moduleResolution": "Bundler",
+    "moduleResolution": "Node",
     "noEmit": true,
     "module": "ESNext",
     "resolveJsonModule": true,
