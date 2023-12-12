@@ -1,11 +1,14 @@
 import { defineConfig } from "drizzle-kit";
 import "dotenv/config";
 
+console.log("Hello from drizzle.config.ts");
+console.log(process.env.DATABASE_URL);
+
 export default defineConfig({
   out: "./drizzle",
   schema: ["./schemas/schema.ts"],
-  driver: "mysql2",
+  driver: "pg",
   dbCredentials: {
-    uri: process.env.DATABASE_URL!,
+    connectionString: process.env.DATABASE_URL!,
   },
 });

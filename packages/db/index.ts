@@ -1,11 +1,7 @@
-import { connect } from "@planetscale/database";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import * as schema from "./schemas";
-import { drizzle } from "drizzle-orm/planetscale-serverless";
 
-const connection = connect({
-  host: process.env.DATABASE_HOST,
-  username: process.env.DATABASE_USERNAME,
-  password: process.env.DATABASE_PASSWORD,
-});
+const client = postgres(process.env.DATABASE_URL!, { prepare: false });
 
-export const db = drizzle(connection, { schema });
+export const db = drizzle(client, { schema });

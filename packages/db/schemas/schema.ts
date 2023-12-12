@@ -1,14 +1,8 @@
 import { relations } from "drizzle-orm";
-import {
-  mysqlTable,
-  int,
-  varchar,
-  mysqlEnum,
-  date,
-} from "drizzle-orm/mysql-core";
+import { pgTable, varchar, boolean, serial } from "drizzle-orm/pg-core";
 
-export const users = mysqlTable("users", {
-  id: int("id").primaryKey().autoincrement(),
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
   firstName: varchar("first_name", { length: 50 }),
   lastName: varchar("last_name", { length: 50 }),
   address1: varchar("address1", { length: 100 }),
@@ -16,12 +10,13 @@ export const users = mysqlTable("users", {
   phone: varchar("phone", { length: 20 }),
   email: varchar("email", { length: 100 }),
   city: varchar("city", { length: 100 }),
-  shirtSize: mysqlEnum("shirt_size", ["XS", "S", "M", "L", "XL", "XXL"]),
+  shirtSize: varchar("shirt_size", { length: 100 }),
   personalWebsite: varchar("personal_website", { length: 100 }),
   github: varchar("github", { length: 100 }),
   linkedin: varchar("linkedin", { length: 100 }),
   resume: varchar("resume", { length: 1000 }),
-  isMember: int("is_member"),
+  isMember: boolean("is_member"),
+  isAdmin: boolean("is_admin"),
 });
 
 export const usersRelations = relations(users, ({ many }) => {
@@ -31,30 +26,30 @@ export const usersRelations = relations(users, ({ many }) => {
   };
 });
 
-export const hackathons = mysqlTable("hackathons", {
-  id: int("id").primaryKey().autoincrement(),
-  name: varchar("name", { length: 100 }),
-  startDate: date("start_date"),
-  endDate: date("end_date"),
-  theme: varchar("theme", { length: 100 }),
-});
-
-export const hackers = mysqlTable("hackers", {
-  id: int("id").primaryKey().autoincrement(),
-  userId: int("user_id"),
-  hackathonId: int("hackathon_id"),
-  isConfirmed: int("is_confirmed"),
-  isWaitlisted: int("is_waitlisted"),
-  isRejected: int("is_rejected"),
-  isCheckedin: int("is_checkedin"),
+export const hackers = pgTable("hackers", {
+  id: serial("id").primaryKey(),
+  userId: serial("user_id"),
+  hackathonId: serial("hackathon_id"),
+  isConfirmed: boolean("is_confirmed"),
+  isWaitlisted: boolean("is_waitlisted"),
+  isRejected: boolean("is_rejected"),
+  isCheckedin: boolean("is_checkedin"),
   whyAttend: varchar("why_attend", { length: 1000 }),
   whatLearn: varchar("what_learn", { length: 1000 }),
 });
 
-export const sponsors = mysqlTable("sponsors", {
-  id: int("id").primaryKey().autoincrement(),
+export const hackathons = pgTable("hackathons", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 100 }),
+  startDate: varchar("start_date", { length: 100 }),
+  endDate: varchar("end_date", { length: 100 }),
+  theme: varchar("theme", { length: 100 }),
+});
+
+export const sponsors = pgTable("sponsors", {
+  id: serial("id").primaryKey(),
   name: varchar("name", { length: 100 }),
   logo: varchar("logo", { length: 100 }),
   website: varchar("website", { length: 100 }),
-  tier: mysqlEnum("tier", ["Bronze", "Silver", "Gold", "Platinum"]),
+  tier: varchar("tier", { length: 100 }),
 });

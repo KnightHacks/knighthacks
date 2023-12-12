@@ -5,7 +5,7 @@
   "types": "dist/index.js",
   "type": "module",
   "scripts": {
-    "db:push": "drizzle-kit push:mysql",
+    "db:push": "drizzle-kit push:pg",
     "db:preview": "drizzle-kit studio --port 5555",
     "build": "tsup",
     "dev": "npm run build -- --watch"
@@ -15,8 +15,7 @@
     "tsup": "^8.0.1"
   },
   "dependencies": {
-    "@planetscale/database": "^1.11.0",
-    "drizzle-orm": "^0.29.0",
-    "mysql2": "^3.6.5"
+    "drizzle-orm": "^0.29.1",
+    "postgres": "^3.4.3"
   }
 }
