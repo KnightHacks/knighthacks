@@ -10,6 +10,7 @@
     "build": "tsup",
     "dev": "npm run build -- --watch"
   },
+  "license": "MIT",
   "devDependencies": {
     "drizzle-kit": "^0.20.6",
     "tsup": "^8.0.1"

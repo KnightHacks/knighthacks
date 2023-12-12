@@ -15,6 +15,7 @@
     "tsconfig": "workspace:*",
     "turbo": "latest"
   },
+  "license": "MIT",
   "packageManager": "pnpm@8.9.0",
   "name": "knighthacks",
   "dependencies": {
