@@ -8,20 +8,11 @@ import { Hello } from "./pages/Hello";
 import { Overview } from "./pages/Overview";
 import { Nav } from "./components/Nav";
 import { SignIn } from "./pages/SignIn";
-import { Auth0Provider } from "@auth0/auth0-react";
 
 export function App() {
   return (
     <WithTrpc>
-      <Auth0Provider
-        domain={import.meta.env.VITE_AUTH0_DOMAIN}
-        clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
-        authorizationParams={{
-          redirect_uri: window.location.origin,
-        }}
-      >
-        <Router />
-      </Auth0Provider>
+      <Router />
     </WithTrpc>
   );
 }
