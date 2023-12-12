@@ -5,7 +5,7 @@
   "types": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev src/index.ts",
+    "dev": "wrangler dev src/index.ts --port 8080",
     "deploy": "wrangler deploy --minify src/index.ts"
   },
   "license": "MIT",
