@@ -21,7 +21,6 @@ export const users = pgTable("users", {
 
 export const usersRelations = relations(users, ({ many }) => {
   return {
-    hackathons: many(hackathons),
     hackers: many(hackers),
   };
 });
@@ -36,6 +35,15 @@ export const hackers = pgTable("hackers", {
   isCheckedin: boolean("is_checkedin"),
   whyAttend: varchar("why_attend", { length: 1000 }),
   whatLearn: varchar("what_learn", { length: 1000 }),
+});
+
+export const hackersRelations = relations(hackers, ({ one, many }) => {
+  return {
+    user: one(users, {
+      fields: [hackers.userId],
+      references: [users.id],
+    }),
+  };
 });
 
 export const hackathons = pgTable("hackathons", {
