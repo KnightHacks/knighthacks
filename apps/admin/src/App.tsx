@@ -8,6 +8,7 @@ import { Hello } from "./pages/Hello";
 import { Overview } from "./pages/Overview";
 import { Nav } from "./components/Nav";
 import { SignIn } from "./pages/SignIn";
+import { Users } from "./pages/Users";
 
 export function App() {
   return (
@@ -45,6 +46,7 @@ function Router() {
         <Route path="/hello" component={Hello} />
         <Route path="/" component={Overview} />
         <Route path="/signin" component={SignIn} />
+        <Route path="/users" component={Users} />
         <Route>404, Not Found!</Route>
       </Switch>
     </>
