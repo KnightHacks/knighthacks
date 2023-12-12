@@ -1,24 +1,17 @@
-import express from "express";
-import cors from "cors";
-import * as trpcExpress from "@trpc/server/adapters/express";
-import { createContext } from "./context";
+import { Hono } from "hono";
+import { trpcServer } from "@hono/trpc-server";
 import { appRouter } from "./routers";
 
-const app = express();
+const app = new Hono();
 
-app.use(cors());
-
-app.get("/", (req, res) => {
-  res.json({
-    message: "Hello from Express!",
-  });
+app.get("/", (c) => {
+  return c.text("Hello World!");
 });
 
 app.use(
-  "/trpc",
-  trpcExpress.createExpressMiddleware({
+  "/trpc/*",
+  trpcServer({
     router: appRouter,
-    createContext,
   })
 );
 

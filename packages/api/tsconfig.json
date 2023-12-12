@@ -6,7 +6,7 @@
     "target": "es2022",
     "verbatimModuleSyntax": true,
     "allowJs": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "noEmit": true,
     "module": "ESNext",
     "resolveJsonModule": true,
@@ -17,5 +17,4 @@
     /* If your code doesn't run in the DOM: */
     "lib": ["es2022"]
   },
-  "include": ["./api/*.ts"]
 }
