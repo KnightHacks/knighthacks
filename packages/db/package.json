@@ -1,15 +1,18 @@
 {
   "name": "db",
   "version": "0.0.0",
-  "main": "index.ts",
-  "types": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.js",
   "type": "module",
   "scripts": {
     "db:push": "drizzle-kit push:mysql",
-    "db:preview": "drizzle-kit studio --port 5555"
+    "db:preview": "drizzle-kit studio --port 5555",
+    "build": "tsup",
+    "dev": "npm run build -- --watch"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.20.6"
+    "drizzle-kit": "^0.20.6",
+    "tsup": "^8.0.1"
   },
   "dependencies": {
     "@planetscale/database": "^1.11.0",

@@ -6,7 +6,8 @@
     "target": "es2022",
     "verbatimModuleSyntax": true,
     "allowJs": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
     "module": "ESNext",
     "resolveJsonModule": true,
     "moduleDetection": "force",
@@ -14,6 +15,6 @@
     "strict": true,
     "noUncheckedIndexedAccess": true,
     /* If your code doesn't run in the DOM: */
-    "lib": ["es2022"],
+    "lib": ["es2022"]
   }
 }
