@@ -9,3 +9,5 @@ export function connect(databaseUrl: string) {
 
   return drizzle(client, { schema });
 }
+
+export * from "drizzle-orm";
