@@ -37,7 +37,7 @@ export const hackers = pgTable("hackers", {
   whatLearn: varchar("what_learn", { length: 1000 }),
 });
 
-export const hackersRelations = relations(hackers, ({ one, many }) => {
+export const hackersRelations = relations(hackers, ({ one }) => {
   return {
     user: one(users, {
       fields: [hackers.userId],
