@@ -1,8 +1,8 @@
-import { t } from "../trpc";
+import { publicProcedure, router } from "../trpc";
 import { usersRouter } from "./users";
 
-export const appRouter = t.router({
-  hello: t.procedure.query(() => {
+export const appRouter = router({
+  hello: publicProcedure.query(() => {
     return "Hello Hono!";
   }),
   users: usersRouter,

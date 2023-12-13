@@ -3,7 +3,7 @@ import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { Bindings } from "./app";
 import { connect } from "db";
 
-export function createContextWithBindings(bindings: Bindings) {
+export function createContext(bindings: Bindings) {
   /*
     Here we have to create a new connection to the database for each request.
     This is because we're using a cloudflare worker, and the worker is stateles, meaning
@@ -19,4 +19,4 @@ export function createContextWithBindings(bindings: Bindings) {
     };
   };
 }
-export type Context = inferAsyncReturnType<typeof createContextWithBindings>;
+export type Context = inferAsyncReturnType<typeof createContext>;

@@ -1,7 +1,7 @@
-import { t } from "../trpc";
+import { privateProcedure, router } from "../trpc";
 
-export const usersRouter = t.router({
-  getAll: t.procedure.query(async ({ ctx }) => {
+export const usersRouter = router({
+  getAll: privateProcedure.query(async ({ ctx }) => {
     return await ctx.db.query.users.findMany();
   }),
 });
