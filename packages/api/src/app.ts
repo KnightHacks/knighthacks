@@ -2,21 +2,29 @@ import { Hono } from "hono";
 import { trpcServer } from "@hono/trpc-server";
 import { appRouter } from "./routers";
 import { cors } from "hono/cors";
-import { createContext } from "./context";
+import { createContextWithBindings } from "./context";
 
-const app = new Hono();
+export type Bindings = {
+  DATABASE_URL: string;
+};
+
+const app = new Hono<{ Bindings: Bindings }>();
 
 app.use("*", cors());
+
 app.get("/", (c) => {
   return c.text("Hello World!");
 });
 
-app.use(
-  "/trpc/*",
-  trpcServer({
+app.use("/trpc/*", async (c, next) => {
+  const middleware = trpcServer({
     router: appRouter,
-    createContext,
-  })
-);
+    onError({ error }) {
+      console.error(error);
+    },
+    createContext: createContextWithBindings(c.env),
+  });
+  return await middleware(c, next);
+});
 
 export { app };
