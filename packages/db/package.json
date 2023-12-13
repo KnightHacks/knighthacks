@@ -1,14 +1,12 @@
 {
   "name": "db",
   "version": "0.0.0",
-  "main": "dist/index.js",
-  "types": "dist/index.js",
+  "main": "index.ts",
+  "types": "index.ts",
   "type": "module",
   "scripts": {
     "db:push": "drizzle-kit push:pg",
-    "db:preview": "drizzle-kit studio --port 5555",
-    "build": "tsup",
-    "dev": "npm run build -- --watch"
+    "db:preview": "drizzle-kit studio --port 5555"
   },
   "license": "MIT",
   "devDependencies": {
