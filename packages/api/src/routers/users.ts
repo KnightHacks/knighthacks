@@ -1,7 +1,7 @@
 import { t } from "../trpc";
 
 export const usersRouter = t.router({
-  allUsers: t.procedure.query(async ({ ctx }) => {
-    return await ctx.db().query.users.findMany();
+  getAll: t.procedure.query(async ({ ctx }) => {
+    return await ctx.db.query.users.findMany();
   }),
 });
