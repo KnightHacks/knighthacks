@@ -40,3 +40,4 @@ dist
 
 # wrangler
 .wrangler
+.dev.vars
