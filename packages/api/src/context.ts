@@ -1,8 +1,17 @@
 import { type inferAsyncReturnType } from "@trpc/server";
-import { db } from "db";
+import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+import { Bindings } from "./app";
+import { connect } from "db";
 
-export async function createContext() {
-  return { db };
+export function createContextWithBindings(bindings: Bindings) {
+  const db = connect(bindings.DATABASE_URL);
+
+  return (opts: FetchCreateContextFnOptions) => {
+    return {
+      ...opts,
+      bindings,
+      db,
+    };
+  };
 }
-
-export type Context = inferAsyncReturnType<typeof createContext>;
+export type Context = inferAsyncReturnType<typeof createContextWithBindings>;
