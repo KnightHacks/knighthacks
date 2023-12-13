@@ -15,6 +15,9 @@ export function Nav() {
         <li>
           <Link href="/hackathons">Hackathons</Link>
         </li>
+        <li>
+          <Link href="/signin">Sign In</Link>
+        </li>
       </ul>
     </div>
   );
