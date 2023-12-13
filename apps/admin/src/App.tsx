@@ -25,7 +25,7 @@ function WithTrpc({ children }: { children: React.ReactNode }) {
       transformer: superjson,
       links: [
         httpBatchLink({
-          url: import.meta.env.VITE_API_URL,
+          url: `${import.meta.env.VITE_API_URL}/trpc`,
         }),
       ],
     })
