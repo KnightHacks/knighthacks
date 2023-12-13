@@ -10,6 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@hono/oauth-providers": "^0.2.0",
     "@hono/trpc-server": "^0.1.0",
     "@trpc/server": "^10.44.1",
     "cors": "^2.8.5",
