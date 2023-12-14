@@ -41,3 +41,4 @@ dist
 # wrangler
 .wrangler
 .dev.vars
+wrangler.toml
