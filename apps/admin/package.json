@@ -13,6 +13,9 @@
   "license": "MIT",
   "dependencies": {
     "@fontsource-variable/inter": "^5.0.15",
+    "@supabase/auth-ui-react": "^0.4.6",
+    "@supabase/auth-ui-shared": "^0.1.8",
+    "@supabase/supabase-js": "^2.39.0",
     "@tanstack/react-query": "^4.3.9",
     "@trpc/client": "10.44.1",
     "@trpc/react-query": "10.44.1",
