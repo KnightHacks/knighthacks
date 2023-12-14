@@ -10,24 +10,21 @@ const t = initTRPC.context<Context>().create({
 export const router = t.router;
 export const middleware = t.middleware;
 
-const isAdmin = middleware(async (opts) => {
-  const cookies = opts.ctx.req.headers.get("cookie");
-  if (!cookies) {
-    throw new TRPCError({ code: "UNAUTHORIZED", message: "No cookie" });
-  }
+const getTokenFromRequest = (req: Request) => {
+  const token = req.headers.get("authorization")?.split(" ")[1];
+  return token;
+};
 
-  const token = cookies.split(";").find((c) => c.startsWith("accessToken"));
+const isAuthenticated = middleware(async (opts) => {
+  const token = getTokenFromRequest(opts.ctx.req);
+
   if (!token) {
     throw new TRPCError({ code: "UNAUTHORIZED", message: "No token" });
   }
 
-  const decoded = await verify(token, opts.ctx.bindings.JWT_SECRET);
+  const decoded = await verify(token, opts.ctx.bindings.SUPABASE_JWT_SECRET);
   if (!decoded) {
     throw new TRPCError({ code: "UNAUTHORIZED", message: "Invalid token" });
-  }
-
-  if (decoded.role !== "admin") {
-    throw new TRPCError({ code: "UNAUTHORIZED", message: "Not admin" });
   }
 
   return opts.next({
@@ -38,5 +35,18 @@ const isAdmin = middleware(async (opts) => {
   });
 });
 
-export const publicProcedure = t.procedure;
-export const privateProcedure = publicProcedure.use(isAdmin);
+const isAdmin = isAuthenticated.unstable_pipe((opts) => {
+  // Extract email from isAuthenticated middleware
+  const email = opts.ctx.user.email;
+
+  // If email doesn't end with @knighthacks.org, then it's not an admin
+  if (!email.endsWith("@knighthacks.org")) {
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "Not an admin" });
+  }
+
+  return opts.next(opts);
+});
+
+export const publicProcedure = t.procedure; // Public procedures don't require a token
+export const adminProcedure = publicProcedure.use(isAdmin); // Admin procedures require knighthacks.org email
+export const authenticatedProcedure = publicProcedure.use(isAuthenticated); // Authenticated procedures require a valid token
