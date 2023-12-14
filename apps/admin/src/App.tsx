@@ -6,15 +6,18 @@ import { trpc } from "./trpc";
 import { Route, Switch } from "wouter";
 import { Hello } from "./pages/Hello";
 import { Overview } from "./pages/Overview";
+import { Users } from "./pages/Users";
+import { SessionProvider, accessToken } from "./lib/hooks/useSession";
 import { Nav } from "./components/Nav";
 import { SignIn } from "./pages/SignIn";
-import { Users } from "./pages/Users";
 
 export function App() {
   return (
-    <WithTrpc>
-      <Router />
-    </WithTrpc>
+    <SessionProvider>
+      <WithTrpc>
+        <Router />
+      </WithTrpc>
+    </SessionProvider>
   );
 }
 
@@ -29,7 +32,10 @@ function WithTrpc({ children }: { children: React.ReactNode }) {
           fetch(url, options) {
             return fetch(url, {
               ...options,
-              credentials: "include",
+              headers: {
+                ...options?.headers,
+                Authorization: accessToken ? `Bearer ${accessToken}` : "",
+              },
             });
           },
         }),
@@ -44,17 +50,25 @@ function WithTrpc({ children }: { children: React.ReactNode }) {
   );
 }
 
+function WithNav(component: () => JSX.Element) {
+  return () => {
+    return (
+      <>
+        <Nav />
+        {component()}
+      </>
+    );
+  };
+}
+
 function Router() {
   return (
-    <>
-      <Nav />
-      <Switch>
-        <Route path="/hello" component={Hello} />
-        <Route path="/" component={Overview} />
-        <Route path="/signin" component={SignIn} />
-        <Route path="/users" component={Users} />
-        <Route>404, Not Found!</Route>
-      </Switch>
-    </>
+    <Switch>
+      <Route path="/hello" component={WithNav(Hello)} />
+      <Route path="/" component={WithNav(Overview)} />
+      <Route path="/users" component={WithNav(Users)} />
+      <Route path="/signin" component={SignIn} />
+      <Route>404, Not Found!</Route>
+    </Switch>
   );
 }
