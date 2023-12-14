@@ -17,7 +17,40 @@ export function Users() {
     <>
       <UsersTable />
       <UserForm />
+      <ResumeUpload />
     </>
+  );
+}
+
+export function ResumeUpload() {
+  return (
+    <label>
+      Resume
+      <input
+        onChange={async (e) => {
+          const file = e.target.files?.[0];
+          if (!file) return;
+          if (file.type !== "application/pdf") return;
+
+          // Encode file name to fit in URL
+          const fileName = encodeURIComponent(file.name);
+          const formData = new FormData();
+          formData.append("resume", file);
+          const res = await fetch(
+            `${import.meta.env.VITE_API_URL}/upload/${fileName}`,
+            {
+              method: "PUT",
+              body: formData,
+            }
+          );
+
+          if (!res.ok) {
+            alert("Failed to upload resume");
+          }
+        }}
+        type="file"
+      />
+    </label>
   );
 }
 
@@ -97,7 +130,6 @@ function UserForm() {
         LinkedIn
         <input className="block" type="text" {...register("linkedin")} />
       </label>
-
       <label>
         <input className="block" type="text" {...register("shirtSize")} />
       </label>
