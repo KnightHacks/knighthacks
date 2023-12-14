@@ -19,4 +19,4 @@ export function createContext(bindings: Bindings) {
     };
   };
 }
-export type Context = inferAsyncReturnType<typeof createContext>;
+export type Context = inferAsyncReturnType<ReturnType<typeof createContext>>;
