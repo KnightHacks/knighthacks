@@ -16,6 +16,9 @@
     },
     "db:preview": {
       "cache": false
+    },
+    "db:migrate": {
+      "cache": false
     }
   }
 }

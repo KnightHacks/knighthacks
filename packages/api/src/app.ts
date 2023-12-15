@@ -3,10 +3,11 @@ import { trpcServer } from "@hono/trpc-server";
 import { appRouter } from "./routers";
 import { cors } from "hono/cors";
 import { createContext } from "./context";
-import { R2PutOptions, type R2Bucket } from "@cloudflare/workers-types";
+import { type R2Bucket } from "@cloudflare/workers-types";
 
 export type Bindings = {
   DATABASE_URL: string;
+  AUTH_TOKEN: string;
   GITHUBID: string;
   GITHUB_SECRET: string;
   SUPABASE_JWT_SECRET: string;

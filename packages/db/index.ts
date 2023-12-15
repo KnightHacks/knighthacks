@@ -1,10 +1,11 @@
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
+import { drizzle } from "drizzle-orm/libsql";
+import { createClient } from "@libsql/client";
 import * as schema from "./schemas";
 
-export function connect(databaseUrl: string) {
-  const client = postgres(databaseUrl, {
-    prepare: false,
+export function connect(url: string, authToken: string) {
+  const client = createClient({
+    url,
+    authToken,
   });
 
   return drizzle(client, { schema });

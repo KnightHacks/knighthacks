@@ -5,18 +5,20 @@
   "types": "index.ts",
   "type": "module",
   "scripts": {
-    "db:push": "drizzle-kit push:pg",
-    "db:preview": "drizzle-kit studio --port 5555"
+    "db:push": "drizzle-kit push:sqlite",
+    "db:preview": "drizzle-kit studio --port 5555",
+    "db:migrate": "tsx migrate.ts",
+    "db:generate": "drizzle-kit generate:sqlite --out ./drizzle --breakpoints --schema=./schemas/schema.ts"
   },
   "license": "MIT",
   "devDependencies": {
     "drizzle-kit": "^0.20.6",
-    "tsup": "^8.0.1"
+    "tsup": "^8.0.1",
+    "tsx": "^4.6.2"
   },
   "dependencies": {
+    "@libsql/client": "0.4.0-pre.5",
     "drizzle-orm": "^0.29.1",
-    "drizzle-zod": "^0.5.1",
-    "pg": "^8.11.3",
-    "postgres": "^3.4.3"
+    "drizzle-zod": "^0.5.1"
   }
 }

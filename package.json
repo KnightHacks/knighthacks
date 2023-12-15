@@ -7,7 +7,8 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db:push": "pnpm with-env turbo run db:push",
-    "db:preview": "pnpm with-env turbo run db:preview"
+    "db:preview": "pnpm with-env turbo run db:preview",
+    "db:migrate": "pnpm with-env turbo run db:migrate"
   },
   "devDependencies": {
     "eslint": "^8.54.0",
