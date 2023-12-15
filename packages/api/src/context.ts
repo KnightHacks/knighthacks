@@ -9,7 +9,7 @@ export function createContext(bindings: Bindings) {
     This is because we're using a cloudflare worker, and the worker is stateles, meaning
     that we can't keep a persistent connection to the database.
    */
-  const db = connect(bindings.DATABASE_URL, bindings.AUTH_TOKEN);
+  const db = connect(bindings.TURSO_URL, bindings.TURSO_AUTH_TOKEN);
 
   return (opts: FetchCreateContextFnOptions) => {
     return {

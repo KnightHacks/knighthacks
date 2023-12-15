@@ -6,10 +6,8 @@ import { createContext } from "./context";
 import { type R2Bucket } from "@cloudflare/workers-types";
 
 export type Bindings = {
-  DATABASE_URL: string;
-  AUTH_TOKEN: string;
-  GITHUBID: string;
-  GITHUB_SECRET: string;
+  TURSO_URL: string;
+  TURSO_AUTH_TOKEN: string;
   SUPABASE_JWT_SECRET: string;
   KNIGHT_HACKS_BUCKET: R2Bucket;
 };
