@@ -1,4 +1,4 @@
-import { trpc } from "../lib/trpc.ts";
+import { trpc } from "@/lib/trpc";
 
 export function Hello() {
   const { data, error, isLoading } = trpc.hello.useQuery();
