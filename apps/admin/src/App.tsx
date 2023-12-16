@@ -7,9 +7,11 @@ import { Route, Switch } from "wouter";
 import { Hello } from "./pages/Hello";
 import { Overview } from "./pages/Overview";
 import { Users } from "./pages/Users";
-import { SessionProvider, accessToken } from "./lib/hooks/useSession";
-import { Nav } from "./components/Nav";
 import { SignIn } from "./pages/SignIn";
+import { supabase } from "./lib/supabase";
+import { SessionProvider } from "./lib/contexts/session";
+import { ProtectedRoute } from "./lib/components/ProtectedRoute";
+import { WithNav } from "./lib/components/WithNav";
 
 export function App() {
   return (
@@ -29,14 +31,23 @@ function WithTrpc({ children }: { children: React.ReactNode }) {
       links: [
         httpBatchLink({
           url: `${import.meta.env.VITE_API_URL}/trpc`,
-          fetch(url, options) {
-            return fetch(url, {
-              ...options,
-              headers: {
-                ...options?.headers,
-                Authorization: accessToken ? `Bearer ${accessToken}` : "",
-              },
-            });
+          async headers() {
+            const {
+              data: { session },
+            } = await supabase.auth.getSession();
+            const accessToken = session?.access_token;
+            return {
+              ...(accessToken
+                ? { Authorization: `Bearer ${accessToken}` }
+                : {}),
+            };
+          },
+          async fetch(input, init) {
+            const res = await fetch(input, init);
+            if (res.status === 401) {
+              window.location.href = "/signin";
+            }
+            return res;
           },
         }),
       ],
@@ -50,23 +61,12 @@ function WithTrpc({ children }: { children: React.ReactNode }) {
   );
 }
 
-function WithNav(component: () => JSX.Element) {
-  return () => {
-    return (
-      <>
-        <Nav />
-        {component()}
-      </>
-    );
-  };
-}
-
 function Router() {
   return (
     <Switch>
-      <Route path="/hello" component={WithNav(Hello)} />
-      <Route path="/" component={WithNav(Overview)} />
-      <Route path="/users" component={WithNav(Users)} />
+      <ProtectedRoute path="/hello" component={WithNav(Hello)} />
+      <ProtectedRoute path="/" component={WithNav(Overview)} />
+      <ProtectedRoute path="/users" component={WithNav(Users)} />
       <Route path="/signin" component={SignIn} />
       <Route>404, Not Found!</Route>
     </Switch>
