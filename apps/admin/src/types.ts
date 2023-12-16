@@ -1,3 +1,3 @@
 import { RouterOutput } from "api";
 
-export type User = RouterOutput['users']['getAll'][0]
+export type User = RouterOutput["users"]["getAll"][0];

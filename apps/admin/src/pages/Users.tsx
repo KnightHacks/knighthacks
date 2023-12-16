@@ -1,4 +1,4 @@
-import { trpc } from "@/trpc";
+import { trpc } from "@/lib/trpc";
 import { User } from "@/types";
 import { useForm, SubmitHandler } from "react-hook-form";
 
