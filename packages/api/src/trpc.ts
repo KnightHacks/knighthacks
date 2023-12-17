@@ -10,13 +10,8 @@ const t = initTRPC.context<Context>().create({
 export const router = t.router;
 export const middleware = t.middleware;
 
-const getTokenFromRequest = (req: Request) => {
-  const token = req.headers.get("authorization")?.split(" ")[1];
-  return token;
-};
-
 const isAuthenticated = middleware(async (opts) => {
-  const token = getTokenFromRequest(opts.ctx.req);
+  const token = opts.ctx.req.headers.get("authorization")?.split(" ")[1];
 
   if (!token) {
     throw new TRPCError({ code: "UNAUTHORIZED", message: "No token" });
