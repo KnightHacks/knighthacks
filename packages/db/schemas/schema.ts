@@ -6,6 +6,7 @@ import { schools } from "../lib/schools";
 
 export const users = sqliteTable("users", {
   id: integer("id").primaryKey({ autoIncrement: true }),
+  isMember: integer("is_member", { mode: "boolean" }), // Whether or not they are a dues paying member
   email: text("email").notNull().unique(), // This will be from the oauth provider
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
@@ -19,7 +20,6 @@ export const users = sqliteTable("users", {
   gradYear: text("grad_year", {
     enum: ["2024", "2025", "2026", "2027", "2028", "other"],
   }).notNull(),
-  levelOfStudy: text("level_of_study").notNull(),
   address1: text("address1").notNull(),
   address2: text("address2"),
   city: text("city").notNull(),
@@ -30,7 +30,6 @@ export const users = sqliteTable("users", {
   personalWebsite: text("personal_website"),
   linkedin: text("linkedin"),
   resume: text("resume"), // Link to resume
-  isMember: integer("is_member", { mode: "boolean" }), // Whether or not they are a dues paying member
   oauthProvider: text("oauth_provider", {
     enum: ["google", "github"],
   }).notNull(),
