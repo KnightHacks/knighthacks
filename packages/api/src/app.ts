@@ -4,6 +4,7 @@ import { appRouter } from "./routers";
 import { cors } from "hono/cors";
 import { createContext } from "./context";
 import { type R2Bucket } from "@cloudflare/workers-types";
+import { verifyAccess } from "./middlewares/verify-access";
 
 export type Bindings = {
   TURSO_URL: string;
@@ -37,8 +38,10 @@ app.use("/trpc/*", async (c, next) => {
   return await middleware(c, next);
 });
 
+app.use("/resume/*", verifyAccess);
+
 // Resume upload
-app.put("/upload/:key", async (c) => {
+app.put("/resume/upload/:key", async (c) => {
   const key = c.req.param("key");
   const bucket = c.env.KNIGHT_HACKS_BUCKET;
   const body = await c.req.arrayBuffer();
@@ -57,7 +60,31 @@ app.put("/upload/:key", async (c) => {
   // Upload the file to the bucket
   await bucket.put(newFilename, body);
 
-  return c.text(`Uploaded ${newFilename} successfully!`);
+  return c.json({
+    success: true,
+    key: newFilename,
+  });
+});
+
+// Resume download
+app.get("/resume/download/:key", async (c) => {
+  const key = c.req.param("key");
+  const bucket = c.env.KNIGHT_HACKS_BUCKET;
+
+  if (!key) return c.text("No key provided", 400);
+
+  const object = await bucket.get(key);
+
+  if (!object) return c.text("File not found", 404);
+
+  const file = await object.arrayBuffer();
+  const contentType = object.httpMetadata?.contentType ?? "";
+
+  return c.body(file, {
+    headers: {
+      "Content-Type": contentType,
+    },
+  });
 });
 
 export { app };
