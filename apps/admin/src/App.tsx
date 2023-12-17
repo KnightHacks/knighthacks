@@ -12,18 +12,19 @@ import { supabase } from "./lib/supabase";
 import { SessionProvider } from "./lib/contexts/session";
 import { ProtectedRoute } from "./lib/components/ProtectedRoute";
 import { WithNav } from "./lib/components/WithNav";
+import { HackathonRegistrationFlow } from "./pages/HackathonRegistrationFlow";
 
 export function App() {
   return (
     <SessionProvider>
-      <TrpcProvider>
+      <TRPCProvider>
         <Router />
-      </TrpcProvider>
-    </SessionProvider>
+      </TRPCProvider>
+    </SessionProvider> 
   );
 }
 
-function TrpcProvider({ children }: { children: React.ReactNode }) {
+function TRPCProvider({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     trpc.createClient({
@@ -68,6 +69,10 @@ function Router() {
       <ProtectedRoute path="/" component={WithNav(Overview)} />
       <ProtectedRoute path="/users" component={WithNav(Users)} />
       <Route path="/signin" component={SignIn} />
+      <Route
+        path="/hackathon-registration-flow"
+        component={HackathonRegistrationFlow}
+      />
       <Route>404, Not Found!</Route>
     </Switch>
   );
