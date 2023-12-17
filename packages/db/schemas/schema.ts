@@ -11,7 +11,9 @@ export const users = sqliteTable("users", {
   lastName: text("last_name").notNull(),
   phone: text("phone").notNull().unique(),
   age: integer("age").notNull(),
-  shirtSize: text("shirt_size").notNull(),
+  shirtSize: text("shirt_size", {
+    enum: ["SM", "MD", "LG", "XL", "XXL"],
+  }).notNull(),
   major: text("major", { enum: majors }).notNull(),
   school: text("school", { enum: schools }).notNull(),
   gradYear: text("grad_year", {
