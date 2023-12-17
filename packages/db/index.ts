@@ -12,3 +12,5 @@ export function connect(url: string, authToken: string) {
 }
 
 export * from "drizzle-orm";
+export * from "./schemas";
+  
