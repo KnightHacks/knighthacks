@@ -30,6 +30,12 @@ importers:
       '@fontsource-variable/inter':
         specifier: ^5.0.15
         version: 5.0.16
+      '@hookform/error-message':
+        specifier: ^2.0.1
+        version: 2.0.1(react-dom@18.2.0)(react-hook-form@7.49.2)(react@18.2.0)
+      '@hookform/resolvers':
+        specifier: ^3.3.2
+        version: 3.3.2(react-hook-form@7.49.2)
       '@supabase/auth-ui-react':
         specifier: ^0.4.6
         version: 0.4.6(@supabase/supabase-js@2.39.0)
@@ -51,6 +57,9 @@ importers:
       api:
         specifier: workspace:*
         version: link:../../packages/api
+      db:
+        specifier: workspace:*
+        version: link:../../packages/db
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -1223,6 +1232,26 @@ packages:
     dependencies:
       '@trpc/server': 10.44.1
       hono: 3.11.4
+    dev: false
+
+  /@hookform/error-message@2.0.1(react-dom@18.2.0)(react-hook-form@7.49.2)(react@18.2.0):
+    resolution: {integrity: sha512-U410sAr92xgxT1idlu9WWOVjndxLdgPUHEB8Schr27C9eh7/xUnITWpCMF93s+lGiG++D4JnbSnrb5A21AdSNg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+      react-hook-form: ^7.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-hook-form: 7.49.2(react@18.2.0)
+    dev: false
+
+  /@hookform/resolvers@3.3.2(react-hook-form@7.49.2):
+    resolution: {integrity: sha512-Tw+GGPnBp+5DOsSg4ek3LCPgkBOuOgS5DsDV7qsWNH9LZc433kgsWICjlsh2J9p04H2K66hsXPPb9qn9ILdUtA==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.49.2(react@18.2.0)
     dev: false
 
   /@humanwhocodes/config-array@0.11.13:
