@@ -28,7 +28,9 @@
     "react-hook-form": "^7.49.2",
     "superjson": "1.9.1",
     "tailwind-config": "workspace:*",
-    "wouter": "^2.12.1"
+    "wouter": "^2.12.1",
+    "zod": "^3.22.4",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
