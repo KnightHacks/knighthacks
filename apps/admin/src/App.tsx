@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import superjson from "superjson";
 import { trpc } from "./lib/trpc.ts";
 import { Route, Switch } from "wouter";
@@ -8,23 +8,49 @@ import { Hello } from "./pages/Hello";
 import { Overview } from "./pages/Overview";
 import { Users } from "./pages/Users";
 import { SignIn } from "./pages/SignIn";
-import { supabase } from "./lib/supabase";
-import { SessionProvider } from "./lib/contexts/session";
 import { ProtectedRoute } from "./lib/components/ProtectedRoute";
 import { WithNav } from "./lib/components/WithNav";
 import { HackathonRegistrationFlow } from "./pages/HackathonRegistrationFlow";
+import { supabase } from "./lib/supabase.ts";
+import { useSessionStore } from "./lib/stores/session-store.ts";
 
 export function App() {
+  const { session, setSession } = useSessionStore();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setLoading(false);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [setSession]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <SessionProvider>
-      <TRPCProvider>
-        <Router />
-      </TRPCProvider>
-    </SessionProvider> 
+    <TRPCProvider accessToken={session?.access_token}>
+      <Router />
+    </TRPCProvider>
   );
 }
 
-function TRPCProvider({ children }: { children: React.ReactNode }) {
+function TRPCProvider({
+  children,
+  accessToken,
+}: {
+  children: React.ReactNode;
+  accessToken?: string;
+}) {
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     trpc.createClient({
@@ -32,23 +58,14 @@ function TRPCProvider({ children }: { children: React.ReactNode }) {
       links: [
         httpBatchLink({
           url: `${import.meta.env.VITE_API_URL}/trpc`,
-          async headers() {
-            const {
-              data: { session },
-            } = await supabase.auth.getSession();
-            const accessToken = session?.access_token;
-            return {
-              ...(accessToken
-                ? { Authorization: `Bearer ${accessToken}` }
-                : {}),
-            };
-          },
-          async fetch(input, init) {
-            const res = await fetch(input, init);
-            if (res.status === 401) {
-              window.location.href = "/signin";
+          headers() {
+            if (!accessToken) {
+              return {};
             }
-            return res;
+
+            return {
+              Authorization: `Bearer ${accessToken}`,
+            };
           },
         }),
       ],
