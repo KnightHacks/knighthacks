@@ -1,3 +1,4 @@
 {
-  "extends": "@knighthacks/tsconfig/base.json"
+  "extends": "@knighthacks/tsconfig/library.json",
+  "include": ["src"]
 }

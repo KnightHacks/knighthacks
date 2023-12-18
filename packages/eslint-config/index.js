@@ -7,6 +7,7 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
+    "plugin:unicorn/recommended",
   ],
   plugins: ["@typescript-eslint"],
   parserOptions: {
@@ -15,5 +16,7 @@ module.exports = {
   },
   rules: {
     "@typescript-eslint/no-non-null-assertion": "off",
+    "unicorn/prevent-abbreviations": "off",
+    "unicorn/no-null": "off",
   },
 };

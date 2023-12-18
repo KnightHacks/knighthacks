@@ -13,7 +13,9 @@ export type Bindings = {
   KNIGHT_HACKS_BUCKET: R2Bucket;
 };
 
-const app = new Hono<{ Bindings: Bindings }>();
+const app = new Hono<{
+  Bindings: Bindings;
+}>();
 
 app.get("/", (c) => {
   return c.text("Hello world");
@@ -33,12 +35,12 @@ app.use("/trpc/*", async (c, next) => {
 
   const token = authorization?.split(" ")[1];
   if (!token) {
-    return await next();
+    return next();
   }
 
   const decoded = await verify(token, c.env.SUPABASE_JWT_SECRET);
   if (!decoded) {
-    return await next();
+    return next();
   }
 
   c.set("jwtPayload", decoded);
@@ -71,7 +73,7 @@ app.put("/resume/upload/:key", async (c) => {
   if (!key.endsWith(".pdf")) return c.text("Invalid file type", 400);
 
   // Format a timestamp for the filename
-  const timestamp = new Date().toISOString().replace(/[-:.TZ]/g, "");
+  const timestamp = new Date().toISOString().replaceAll(/[.:TZ-]/g, "");
 
   // Create a new filename with the timestamp appended
   const [fileName, fileExtension] = key.split(".");

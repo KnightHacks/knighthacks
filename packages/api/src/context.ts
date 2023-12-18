@@ -1,8 +1,8 @@
 import { connect } from "@knighthacks/db";
 import { type inferAsyncReturnType } from "@trpc/server";
-import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
-import { Context as HonoContext } from "hono";
-import { Bindings } from "./app";
+import { type FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+import { type Context as HonoContext } from "hono";
+import { type Bindings } from "./app";
 
 export function createTRPCContextFromHonoContext(
   c: HonoContext<{ Bindings: Bindings }>

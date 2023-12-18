@@ -4,7 +4,7 @@ import { adminProcedure, authenticatedProcedure, router } from "../trpc";
 
 export const usersRouter = router({
   getAll: adminProcedure.query(async ({ ctx }) => {
-    return await ctx.db.query.users.findMany();
+    return ctx.db.query.users.findMany();
   }),
   register: authenticatedProcedure
     .input(
@@ -31,7 +31,7 @@ export const usersRouter = router({
         });
       }
 
-      return await ctx.db.insert(users).values({
+      return ctx.db.insert(users).values({
         ...input,
         email,
         oauthProvider,
@@ -39,10 +39,8 @@ export const usersRouter = router({
       });
     }),
   getCurrentUser: authenticatedProcedure.query(async ({ ctx }) => {
-    const currentUser = await ctx.db.query.users.findFirst({
+    return ctx.db.query.users.findFirst({
       where: eq(users.email, ctx.session.email),
     });
-    if (!currentUser) return null;
-    return currentUser;
   }),
 });

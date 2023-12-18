@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { useSessionStore } from "../stores/session-store";
 import { supabase } from "../supabase";
 
-export function Nav() {
+export function Navigation() {
   const { session } = useSessionStore();
 
   return (
