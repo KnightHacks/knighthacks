@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "wrangler dev src/index.ts --port 8080 --remote",
     "deploy": "wrangler deploy --minify src/index.ts",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "tsc && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "license": "MIT",
   "dependencies": {
