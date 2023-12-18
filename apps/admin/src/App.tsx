@@ -9,10 +9,10 @@ import { useSessionStore } from "./lib/stores/session-store.ts";
 import { supabase } from "./lib/supabase.ts";
 import { trpc } from "./lib/trpc.ts";
 import { HackathonRegistrationFlow } from "./pages/HackathonRegistrationFlow";
-import { Hello } from "./pages/Hello.tsx";
 import { Overview } from "./pages/Overview";
 import { SignIn } from "./pages/SignIn";
 import { Users } from "./pages/Users";
+import { Hello } from "./pages/hello";
 
 export function App() {
   const { session, setSession } = useSessionStore();
