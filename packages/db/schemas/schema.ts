@@ -67,6 +67,10 @@ export const hackersRelations = relations(hackers, ({ one }) => {
       fields: [hackers.userId],
       references: [users.id],
     }),
+    hackathon: one(hackathons, {
+      fields: [hackers.hackathonId],
+      references: [hackathons.id],
+    }),
   };
 });
 
@@ -78,9 +82,9 @@ export const hackathons = sqliteTable("hackathons", {
   theme: text("theme"),
 });
 
-// Hackathons can have multiple sponsors
 export const hackathonsRelations = relations(hackathons, ({ many }) => {
   return {
+    hackers: many(hackers),
     sponsors: many(sponsors),
   };
 });
@@ -97,10 +101,12 @@ export const sponsors = sqliteTable("sponsors", {
   }),
 });
 
-// Sponsors can sponsor multiple hackathons
-export const sponsorsRelations = relations(sponsors, ({ many }) => {
+export const sponsorsRelations = relations(sponsors, ({ one }) => {
   return {
-    hackathons: many(hackathons),
+    hackathon: one(hackathons, {
+      fields: [sponsors.hackathonId],
+      references: [hackathons.id],
+    }),
   };
 });
 
