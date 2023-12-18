@@ -18,6 +18,12 @@ importers:
       prettier:
         specifier: ^3.1.0
         version: 3.1.1
+      prettier-plugin-organize-imports:
+        specifier: ^3.2.4
+        version: 3.2.4(prettier@3.1.1)(typescript@5.3.3)
+      prettier-plugin-tailwindcss:
+        specifier: ^0.5.9
+        version: 0.5.9(prettier-plugin-organize-imports@3.2.4)(prettier@3.1.1)
       tsconfig:
         specifier: workspace:*
         version: link:packages/tsconfig
@@ -36,6 +42,15 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.3.2
         version: 3.3.2(react-hook-form@7.49.2)
+      '@knighthacks/api':
+        specifier: workspace:*
+        version: link:../../packages/api
+      '@knighthacks/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@knighthacks/tailwind-config':
+        specifier: workspace:*
+        version: link:../../packages/tailwind-config
       '@supabase/auth-ui-react':
         specifier: ^0.4.6
         version: 0.4.6(@supabase/supabase-js@2.39.0)
@@ -54,12 +69,6 @@ importers:
       '@trpc/react-query':
         specifier: 10.44.1
         version: 10.44.1(@tanstack/react-query@4.36.1)(@trpc/client@10.44.1)(@trpc/server@10.44.1)(react-dom@18.2.0)(react@18.2.0)
-      api:
-        specifier: workspace:*
-        version: link:../../packages/api
-      db:
-        specifier: workspace:*
-        version: link:../../packages/db
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -72,9 +81,6 @@ importers:
       superjson:
         specifier: 1.9.1
         version: 1.9.1
-      tailwind-config:
-        specifier: workspace:*
-        version: link:../../packages/tailwind-config
       wouter:
         specifier: ^2.12.1
         version: 2.12.1(react@18.2.0)
@@ -115,15 +121,6 @@ importers:
       postcss:
         specifier: ^8.4.32
         version: 8.4.32
-      prettier:
-        specifier: ^3.1.0
-        version: 3.1.1
-      prettier-plugin-organize-imports:
-        specifier: ^3.2.4
-        version: 3.2.4(prettier@3.1.1)(typescript@5.3.3)
-      prettier-plugin-tailwindcss:
-        specifier: ^0.5.9
-        version: 0.5.9(prettier-plugin-organize-imports@3.2.4)(prettier@3.1.1)
       tailwindcss:
         specifier: ^3.3.5
         version: 3.3.6
@@ -139,15 +136,15 @@ importers:
       '@hono/trpc-server':
         specifier: ^0.1.0
         version: 0.1.0(@trpc/server@10.44.1)(hono@3.11.4)
+      '@knighthacks/db':
+        specifier: workspace:*
+        version: link:../db
       '@trpc/server':
         specifier: ^10.44.1
         version: 10.44.1
       cors:
         specifier: ^2.8.5
         version: 2.8.5
-      db:
-        specifier: workspace:*
-        version: link:../db
       hono:
         specifier: ^3.11.4
         version: 3.11.4
@@ -193,7 +190,7 @@ importers:
         specifier: ^4.6.2
         version: 4.6.2
 
-  packages/eslint-config-custom:
+  packages/eslint-config:
     devDependencies:
       '@vercel/style-guide':
         specifier: ^5.0.0
@@ -215,6 +212,9 @@ importers:
 
   packages/ui:
     devDependencies:
+      '@knighthacks/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
       '@turbo/gen':
         specifier: ^1.10.12
         version: 1.11.1(@types/node@20.10.4)(typescript@5.3.3)
@@ -227,9 +227,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.0
         version: 18.2.17
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
       react:
         specifier: ^18.2.0
         version: 18.2.0
