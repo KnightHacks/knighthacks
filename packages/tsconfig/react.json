@@ -1,8 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "React Library",
+  "display": "Vite",
   "extends": "./base.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-  }
+    "lib": ["dom", "dom.iterable", "es2022"]
+  },
+  "exclude": ["node_modules"]
 }

@@ -5,6 +5,6 @@
       "@/*": ["src/*"]
     }
   },
-  "extends": "@knighthacks/tsconfig/vite.json",
+  "extends": "@knighthacks/tsconfig/react.json",
   "include": ["src"]
 }
