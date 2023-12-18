@@ -1,0 +1,7 @@
+{
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "semi": true,
+  "singleQuote": false,
+  "plugins": ["prettier-plugin-organize-imports", "prettier-plugin-tailwindcss"]
+}
