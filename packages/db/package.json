@@ -8,11 +8,14 @@
     "db:push": "drizzle-kit push:sqlite",
     "db:preview": "drizzle-kit studio --port 5555",
     "db:migrate": "tsx migrate.ts",
-    "db:generate": "drizzle-kit generate:sqlite --out ./drizzle --breakpoints --schema=./schemas/schema.ts"
+    "db:generate": "drizzle-kit generate:sqlite --out ./drizzle --breakpoints --schema=./schemas/schema.ts",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "license": "MIT",
   "devDependencies": {
     "drizzle-kit": "^0.20.6",
+    "@knighthacks/eslint-config": "workspace:*",
+    "eslint": "^8.56.0",
     "tsup": "^8.0.1",
     "tsx": "^4.6.2"
   },

@@ -16,9 +16,6 @@
     "@hookform/resolvers": "^3.3.2",
     "@knighthacks/api": "workspace:*",
     "@knighthacks/db": "workspace:*",
-    "@knighthacks/eslint-config": "workspace:*",
-    "@knighthacks/tailwind-config": "workspace:*",
-    "@knighthacks/tsconfig": "workspace:*",
     "@supabase/auth-ui-react": "^0.4.6",
     "@supabase/auth-ui-shared": "^0.1.8",
     "@supabase/supabase-js": "^2.39.0",
@@ -34,6 +31,9 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
+    "@knighthacks/tailwind-config": "workspace:*",
+    "@knighthacks/eslint-config": "workspace:*",
+    "@knighthacks/tsconfig": "workspace:*",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react-swc": "^3.5.0",
