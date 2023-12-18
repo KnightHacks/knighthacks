@@ -1,9 +1,9 @@
-import { useSession } from "@/lib/hooks/useSession";
+import { useSessionStore } from "@/lib/stores/session-store";
 import { supabase } from "@/lib/supabase";
 import { Redirect } from "wouter";
 
 export function SignIn() {
-  const { session } = useSession();
+  const { session } = useSessionStore();
 
   if (session) {
     return <Redirect to="/" />;

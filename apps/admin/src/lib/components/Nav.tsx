@@ -1,9 +1,9 @@
 import { Link } from "wouter";
 import { supabase } from "../supabase";
-import { useSession } from "../hooks/useSession";
+import { useSessionStore } from "../stores/session-store";
 
 export function Nav() {
-  const { session } = useSession();
+  const { session } = useSessionStore();
 
   return (
     <div className="m-4">

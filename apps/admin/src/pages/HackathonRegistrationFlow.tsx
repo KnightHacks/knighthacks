@@ -1,23 +1,22 @@
-import { useSession } from "@/lib/hooks/useSession";
+import { useSessionStore } from "@/lib/stores/session-store";
+import { supabase } from "@/lib/supabase";
 import { trpc } from "@/lib/trpc";
-import { insertUserSchema } from "db";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { supabase } from "@/lib/supabase";
-import { Session as SupabaseSession } from "@supabase/supabase-js";
+import { insertUserSchema } from "db";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 export function HackathonRegistrationFlow() {
   const { data: currentUser } = trpc.users.getCurrentUser.useQuery();
-  const { session } = useSession();
+  const { session } = useSessionStore();
 
   if (!session) {
     return <SignInWithGithub />;
   }
 
   if (session && !currentUser) {
-    return <UserForm session={session} />;
+    return <UserForm accessToken={session.access_token} />;
   }
 
   return (
@@ -45,22 +44,14 @@ const userRegistrationSchema = insertUserSchema
   .extend({
     // On the client, we want to accept a FileList object
     // On the server, we want to accept a string, which will be the key of the uploaded file
-    resume: z.instanceof(FileList).refine(
-      (files) => {
-        if (files.length === 0) return true;
-        return files[0].type === "application/pdf";
-      },
-      {
-        message: "Resume must be a PDF",
-      }
-    ),
+    resume: z.instanceof(FileList).transform((fileList) => fileList[0]),
   })
   // These fields will be filled in by the current session
   .omit({ email: true, oauthProvider: true, oauthUserId: true });
 
 type UserRegistrationSchema = z.infer<typeof userRegistrationSchema>;
 
-function UserForm({ session }: { session: SupabaseSession }) {
+function UserForm({ accessToken }: { accessToken: string }) {
   const {
     register,
     handleSubmit,
@@ -69,22 +60,21 @@ function UserForm({ session }: { session: SupabaseSession }) {
     resolver: zodResolver(userRegistrationSchema),
   });
 
-  console.log(errors);
   const { mutate, error } = trpc.users.register.useMutation();
 
   const onSubmit: SubmitHandler<UserRegistrationSchema> = async (data) => {
     let resume: string | null = null;
-    if (data.resume.length === 1) {
+    if (data.resume) {
       // Upload resume
       const formData = new FormData();
-      formData.append("resume", data.resume[0]);
+      formData.append("resume", data.resume);
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/resume/upload/${data.resume[0].name}`,
+        `${import.meta.env.VITE_API_URL}/resume/upload/${data.resume.name}`,
         {
           method: "PUT",
           body: formData,
           headers: {
-            Authorization: `Bearer ${session.access_token}`,
+            Authorization: `Bearer ${accessToken}}`,
           },
         }
       );
@@ -101,9 +91,6 @@ function UserForm({ session }: { session: SupabaseSession }) {
     mutate({
       ...data,
       resume,
-      email: session.user.email!,
-      oauthProvider: "github",
-      oauthUserId: session.user.id,
     });
   };
 
