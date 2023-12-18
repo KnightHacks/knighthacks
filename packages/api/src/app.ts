@@ -2,9 +2,9 @@ import { Hono } from "hono";
 import { trpcServer } from "@hono/trpc-server";
 import { appRouter } from "./routers";
 import { cors } from "hono/cors";
-import { createContext } from "./context";
+import { createTRPCContextFromHonoContext } from "./context";
 import { type R2Bucket } from "@cloudflare/workers-types";
-import { verifyAccess } from "./middlewares/verify-access";
+import { verify, jwt } from "hono/jwt";
 
 export type Bindings = {
   TURSO_URL: string;
@@ -15,6 +15,10 @@ export type Bindings = {
 
 const app = new Hono<{ Bindings: Bindings }>();
 
+app.get("/", (c) => {
+  return c.text("Hello world");
+});
+
 app.use(
   "*",
   cors({
@@ -23,22 +27,38 @@ app.use(
   })
 );
 
-app.get("/", (c) => {
-  return c.text("Hello world");
+// Get user session from authorization header and pass it to TRPC
+app.use("/trpc/*", async (c, next) => {
+  const authorization = c.req.header("authorization");
+
+  const token = authorization?.split(" ")[1];
+  if (!token) {
+    return await next();
+  }
+
+  const decoded = await verify(token, c.env.SUPABASE_JWT_SECRET);
+  if (!decoded) {
+    return await next();
+  }
+
+  c.set("jwtPayload", decoded);
+  await next();
 });
 
 app.use("/trpc/*", async (c, next) => {
-  const middleware = trpcServer({
+  const trpcMiddleware = trpcServer({
     router: appRouter,
     onError({ error }) {
       console.error(error);
     },
-    createContext: createContext(c.env),
+    createContext: createTRPCContextFromHonoContext(c),
   });
-  return await middleware(c, next);
+  return await trpcMiddleware(c, next);
 });
 
-app.use("/resume/*", verifyAccess);
+app.use("/resume/*", (c, next) => {
+  return jwt({ secret: c.env.SUPABASE_JWT_SECRET })(c, next);
+});
 
 // Resume upload
 app.put("/resume/upload/:key", async (c) => {
