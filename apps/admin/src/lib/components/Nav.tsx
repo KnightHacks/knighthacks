@@ -1,6 +1,6 @@
 import { Link } from "wouter";
-import { supabase } from "../supabase";
 import { useSessionStore } from "../stores/session-store";
+import { supabase } from "../supabase";
 
 export function Nav() {
   const { session } = useSessionStore();

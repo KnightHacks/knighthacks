@@ -2,17 +2,17 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import { useEffect, useState } from "react";
 import superjson from "superjson";
-import { trpc } from "./lib/trpc.ts";
 import { Route, Switch } from "wouter";
-import { Hello } from "./pages/Hello";
-import { Overview } from "./pages/Overview";
-import { Users } from "./pages/Users";
-import { SignIn } from "./pages/SignIn";
 import { ProtectedRoute } from "./lib/components/ProtectedRoute";
 import { WithNav } from "./lib/components/WithNav";
-import { HackathonRegistrationFlow } from "./pages/HackathonRegistrationFlow";
-import { supabase } from "./lib/supabase.ts";
 import { useSessionStore } from "./lib/stores/session-store.ts";
+import { supabase } from "./lib/supabase.ts";
+import { trpc } from "./lib/trpc.ts";
+import { HackathonRegistrationFlow } from "./pages/HackathonRegistrationFlow";
+import { Hello } from "./pages/Hello";
+import { Overview } from "./pages/Overview";
+import { SignIn } from "./pages/SignIn";
+import { Users } from "./pages/Users";
 
 export function App() {
   const { session, setSession } = useSessionStore();
