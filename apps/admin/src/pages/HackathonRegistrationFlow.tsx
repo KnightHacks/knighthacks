@@ -3,7 +3,7 @@ import { supabase } from "@/lib/supabase";
 import { trpc } from "@/lib/trpc";
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { insertUserSchema } from "db";
+import { insertUserSchema } from "@knighthacks/db";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 

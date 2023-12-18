@@ -15,7 +15,7 @@ This repository is a monorepo.
 - We use [Vercel](https://vercel.com) for hosting.
 - We use [Prettier](https://prettier.io) for code formatting.
 - We use [ESLint](https://eslint.org) for linting.
-This repository is structured as follows:
+  This repository is structured as follows:
 
 ```
 apps
@@ -82,6 +82,3 @@ All lowercase with no period at the end. Use present tense. Something like the f
 ```bash
 git commit -m "add new feature"
 ```
-
-
-

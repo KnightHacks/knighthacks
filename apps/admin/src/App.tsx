@@ -9,7 +9,7 @@ import { useSessionStore } from "./lib/stores/session-store.ts";
 import { supabase } from "./lib/supabase.ts";
 import { trpc } from "./lib/trpc.ts";
 import { HackathonRegistrationFlow } from "./pages/HackathonRegistrationFlow";
-import { Hello } from "./pages/Hello";
+import { Hello } from "./pages/Hello.tsx";
 import { Overview } from "./pages/Overview";
 import { SignIn } from "./pages/SignIn";
 import { Users } from "./pages/Users";
@@ -88,7 +88,7 @@ function Router() {
       <Route path="/signin" component={SignIn} />
       <Route
         path="/hackathon-registration-flow"
-        component={HackathonRegistrationFlow}
+        component={WithNav(HackathonRegistrationFlow)}
       />
       <Route>404, Not Found!</Route>
     </Switch>

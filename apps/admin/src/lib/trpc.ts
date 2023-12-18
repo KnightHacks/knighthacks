@@ -1,4 +1,4 @@
+import { AppRouter } from "@knighthacks/api";
 import { createTRPCReact } from "@trpc/react-query";
-import { AppRouter } from "api";
 
 export const trpc = createTRPCReact<AppRouter>();

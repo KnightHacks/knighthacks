@@ -1,11 +1,6 @@
-import { insertUserSchema, users } from "db";
-import {
-  adminProcedure,
-  authenticatedProcedure,
-  router,
-} from "../trpc";
-import { eq } from "db";
+import { eq, insertUserSchema, users } from "@knighthacks/db";
 import { TRPCError } from "@trpc/server";
+import { adminProcedure, authenticatedProcedure, router } from "../trpc";
 
 export const usersRouter = router({
   getAll: adminProcedure.query(async ({ ctx }) => {
@@ -35,7 +30,7 @@ export const usersRouter = router({
           message: "User already exists",
         });
       }
-      
+
       return await ctx.db.insert(users).values({
         ...input,
         email,
