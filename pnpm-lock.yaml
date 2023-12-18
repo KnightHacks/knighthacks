@@ -12,6 +12,9 @@ importers:
         specifier: ^7.3.0
         version: 7.3.0
     devDependencies:
+      '@knighthacks/tsconfig':
+        specifier: workspace:*
+        version: link:packages/tsconfig
       eslint:
         specifier: ^8.54.0
         version: 8.55.0
@@ -27,9 +30,6 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.5.9
         version: 0.5.9(prettier-plugin-organize-imports@3.2.4)(prettier@3.1.1)
-      tsconfig:
-        specifier: workspace:*
-        version: link:packages/tsconfig
       turbo:
         specifier: latest
         version: 1.11.1
@@ -54,6 +54,9 @@ importers:
       '@knighthacks/tailwind-config':
         specifier: workspace:*
         version: link:../../packages/tailwind-config
+      '@knighthacks/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
       '@supabase/auth-ui-react':
         specifier: ^0.4.6
         version: 0.4.6(@supabase/supabase-js@2.39.0)
@@ -218,6 +221,9 @@ importers:
       '@knighthacks/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@knighthacks/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@turbo/gen':
         specifier: ^1.10.12
         version: 1.11.1(@types/node@20.10.4)(typescript@5.3.3)
@@ -233,9 +239,6 @@ importers:
       react:
         specifier: ^18.2.0
         version: 18.2.0
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
       typescript:
         specifier: ^5.2.2
         version: 5.3.3
