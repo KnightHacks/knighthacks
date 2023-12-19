@@ -3,7 +3,7 @@
   "scripts": {
     "with-env": "dotenv -e .env --",
     "build": "pnpm with-env turbo run build",
-    "dev": "pnpm with-env turbo run dev",
+    "dev": "pnpm with-env turbo run dev --parallel",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db:push": "pnpm with-env turbo run db:push",
