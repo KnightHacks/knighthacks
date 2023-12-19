@@ -1,4 +1,4 @@
-import { Navigation } from "./navigation";
+import { Navigation } from './navigation';
 
 export function WithNav(component: () => JSX.Element) {
   return () => {

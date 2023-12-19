@@ -1,6 +1,6 @@
-import { TRPCError, initTRPC } from "@trpc/server";
-import superjson from "superjson";
-import { type TRPCContext } from "./context";
+import { TRPCError, initTRPC } from '@trpc/server';
+import superjson from 'superjson';
+import { type TRPCContext } from './context';
 
 const t = initTRPC.context<TRPCContext>().create({
   transformer: superjson,
@@ -13,7 +13,7 @@ const isAuthenticated = middleware(async (opts) => {
   const session = opts.ctx.session;
 
   if (!session) {
-    throw new TRPCError({ code: "UNAUTHORIZED", message: "Not authenticated" });
+    throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Not authenticated' });
   }
 
   return opts.next({
@@ -29,8 +29,8 @@ const isAdmin = isAuthenticated.unstable_pipe((opts) => {
   const email = session.email;
 
   // If email doesn't end with @knighthacks.org, then it's not an admin
-  if (!email.endsWith("@knighthacks.org")) {
-    throw new TRPCError({ code: "UNAUTHORIZED", message: "Not an admin" });
+  if (!email.endsWith('@knighthacks.org')) {
+    throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Not an admin' });
   }
 
   return opts.next(opts);

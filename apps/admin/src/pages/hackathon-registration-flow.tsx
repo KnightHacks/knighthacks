@@ -1,11 +1,11 @@
-import { useSessionStore } from "@/lib/stores/session-store";
-import { supabase } from "@/lib/supabase";
-import { trpc } from "@/lib/trpc";
-import { ErrorMessage } from "@hookform/error-message";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { insertUserSchema } from "@knighthacks/db";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { z } from "zod";
+import { useSessionStore } from '@/lib/stores/session-store';
+import { supabase } from '@/lib/supabase';
+import { trpc } from '@/lib/trpc';
+import { ErrorMessage } from '@hookform/error-message';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { insertUserSchema } from '@knighthacks/db';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { z } from 'zod';
 
 export function HackathonRegistrationFlow() {
   const { data: currentUser } = trpc.users.getCurrentUser.useQuery();
@@ -31,7 +31,7 @@ function SignInWithGithub() {
     <button
       onClick={() =>
         supabase.auth.signInWithOAuth({
-          provider: "github",
+          provider: 'github',
         })
       }
     >
@@ -67,20 +67,20 @@ function UserForm({ accessToken }: { accessToken: string }) {
     if (data.resume) {
       // Upload resume
       const formData = new FormData();
-      formData.append("resume", data.resume);
+      formData.append('resume', data.resume);
       const res = await fetch(
         `${import.meta.env.VITE_API_URL}/resume/upload/${data.resume.name}`,
         {
-          method: "PUT",
+          method: 'PUT',
           body: formData,
           headers: {
             Authorization: `Bearer ${accessToken}}`,
           },
-        }
+        },
       );
 
       if (!res.ok) {
-        alert("Error uploading resume");
+        alert('Error uploading resume');
         return;
       }
 
@@ -100,29 +100,29 @@ function UserForm({ accessToken }: { accessToken: string }) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <label className="block">
         Is Member
-        <input className="block" type="checkbox" {...register("isMember")} />
+        <input className="block" type="checkbox" {...register('isMember')} />
         <ErrorMessage errors={errors} name="isMember" />
       </label>
       <label className="block">
         First Name
-        <input className="block" type="text" {...register("firstName")} />
+        <input className="block" type="text" {...register('firstName')} />
         <ErrorMessage errors={errors} name="firstName" />
       </label>
       <label className="block">
         Last Name
-        <input className="block" type="text" {...register("lastName")} />
+        <input className="block" type="text" {...register('lastName')} />
         <ErrorMessage errors={errors} name="lastName" />
       </label>
       <label>
         Phone
-        <input className="block" type="tel" {...register("phone")} />
+        <input className="block" type="tel" {...register('phone')} />
       </label>
       <label className="block">
         Age
         <input
           className="block"
           type="number"
-          {...register("age", {
+          {...register('age', {
             valueAsNumber: true,
           })}
         />
@@ -130,67 +130,67 @@ function UserForm({ accessToken }: { accessToken: string }) {
       </label>
       <label className="block">
         Shirt Size
-        <input className="block" type="text" {...register("shirtSize")} />
+        <input className="block" type="text" {...register('shirtSize')} />
         <ErrorMessage errors={errors} name="shirtSize" />
       </label>
       <label className="block">
         Major
-        <input className="block" type="text" {...register("major")} />
+        <input className="block" type="text" {...register('major')} />
         <ErrorMessage errors={errors} name="major" />
       </label>
       <label className="block">
         School
-        <input className="block" type="text" {...register("school")} />
+        <input className="block" type="text" {...register('school')} />
         <ErrorMessage errors={errors} name="school" />
       </label>
       <label className="block">
         Graduation Year
-        <input className="block" type="text" {...register("gradYear")} />
+        <input className="block" type="text" {...register('gradYear')} />
         <ErrorMessage errors={errors} name="gradYear" />
       </label>
       <label className="block">
         Address 1
-        <input className="block" type="text" {...register("address1")} />
+        <input className="block" type="text" {...register('address1')} />
         <ErrorMessage errors={errors} name="address1" />
       </label>
       <label className="block">
         Address 2
-        <input className="block" type="text" {...register("address2")} />
+        <input className="block" type="text" {...register('address2')} />
         <ErrorMessage errors={errors} name="address2" />
       </label>
       <label className="block">
         City
-        <input className="block" type="text" {...register("city")} />
+        <input className="block" type="text" {...register('city')} />
         <ErrorMessage errors={errors} name="city" />
       </label>
       <label className="block">
         State
-        <input className="block" type="text" {...register("state")} />
+        <input className="block" type="text" {...register('state')} />
         <ErrorMessage errors={errors} name="state" />
       </label>
       <label className="block">
         Zip
-        <input className="block" type="text" {...register("zip")} />
+        <input className="block" type="text" {...register('zip')} />
         <ErrorMessage errors={errors} name="zip" />
       </label>
       <label className="block">
         Country
-        <input className="block" type="text" {...register("country")} />
+        <input className="block" type="text" {...register('country')} />
         <ErrorMessage errors={errors} name="country" />
       </label>
       <label className="block">
         Github
-        <input className="block" type="text" {...register("github")} />
+        <input className="block" type="text" {...register('github')} />
         <ErrorMessage errors={errors} name="github" />
       </label>
       <label className="block">
         Personal Website
-        <input className="block" type="text" {...register("personalWebsite")} />
+        <input className="block" type="text" {...register('personalWebsite')} />
         <ErrorMessage errors={errors} name="personalWebsite" />
       </label>
       <label className="block">
         LinkedIn
-        <input className="block" type="text" {...register("linkedin")} />
+        <input className="block" type="text" {...register('linkedin')} />
         <ErrorMessage errors={errors} name="personalWebsite" />
       </label>
       <label className="block">
@@ -199,7 +199,7 @@ function UserForm({ accessToken }: { accessToken: string }) {
           className="block"
           type="file"
           accept="application/pdf"
-          {...register("resume")}
+          {...register('resume')}
         />
         <ErrorMessage errors={errors} name="resume" />
       </label>

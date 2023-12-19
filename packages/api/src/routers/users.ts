@@ -1,6 +1,6 @@
-import { eq, insertUserSchema, users } from "@knighthacks/db";
-import { TRPCError } from "@trpc/server";
-import { adminProcedure, authenticatedProcedure, router } from "../trpc";
+import { eq, insertUserSchema, users } from '@knighthacks/db';
+import { TRPCError } from '@trpc/server';
+import { adminProcedure, authenticatedProcedure, router } from '../trpc';
 
 export const usersRouter = router({
   getAll: adminProcedure.query(async ({ ctx }) => {
@@ -12,7 +12,7 @@ export const usersRouter = router({
         email: true,
         oauthProvider: true,
         oauthUserId: true,
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const email = ctx.session.email;
@@ -26,8 +26,8 @@ export const usersRouter = router({
 
       if (user) {
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "User already exists",
+          code: 'BAD_REQUEST',
+          message: 'User already exists',
         });
       }
 

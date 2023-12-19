@@ -1,5 +1,5 @@
-import config from "@knighthacks/tailwind-config";
-import { type Config } from "tailwindcss";
+import config from '@knighthacks/tailwind-config';
+import { type Config } from 'tailwindcss';
 
 export default {
   ...config,
