@@ -1,3 +1,1 @@
-module.exports = {
-  extends: ["@knighthacks/eslint-config"],
-};
+module.exports = {};
