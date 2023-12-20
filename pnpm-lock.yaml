@@ -133,6 +133,9 @@ importers:
       '@knighthacks/db':
         specifier: workspace:*
         version: link:../db
+      '@supabase/supabase-js':
+        specifier: ^2.39.0
+        version: 2.39.0
       '@trpc/server':
         specifier: ^10.44.1
         version: 10.44.1
