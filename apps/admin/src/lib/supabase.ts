@@ -5,8 +5,6 @@ import { createClient } from "@supabase/supabase-js";
   It is not type safe. Instead, use the trpc client.
 */
 export const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_PROJECT_URL,
-  import.meta.env.VITE_SUPABASE_PROJECT_API_KEY,
+  import.meta.env.VITE_SUPABASE_PROJECT_URL as string,
+  import.meta.env.VITE_SUPABASE_PROJECT_API_KEY as string,
 );
-
-supabase.auth.getUser();
