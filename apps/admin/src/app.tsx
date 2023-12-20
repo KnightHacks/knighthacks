@@ -1,30 +1,37 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { httpBatchLink } from '@trpc/client';
-import { useEffect, useState } from 'react';
-import superjson from 'superjson';
-import { Route, Switch } from 'wouter';
-import { ProtectedRoute } from './lib/components/protected-route';
-import { WithNav } from './lib/components/with-nav';
-import { useSessionStore } from './lib/stores/session-store';
-import { supabase } from './lib/supabase';
-import { trpc } from './lib/trpc';
-import { HackathonRegistrationFlow } from './pages/hackathon-registration-flow';
-import { Hello } from './pages/hello';
-import { Overview } from './pages/overview';
-import { SignIn } from './pages/sign-in';
-import { Users } from './pages/users';
+import { useEffect, useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { httpBatchLink } from "@trpc/client";
+import superjson from "superjson";
+import { Route, Switch } from "wouter";
+
+import { ProtectedRoute } from "./lib/components/protected-route";
+import { WithNav } from "./lib/components/with-nav";
+import { useSessionStore } from "./lib/stores/session-store";
+import { supabase } from "./lib/supabase";
+import { trpc } from "./lib/trpc";
+import { HackathonRegistrationFlow } from "./pages/hackathon-registration-flow";
+import { Hello } from "./pages/hello";
+import { Overview } from "./pages/overview";
+import { SignIn } from "./pages/sign-in";
+import { Users } from "./pages/users";
 
 export function App() {
   const { session, setSession } = useSessionStore();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        setSession(session);
-      }
-      setLoading(false);
-    });
+    supabase.auth
+      .getSession()
+      .then(({ data: { session } }) => {
+        if (session) {
+          setSession(session);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
 
     const {
       data: { subscription },

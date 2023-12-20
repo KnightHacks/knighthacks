@@ -1,13 +1,15 @@
 {
-  "name": "admin",
+  "name": "@knighthacks/admin",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "tsc && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "typecheck": "tsc --noEmit"
   },
   "license": "MIT",
   "dependencies": {
@@ -31,9 +33,10 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
-    "@knighthacks/tailwind-config": "workspace:*",
     "@knighthacks/eslint-config": "workspace:*",
+    "@knighthacks/prettier-config": "workspace:*",
     "@knighthacks/tsconfig": "workspace:*",
+    "@knighthacks/tailwind-config": "workspace:*",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react-swc": "^3.5.0",
@@ -43,5 +46,13 @@
     "tailwindcss": "^3.3.5",
     "typescript": "^5.2.2",
     "vite": "^5.0.0"
-  }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@knighthacks/eslint-config/base",
+      "@knighthacks/eslint-config/react"
+    ]
+  },
+  "prettier": "@knighthacks/prettier-config"
 }

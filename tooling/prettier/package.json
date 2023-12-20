@@ -1,7 +1,7 @@
 {
-  "name": "@acme/prettier-config",
+  "name": "@knighthacks/prettier-config",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.0.0",
   "type": "module",
   "exports": {
     ".": "./index.js"
@@ -17,8 +17,8 @@
     "prettier-plugin-tailwindcss": "^0.5.9"
   },
   "devDependencies": {
-    "@acme/tsconfig": "workspace:^0.1.0",
+    "@knighthacks/tsconfig": "workspace:*",
     "typescript": "^5.3.3"
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@knighthacks/prettier-config"
 }

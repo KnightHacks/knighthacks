@@ -1,5 +1,5 @@
-import { type Session } from '@supabase/supabase-js';
-import { create } from 'zustand';
+import { type Session } from "@supabase/supabase-js";
+import { create } from "zustand";
 
 interface SessionStore {
   session?: Session;

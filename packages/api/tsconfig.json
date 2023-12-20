@@ -1,4 +1,10 @@
 {
-  "extends": "@knighthacks/tsconfig/library.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  },
+  "extends": "@knighthacks/tsconfig/base.json",
   "include": ["src"]
 }

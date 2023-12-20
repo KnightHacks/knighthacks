@@ -4,5 +4,5 @@
 
 body {
   font-family: "Inter Variable", sans-serif;
-  @apply bg-neutral-950 text-neutral-300 text-sm;
+  @apply bg-neutral-950 text-sm text-neutral-300;
 }

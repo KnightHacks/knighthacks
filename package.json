@@ -1,31 +1,33 @@
 {
+  "name": "knight-hacks",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "with-env": "dotenv -e .env --",
     "build": "pnpm with-env turbo run build",
-    "dev": "pnpm with-env turbo run dev --parallel",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "db:push": "pnpm with-env turbo run db:push",
+    "clean": "git clean -xdf node_modules",
+    "clean:workspaces": "turbo clean",
     "db:preview": "pnpm with-env turbo run db:preview",
-    "db:migrate": "pnpm with-env turbo run db:migrate",
-    "prepare": "husky install"
+    "db:push": "pnpm with-env turbo run db:push",
+    "dev": "pnpm with-env turbo run dev --parallel",
+    "format": "turbo format --continue -- --cache --cache-location node_modules/.cache/.prettiercache",
+    "format:fix": "turbo format --continue -- --write --cache --cache-location node_modules/.cache/.prettiercache",
+    "lint": "turbo lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
+    "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
+    "prepare": "husky install",
+    "typecheck": "turbo typecheck"
   },
-  "prettier": "@vercel/style-guide/prettier",
+  "dependencies": {
+    "dotenv-cli": "^7.3.0"
+  },
   "devDependencies": {
     "@knighthacks/tsconfig": "workspace:*",
-    "@vercel/style-guide": "^5.1.0",
+    "@knighthacks/prettier-config": "workspace:*",
     "eslint": "^8.54.0",
     "husky": "^8.0.0",
     "prettier": "^3.1.0",
-    "prettier-plugin-organize-imports": "^3.2.4",
-    "prettier-plugin-tailwindcss": "^0.5.9",
     "turbo": "latest"
   },
-  "license": "MIT",
   "packageManager": "pnpm@8.9.0",
-  "name": "knighthacks",
-  "dependencies": {
-    "dotenv-cli": "^7.3.0"
-  }
+  "prettier": "@knighthacks/prettier-config"
 }

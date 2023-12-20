@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
 
 /*
   Do not use this client to make database calls directly.
@@ -8,3 +8,5 @@ export const supabase = createClient(
   import.meta.env.VITE_SUPABASE_PROJECT_URL,
   import.meta.env.VITE_SUPABASE_PROJECT_API_KEY,
 );
+
+supabase.auth.getUser();

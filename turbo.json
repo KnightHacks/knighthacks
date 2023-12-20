@@ -17,7 +17,13 @@
     "db:preview": {
       "cache": false
     },
-    "db:migrate": {
+    "clean": {
+      "cache": false
+    },
+    "typecheck": {
+      "cache": false
+    },
+    "format": {
       "cache": false
     }
   }

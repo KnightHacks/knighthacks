@@ -1,6 +1,8 @@
-import config from '@knighthacks/tailwind-config';
-import { type Config } from 'tailwindcss';
+import { Config } from "tailwindcss";
+
+import baseConfig from "@knighthacks/tailwind-config";
 
 export default {
-  ...config,
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  presets: [baseConfig],
 } satisfies Config;

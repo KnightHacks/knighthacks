@@ -1,6 +1,7 @@
-import { useSessionStore } from '@/lib/stores/session-store';
-import { supabase } from '@/lib/supabase';
-import { Redirect } from 'wouter';
+import { Redirect } from "wouter";
+
+import { useSessionStore } from "~/lib/stores/session-store";
+import { supabase } from "~/lib/supabase";
 
 export function SignIn() {
   const { session } = useSessionStore();
@@ -13,9 +14,9 @@ export function SignIn() {
     <button
       onClick={() => {
         supabase.auth.signInWithOAuth({
-          provider: 'google',
+          provider: "google",
           options: {
-            redirectTo: '/',
+            redirectTo: "/",
           },
         });
       }}
