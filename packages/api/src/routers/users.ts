@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import { eq, insertUserSchema, users } from "@knighthacks/db";
+import { eq, insertUserRequestSchema, users } from "@knighthacks/db";
 
 import { adminProcedure, authenticatedProcedure, router } from "../trpc";
 
@@ -10,13 +10,7 @@ export const usersRouter = router({
     return ctx.db.query.users.findMany();
   }),
   register: authenticatedProcedure
-    .input(
-      insertUserSchema.omit({
-        email: true,
-        oauthProvider: true,
-        oauthUserId: true,
-      }),
-    )
+    .input(insertUserRequestSchema)
     .mutation(async ({ ctx, input }) => {
       const email = ctx.user.email!;
       const oauthProvider = ctx.user.app_metadata.provider as
@@ -44,9 +38,11 @@ export const usersRouter = router({
       });
     }),
   getCurrentUser: authenticatedProcedure.query(async ({ ctx }) => {
-    return ctx.db.query.users.findFirst({
+    const user = await ctx.db.query.users.findFirst({
       where: eq(users.email, ctx.user.email!),
     });
+
+    return user ?? null;
   }),
   deleteUser: adminProcedure
     .input(z.object({ id: z.number() }))
