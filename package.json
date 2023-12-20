@@ -14,7 +14,6 @@
     "format:fix": "turbo format --continue -- --write --cache --cache-location node_modules/.cache/.prettiercache",
     "lint": "turbo lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
-    "prepare": "husky install",
     "typecheck": "turbo typecheck"
   },
   "dependencies": {
@@ -24,7 +23,6 @@
     "@knighthacks/tsconfig": "workspace:*",
     "@knighthacks/prettier-config": "workspace:*",
     "eslint": "^8.54.0",
-    "husky": "^8.0.0",
     "prettier": "^3.1.0",
     "turbo": "latest"
   },
