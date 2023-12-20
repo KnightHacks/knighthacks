@@ -18,12 +18,11 @@ export const usersRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const email = ctx.session.email as string;
-      const appMetadata = ctx.session.app_metadata as {
-        provider: string;
-      };
-      const oauthProvider = appMetadata.provider as "github" | "google";
-      const oauthUserId = ctx.session.user_id as string;
+      const email = ctx.user.email!;
+      const oauthProvider = ctx.user.app_metadata.provider as
+        | "github"
+        | "google";
+      const oauthUserId = ctx.user.id;
 
       // If the user already exists, throw an error
       const user = await ctx.db.query.users.findFirst({
@@ -46,7 +45,7 @@ export const usersRouter = router({
     }),
   getCurrentUser: authenticatedProcedure.query(async ({ ctx }) => {
     return ctx.db.query.users.findFirst({
-      where: eq(users.email, ctx.session.email as string),
+      where: eq(users.email, ctx.user.email!),
     });
   }),
   deleteUser: adminProcedure

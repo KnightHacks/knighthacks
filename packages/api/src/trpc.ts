@@ -11,23 +11,23 @@ export const router = t.router;
 export const middleware = t.middleware;
 
 const isAuthenticated = middleware(async (opts) => {
-  const session = opts.ctx.session;
+  const user = opts.ctx.user;
 
-  if (!session) {
+  if (!user) {
     throw new TRPCError({ code: "UNAUTHORIZED", message: "Not authenticated" });
   }
 
   return opts.next({
     ctx: {
       ...opts.ctx,
-      session,
+      user,
     },
   });
 });
 
 const isAdmin = isAuthenticated.unstable_pipe((opts) => {
-  const session = opts.ctx.session;
-  const email = session.email as string;
+  const user = opts.ctx.user;
+  const email = user.email!;
 
   // If email doesn't end with @knighthacks.org, then it's not an admin
   if (!email.endsWith("@knighthacks.org")) {
