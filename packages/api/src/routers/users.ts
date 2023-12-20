@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+import { z } from "zod";
 
 import { eq, insertUserSchema, users } from "@knighthacks/db";
 
@@ -21,9 +22,8 @@ export const usersRouter = router({
       const appMetadata = ctx.session.app_metadata as {
         provider: string;
       };
-
-      const oauthProvider = appMetadata.provider;
-      const oauthUserId = ctx.session.sub;
+      const oauthProvider = appMetadata.provider as "github" | "google";
+      const oauthUserId = ctx.session.user_id as string;
 
       // If the user already exists, throw an error
       const user = await ctx.db.query.users.findFirst({
@@ -49,4 +49,9 @@ export const usersRouter = router({
       where: eq(users.email, ctx.session.email as string),
     });
   }),
+  deleteUser: adminProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.delete(users).where(eq(users.id, input.id));
+    }),
 });
