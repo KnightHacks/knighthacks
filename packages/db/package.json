@@ -8,6 +8,7 @@
     "db:push": "drizzle-kit push:sqlite",
     "db:preview": "drizzle-kit studio --port 5555",
     "db:generate": "drizzle-kit generate:sqlite --out ./drizzle --breakpoints --schema=./schemas/schema.ts",
+    "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
   },
