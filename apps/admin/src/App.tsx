@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { httpBatchLink } from "@trpc/client";
-import superjson from "superjson";
 import { Route, Switch } from "wouter";
 
 import { ProtectedRoute } from "./lib/components/protected-route";
+import { TRPCProvider } from "./lib/components/trpc-provider";
 import { WithNav } from "./lib/components/with-nav";
 import { useSessionStore } from "./lib/stores/session-store";
 import { supabase } from "./lib/supabase";
-import { trpc } from "./lib/trpc";
 import { HackathonRegistrationFlow } from "./pages/hackathon-registration-flow";
 import { Hello } from "./pages/hello";
 import { Overview } from "./pages/overview";
@@ -50,41 +47,6 @@ export function App() {
     <TRPCProvider accessToken={session?.access_token}>
       <Router />
     </TRPCProvider>
-  );
-}
-
-function TRPCProvider({
-  children,
-  accessToken,
-}: {
-  children: React.ReactNode;
-  accessToken?: string;
-}) {
-  const [queryClient] = useState(() => new QueryClient());
-  const [trpcClient] = useState(() =>
-    trpc.createClient({
-      transformer: superjson,
-      links: [
-        httpBatchLink({
-          url: `${import.meta.env.VITE_API_URL}/trpc`,
-          headers() {
-            if (!accessToken) {
-              return {};
-            }
-
-            return {
-              Authorization: `Bearer ${accessToken}`,
-            };
-          },
-        }),
-      ],
-    }),
-  );
-
-  return (
-    <trpc.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </trpc.Provider>
   );
 }
 
