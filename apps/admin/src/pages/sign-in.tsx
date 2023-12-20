@@ -13,7 +13,7 @@ export function SignIn() {
   return (
     <button
       onClick={() => {
-        supabase.auth.signInWithOAuth({
+        void supabase.auth.signInWithOAuth({
           provider: "google",
           options: {
             redirectTo: "/",
