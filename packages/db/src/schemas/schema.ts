@@ -1,25 +1,25 @@
 import { relations } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { z } from "zod";
 
-import { majors } from "../consts/majors";
-import { schools } from "../consts/schools";
+import { gradYears, majors, schools, shirtSizes } from "../consts";
 
 export const users = sqliteTable("users", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  isMember: integer("is_member", { mode: "boolean" }), // Whether or not they are a dues paying member
+  isMember: integer("is_member", { mode: "boolean" }).default(false), // Whether or not they are a dues paying member
   email: text("email").notNull().unique(), // This will be from the oauth provider
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
   phone: text("phone").notNull().unique(),
   age: integer("age").notNull(),
   shirtSize: text("shirt_size", {
-    enum: ["SM", "MD", "LG", "XL", "XXL"],
+    enum: shirtSizes,
   }).notNull(),
   major: text("major", { enum: majors }).notNull(),
   school: text("school", { enum: schools }).notNull(),
   gradYear: text("grad_year", {
-    enum: ["2024", "2025", "2026", "2027", "2028", "other"],
+    enum: gradYears,
   }).notNull(),
   address1: text("address1").notNull(),
   address2: text("address2"),
@@ -124,6 +124,69 @@ export const selectHackathonSchema = createSelectSchema(hackathons);
 
 export const insertUserSchema = createInsertSchema(users);
 export const selectUserSchema = createSelectSchema(users);
+export const insertUserRequestSchema = createInsertSchema(users, {
+  firstName: (schema) =>
+    schema.firstName.min(1, {
+      message: "First name is required",
+    }),
+  lastName: (schema) =>
+    schema.lastName.min(1, {
+      message: "Last name is required",
+    }),
+  phone: (schema) =>
+    schema.phone
+      .min(1, {
+        message: "Phone number is required",
+      })
+      .regex(/^\d{10}$/, {
+        message: "Phone number must be 10 digits",
+      }),
+  age: (schema) =>
+    schema.age
+      .min(18, {
+        message: "You must be at least 18 years old",
+      })
+      .max(100, {
+        message: "Be for real right now",
+      }),
+  shirtSize: z.enum(shirtSizes, {
+    errorMap: () => ({ message: "Invalid shirt size" }),
+  }),
+  major: z.enum(majors, {
+    errorMap: () => ({ message: "Invalid major" }),
+  }),
+  school: z.enum(schools, {
+    errorMap: () => ({ message: "Invalid school" }),
+  }),
+  gradYear: z.enum(gradYears, {
+    errorMap: () => ({ message: "Invalid graduation year" }),
+  }),
+  address1: (schema) =>
+    schema.address1.min(1, {
+      message: "Address is required",
+    }),
+  city: (schema) =>
+    schema.city.min(1, {
+      message: "City is required",
+    }),
+  state: (schema) =>
+    schema.state.min(1, {
+      message: "State is required",
+    }),
+  zip: (schema) =>
+    schema.zip.min(1, {
+      message: "Zip code is required",
+    }),
+  country: (schema) =>
+    schema.country.min(1, {
+      message: "Country is required",
+    }),
+}).omit({
+  id: true,
+  email: true,
+  oauthProvider: true,
+  oauthUserId: true,
+});
 
 export const insertHackerSchema = createInsertSchema(hackers);
 export const selectHackerSchema = createSelectSchema(hackers);
