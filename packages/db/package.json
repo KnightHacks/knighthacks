@@ -27,7 +27,8 @@
     "@knighthacks/tsconfig": "workspace:*",
     "@libsql/client": "0.4.0-pre.5",
     "drizzle-orm": "^0.29.1",
-    "drizzle-zod": "^0.5.1"
+    "drizzle-zod": "^0.5.1",
+    "zod": "^3.22.4"
   },
   "eslintConfig": {
     "root": true,
