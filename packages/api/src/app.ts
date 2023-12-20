@@ -1,5 +1,4 @@
 import { trpcServer } from "@hono/trpc-server";
-import { createClient } from "@supabase/supabase-js";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 
@@ -23,26 +22,7 @@ app.use(
 );
 
 // Get user session from authorization header and pass it to TRPC
-app.use("/trpc/*", async (c, next) => {
-  const supabase = createClient(
-    c.env.SUPABASE_PROJECT_URL,
-    c.env.SUPABASE_PROJECT_API_KEY,
-  );
-  const authorization = c.req.header("authorization");
-
-  const token = authorization?.split(" ")[1];
-  if (!token) {
-    return next();
-  }
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser(token);
-
-  c.set("user", user);
-
-  await next();
-});
+app.use("/trpc/*", auth);
 
 app.use("/trpc/*", async (c, next) => {
   const trpcMiddleware = trpcServer({
