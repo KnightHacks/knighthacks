@@ -12,10 +12,12 @@ export function createTRPCContextFromHonoContext(c: HonoContext) {
      */
     const db = c.get("db");
     const auth = getAuth(c);
+    const clerk = c.get("clerk");
 
     return {
       ...opts,
       db,
+      clerk,
       user: auth?.sessionClaims,
       env: c.env,
     };
