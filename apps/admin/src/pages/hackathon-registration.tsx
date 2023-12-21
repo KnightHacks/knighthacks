@@ -11,10 +11,9 @@ import { insertHackerRequestSchema } from "@knighthacks/db";
 import { trpc } from "~/trpc";
 
 export function HackathonRegistration() {
-  const { data: currentUser, isLoading: isLoadingCurrentUser } =
-    trpc.users.getCurrentUser.useQuery();
+  const { data: currentUser, isLoading } = trpc.users.getCurrentUser.useQuery();
 
-  if (isLoadingCurrentUser) {
+  if (isLoading) {
     return <>Loading...</>;
   }
 
