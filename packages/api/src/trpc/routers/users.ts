@@ -1,6 +1,12 @@
 import { z } from "zod";
 
-import { eq, insertUserRequestSchema, users } from "@knighthacks/db";
+import {
+  asc,
+  eq,
+  hackathons,
+  insertUserRequestSchema,
+  users,
+} from "@knighthacks/db";
 
 import { router } from "../init";
 import { adminProcedure, authenticatedProcedure } from "../procedures";
@@ -24,9 +30,28 @@ export const usersRouter = router({
   getCurrentUser: authenticatedProcedure.query(async ({ ctx }) => {
     const user = await ctx.db.query.users.findFirst({
       where: eq(users.email, ctx.user.email),
+      with: { hackers: true },
     });
 
-    return user ?? null;
+    const currentHackathon = await ctx.db.query.hackathons.findFirst({
+      orderBy: [asc(hackathons.startDate)],
+    });
+
+    if (!user) return null;
+    if (!currentHackathon)
+      return {
+        ...user,
+        hasAppliedToCurrentHackathon: false,
+      };
+
+    const hasAppliedToCurrentHackathon = user.hackers.some(
+      (hacker) => hacker.hackathonId === currentHackathon.id,
+    );
+
+    return {
+      ...user,
+      hasAppliedToCurrentHackathon,
+    };
   }),
   deleteUser: adminProcedure
     .input(z.object({ id: z.string() }))
