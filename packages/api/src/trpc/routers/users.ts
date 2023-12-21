@@ -58,5 +58,17 @@ export const usersRouter = router({
     .mutation(async ({ ctx, input }) => {
       await ctx.clerk.users.deleteUser(input.id); // Delete the user from Clerk
       await ctx.db.delete(users).where(eq(users.clerkUserId, input.id)); // Delete the user from the database
+
+      await ctx.db.transaction(async (tx) => {
+        // If deleting the user from Clerk fails, rollback the transaction
+        try {
+          await ctx.clerk.users.deleteUser(input.id);
+        } catch {
+          tx.rollback();
+          return;
+        }
+        // Delete the user from the database
+        await tx.delete(users).where(eq(users.clerkUserId, input.id));
+      });
     }),
 });
