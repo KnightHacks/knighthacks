@@ -1,10 +1,10 @@
+import { clerkMiddleware } from "@hono/clerk-auth";
 import { trpcServer } from "@hono/trpc-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 
 import type { HonoConfig } from "./config";
 import { createTRPCContextFromHonoContext } from "./context";
-import { auth } from "./middlewares/auth";
 import { appRouter } from "./routers";
 
 const app = new Hono<HonoConfig>();
@@ -13,6 +13,12 @@ app.get("/", (c) => {
   return c.text("Hello world");
 });
 
+app.use("*", (c, next) => {
+  return clerkMiddleware({
+    publishableKey: c.env.CLERK_PUBLISHABLE_KEY,
+    secretKey: c.env.CLERK_SECRET_KEY,
+  })(c, next);
+});
 app.use(
   "*",
   cors({
@@ -20,9 +26,6 @@ app.use(
     credentials: true,
   }),
 );
-
-// Get user session from authorization header and pass it to TRPC
-app.use("/trpc/*", auth);
 
 app.use("/trpc/*", async (c, next) => {
   const trpcMiddleware = trpcServer({
@@ -34,8 +37,6 @@ app.use("/trpc/*", async (c, next) => {
   });
   return await trpcMiddleware(c, next);
 });
-
-app.use("/resume/*", auth);
 
 // Resume upload
 app.put("/resume/upload/:key", async (c) => {

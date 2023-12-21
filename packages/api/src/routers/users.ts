@@ -12,11 +12,8 @@ export const usersRouter = router({
   register: authenticatedProcedure
     .input(insertUserRequestSchema)
     .mutation(async ({ ctx, input }) => {
-      const email = ctx.user.email!;
-      const oauthProvider = ctx.user.app_metadata.provider as
-        | "github"
-        | "google";
-      const oauthUserId = ctx.user.id;
+      const email = ctx.user.email;
+      const clerkUserId = ctx.user.id;
 
       // If the user already exists, throw an error
       const user = await ctx.db.query.users.findFirst({
@@ -32,14 +29,13 @@ export const usersRouter = router({
 
       return ctx.db.insert(users).values({
         ...input,
+        clerkUserId,
         email,
-        oauthProvider,
-        oauthUserId,
       });
     }),
   getCurrentUser: authenticatedProcedure.query(async ({ ctx }) => {
     const user = await ctx.db.query.users.findFirst({
-      where: eq(users.email, ctx.user.email!),
+      where: eq(users.email, ctx.user.email),
     });
 
     return user ?? null;

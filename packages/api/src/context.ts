@@ -1,5 +1,6 @@
 import type { inferAsyncReturnType } from "@trpc/server";
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+import { getAuth } from "@hono/clerk-auth";
 
 import { connect } from "@knighthacks/db";
 
@@ -12,12 +13,13 @@ export function createTRPCContextFromHonoContext(c: HonoContext) {
      * This is because we can't share a connection between requests in a Cloudflare Worker.
      */
     const db = connect(c.env.TURSO_URL, c.env.TURSO_AUTH_TOKEN);
-    const user = c.get("user");
+    const auth = getAuth(c);
 
+    console.log(JSON.stringify(auth));
     return {
       ...opts,
       db,
-      user,
+      user: auth?.sessionClaims,
       env: c.env,
     };
   };

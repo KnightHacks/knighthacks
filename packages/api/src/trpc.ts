@@ -27,7 +27,7 @@ const isAuthenticated = middleware(async (opts) => {
 
 const isAdmin = isAuthenticated.unstable_pipe((opts) => {
   const user = opts.ctx.user;
-  const email = user.email!;
+  const email = user.email;
 
   // If email doesn't end with @knighthacks.org, then it's not an admin
   if (!email.endsWith("@knighthacks.org")) {

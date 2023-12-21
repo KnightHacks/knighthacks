@@ -31,10 +31,7 @@ export const users = sqliteTable("users", {
   personalWebsite: text("personal_website"),
   linkedin: text("linkedin"),
   resume: text("resume"), // Link to resume
-  oauthProvider: text("oauth_provider", {
-    enum: ["google", "github"],
-  }).notNull(),
-  oauthUserId: text("oauth_id").notNull(), // We will use this to check if they've created a KnightHacks account
+  clerkUserId: text("oauth_id").notNull(), // We will use this to check if they've created a KnightHacks account
 });
 
 // A user can make multiple hacker applications
@@ -184,8 +181,7 @@ export const insertUserRequestSchema = createInsertSchema(users, {
 }).omit({
   id: true,
   email: true,
-  oauthProvider: true,
-  oauthUserId: true,
+  clerkUserId: true,
 });
 
 export const insertHackerSchema = createInsertSchema(hackers);
