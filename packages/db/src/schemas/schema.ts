@@ -6,7 +6,7 @@ import { z } from "zod";
 import { gradYears, majors, schools, shirtSizes } from "../consts";
 
 export const users = sqliteTable("users", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+  id: text("id").primaryKey(), // This will be from the oauth provider
   isMember: integer("is_member", { mode: "boolean" }).default(false), // Whether or not they are a dues paying member
   email: text("email").notNull().unique(), // This will be from the oauth provider
   firstName: text("first_name").notNull(),
@@ -31,7 +31,6 @@ export const users = sqliteTable("users", {
   personalWebsite: text("personal_website"),
   linkedin: text("linkedin"),
   resume: text("resume"), // Link to resume
-  clerkUserId: text("oauth_id").notNull(), // We will use this to check if they've created a KnightHacks account
 });
 
 // A user can make multiple hacker applications
@@ -43,7 +42,7 @@ export const usersRelations = relations(users, ({ many }) => {
 
 export const hackers = sqliteTable("hackers", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  userId: integer("user_id").references(() => users.id, {
+  userId: text("user_id").references(() => users.id, {
     onDelete: "cascade", // If the user is deleted, delete the hacker
     onUpdate: "cascade", // If the user is updated, update the hacker
   }),
@@ -180,7 +179,6 @@ export const insertUserRequestSchema = createInsertSchema(users, {
 }).omit({
   id: true,
   email: true,
-  clerkUserId: true,
 });
 export const selectUserSchema = createSelectSchema(users);
 
