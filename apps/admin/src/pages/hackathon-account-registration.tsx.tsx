@@ -2,59 +2,33 @@ import type { SubmitHandler } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Redirect } from "wouter";
 import { z } from "zod";
 
-import { insertUserSchema } from "@knighthacks/db";
+import {
+  gradYears,
+  insertUserRequestSchema,
+  majors,
+  schools,
+  shirtSizes,
+} from "@knighthacks/db";
 
-import { useSessionStore } from "~/lib/stores/session-store";
-import { supabase } from "~/lib/supabase";
+import { useSession } from "~/lib/hooks/useSession";
 import { trpc } from "~/lib/trpc";
 
-export function HackathonRegistrationFlow() {
-  const { data: currentUser } = trpc.users.getCurrentUser.useQuery();
-  const { session } = useSessionStore();
-
-  if (!session) {
-    return <SignInWithGithub />;
-  }
-
-  if (session && !currentUser) {
-    return <UserForm accessToken={session.access_token} />;
-  }
-
-  return (
-    <>
-      <p>Thank you for making a KnightHacks account!</p>
-    </>
-  );
+export function HackathonAccountRegistration() {
+  return <UserForm />;
 }
 
-function SignInWithGithub() {
-  return (
-    <button
-      onClick={() =>
-        supabase.auth.signInWithOAuth({
-          provider: "github",
-        })
-      }
-    >
-      Sign In With Github
-    </button>
-  );
-}
-
-const userRegistrationSchema = insertUserSchema
-  .extend({
-    // On the client, we want to accept a FileList object
-    // On the server, we want to accept a string, which will be the key of the uploaded file
-    resume: z.instanceof(FileList).transform((fileList) => fileList[0]),
-  })
-  // These fields will be filled in by the current session
-  .omit({ email: true, oauthProvider: true, oauthUserId: true });
+const userRegistrationSchema = insertUserRequestSchema.extend({
+  // On the client, we want to accept a FileList object
+  // On the server, we want to accept a string, which will be the key of the uploaded file
+  resume: z.instanceof(FileList).transform((fileList) => fileList[0]),
+});
 
 type UserRegistrationSchema = z.infer<typeof userRegistrationSchema>;
 
-function UserForm({ accessToken }: { accessToken: string }) {
+function UserForm() {
   const {
     register,
     handleSubmit,
@@ -62,8 +36,15 @@ function UserForm({ accessToken }: { accessToken: string }) {
   } = useForm<UserRegistrationSchema>({
     resolver: zodResolver(userRegistrationSchema),
   });
+  const { session } = useSession();
 
-  const { mutate, error } = trpc.users.register.useMutation();
+  if (!session) {
+    return <Redirect to="/hackathon/signin" />;
+  }
+
+  const { mutate, error, isLoading } = trpc.users.register.useMutation();
+
+  if (isLoading) return <p>Loading...</p>;
 
   const onSubmit: SubmitHandler<UserRegistrationSchema> = async (data) => {
     let resume: string | null = null;
@@ -77,7 +58,7 @@ function UserForm({ accessToken }: { accessToken: string }) {
           method: "PUT",
           body: formData,
           headers: {
-            Authorization: `Bearer ${accessToken}}`,
+            Authorization: `Bearer ${session.access_token}`,
           },
         },
       );
@@ -87,7 +68,7 @@ function UserForm({ accessToken }: { accessToken: string }) {
         return;
       }
 
-      const { key } = await res.json();
+      const { key } = (await res.json()) as { key: string };
       resume = key;
     }
 
@@ -118,37 +99,64 @@ function UserForm({ accessToken }: { accessToken: string }) {
       </label>
       <label>
         Phone
-        <input className="block" type="tel" {...register("phone")} />
+        <input className="block" {...register("phone")} />
+        <ErrorMessage errors={errors} name="phone" />
       </label>
       <label className="block">
         Age
         <input
           className="block"
           type="number"
-          {...register("age", {
-            valueAsNumber: true,
-          })}
+          min={0}
+          max={100}
+          defaultValue={0}
+          {...register("age", { valueAsNumber: true })}
         />
         <ErrorMessage errors={errors} name="age" />
       </label>
       <label className="block">
         Shirt Size
-        <input className="block" type="text" {...register("shirtSize")} />
+        <select className="block" {...register("shirtSize")}>
+          {shirtSizes.map((size) => (
+            <option key={size} value={size}>
+              {size}
+            </option>
+          ))}
+          <option value="XL">XL</option>
+        </select>
         <ErrorMessage errors={errors} name="shirtSize" />
       </label>
       <label className="block">
         Major
-        <input className="block" type="text" {...register("major")} />
+        <select className="block" {...register("major")}>
+          {majors.map((school) => (
+            <option key={school} value={school}>
+              {school}
+            </option>
+          ))}
+        </select>
         <ErrorMessage errors={errors} name="major" />
       </label>
       <label className="block">
         School
-        <input className="block" type="text" {...register("school")} />
+        <select className="block" {...register("school")}>
+          {schools.map((school) => (
+            <option key={school} value={school}>
+              {school}
+            </option>
+          ))}
+        </select>
         <ErrorMessage errors={errors} name="school" />
       </label>
       <label className="block">
         Graduation Year
-        <input className="block" type="text" {...register("gradYear")} />
+        <select className="block" {...register("gradYear")}>
+          {gradYears.map((gradYear) => (
+            <option key={gradYear} value={gradYear}>
+              {gradYear}
+            </option>
+          ))}
+        </select>
         <ErrorMessage errors={errors} name="gradYear" />
       </label>
       <label className="block">
