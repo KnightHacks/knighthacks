@@ -1,4 +1,4 @@
-import { Route, Switch } from "wouter";
+import { Route, Router, Switch } from "wouter";
 
 import { ProtectedRoute } from "~/components/protected-route";
 import { WithNav } from "../components/with-nav";
@@ -15,15 +15,17 @@ export function Pages() {
       <ProtectedRoute path="/" component={WithNav(Overview)} />
       <ProtectedRoute path="/hello" component={WithNav(Hello)} />
       <ProtectedRoute path="/users" component={WithNav(Users)} />
-      <Route path="/hackathon/signin" component={WithNav(HackathonSignIn)} />
-      <ProtectedRoute
-        path="/hackathon/account-registration"
-        component={WithNav(HackathonAccountRegistration)}
-      />
-      <ProtectedRoute
-        path="/hackathon/registration"
-        component={WithNav(HackathonRegistration)}
-      />
+      <Router base="/hackathon">
+        <Route path="/signin" component={WithNav(HackathonSignIn)} />
+        <ProtectedRoute
+          path="/account-registration"
+          component={WithNav(HackathonAccountRegistration)}
+        />
+        <ProtectedRoute
+          path="/registration"
+          component={WithNav(HackathonRegistration)}
+        />
+      </Router>
       <Route>404, Not Found!</Route>
     </Switch>
   );
