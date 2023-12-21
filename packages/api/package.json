@@ -13,9 +13,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@clerk/backend": "^0.36.0",
+    "@hono/clerk-auth": "^1.0.0",
     "@hono/trpc-server": "*",
     "@knighthacks/db": "workspace:*",
-    "@supabase/supabase-js": "^2.39.0",
     "@trpc/server": "^10.44.1",
     "cors": "^2.8.5",
     "hono": "^3.11.4",
