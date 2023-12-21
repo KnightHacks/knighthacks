@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "paths": {
-      "~/*": ["./src/*"]
-    }
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "extends": "@knighthacks/tsconfig/base.json",
   "include": ["src"]
