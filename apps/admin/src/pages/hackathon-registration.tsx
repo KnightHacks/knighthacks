@@ -47,6 +47,10 @@ function HackerRegistration({
     });
   };
 
+  if (currentUser.hasAppliedToCurrentHackathon) {
+    return <>Thank you for registering!</>;
+  }
+
   if (isLoading) {
     return <>Registering...</>;
   }
