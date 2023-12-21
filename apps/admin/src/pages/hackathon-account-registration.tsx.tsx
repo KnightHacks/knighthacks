@@ -1,4 +1,5 @@
 import type { SubmitHandler } from "react-hook-form";
+import { useAuth } from "@clerk/clerk-react";
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,10 +14,24 @@ import {
   shirtSizes,
 } from "@knighthacks/db";
 
-import { useSession } from "~/lib/hooks/useSession";
 import { trpc } from "~/lib/trpc";
 
 export function HackathonAccountRegistration() {
+  const {
+    data: currentUser,
+    isLoading,
+    error,
+  } = trpc.users.getCurrentUser.useQuery();
+
+  if (isLoading) return <p>Fetching current user...</p>;
+
+  if (error) {
+    alert(error.message);
+    return <Redirect to="/hackathon/signin" />;
+  }
+
+  if (currentUser) return <Redirect to="/hackathon/registration" />;
+
   return <UserForm />;
 }
 
@@ -36,12 +51,8 @@ function UserForm() {
   } = useForm<UserRegistrationSchema>({
     resolver: zodResolver(userRegistrationSchema),
   });
-  const { session } = useSession();
 
-  if (!session) {
-    return <Redirect to="/hackathon/signin" />;
-  }
-
+  const { getToken } = useAuth();
   const { mutate, error, isLoading } = trpc.users.register.useMutation();
 
   if (isLoading) return <p>Loading...</p>;
@@ -58,7 +69,7 @@ function UserForm() {
           method: "PUT",
           body: formData,
           headers: {
-            Authorization: `Bearer ${session.access_token}`,
+            Authorization: `Bearer ${await getToken()}`,
           },
         },
       );

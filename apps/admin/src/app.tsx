@@ -1,3 +1,4 @@
+import { ClerkProvider } from "@clerk/clerk-react";
 import { Route, Switch } from "wouter";
 
 import { ProtectedRoute } from "./lib/components/protected-route";
@@ -13,9 +14,13 @@ import { Users } from "./pages/users";
 
 export function App() {
   return (
-    <TRPCProvider>
-      <Router />
-    </TRPCProvider>
+    <ClerkProvider
+      publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY as string}
+    >
+      <TRPCProvider>
+        <Router />
+      </TRPCProvider>
+    </ClerkProvider>
   );
 }
 
@@ -26,12 +31,15 @@ function Router() {
       <ProtectedRoute path="/" component={WithNav(Overview)} />
       <ProtectedRoute path="/users" component={WithNav(Users)} />
       <Route path="/signin" component={SignIn} />
-      <Route path="/hackathon/signin" component={HackathonSignIn} />
-      <Route
+      <Route path="/hackathon/signin" component={WithNav(HackathonSignIn)} />
+      <ProtectedRoute
         path="/hackathon/account-registration"
-        component={HackathonAccountRegistration}
+        component={WithNav(HackathonAccountRegistration)}
       />
-      <Route path="/hackathon/registration" component={HackathonRegistration} />
+      <ProtectedRoute
+        path="/hackathon/registration"
+        component={WithNav(HackathonRegistration)}
+      />
       <Route>404, Not Found!</Route>
     </Switch>
   );

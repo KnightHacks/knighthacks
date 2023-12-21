@@ -1,13 +1,16 @@
 import type { RouteProps } from "wouter";
+import { useAuth } from "@clerk/clerk-react";
 import { Redirect, Route } from "wouter";
 
-import { useSessionStore } from "../stores/session-store";
-
 export function ProtectedRoute(props: RouteProps) {
-  const { session } = useSessionStore();
+  const { isSignedIn, isLoaded } = useAuth();
 
-  if (!session) {
-    return <Redirect to="/signin" />;
+  if (!isLoaded) {
+    return <>Loading...</>;
+  }
+
+  if (!isSignedIn) {
+    return <Redirect to="/hackathon/signin" />;
   }
 
   return <Route {...props} />;

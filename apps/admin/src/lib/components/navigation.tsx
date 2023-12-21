@@ -1,10 +1,8 @@
+import { SignOutButton, useAuth } from "@clerk/clerk-react";
 import { Link } from "wouter";
 
-import { useSessionStore } from "../stores/session-store";
-import { supabase } from "../supabase";
-
 export function Navigation() {
-  const { session } = useSessionStore();
+  const { isSignedIn } = useAuth();
 
   return (
     <div className="m-4">
@@ -21,13 +19,9 @@ export function Navigation() {
         <li>
           <Link href="/hackathons">Hackathons</Link>
         </li>
-        {session ? (
+        {isSignedIn && (
           <li>
-            <button onClick={() => supabase.auth.signOut()}>Sign Out</button>
-          </li>
-        ) : (
-          <li>
-            <Link href="/signin">Sign In</Link>
+            <SignOutButton />
           </li>
         )}
       </ul>
