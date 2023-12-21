@@ -3,15 +3,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import superjson from "superjson";
 
+import { useSession } from "../hooks/useSession";
 import { trpc } from "../trpc";
 
-export function TRPCProvider({
-  children,
-  accessToken,
-}: {
-  children: React.ReactNode;
-  accessToken?: string;
-}) {
+export function TRPCProvider({ children }: { children: React.ReactNode }) {
+  const { session } = useSession();
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     trpc.createClient({
@@ -20,12 +16,12 @@ export function TRPCProvider({
         httpBatchLink({
           url: `${import.meta.env.VITE_API_URL}/trpc`,
           headers() {
-            if (!accessToken) {
+            if (!session) {
               return {};
             }
 
             return {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${session.access_token}`,
             };
           },
         }),
