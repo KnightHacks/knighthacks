@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 
 import type { R2Bucket } from "@cloudflare/workers-types";
-import type { Context } from "hono";
+import type { Context, Input } from "hono";
+
+import type { connect } from "@knighthacks/db";
 
 export type Bindings = {
   TURSO_URL: string;
@@ -11,8 +13,16 @@ export type Bindings = {
   KNIGHT_HACKS_BUCKET: R2Bucket;
 };
 
-export type HonoConfig = {
-  Bindings: Bindings;
+export type Variables = {
+  db: ReturnType<typeof connect>;
 };
 
-export type HonoContext = Context<HonoConfig>;
+export type HonoConfig = {
+  Bindings: Bindings;
+  Variables: Variables;
+};
+
+export type HonoContext<
+  P extends string = string,
+  I extends Input = Input,
+> = Context<HonoConfig, P, I>;
