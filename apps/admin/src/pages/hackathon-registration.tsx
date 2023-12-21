@@ -14,7 +14,7 @@ export function HackathonRegistration() {
   const { data: currentUser, isLoading } = trpc.users.getCurrentUser.useQuery();
 
   if (isLoading) {
-    return <>Loading...</>;
+    return <>Fetching current user...</>;
   }
 
   if (!currentUser) {
@@ -31,7 +31,7 @@ function HackerRegistration({
 }: {
   currentUser: NonNullable<RouterOutput["users"]["getCurrentUser"]>;
 }) {
-  const { mutate, isLoading } = trpc.hackers.register.useMutation();
+  const { mutate, isLoading, isSuccess } = trpc.hackers.register.useMutation();
   const {
     handleSubmit,
     register,
@@ -43,11 +43,10 @@ function HackerRegistration({
   const onSubmit: SubmitHandler<HackerRegistrationSchema> = (data) => {
     mutate({
       ...data,
-      userId: currentUser.id,
     });
   };
 
-  if (currentUser.hasAppliedToCurrentHackathon) {
+  if (currentUser.hasAppliedToCurrentHackathon || isSuccess) {
     return <>Thank you for registering!</>;
   }
 
