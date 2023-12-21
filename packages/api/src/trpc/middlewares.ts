@@ -1,8 +1,10 @@
 import { TRPCError } from "@trpc/server";
 
+import { eq, users } from "@knighthacks/db";
+
 import { middleware } from "./init";
 
-export const isAuthenticated = middleware(async (opts) => {
+export const isAuthenticated = middleware((opts) => {
   const user = opts.ctx.user;
 
   if (!user) {
@@ -24,6 +26,18 @@ export const isAdmin = isAuthenticated.unstable_pipe((opts) => {
   // If email doesn't end with @knighthacks.org, then user is not an admin
   if (!email.endsWith("@knighthacks.org")) {
     throw new TRPCError({ code: "UNAUTHORIZED", message: "Not an admin" });
+  }
+
+  return opts.next(opts);
+});
+
+export const hasAccount = isAuthenticated.unstable_pipe(async (opts) => {
+  const user = await opts.ctx.db.query.users.findFirst({
+    where: eq(users.email, opts.ctx.user.email),
+  });
+
+  if (!user) {
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "Not authenticated" });
   }
 
   return opts.next(opts);
