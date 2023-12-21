@@ -1,5 +1,6 @@
 import { router } from "../init";
 import { publicProcedure } from "../procedures";
+import { hackathonsRouter } from "./hackathons";
 import { usersRouter } from "./users";
 
 export const appRouter = router({
@@ -7,6 +8,7 @@ export const appRouter = router({
     return "Hello Hono!";
   }),
   users: usersRouter,
+  hackathons: hackathonsRouter,
 });
 
 export type AppRouter = typeof appRouter;
