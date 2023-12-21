@@ -42,8 +42,9 @@ export const usersRouter = router({
     return user ?? null;
   }),
   deleteUser: adminProcedure
-    .input(z.object({ id: z.number() }))
+    .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      await ctx.db.delete(users).where(eq(users.id, input.id));
+      await ctx.clerk.users.deleteUser(input.id); // Delete the user from Clerk
+      await ctx.db.delete(users).where(eq(users.clerkUserId, input.id)); // Delete the user from the database
     }),
 });
