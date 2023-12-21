@@ -10,7 +10,7 @@ export function ProtectedRoute(props: RouteProps) {
   }
 
   if (!isSignedIn) {
-    return <Redirect to="/hackathon/signin" />;
+    return <Redirect to="/signin" />;
   }
 
   return <Route {...props} />;
