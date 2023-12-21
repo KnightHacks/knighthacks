@@ -60,9 +60,9 @@ function HackerRegistration({
         <ErrorMessage errors={errors} name="whyAttend" />
       </label>
       <label className="block">
-        Why do you want to participate in KnightHacks?
+        What do you want to learn at KnightHacks?
         <textarea className="block" {...register("whatLearn")} />
-        <ErrorMessage errors={errors} name="whyAttend" />
+        <ErrorMessage errors={errors} name="whatLearn" />
       </label>
       <button type="submit">Submit</button>
     </form>
