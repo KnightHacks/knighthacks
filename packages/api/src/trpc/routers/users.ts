@@ -16,18 +16,6 @@ export const usersRouter = router({
       const email = ctx.user.email;
       const clerkUserId = ctx.user.id;
 
-      // If the user already exists, throw an error
-      const user = await ctx.db.query.users.findFirst({
-        where: eq(users.email, email),
-      });
-
-      if (user) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "User already exists",
-        });
-      }
-
       return ctx.db.insert(users).values({
         ...input,
         clerkUserId,
