@@ -120,7 +120,6 @@ export const insertHackathonSchema = createInsertSchema(hackathons);
 export const selectHackathonSchema = createSelectSchema(hackathons);
 
 export const insertUserSchema = createInsertSchema(users);
-export const selectUserSchema = createSelectSchema(users);
 export const insertUserRequestSchema = createInsertSchema(users, {
   firstName: (schema) =>
     schema.firstName.min(1, {
@@ -183,6 +182,17 @@ export const insertUserRequestSchema = createInsertSchema(users, {
   email: true,
   clerkUserId: true,
 });
+export const selectUserSchema = createSelectSchema(users);
 
 export const insertHackerSchema = createInsertSchema(hackers);
+export const insertHackerRequestSchema = createInsertSchema(hackers, {
+  whyAttend: (schema) =>
+    schema.whyAttend.min(1, {
+      message: "This field is required",
+    }),
+  whatLearn: (schema) =>
+    schema.whatLearn.min(1, {
+      message: "This field is required",
+    }),
+});
 export const selectHackerSchema = createSelectSchema(hackers);
