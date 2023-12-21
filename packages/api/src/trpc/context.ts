@@ -4,7 +4,7 @@ import { getAuth } from "@hono/clerk-auth";
 
 import { connect } from "@knighthacks/db";
 
-import type { HonoContext } from "./config";
+import type { HonoContext } from "../config";
 
 export function createTRPCContextFromHonoContext(c: HonoContext) {
   return (opts: FetchCreateContextFnOptions) => {

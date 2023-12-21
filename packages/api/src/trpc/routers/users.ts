@@ -3,7 +3,8 @@ import { z } from "zod";
 
 import { eq, insertUserRequestSchema, users } from "@knighthacks/db";
 
-import { adminProcedure, authenticatedProcedure, router } from "../trpc";
+import { router } from "../init";
+import { adminProcedure, authenticatedProcedure } from "../procedures";
 
 export const usersRouter = router({
   getAll: adminProcedure.query(async ({ ctx }) => {
