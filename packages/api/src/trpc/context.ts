@@ -15,7 +15,6 @@ export function createTRPCContextFromHonoContext(c: HonoContext) {
     const db = connect(c.env.TURSO_URL, c.env.TURSO_AUTH_TOKEN);
     const auth = getAuth(c);
 
-    console.log(JSON.stringify(auth));
     return {
       ...opts,
       db,
