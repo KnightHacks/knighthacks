@@ -8,6 +8,9 @@ import { trpc } from "./middlewares/trpc";
 import { resume } from "./routes/resume";
 
 const app = new Hono<HonoConfig>()
+  .get("/", (c) => {
+    return c.text("Hello world");
+  })
   .use(
     "*",
     cors({
@@ -17,10 +20,6 @@ const app = new Hono<HonoConfig>()
   .use("*", db)
   .use("*", clerk)
   .use("/trpc/*", trpc)
-
-  .get("/", (c) => {
-    return c.text("Hello world");
-  })
   .route("/resume", resume);
 
 export { app };
