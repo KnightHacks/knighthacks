@@ -14,7 +14,7 @@ import {
   shirtSizes,
 } from "@knighthacks/db";
 
-import { trpc } from "~/lib/trpc";
+import { trpc } from "~/trpc";
 
 export function HackathonAccountRegistration() {
   const {

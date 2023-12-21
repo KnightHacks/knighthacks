@@ -1,6 +1,6 @@
 import { Redirect } from "wouter";
 
-import { trpc } from "~/lib/trpc";
+import { trpc } from "~/trpc";
 
 export function HackathonRegistration() {
   const { data: currentUser, isLoading } = trpc.users.getCurrentUser.useQuery();
