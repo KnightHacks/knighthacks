@@ -18,13 +18,10 @@ export const usersRouter = router({
   register: authenticatedProcedure
     .input(insertUserRequestSchema)
     .mutation(async ({ ctx, input }) => {
-      const email = ctx.user.email;
-      const clerkUserId = ctx.user.id;
-
       return ctx.db.insert(users).values({
         ...input,
-        clerkUserId,
-        email,
+        email: ctx.user.email,
+        id: ctx.user.id,
       });
     }),
   getCurrentUser: authenticatedProcedure.query(async ({ ctx }) => {
@@ -57,7 +54,7 @@ export const usersRouter = router({
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       await ctx.clerk.users.deleteUser(input.id); // Delete the user from Clerk
-      await ctx.db.delete(users).where(eq(users.clerkUserId, input.id)); // Delete the user from the database
+      await ctx.db.delete(users).where(eq(users.id, input.id)); // Delete the user from the database
 
       await ctx.db.transaction(async (tx) => {
         // If deleting the user from Clerk fails, rollback the transaction
@@ -68,7 +65,7 @@ export const usersRouter = router({
           return;
         }
         // Delete the user from the database
-        await tx.delete(users).where(eq(users.clerkUserId, input.id));
+        await tx.delete(users).where(eq(users.id, input.id));
       });
     }),
 });
