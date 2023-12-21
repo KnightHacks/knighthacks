@@ -26,3 +26,10 @@ export type HonoContext<
   P extends string = string,
   I extends Input = Input,
 > = Context<HonoConfig, P, I>;
+
+declare global {
+  interface CustomJwtSessionClaims {
+    id: string;
+    email: string;
+  }
+}
