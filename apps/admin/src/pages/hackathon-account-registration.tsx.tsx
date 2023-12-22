@@ -1,9 +1,10 @@
 import type { SubmitHandler } from "react-hook-form";
+import { useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Redirect } from "wouter";
+import { Redirect, useLocation } from "wouter";
 import { z } from "zod";
 
 import {
@@ -17,18 +18,9 @@ import {
 import { trpc } from "~/trpc";
 
 export function HackathonAccountRegistration() {
-  const {
-    data: currentUser,
-    isLoading,
-    error,
-  } = trpc.users.getCurrentUser.useQuery();
+  const { data: currentUser, isLoading } = trpc.users.getCurrentUser.useQuery();
 
-  if (isLoading) return <p>Fetching current user...</p>;
-
-  if (error) {
-    alert(error.message);
-    return <Redirect to="/hackathon/signin" />;
-  }
+  if (isLoading) return <>Fetching current user...</>;
 
   if (currentUser) return <Redirect to="/hackathon/registration" />;
 
@@ -51,9 +43,16 @@ function UserForm() {
   } = useForm<UserRegistrationSchema>({
     resolver: zodResolver(userRegistrationSchema),
   });
-
+  const [_, navigation] = useLocation();
   const { getToken } = useAuth();
-  const { mutate, error, isLoading } = trpc.users.register.useMutation();
+  const utils = trpc.useUtils();
+  const { error, isLoading, mutate } = trpc.users.register.useMutation({
+    onSuccess: async () => {
+      // Since we have a new user, invalidate the current user query
+      await utils.users.getCurrentUser.invalidate();
+      navigation("/hackathon/registration");
+    },
+  });
 
   if (isLoading) return <p>Loading...</p>;
 
