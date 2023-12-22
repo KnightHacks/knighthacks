@@ -1,5 +1,4 @@
 import type { SubmitHandler } from "react-hook-form";
-import { useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
