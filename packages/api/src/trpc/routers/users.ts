@@ -53,10 +53,17 @@ export const usersRouter = router({
   deleteUser: adminProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      await ctx.clerk.users.deleteUser(input.id); // Delete the user from Clerk
-      await ctx.db.delete(users).where(eq(users.id, input.id)); // Delete the user from the database
-
       await ctx.db.transaction(async (tx) => {
+        const [user] = await tx
+          .select({ resume: users.resume })
+          .from(users)
+          .where(eq(users.id, input.id));
+
+        if (!user) {
+          tx.rollback();
+          return;
+        }
+
         // If deleting the user from Clerk fails, rollback the transaction
         try {
           await ctx.clerk.users.deleteUser(input.id);
@@ -64,6 +71,12 @@ export const usersRouter = router({
           tx.rollback();
           return;
         }
+
+        // Delete user's resume from Cloudflare R2
+        if (user?.resume) {
+          await ctx.env.KNIGHT_HACKS_BUCKET.delete(user.resume);
+        }
+
         // Delete the user from the database
         await tx.delete(users).where(eq(users.id, input.id));
       });
