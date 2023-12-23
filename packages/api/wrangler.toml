@@ -1,0 +1,10 @@
+name = "knighthacks-api"
+compatibility_date = "2023-01-01"
+node_compat = true
+account_id = "091d616e4c63e948b32e03c833fb68f8"
+workers_dev = true
+
+[[r2_buckets]]
+binding = "KNIGHT_HACKS_BUCKET"
+bucket_name = "knight-hacks"
+preview_bucket_name = "knight-hacks-preview"
