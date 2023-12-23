@@ -8,5 +8,9 @@ export function HackathonSignIn() {
     return <Redirect to="/hackathon/account-registration" replace />;
   }
 
-  return <SignIn afterSignInUrl="/hackathon/account-registration" />;
+  return (
+    <div className="flex items-center justify-center">
+      <SignIn afterSignInUrl="/hackathon/account-registration" />
+    </div>
+  );
 }
