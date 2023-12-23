@@ -1,7 +1,8 @@
 import { Route, Switch } from "wouter";
 
-import { ProtectedRoute } from "~/components/protected-route";
-import { WithNav } from "../components/with-nav";
+import { AdminRoute } from "~/components/admin-route";
+import { AuthenticatedRoute } from "~/components/authenticated-route";
+import { WithNav } from "~/components/with-nav.jsx";
 import { HackathonAccountRegistration } from "./hackathon-account-registration.tsx";
 import { HackathonRegistration } from "./hackathon-registration";
 import { HackathonSignIn } from "./hackathon-signin";
@@ -13,17 +14,16 @@ import { Users } from "./users";
 export function Pages() {
   return (
     <Switch>
-      <ProtectedRoute path="/" component={WithNav(Overview)} />
+      <AdminRoute path="/" component={WithNav(Overview)} />
+      <AdminRoute path="/users" component={WithNav(Users)} />
       <Route path="/hello" component={WithNav(Hello)} />
       <Route path="/signin" component={SignIn} />
-      <ProtectedRoute path="/users" component={WithNav(Users)} />
       <Route path="/hackathon/signin" component={WithNav(HackathonSignIn)} />
-      <Route path="/hackathon/signin" component={WithNav(HackathonSignIn)} />
-      <ProtectedRoute
+      <AuthenticatedRoute
         path="/hackathon/account-registration"
         component={WithNav(HackathonAccountRegistration)}
       />
-      <ProtectedRoute
+      <AuthenticatedRoute
         path="/hackathon/registration"
         component={WithNav(HackathonRegistration)}
       />
