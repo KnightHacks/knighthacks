@@ -18,6 +18,7 @@ export const hackersRouter = router({
         });
 
         if (!hackathon) {
+          console.error("No current hackathon found");
           tx.rollback();
           return;
         }
