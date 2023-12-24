@@ -1,7 +1,7 @@
 import type { SubmitHandler } from "react-hook-form";
 import { useAuth } from "@clerk/clerk-react";
-import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Redirect, useLocation } from "wouter";
 import { z } from "zod";
@@ -14,7 +14,39 @@ import {
   shirtSizes,
 } from "@knighthacks/db";
 
+import { Button } from "~/components/ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "~/components/ui/command";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/ui/form";
+import { Input } from "~/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/popover";
+import { ScrollArea } from "~/components/ui/scroll-area";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import { useToast } from "~/components/ui/use-toast";
 import { trpc } from "~/trpc";
+import { cn } from "~/utils";
 
 export function HackathonAccountRegistration() {
   const { data: currentUser, isLoading } = trpc.users.getCurrentUser.useQuery();
@@ -27,21 +59,38 @@ export function HackathonAccountRegistration() {
 }
 
 const userRegistrationSchema = insertUserRequestSchema.extend({
-  // On the client, we want to accept a FileList object
+  // On the client, we want to accept a FileList object or undefined
   // On the server, we want to accept a string, which will be the key of the uploaded file
-  resume: z.instanceof(FileList).transform((fileList) => fileList[0]),
+  resume: z.instanceof(File),
 });
 
 type UserRegistrationSchema = z.infer<typeof userRegistrationSchema>;
 
 function UserForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<UserRegistrationSchema>({
+  const form = useForm<UserRegistrationSchema>({
     resolver: zodResolver(userRegistrationSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      phone: "",
+      age: 18,
+      shirtSize: "SM",
+      major: "Computer Science",
+      school: "The University of Central Florida",
+      gradYear: "2025",
+      address1: "",
+      address2: "",
+      city: "",
+      state: "",
+      zip: "",
+      country: "",
+      github: "",
+      personalWebsite: "",
+      linkedin: "",
+      resume: new File([], ""),
+    },
   });
+  const { toast } = useToast();
   const [_, navigation] = useLocation();
   const { getToken } = useAuth();
   const utils = trpc.useUtils();
@@ -49,6 +98,10 @@ function UserForm() {
     onSuccess: async () => {
       // Since we have a new user, invalidate the current user query
       await utils.users.getCurrentUser.invalidate();
+      toast({
+        title: "Success!",
+        description: "You've created a Knight Hacks account!",
+      });
       navigation("/hackathon/registration");
     },
   });
@@ -90,140 +143,398 @@ function UserForm() {
   if (error) alert(error.message);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label className="block">
-        Is Member
-        <input className="block" type="checkbox" {...register("isMember")} />
-        <ErrorMessage errors={errors} name="isMember" />
-      </label>
-      <label className="block">
-        First Name
-        <input className="block" type="text" {...register("firstName")} />
-        <ErrorMessage errors={errors} name="firstName" />
-      </label>
-      <label className="block">
-        Last Name
-        <input className="block" type="text" {...register("lastName")} />
-        <ErrorMessage errors={errors} name="lastName" />
-      </label>
-      <label>
-        Phone
-        <input className="block" {...register("phone")} />
-        <ErrorMessage errors={errors} name="phone" />
-      </label>
-      <label className="block">
-        Age
-        <input
-          className="block"
-          type="number"
-          min={0}
-          max={100}
-          defaultValue={0}
-          {...register("age", { valueAsNumber: true })}
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mx-auto mb-4 mt-4 flex w-2/3 flex-1 flex-col justify-center space-y-6"
+      >
+        <FormField
+          control={form.control}
+          name="firstName"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>First Name</FormLabel>
+              <FormControl>
+                <Input placeholder="First Name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <ErrorMessage errors={errors} name="age" />
-      </label>
-      <label className="block">
-        Shirt Size
-        <select className="block" {...register("shirtSize")}>
-          {shirtSizes.map((size) => (
-            <option key={size} value={size}>
-              {size}
-            </option>
-          ))}
-          <option value="XL">XL</option>
-        </select>
-        <ErrorMessage errors={errors} name="shirtSize" />
-      </label>
-      <label className="block">
-        Major
-        <select className="block" {...register("major")}>
-          {majors.map((school) => (
-            <option key={school} value={school}>
-              {school}
-            </option>
-          ))}
-        </select>
-        <ErrorMessage errors={errors} name="major" />
-      </label>
-      <label className="block">
-        School
-        <select className="block" {...register("school")}>
-          {schools.map((school) => (
-            <option key={school} value={school}>
-              {school}
-            </option>
-          ))}
-        </select>
-        <ErrorMessage errors={errors} name="school" />
-      </label>
-      <label className="block">
-        Graduation Year
-        <select className="block" {...register("gradYear")}>
-          {gradYears.map((gradYear) => (
-            <option key={gradYear} value={gradYear}>
-              {gradYear}
-            </option>
-          ))}
-        </select>
-        <ErrorMessage errors={errors} name="gradYear" />
-      </label>
-      <label className="block">
-        Address 1
-        <input className="block" type="text" {...register("address1")} />
-        <ErrorMessage errors={errors} name="address1" />
-      </label>
-      <label className="block">
-        Address 2
-        <input className="block" type="text" {...register("address2")} />
-        <ErrorMessage errors={errors} name="address2" />
-      </label>
-      <label className="block">
-        City
-        <input className="block" type="text" {...register("city")} />
-        <ErrorMessage errors={errors} name="city" />
-      </label>
-      <label className="block">
-        State
-        <input className="block" type="text" {...register("state")} />
-        <ErrorMessage errors={errors} name="state" />
-      </label>
-      <label className="block">
-        Zip
-        <input className="block" type="text" {...register("zip")} />
-        <ErrorMessage errors={errors} name="zip" />
-      </label>
-      <label className="block">
-        Country
-        <input className="block" type="text" {...register("country")} />
-        <ErrorMessage errors={errors} name="country" />
-      </label>
-      <label className="block">
-        Github
-        <input className="block" type="text" {...register("github")} />
-        <ErrorMessage errors={errors} name="github" />
-      </label>
-      <label className="block">
-        Personal Website
-        <input className="block" type="text" {...register("personalWebsite")} />
-        <ErrorMessage errors={errors} name="personalWebsite" />
-      </label>
-      <label className="block">
-        LinkedIn
-        <input className="block" type="text" {...register("linkedin")} />
-        <ErrorMessage errors={errors} name="personalWebsite" />
-      </label>
-      <label className="block">
-        Resume
-        <input
-          className="block"
-          type="file"
-          accept="application/pdf"
-          {...register("resume")}
+        <FormField
+          control={form.control}
+          name="lastName"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Last Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Last Name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <ErrorMessage errors={errors} name="resume" />
-      </label>
-      <button type="submit">Submit</button>
-    </form>
+        <FormField
+          control={form.control}
+          name="phone"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone</FormLabel>
+              <FormControl>
+                <Input placeholder="Phone" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="age"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Age</FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="Age" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="shirtSize"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Shirt Size</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your shirt size" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {shirtSizes.map((size) => (
+                    <SelectItem key={size} value={size}>
+                      {size}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="major"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Major</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      className={cn(
+                        "justify-between",
+                        !field.value && "text-muted-foreground",
+                      )}
+                    >
+                      {field.value
+                        ? majors.find((major) => major === field.value)
+                        : "Select your major"}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="p-0">
+                  <Command>
+                    <CommandInput placeholder="Search majors..." />
+                    <CommandEmpty>No major found.</CommandEmpty>
+                    <ScrollArea className="h-[400px]">
+                      <CommandGroup>
+                        {majors.map((major) => (
+                          <CommandItem
+                            value={major}
+                            key={major}
+                            onSelect={() => {
+                              form.setValue("major", major);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                major === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0",
+                              )}
+                            />
+                            {major}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </ScrollArea>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="school"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>School</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      className={cn(
+                        "justify-between",
+                        !field.value && "text-muted-foreground",
+                      )}
+                    >
+                      {field.value
+                        ? schools.find((school) => school === field.value)
+                        : "Select your school"}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="p-0">
+                  <Command>
+                    <CommandInput placeholder="Search schools..." />
+                    <CommandEmpty>No school found.</CommandEmpty>
+                    <ScrollArea className="h-[400px]">
+                      <CommandGroup>
+                        {schools.map((school) => (
+                          <CommandItem
+                            value={school}
+                            key={school}
+                            onSelect={() => {
+                              form.setValue("school", school);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                school === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0",
+                              )}
+                            />
+                            {school}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </ScrollArea>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="gradYear"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Graduation Year</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your graduation year" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {gradYears.map((gradYear) => (
+                    <SelectItem key={gradYear} value={gradYear}>
+                      {gradYear}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="address1"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Address Line 1</FormLabel>
+              <FormControl>
+                <Input placeholder="Address Line 1" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="address2"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Address Line 2</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Address Line 2"
+                  {...field}
+                  value={field.value ?? ""}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="city"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>City</FormLabel>
+              <FormControl>
+                <Input placeholder="City" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="state"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>State</FormLabel>
+              <FormControl>
+                <Input placeholder="State" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="zip"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Zip Code</FormLabel>
+              <FormControl>
+                <Input placeholder="Zip Code" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="country"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Country</FormLabel>
+              <FormControl>
+                <Input placeholder="Country" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="github"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>GitHub</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="GitHub"
+                  {...field}
+                  value={field.value ?? ""}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="personalWebsite"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Personal Website</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Personal Website"
+                  {...field}
+                  value={field.value ?? ""}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="linkedin"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>LinkedIn</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Personal Website"
+                  {...field}
+                  value={field.value ?? ""}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="resume"
+          disabled={isLoading}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Resume</FormLabel>
+              <FormControl>
+                <Input
+                  type="file"
+                  accept="application/pdf"
+                  onChange={(e) => field.onChange(e.target.files?.[0])}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" disabled={isLoading}>
+          Submit
+        </Button>
+      </form>
+    </Form>
   );
 }
