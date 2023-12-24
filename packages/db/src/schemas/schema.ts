@@ -136,14 +136,9 @@ export const insertUserRequestSchema = createInsertSchema(users, {
       .regex(/^\d{10}$/, {
         message: "Phone number must be 10 digits",
       }),
-  age: (schema) =>
-    schema.age
-      .min(18, {
-        message: "You must be at least 18 years old",
-      })
-      .max(100, {
-        message: "Be for real right now",
-      }),
+  age: z.coerce.number().min(18, {
+    message: "You must be at least 18 years old",
+  }),
   shirtSize: z.enum(shirtSizes, {
     errorMap: () => ({ message: "Invalid shirt size" }),
   }),
@@ -176,6 +171,27 @@ export const insertUserRequestSchema = createInsertSchema(users, {
     schema.country.min(1, {
       message: "Country is required",
     }),
+  github: (schema) =>
+    schema.github
+      .url({
+        message: "Invalid GitHub link",
+      })
+      .optional()
+      .or(z.literal("")),
+  personalWebsite: (schema) =>
+    schema.personalWebsite
+      .url({
+        message: "Invalid personal website link",
+      })
+      .optional()
+      .or(z.literal("")),
+  linkedin: (schema) =>
+    schema.linkedin
+      .url({
+        message: "Invalid LinkedIn link",
+      })
+      .optional()
+      .or(z.literal("")),
 }).omit({
   id: true,
   email: true,
