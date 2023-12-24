@@ -1,6 +1,5 @@
 import type { SubmitHandler } from "react-hook-form";
 import type { z } from "zod";
-import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Redirect } from "wouter";
@@ -8,6 +7,16 @@ import { Redirect } from "wouter";
 import type { RouterOutput } from "@knighthacks/api";
 import { insertHackerRequestSchema } from "@knighthacks/db";
 
+import { Button } from "~/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/ui/form";
+import { Textarea } from "~/components/ui/textarea";
 import { trpc } from "~/trpc";
 
 export function HackathonRegistration() {
@@ -35,11 +44,7 @@ function HackerRegistration({
       void utils.users.getCurrentUser.invalidate();
     },
   });
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm<HackerRegistrationSchema>({
+  const form = useForm<HackerRegistrationSchema>({
     resolver: zodResolver(insertHackerRequestSchema),
   });
 
@@ -58,18 +63,49 @@ function HackerRegistration({
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label className="block">
-        Why do you want to participate in KnightHacks?
-        <textarea className="block" {...register("whyAttend")} />
-        <ErrorMessage errors={errors} name="whyAttend" />
-      </label>
-      <label className="block">
-        What do you want to learn at KnightHacks?
-        <textarea className="block" {...register("whatLearn")} />
-        <ErrorMessage errors={errors} name="whatLearn" />
-      </label>
-      <button type="submit">Submit</button>
-    </form>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mx-auto  flex w-2/3 flex-1 flex-col justify-center space-y-6"
+      >
+        <FormField
+          control={form.control}
+          name="whyAttend"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Why do you want to attend Knight Hacks?</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Why do you want to attend Knight Hacks?"
+                  className="resize-none"
+                  disabled={isLoading}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="whatLearn"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>What do you want to learn at Knight Hacks?</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="What do you want to learn at Knight Hacks?"
+                  className="resize-none"
+                  disabled={isLoading}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
   );
 }
