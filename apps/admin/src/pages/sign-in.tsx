@@ -1,9 +1,15 @@
-import { SignIn as ClerkSignIn, useClerk } from "@clerk/clerk-react";
+import { SignIn as ClerkSignIn, useAuth, useClerk } from "@clerk/clerk-react";
+import { Redirect } from "wouter";
 
 import { Skeleton } from "~/components/ui/skeleton";
 
 export function SignIn() {
+  const { isSignedIn } = useAuth();
   const { loaded } = useClerk();
+
+  if (isSignedIn) {
+    return <Redirect to="/" />;
+  }
 
   const form = loaded ? (
     <ClerkSignIn />
