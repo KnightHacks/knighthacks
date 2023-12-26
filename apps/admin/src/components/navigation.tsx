@@ -12,14 +12,12 @@ import { Skeleton } from "./ui/skeleton";
 import { ThemeToggle } from "./ui/theme-toggle";
 
 export function Navigation() {
-  const { isSignedIn, isLoaded } = useUser();
+  const { isLoaded } = useUser();
 
-  const profile = isSignedIn ? (
+  const profile = isLoaded ? (
     <UserButton />
-  ) : isLoaded ? (
-    <Link href="/signin">Sign In</Link>
   ) : (
-    <Skeleton className="h-8 w-32 rounded-md" />
+    <Skeleton className="h-8 w-8 rounded-full" />
   );
 
   return (
