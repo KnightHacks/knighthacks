@@ -12,7 +12,7 @@ export function AuthenticatedRoute(props: RouteProps) {
   }
 
   if (!isSignedIn) {
-    return <Redirect to="/signin" />;
+    return <Redirect to="/sign-in" />;
   }
 
   return <Route {...props} />;

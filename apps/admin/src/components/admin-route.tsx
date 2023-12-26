@@ -13,7 +13,7 @@ export function AdminRoute(props: RouteProps) {
   }
 
   if (!isSignedIn) {
-    return <Redirect to="/signin" />;
+    return <Redirect to="/sign-in" />;
   }
 
   if (!user.primaryEmailAddress?.emailAddress.endsWith("@knighthacks.org")) {

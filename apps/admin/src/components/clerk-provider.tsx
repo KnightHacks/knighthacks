@@ -16,6 +16,10 @@ export function ClerkProviderWithTheme({
         baseTheme: theme === "dark" ? dark : undefined,
       }}
       publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY as string}
+      afterSignInUrl="/"
+      afterSignUpUrl="/"
+      signInUrl="/sign-in"
+      signUpUrl="/sign-up"
     >
       {children}
     </ClerkProvider>

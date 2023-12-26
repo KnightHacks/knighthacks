@@ -10,6 +10,7 @@ import { HackathonSignIn } from "./hackathon-signin";
 import { Hello } from "./hello";
 import { Overview } from "./overview";
 import { SignIn } from "./sign-in";
+import { SignUp } from "./sign-up.jsx";
 import { Users } from "./users";
 
 export function Pages() {
@@ -19,8 +20,9 @@ export function Pages() {
         <AdminRoute path="/" component={WithNav(Overview)} />
         <AdminRoute path="/users" component={WithNav(Users)} />
         <Route path="/hello" component={WithNav(Hello)} />
-        <Route path="/signin" component={SignIn} />
-        <Route path="/hackathon/signin" component={HackathonSignIn} />
+        <Route path="/sign-in" component={SignIn} />
+        <Route path="/sign-up" component={SignUp} />
+        <Route path="/hackathon/sign-in" component={HackathonSignIn} />
         <AuthenticatedRoute
           path="/hackathon/account-registration"
           component={WithNav(HackathonAccountRegistration)}
