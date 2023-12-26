@@ -1,12 +1,15 @@
 import type { RouteProps } from "wouter";
-import { useUser } from "@clerk/clerk-react";
+import { SignOutButton, useUser } from "@clerk/clerk-react";
 import { Redirect, Route } from "wouter";
+
+import { LoadingOverlay } from "./loading-overlay";
+import { Button } from "./ui/button";
 
 export function AdminRoute(props: RouteProps) {
   const { user, isLoaded, isSignedIn } = useUser();
 
   if (!isLoaded) {
-    return <>Loading...</>;
+    return <LoadingOverlay />;
   }
 
   if (!isSignedIn) {
@@ -14,7 +17,14 @@ export function AdminRoute(props: RouteProps) {
   }
 
   if (!user.primaryEmailAddress?.emailAddress.endsWith("@knighthacks.org")) {
-    return <>You don&apos;t have access to this page.</>;
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center">
+        <p className="mb-4">You don&apos;t have access to this application</p>
+        <Button asChild>
+          <SignOutButton />
+        </Button>
+      </div>
+    );
   }
   return <Route {...props} />;
 }
