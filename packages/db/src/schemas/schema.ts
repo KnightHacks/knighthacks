@@ -7,10 +7,28 @@ import { gradYears, majors, schools, shirtSizes } from "../consts";
 
 export const users = sqliteTable("users", {
   id: text("id").primaryKey(), // This will be from the oauth provider
-  isMember: integer("is_member", { mode: "boolean" }).default(false), // Whether or not they are a dues paying member
   email: text("email").notNull().unique(), // This will be from the oauth provider
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
+  metadata: integer("metadata_id").references(() => userMetadata.id, {
+    onDelete: "cascade", // If the metadata is deleted, delete the user
+    onUpdate: "cascade", // If the metadata is updated, update the user
+  }),
+});
+
+// A user can only have one metadata
+export const usersMetadataRelations = relations(users, ({ one }) => {
+  return {
+    metadata: one(userMetadata, {
+      fields: [users.metadata],
+      references: [userMetadata.id],
+    }),
+  };
+});
+
+const userMetadata = sqliteTable("user_metadata", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  isMember: integer("is_member", { mode: "boolean" }).default(false), // Whether or not they are a dues paying member
   phone: text("phone").notNull().unique(),
   age: integer("age").notNull(),
   shirtSize: text("shirt_size", {
@@ -119,15 +137,9 @@ export const insertHackathonSchema = createInsertSchema(hackathons);
 export const selectHackathonSchema = createSelectSchema(hackathons);
 
 export const insertUserSchema = createInsertSchema(users);
-export const insertUserRequestSchema = createInsertSchema(users, {
-  firstName: (schema) =>
-    schema.firstName.min(1, {
-      message: "First name is required",
-    }),
-  lastName: (schema) =>
-    schema.lastName.min(1, {
-      message: "Last name is required",
-    }),
+export const selectUserSchema = createSelectSchema(users);
+
+export const insertUserMetadataSchema = createInsertSchema(userMetadata, {
   phone: (schema) =>
     schema.phone
       .min(1, {
@@ -192,11 +204,8 @@ export const insertUserRequestSchema = createInsertSchema(users, {
       })
       .optional()
       .or(z.literal("")),
-}).omit({
-  id: true,
-  email: true,
 });
-export const selectUserSchema = createSelectSchema(users);
+export const selectUserMetadataSchema = createSelectSchema(userMetadata);
 
 export const insertHackerSchema = createInsertSchema(hackers);
 export const insertHackerRequestSchema = createInsertSchema(hackers, {
