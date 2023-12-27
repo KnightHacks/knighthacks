@@ -10,6 +10,7 @@ export type Bindings = {
   TURSO_AUTH_TOKEN: string;
   CLERK_SECRET_KEY: string;
   CLERK_PUBLISHABLE_KEY: string;
+  CLERK_WEBHOOK_SECRET_KEY: string;
   KNIGHT_HACKS_BUCKET: R2Bucket;
 };
 

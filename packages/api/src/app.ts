@@ -6,6 +6,7 @@ import { clerk } from "./middlewares/clerk";
 import { db } from "./middlewares/db";
 import { trpc } from "./middlewares/trpc";
 import { resume } from "./routes/resume";
+import { webhook } from "./routes/webhook";
 
 const app = new Hono<HonoConfig>()
   .get("/", (c) => {
@@ -20,6 +21,7 @@ const app = new Hono<HonoConfig>()
   .use("*", db)
   .use("*", clerk)
   .use("/trpc/*", trpc)
-  .route("/resume", resume);
+  .route("/resume", resume)
+  .route("/webhook", webhook);
 
 export { app };
