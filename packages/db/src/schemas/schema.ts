@@ -16,9 +16,10 @@ export const users = sqliteTable("users", {
   }),
 });
 
-// A user can only have one metadata
-export const usersMetadataRelations = relations(users, ({ one }) => {
+// A user can make multiple hacker applications and have one metadata entry
+export const usersRelations = relations(users, ({ many, one }) => {
   return {
+    hackers: many(hackers),
     metadata: one(userMetadata, {
       fields: [users.metadata],
       references: [userMetadata.id],
@@ -51,10 +52,12 @@ const userMetadata = sqliteTable("user_metadata", {
   resume: text("resume"), // Link to resume
 });
 
-// A user can make multiple hacker applications
-export const usersRelations = relations(users, ({ many }) => {
+export const userMetadataRelations = relations(userMetadata, ({ one }) => {
   return {
-    hackers: many(hackers),
+    user: one(users, {
+      fields: [userMetadata.id],
+      references: [users.metadata],
+    }),
   };
 });
 
