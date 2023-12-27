@@ -27,7 +27,7 @@ export const usersRelations = relations(users, ({ many, one }) => {
   };
 });
 
-const userMetadata = sqliteTable("user_metadata", {
+export const userMetadata = sqliteTable("user_metadata", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   isMember: integer("is_member", { mode: "boolean" }).default(false), // Whether or not they are a dues paying member
   phone: text("phone").notNull().unique(),
