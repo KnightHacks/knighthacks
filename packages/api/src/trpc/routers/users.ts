@@ -1,4 +1,11 @@
-import { asc, eq, hackathons, users } from "@knighthacks/db";
+import {
+  asc,
+  eq,
+  hackathons,
+  insertUserMetadataSchema,
+  userMetadata,
+  users,
+} from "@knighthacks/db";
 
 import { router } from "../init";
 import { adminProcedure, authenticatedProcedure } from "../procedures";
@@ -7,6 +14,14 @@ export const usersRouter = router({
   getAll: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.users.findMany();
   }),
+  insertMetadata: authenticatedProcedure
+    .input(insertUserMetadataSchema)
+    .mutation(({ ctx, input }) => {
+      return ctx.db.insert(userMetadata).values({
+        ...input,
+        userId: ctx.user.id,
+      });
+    }),
   getCurrentUser: authenticatedProcedure.query(async ({ ctx }) => {
     const user = await ctx.db.query.users.findFirst({
       where: eq(users.email, ctx.user.email),
