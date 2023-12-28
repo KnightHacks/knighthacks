@@ -25,7 +25,7 @@ export const usersRouter = router({
   getCurrentUser: authenticatedProcedure.query(async ({ ctx }) => {
     const user = await ctx.db.query.users.findFirst({
       where: eq(users.email, ctx.user.email),
-      with: { hackers: true },
+      with: { hackers: true, metadata: true },
     });
 
     const currentHackathon = await ctx.db.query.hackathons.findFirst({
