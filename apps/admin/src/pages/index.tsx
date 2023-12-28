@@ -6,7 +6,7 @@ import { Toaster } from "~/components/ui/toaster.jsx";
 import { WithNav } from "~/components/with-nav.jsx";
 import { HackathonAccountRegistration } from "./hackathon-account-registration.tsx";
 import { HackathonRegistration } from "./hackathon-registration";
-import { HackathonSignIn } from "./hackathon-signin";
+import { HackathonSignIn } from "./hackathon-sign-in";
 import { Hello } from "./hello";
 import { Overview } from "./overview";
 import { SignIn } from "./sign-in";
