@@ -18,11 +18,10 @@ export const hackersRouter = router({
         });
 
         if (!hackathon) {
-          console.error("No current hackathon found");
           tx.rollback();
           return;
         }
-
+        
         await tx.insert(hackers).values({
           ...input,
           hackathonId: hackathon.id,
