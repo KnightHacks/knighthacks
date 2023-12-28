@@ -56,7 +56,7 @@ export const userMetadataRelations = relations(userMetadata, ({ one }) => {
       references: [users.id],
     }),
   };
-})
+});
 
 export const hackers = sqliteTable("hackers", {
   id: integer("id").primaryKey({ autoIncrement: true }),
@@ -139,72 +139,77 @@ export const selectHackathonSchema = createSelectSchema(hackathons);
 export const insertUserSchema = createInsertSchema(users);
 export const selectUserSchema = createSelectSchema(users);
 
-export const insertUserMetadataSchema = createInsertSchema(userMetadata, {
-  phone: (schema) =>
-    schema.phone
-      .min(1, {
-        message: "Phone number is required",
-      })
-      .regex(/^\d{10}$/, {
-        message: "Phone number must be 10 digits",
+export const insertUserMetadataSchema = createInsertSchema(userMetadata);
+export const insertUserMetadataRequestSchema = createInsertSchema(
+  userMetadata,
+  {
+    phone: (schema) =>
+      schema.phone
+        .min(1, {
+          message: "Phone number is required",
+        })
+        .regex(/^\d{10}$/, {
+          message: "Phone number must be 10 digits",
+        }),
+    age: z.coerce.number().min(18, {
+      message: "You must be at least 18 years old",
+    }),
+    shirtSize: z.enum(shirtSizes, {
+      errorMap: () => ({ message: "Invalid shirt size" }),
+    }),
+    major: z.enum(majors, {
+      errorMap: () => ({ message: "Invalid major" }),
+    }),
+    school: z.enum(schools, {
+      errorMap: () => ({ message: "Invalid school" }),
+    }),
+    gradYear: z.enum(gradYears, {
+      errorMap: () => ({ message: "Invalid graduation year" }),
+    }),
+    address1: (schema) =>
+      schema.address1.min(1, {
+        message: "Address is required",
       }),
-  age: z.coerce.number().min(18, {
-    message: "You must be at least 18 years old",
-  }),
-  shirtSize: z.enum(shirtSizes, {
-    errorMap: () => ({ message: "Invalid shirt size" }),
-  }),
-  major: z.enum(majors, {
-    errorMap: () => ({ message: "Invalid major" }),
-  }),
-  school: z.enum(schools, {
-    errorMap: () => ({ message: "Invalid school" }),
-  }),
-  gradYear: z.enum(gradYears, {
-    errorMap: () => ({ message: "Invalid graduation year" }),
-  }),
-  address1: (schema) =>
-    schema.address1.min(1, {
-      message: "Address is required",
-    }),
-  city: (schema) =>
-    schema.city.min(1, {
-      message: "City is required",
-    }),
-  state: (schema) =>
-    schema.state.min(1, {
-      message: "State is required",
-    }),
-  zip: (schema) =>
-    schema.zip.min(1, {
-      message: "Zip code is required",
-    }),
-  country: (schema) =>
-    schema.country.min(1, {
-      message: "Country is required",
-    }),
-  github: (schema) =>
-    schema.github
-      .url({
-        message: "Invalid GitHub link",
-      })
-      .optional()
-      .or(z.literal("")),
-  personalWebsite: (schema) =>
-    schema.personalWebsite
-      .url({
-        message: "Invalid personal website link",
-      })
-      .optional()
-      .or(z.literal("")),
-  linkedin: (schema) =>
-    schema.linkedin
-      .url({
-        message: "Invalid LinkedIn link",
-      })
-      .optional()
-      .or(z.literal("")),
-});
+    city: (schema) =>
+      schema.city.min(1, {
+        message: "City is required",
+      }),
+    state: (schema) =>
+      schema.state.min(1, {
+        message: "State is required",
+      }),
+    zip: (schema) =>
+      schema.zip.min(1, {
+        message: "Zip code is required",
+      }),
+    country: (schema) =>
+      schema.country.min(1, {
+        message: "Country is required",
+      }),
+    github: (schema) =>
+      schema.github
+        .url({
+          message: "Invalid GitHub link",
+        })
+        .optional()
+        .or(z.literal("")),
+    personalWebsite: (schema) =>
+      schema.personalWebsite
+        .url({
+          message: "Invalid personal website link",
+        })
+        .optional()
+        .or(z.literal("")),
+    linkedin: (schema) =>
+      schema.linkedin
+        .url({
+          message: "Invalid LinkedIn link",
+        })
+        .optional()
+        .or(z.literal("")),
+    resume: z.instanceof(File),
+  },
+);
 export const selectUserMetadataSchema = createSelectSchema(userMetadata);
 
 export const insertHackerSchema = createInsertSchema(hackers);
