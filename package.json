@@ -9,6 +9,7 @@
     "clean:workspaces": "turbo clean",
     "db:preview": "pnpm with-env turbo run db:preview",
     "db:push": "pnpm with-env turbo run db:push",
+    "db:generate": "pnpm with-env turbo run db:generate",
     "dev": "pnpm with-env turbo run dev --parallel",
     "format": "turbo format --continue -- --cache --cache-location node_modules/.cache/.prettiercache",
     "format:fix": "turbo format --continue -- --write --cache --cache-location node_modules/.cache/.prettiercache",

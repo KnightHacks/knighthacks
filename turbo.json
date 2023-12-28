@@ -17,6 +17,9 @@
     "db:preview": {
       "cache": false
     },
+    "db:generate": {
+      "cache": false
+    },
     "clean": {
       "cache": false
     },
