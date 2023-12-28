@@ -26,7 +26,7 @@ export function HackathonRegistration() {
     return <>Fetching current user...</>;
   }
 
-  if (!currentUser) return <Redirect to="/hackathon/account-registration" />;
+  if (!currentUser?.metadata) return <Redirect to="/hackathon/account-registration" />;
 
   return <HackerRegistration currentUser={currentUser} />;
 }
