@@ -49,6 +49,15 @@ export const userMetadata = sqliteTable("user_metadata", {
   resume: text("resume"), // Link to resume
 });
 
+export const userMetadataRelations = relations(userMetadata, ({ one }) => {
+  return {
+    user: one(users, {
+      fields: [userMetadata.userId],
+      references: [users.id],
+    }),
+  };
+})
+
 export const hackers = sqliteTable("hackers", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   userId: text("user_id").references(() => users.id, {
