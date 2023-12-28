@@ -8,7 +8,7 @@ import { z } from "zod";
 
 import {
   gradYears,
-  insertUserRequestSchema,
+  insertUserMetadataSchema,
   majors,
   schools,
   shirtSizes,
@@ -53,25 +53,23 @@ export function HackathonAccountRegistration() {
 
   if (isLoading) return <>Fetching current user...</>;
 
-  if (currentUser) return <Redirect to="/hackathon/registration" />;
+  if (currentUser?.metadata) return <Redirect to="/hackathon/registration" />;
 
   return <UserForm />;
 }
 
-const userRegistrationSchema = insertUserRequestSchema.extend({
-  // On the client, we want to accept a FileList object or undefined
-  // On the server, we want to accept a string, which will be the key of the uploaded file
-  resume: z.instanceof(File),
+const insertUserMetadataRequestSchema = insertUserMetadataSchema.extend({
+  resume: z.instanceof(File).optional(),
 });
 
-type UserRegistrationSchema = z.infer<typeof userRegistrationSchema>;
+type UserMetadataRequestSchema = z.infer<
+  typeof insertUserMetadataRequestSchema
+>;
 
 function UserForm() {
-  const form = useForm<UserRegistrationSchema>({
-    resolver: zodResolver(userRegistrationSchema),
+  const form = useForm<UserMetadataRequestSchema>({
+    resolver: zodResolver(insertUserMetadataSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
       phone: "",
       age: 18,
       shirtSize: "SM",
@@ -94,7 +92,7 @@ function UserForm() {
   const [_, navigation] = useLocation();
   const { getToken } = useAuth();
   const utils = trpc.useUtils();
-  const { error, isLoading, mutate } = trpc.users.register.useMutation({
+  const { error, isLoading, mutate } = trpc.users.insertMetadata.useMutation({
     onSuccess: async () => {
       // Since we have a new user, invalidate the current user query
       await utils.users.getCurrentUser.invalidate();
@@ -108,7 +106,7 @@ function UserForm() {
 
   if (isLoading) return <p>Loading...</p>;
 
-  const onSubmit: SubmitHandler<UserRegistrationSchema> = async (data) => {
+  const onSubmit: SubmitHandler<UserMetadataRequestSchema> = async (data) => {
     let resume: string | null = null;
     if (data.resume) {
       // Upload resume
@@ -148,34 +146,6 @@ function UserForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="mx-auto mb-4 mt-4 flex w-2/3 flex-1 flex-col justify-center space-y-6"
       >
-        <FormField
-          control={form.control}
-          name="firstName"
-          disabled={isLoading}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>First Name</FormLabel>
-              <FormControl>
-                <Input placeholder="First Name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="lastName"
-          disabled={isLoading}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Last Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Last Name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="phone"
