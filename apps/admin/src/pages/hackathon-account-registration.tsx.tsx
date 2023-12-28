@@ -1,14 +1,14 @@
 import type { SubmitHandler } from "react-hook-form";
+import type { z } from "zod";
 import { useAuth } from "@clerk/clerk-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Redirect, useLocation } from "wouter";
-import { z } from "zod";
 
 import {
   gradYears,
-  insertUserMetadataSchema,
+  insertUserMetadataRequestSchema,
   majors,
   schools,
   shirtSizes,
@@ -58,17 +58,13 @@ export function HackathonAccountRegistration() {
   return <UserForm />;
 }
 
-const insertUserMetadataRequestSchema = insertUserMetadataSchema.extend({
-  resume: z.instanceof(File).optional(),
-});
-
 type UserMetadataRequestSchema = z.infer<
   typeof insertUserMetadataRequestSchema
 >;
 
 function UserForm() {
   const form = useForm<UserMetadataRequestSchema>({
-    resolver: zodResolver(insertUserMetadataSchema),
+    resolver: zodResolver(insertUserMetadataRequestSchema),
     defaultValues: {
       phone: "",
       age: 18,
@@ -85,7 +81,7 @@ function UserForm() {
       github: "",
       personalWebsite: "",
       linkedin: "",
-      resume: new File([], ""),
+      resume: undefined,
     },
   });
   const { toast } = useToast();
