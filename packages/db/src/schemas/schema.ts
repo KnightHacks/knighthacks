@@ -10,25 +10,22 @@ export const users = sqliteTable("users", {
   email: text("email").notNull().unique(), // This will be from the oauth provider
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
-  metadata: integer("metadata_id").references(() => userMetadata.id, {
-    onDelete: "cascade", // If the metadata is deleted, delete the user
-    onUpdate: "cascade", // If the metadata is updated, update the user
-  }),
 });
 
 // A user can make multiple hacker applications and have one metadata entry
 export const usersRelations = relations(users, ({ many, one }) => {
   return {
     hackers: many(hackers),
-    metadata: one(userMetadata, {
-      fields: [users.metadata],
-      references: [userMetadata.id],
-    }),
+    metadata: one(userMetadata),
   };
 });
 
 export const userMetadata = sqliteTable("user_metadata", {
   id: integer("id").primaryKey({ autoIncrement: true }),
+  userId: text("user_id").references(() => users.id, {
+    onDelete: "cascade", // If the user is deleted, delete the metadata
+    onUpdate: "cascade", // If the user is updated, update the metadata
+  }),
   isMember: integer("is_member", { mode: "boolean" }).default(false), // Whether or not they are a dues paying member
   phone: text("phone").notNull().unique(),
   age: integer("age").notNull(),
@@ -50,15 +47,6 @@ export const userMetadata = sqliteTable("user_metadata", {
   personalWebsite: text("personal_website"),
   linkedin: text("linkedin"),
   resume: text("resume"), // Link to resume
-});
-
-export const userMetadataRelations = relations(userMetadata, ({ one }) => {
-  return {
-    user: one(users, {
-      fields: [userMetadata.id],
-      references: [users.metadata],
-    }),
-  };
 });
 
 export const hackers = sqliteTable("hackers", {
