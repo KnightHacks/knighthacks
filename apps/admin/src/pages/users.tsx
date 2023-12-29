@@ -40,22 +40,24 @@ import { trpc } from "~/trpc";
 
 export function Users() {
   return (
-    <Dialog>
-      <div className="mx-auto min-w-[800px]">
-        <div className="mb-4">
-          <DialogTrigger asChild>
-            <Button>Add User</Button>
-          </DialogTrigger>
+    <div className="px-4">
+      <Dialog>
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-4">
+            <DialogTrigger asChild>
+              <Button>Add User</Button>
+            </DialogTrigger>
+          </div>
+          <UserTable />
         </div>
-        <UserTable />
-      </div>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Add User</DialogTitle>
-          <AddUserForm />
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add User</DialogTitle>
+            <AddUserForm />
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }
 
