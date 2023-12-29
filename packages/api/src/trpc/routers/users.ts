@@ -1,3 +1,4 @@
+import { z } from "zod";
 
 import {
   asc,
@@ -50,5 +51,11 @@ export const usersRouter = router({
       ...user,
       hasAppliedToCurrentHackathon,
     };
+  }),
+  delete: adminProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
+    await ctx.db.transaction(async (db) => {
+      await ctx.clerk.users.deleteUser(input); // Delete user from Clerk
+      await db.delete(users).where(eq(users.id, input)); // Delete user from database
+    });
   }),
 });
