@@ -20,13 +20,14 @@ import { Textarea } from "~/components/ui/textarea";
 import { trpc } from "~/trpc";
 
 export function HackathonRegistration() {
-  const { data: currentUser, isLoading } = trpc.users.getCurrentUser.useQuery();
+  const { data: currentUser, isLoading } = trpc.users.getCurrent.useQuery();
 
   if (isLoading) {
     return <>Fetching current user...</>;
   }
 
-  if (!currentUser?.metadata) return <Redirect to="/hackathon/account-registration" />;
+  if (!currentUser?.metadata)
+    return <Redirect to="/hackathon/account-registration" />;
 
   return <HackerRegistration currentUser={currentUser} />;
 }
@@ -36,12 +37,12 @@ type HackerRegistrationSchema = z.infer<typeof insertHackerRequestSchema>;
 function HackerRegistration({
   currentUser,
 }: {
-  currentUser: NonNullable<RouterOutput["users"]["getCurrentUser"]>;
+  currentUser: NonNullable<RouterOutput["users"]["getCurrent"]>;
 }) {
   const utils = trpc.useUtils();
   const { mutate, isLoading, isSuccess } = trpc.hackers.register.useMutation({
     onSuccess: () => {
-      void utils.users.getCurrentUser.invalidate();
+      void utils.users.getCurrent.invalidate();
     },
   });
   const form = useForm<HackerRegistrationSchema>({

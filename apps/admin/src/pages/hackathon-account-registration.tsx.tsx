@@ -49,7 +49,7 @@ import { trpc } from "~/trpc";
 import { cn } from "~/utils";
 
 export function HackathonAccountRegistration() {
-  const { data: currentUser, isLoading } = trpc.users.getCurrentUser.useQuery();
+  const { data: currentUser, isLoading } = trpc.users.getCurrent.useQuery();
 
   if (isLoading) return <>Fetching current user...</>;
 
@@ -91,7 +91,7 @@ function UserForm() {
   const { error, isLoading, mutate } = trpc.users.insertMetadata.useMutation({
     onSuccess: async () => {
       // Since we have a new user, invalidate the current user query
-      await utils.users.getCurrentUser.invalidate();
+      await utils.users.getCurrent.invalidate();
       toast({
         title: "Success!",
         description: "You've created a Knight Hacks account!",
