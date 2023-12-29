@@ -12,7 +12,9 @@ import { adminProcedure, authenticatedProcedure } from "../procedures";
 
 export const usersRouter = router({
   getAll: adminProcedure.query(async ({ ctx }) => {
-    return ctx.db.query.users.findMany();
+    return ctx.db.query.users.findMany({
+      with: { hackers: true, metadata: true },
+    });
   }),
   insertMetadata: authenticatedProcedure
     .input(insertUserMetadataSchema)
