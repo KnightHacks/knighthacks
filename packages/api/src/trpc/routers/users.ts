@@ -1,3 +1,4 @@
+
 import {
   asc,
   eq,
@@ -24,7 +25,7 @@ export const usersRouter = router({
         userId: ctx.user.id,
       });
     }),
-  getCurrentUser: authenticatedProcedure.query(async ({ ctx }) => {
+  getCurrent: authenticatedProcedure.query(async ({ ctx }) => {
     const user = await ctx.db.query.users.findFirst({
       where: eq(users.email, ctx.user.email),
       with: { hackers: true, metadata: true },
