@@ -5,6 +5,7 @@ import {
   eq,
   hackathons,
   insertUserMetadataSchema,
+  insertUserSchema,
   userMetadata,
   users,
 } from "@knighthacks/db";
@@ -58,4 +59,17 @@ export const usersRouter = router({
       await db.delete(users).where(eq(users.id, input)); // Delete user from database
     });
   }),
+  add: adminProcedure
+    .input(insertUserSchema.omit({ id: true }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.transaction(async (db) => {
+        // Create user in Clerk
+        const user = await ctx.clerk.users.createUser({
+          firstName: input.firstName,
+          lastName: input.lastName,
+          emailAddress: [input.email],
+        });
+        await db.insert(users).values({ ...input, id: user.id }); // Create user in database
+      });
+    }),
 });
