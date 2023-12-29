@@ -72,4 +72,17 @@ export const usersRouter = router({
         await db.insert(users).values({ ...input, id: user.id }); // Create user in database
       });
     }),
+  update: adminProcedure
+    .input(insertUserSchema.partial().extend({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.transaction(async (db) => {
+        // Update user in Clerk
+        await ctx.clerk.users.updateUser(input.id, {
+          firstName: input.firstName,
+          lastName: input.lastName,
+          // TOOD: Find a way to update email
+        });
+        await db.update(users).set(input).where(eq(users.id, input.id)); // Update user in database
+      });
+    }),
 });
