@@ -10,7 +10,7 @@ import { HackathonSignIn } from "./hackathon-sign-in";
 import { Hello } from "./hello";
 import { Overview } from "./overview";
 import { SignIn } from "./sign-in";
-import { SignUp } from "./sign-up.jsx";
+import { SignUp } from "./sign-up";
 import { Users } from "./users";
 
 export function Pages() {
