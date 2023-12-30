@@ -32,7 +32,7 @@ export function HackathonRegistration() {
   return <HackerRegistration currentUser={currentUser} />;
 }
 
-type HackerRegistrationSchema = z.infer<typeof insertHackerRequestSchema>;
+type HackerRegistrationFormValues = z.infer<typeof insertHackerRequestSchema>;
 
 function HackerRegistration({
   currentUser,
@@ -45,11 +45,11 @@ function HackerRegistration({
       void utils.users.getCurrent.invalidate();
     },
   });
-  const form = useForm<HackerRegistrationSchema>({
+  const form = useForm<HackerRegistrationFormValues>({
     resolver: zodResolver(insertHackerRequestSchema),
   });
 
-  const onSubmit: SubmitHandler<HackerRegistrationSchema> = (data) => {
+  const onSubmit: SubmitHandler<HackerRegistrationFormValues> = (data) => {
     mutate({
       ...data,
     });
