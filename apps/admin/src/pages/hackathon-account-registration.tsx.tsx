@@ -8,7 +8,7 @@ import { Redirect, useLocation } from "wouter";
 
 import {
   gradYears,
-  insertUserProfileRequestSchema,
+  insertUserProfileFormSchema,
   majors,
   schools,
   shirtSizes,
@@ -58,13 +58,11 @@ export function HackathonAccountRegistration() {
   return <UserProfileForm />;
 }
 
-type UserProfileRequestFormValues = z.infer<
-  typeof insertUserProfileRequestSchema
->;
+type UserProfileRequestFormValues = z.infer<typeof insertUserProfileFormSchema>;
 
 function UserProfileForm() {
   const form = useForm<UserProfileRequestFormValues>({
-    resolver: zodResolver(insertUserProfileRequestSchema),
+    resolver: zodResolver(insertUserProfileFormSchema),
     defaultValues: {
       phone: "",
       age: 18,
