@@ -16,11 +16,11 @@ export const users = sqliteTable("users", {
 export const usersRelations = relations(users, ({ many, one }) => {
   return {
     hackers: many(hackers),
-    metadata: one(userMetadata),
+    profile: one(userProfiles),
   };
 });
 
-export const userMetadata = sqliteTable("user_metadata", {
+export const userProfiles = sqliteTable("user_profiles", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   userId: text("user_id").references(() => users.id, {
     onDelete: "cascade", // If the user is deleted, delete the metadata
@@ -49,10 +49,10 @@ export const userMetadata = sqliteTable("user_metadata", {
   resume: text("resume"), // Link to resume
 });
 
-export const userMetadataRelations = relations(userMetadata, ({ one }) => {
+export const userProfileRelations = relations(userProfiles, ({ one }) => {
   return {
     user: one(users, {
-      fields: [userMetadata.userId],
+      fields: [userProfiles.userId],
       references: [users.id],
     }),
   };
@@ -139,9 +139,9 @@ export const selectHackathonSchema = createSelectSchema(hackathons);
 export const insertUserSchema = createInsertSchema(users);
 export const selectUserSchema = createSelectSchema(users);
 
-export const insertUserMetadataSchema = createInsertSchema(userMetadata);
+export const insertUserMetadataSchema = createInsertSchema(userProfiles);
 export const insertUserMetadataRequestSchema = createInsertSchema(
-  userMetadata,
+  userProfiles,
   {
     phone: (schema) =>
       schema.phone
@@ -210,7 +210,7 @@ export const insertUserMetadataRequestSchema = createInsertSchema(
     resume: z.instanceof(File),
   },
 );
-export const selectUserMetadataSchema = createSelectSchema(userMetadata);
+export const selectUserMetadataSchema = createSelectSchema(userProfiles);
 
 export const insertHackerSchema = createInsertSchema(hackers);
 export const insertHackerRequestSchema = createInsertSchema(hackers, {
