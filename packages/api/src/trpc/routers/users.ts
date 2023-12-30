@@ -27,6 +27,14 @@ export const usersRouter = router({
         userId: ctx.user.id,
       });
     }),
+  updateProfile: authenticatedProcedure
+    .input(insertUserProfileSchema)
+    .mutation(({ ctx, input }) => {
+      return ctx.db
+        .update(userProfiles)
+        .set(input)
+        .where(eq(userProfiles.userId, ctx.user.id));
+    }),
   getCurrent: authenticatedProcedure.query(async ({ ctx }) => {
     const user = await ctx.db.query.users.findFirst({
       where: eq(users.email, ctx.user.email),
