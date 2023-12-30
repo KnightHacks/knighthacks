@@ -4,7 +4,7 @@ import {
   asc,
   eq,
   hackathons,
-  insertUserMetadataSchema,
+  insertUserProfileSchema,
   insertUserSchema,
   userProfiles,
   users,
@@ -20,7 +20,7 @@ export const usersRouter = router({
     });
   }),
   insertMetadata: authenticatedProcedure
-    .input(insertUserMetadataSchema)
+    .input(insertUserProfileSchema)
     .mutation(({ ctx, input }) => {
       return ctx.db.insert(userProfiles).values({
         ...input,
