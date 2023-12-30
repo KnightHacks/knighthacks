@@ -139,77 +139,74 @@ export const selectHackathonSchema = createSelectSchema(hackathons);
 export const insertUserSchema = createInsertSchema(users);
 export const selectUserSchema = createSelectSchema(users);
 
-export const insertUserMetadataSchema = createInsertSchema(userProfiles);
-export const insertUserMetadataRequestSchema = createInsertSchema(
-  userProfiles,
-  {
-    phone: (schema) =>
-      schema.phone
-        .min(1, {
-          message: "Phone number is required",
-        })
-        .regex(/^\d{10}$/, {
-          message: "Phone number must be 10 digits",
-        }),
-    age: z.coerce.number().min(18, {
-      message: "You must be at least 18 years old",
-    }),
-    shirtSize: z.enum(shirtSizes, {
-      errorMap: () => ({ message: "Invalid shirt size" }),
-    }),
-    major: z.enum(majors, {
-      errorMap: () => ({ message: "Invalid major" }),
-    }),
-    school: z.enum(schools, {
-      errorMap: () => ({ message: "Invalid school" }),
-    }),
-    gradYear: z.enum(gradYears, {
-      errorMap: () => ({ message: "Invalid graduation year" }),
-    }),
-    address1: (schema) =>
-      schema.address1.min(1, {
-        message: "Address is required",
+export const insertUserProfileSchema = createInsertSchema(userProfiles);
+export const insertUserProfileRequestSchema = createInsertSchema(userProfiles, {
+  phone: (schema) =>
+    schema.phone
+      .min(1, {
+        message: "Phone number is required",
+      })
+      .regex(/^\d{10}$/, {
+        message: "Phone number must be 10 digits",
       }),
-    city: (schema) =>
-      schema.city.min(1, {
-        message: "City is required",
-      }),
-    state: (schema) =>
-      schema.state.min(1, {
-        message: "State is required",
-      }),
-    zip: (schema) =>
-      schema.zip.min(1, {
-        message: "Zip code is required",
-      }),
-    country: (schema) =>
-      schema.country.min(1, {
-        message: "Country is required",
-      }),
-    github: (schema) =>
-      schema.github
-        .url({
-          message: "Invalid GitHub link",
-        })
-        .optional()
-        .or(z.literal("")),
-    personalWebsite: (schema) =>
-      schema.personalWebsite
-        .url({
-          message: "Invalid personal website link",
-        })
-        .optional()
-        .or(z.literal("")),
-    linkedin: (schema) =>
-      schema.linkedin
-        .url({
-          message: "Invalid LinkedIn link",
-        })
-        .optional()
-        .or(z.literal("")),
-    resume: z.instanceof(File),
-  },
-);
+  age: z.coerce.number().min(18, {
+    message: "You must be at least 18 years old",
+  }),
+  shirtSize: z.enum(shirtSizes, {
+    errorMap: () => ({ message: "Invalid shirt size" }),
+  }),
+  major: z.enum(majors, {
+    errorMap: () => ({ message: "Invalid major" }),
+  }),
+  school: z.enum(schools, {
+    errorMap: () => ({ message: "Invalid school" }),
+  }),
+  gradYear: z.enum(gradYears, {
+    errorMap: () => ({ message: "Invalid graduation year" }),
+  }),
+  address1: (schema) =>
+    schema.address1.min(1, {
+      message: "Address is required",
+    }),
+  city: (schema) =>
+    schema.city.min(1, {
+      message: "City is required",
+    }),
+  state: (schema) =>
+    schema.state.min(1, {
+      message: "State is required",
+    }),
+  zip: (schema) =>
+    schema.zip.min(1, {
+      message: "Zip code is required",
+    }),
+  country: (schema) =>
+    schema.country.min(1, {
+      message: "Country is required",
+    }),
+  github: (schema) =>
+    schema.github
+      .url({
+        message: "Invalid GitHub link",
+      })
+      .optional()
+      .or(z.literal("")),
+  personalWebsite: (schema) =>
+    schema.personalWebsite
+      .url({
+        message: "Invalid personal website link",
+      })
+      .optional()
+      .or(z.literal("")),
+  linkedin: (schema) =>
+    schema.linkedin
+      .url({
+        message: "Invalid LinkedIn link",
+      })
+      .optional()
+      .or(z.literal("")),
+  resume: z.instanceof(File),
+});
 export const selectUserMetadataSchema = createSelectSchema(userProfiles);
 
 export const insertHackerSchema = createInsertSchema(hackers);
