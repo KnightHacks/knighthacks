@@ -6,7 +6,7 @@ import {
   hackathons,
   insertUserMetadataSchema,
   insertUserSchema,
-  userMetadata,
+  userProfiles,
   users,
 } from "@knighthacks/db";
 
@@ -16,13 +16,13 @@ import { adminProcedure, authenticatedProcedure } from "../procedures";
 export const usersRouter = router({
   getAll: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.users.findMany({
-      with: { hackers: true, metadata: true },
+      with: { hackers: true, profile: true },
     });
   }),
   insertMetadata: authenticatedProcedure
     .input(insertUserMetadataSchema)
     .mutation(({ ctx, input }) => {
-      return ctx.db.insert(userMetadata).values({
+      return ctx.db.insert(userProfiles).values({
         ...input,
         userId: ctx.user.id,
       });
@@ -30,7 +30,7 @@ export const usersRouter = router({
   getCurrent: authenticatedProcedure.query(async ({ ctx }) => {
     const user = await ctx.db.query.users.findFirst({
       where: eq(users.email, ctx.user.email),
-      with: { hackers: true, metadata: true },
+      with: { hackers: true, profile: true },
     });
 
     const currentHackathon = await ctx.db.query.hackathons.findFirst({
