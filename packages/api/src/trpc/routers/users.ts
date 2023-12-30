@@ -19,7 +19,7 @@ export const usersRouter = router({
       with: { hackers: true, profile: true },
     });
   }),
-  insertMetadata: authenticatedProcedure
+  addProfile: authenticatedProcedure
     .input(insertUserProfileSchema)
     .mutation(({ ctx, input }) => {
       return ctx.db.insert(userProfiles).values({
