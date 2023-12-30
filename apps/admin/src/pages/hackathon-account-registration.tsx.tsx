@@ -55,12 +55,14 @@ export function HackathonAccountRegistration() {
 
   if (currentUser?.profile) return <Redirect to="/hackathon/registration" />;
 
-  return <UserForm />;
+  return <UserProfileForm />;
 }
 
-type UserProfileRequestFormValues = z.infer<typeof insertUserProfileRequestSchema>;
+type UserProfileRequestFormValues = z.infer<
+  typeof insertUserProfileRequestSchema
+>;
 
-function UserForm() {
+function UserProfileForm() {
   const form = useForm<UserProfileRequestFormValues>({
     resolver: zodResolver(insertUserProfileRequestSchema),
     defaultValues: {
@@ -86,7 +88,7 @@ function UserForm() {
   const [_, navigation] = useLocation();
   const { getToken } = useAuth();
   const utils = trpc.useUtils();
-  const { error, isLoading, mutate } = trpc.users.insertMetadata.useMutation({
+  const { error, isLoading, mutate } = trpc.users.addProfile.useMutation({
     onSuccess: async () => {
       // Since we have a new user, invalidate the current user query
       await utils.users.getCurrent.invalidate();
@@ -100,7 +102,9 @@ function UserForm() {
 
   if (isLoading) return <p>Loading...</p>;
 
-  const onSubmit: SubmitHandler<UserProfileRequestFormValues> = async (data) => {
+  const onSubmit: SubmitHandler<UserProfileRequestFormValues> = async (
+    data,
+  ) => {
     let resume: string | null = null;
     if (data.resume) {
       // Upload resume
