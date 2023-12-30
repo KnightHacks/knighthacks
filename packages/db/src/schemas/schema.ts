@@ -140,7 +140,7 @@ export const insertUserSchema = createInsertSchema(users);
 export const selectUserSchema = createSelectSchema(users);
 
 export const insertUserProfileSchema = createInsertSchema(userProfiles);
-export const insertUserProfileRequestSchema = createInsertSchema(userProfiles, {
+export const insertUserProfileFormSchema = createInsertSchema(userProfiles, {
   phone: (schema) =>
     schema.phone
       .min(1, {
