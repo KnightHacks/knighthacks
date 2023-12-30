@@ -93,4 +93,10 @@ export const usersRouter = router({
         await db.update(users).set(input).where(eq(users.id, input.id)); // Update user in database
       });
     }),
+  getById: adminProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
+    await ctx.db.query.users.findFirst({
+      where: eq(users.id, input),
+      with: { hackers: true, profile: true },
+    });
+  }),
 });
