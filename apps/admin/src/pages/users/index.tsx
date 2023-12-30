@@ -1,7 +1,7 @@
 import type { ColumnDef, Row } from "@tanstack/react-table";
 import type { SubmitHandler } from "react-hook-form";
 import type { z } from "zod";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -442,8 +442,6 @@ function AddUserProfileForm() {
       navigation("/hackathon/registration");
     },
   });
-
-  const parentRef = useRef();
 
   if (isLoading) return <p>Loading...</p>;
 
