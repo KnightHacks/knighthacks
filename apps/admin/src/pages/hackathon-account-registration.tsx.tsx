@@ -8,7 +8,7 @@ import { Redirect, useLocation } from "wouter";
 
 import {
   gradYears,
-  insertUserMetadataRequestSchema,
+  insertUserProfileRequestSchema,
   majors,
   schools,
   shirtSizes,
@@ -58,13 +58,11 @@ export function HackathonAccountRegistration() {
   return <UserForm />;
 }
 
-type UserMetadataRequestSchema = z.infer<
-  typeof insertUserMetadataRequestSchema
->;
+type UserProfileRequestFormValues = z.infer<typeof insertUserProfileRequestSchema>;
 
 function UserForm() {
-  const form = useForm<UserMetadataRequestSchema>({
-    resolver: zodResolver(insertUserMetadataRequestSchema),
+  const form = useForm<UserProfileRequestFormValues>({
+    resolver: zodResolver(insertUserProfileRequestSchema),
     defaultValues: {
       phone: "",
       age: 18,
@@ -102,7 +100,7 @@ function UserForm() {
 
   if (isLoading) return <p>Loading...</p>;
 
-  const onSubmit: SubmitHandler<UserMetadataRequestSchema> = async (data) => {
+  const onSubmit: SubmitHandler<UserProfileRequestFormValues> = async (data) => {
     let resume: string | null = null;
     if (data.resume) {
       // Upload resume
