@@ -132,7 +132,6 @@ export const schools = [
   "Bayview Secondary School",
   "Beihang University",
   "Bellevue College, Washington",
-  "Below is a list of all schools that we've manually verified. If you see one that hasn't been included, please feel free to submit a PR.",
   "Benedictine College",
   "Benha University",
   "Benjamin Franklin High School - Baltimore",
