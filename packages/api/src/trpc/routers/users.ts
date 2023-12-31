@@ -81,14 +81,14 @@ export const usersRouter = router({
       });
     }),
   update: adminProcedure
-    .input(insertUserSchema.partial().extend({ id: z.string() }))
+    .input(insertUserSchema.omit({ email: true }))
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (db) => {
         // Update user in Clerk
         await ctx.clerk.users.updateUser(input.id, {
           firstName: input.firstName,
           lastName: input.lastName,
-          // TOOD: Find a way to update email
+          // TOOD: Find a way to update email 
         });
         await db.update(users).set(input).where(eq(users.id, input.id)); // Update user in database
       });
@@ -99,5 +99,4 @@ export const usersRouter = router({
       with: { hackers: true, profile: true },
     });
   }),
-  
 });
