@@ -35,7 +35,7 @@ export const webhook = new Hono<HonoConfig>().post("/", async (c) => {
           event.data.primary_email_address_id,
         ),
       });
-      return c.text(`User with id ${event.data.id} created`, 200);    
+      return c.text(`User with id ${event.data.id} created`, 200);
     case "user.updated":
       await db
         .update(users)

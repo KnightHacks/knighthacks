@@ -88,7 +88,7 @@ export const usersRouter = router({
         await ctx.clerk.users.updateUser(input.id, {
           firstName: input.firstName,
           lastName: input.lastName,
-          // TOOD: Find a way to update email 
+          // TOOD: Find a way to update email
         });
         await db.update(users).set(input).where(eq(users.id, input.id)); // Update user in database
       });
