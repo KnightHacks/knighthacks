@@ -21,7 +21,7 @@ export const hackersRouter = router({
           tx.rollback();
           return;
         }
-        
+
         await tx.insert(hackers).values({
           ...input,
           hackathonId: hackathon.id,
