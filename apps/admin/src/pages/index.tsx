@@ -11,7 +11,7 @@ import { Hello } from "./hello";
 import { Overview } from "./overview";
 import { SignIn } from "./sign-in";
 import { SignUp } from "./sign-up";
-import { Users } from "./users;
+import { Users } from "./users";
 
 export function Pages() {
   return (
