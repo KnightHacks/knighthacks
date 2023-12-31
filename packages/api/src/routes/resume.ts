@@ -40,11 +40,14 @@ export const resume = new Hono<HonoConfig>()
     // Get user from session
     const user = await db.query.users.findFirst({
       where: eq(users.email, auth.sessionClaims?.email),
+      with: {
+        profile: true,
+      },
     });
 
     // If the user doesn't exist or the resume key doesn't match,
     // then the user is unauthorized to download the file
-    if (!user?.resume || user.resume !== key)
+    if (!user?.profile?.resume || user.profile.resume !== key)
       return c.text("Unauthorized", 401);
 
     const bucket = c.env.KNIGHT_HACKS_BUCKET;
