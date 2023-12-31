@@ -2,6 +2,7 @@ import type { SubmitHandler } from "react-hook-form";
 import type { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import { insertUserSchema } from "@knighthacks/db";
 
@@ -15,7 +16,6 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { useToast } from "~/components/ui/use-toast";
 import { trpc } from "~/trpc";
 
 const insertUserFormSchema = insertUserSchema.omit({ id: true });
@@ -24,12 +24,10 @@ type InsertUserFormValues = z.infer<typeof insertUserFormSchema>;
 
 export function AddUserForm() {
   const utils = trpc.useUtils();
-  const { toast } = useToast();
   const { mutate, isLoading } = trpc.users.add.useMutation({
     onSuccess: async () => {
       await utils.users.getAll.invalidate();
-      toast({
-        title: "Success!",
+      toast("Success!", {
         description: "User added",
       });
     },

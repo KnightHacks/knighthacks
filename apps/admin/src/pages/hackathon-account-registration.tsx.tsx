@@ -4,6 +4,7 @@ import { useAuth } from "@clerk/clerk-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { Redirect, useLocation } from "wouter";
 
 import {
@@ -44,7 +45,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { useToast } from "~/components/ui/use-toast";
 import { trpc } from "~/trpc";
 import { cn } from "~/utils";
 
@@ -82,7 +82,6 @@ function UserProfileForm() {
       resume: undefined,
     },
   });
-  const { toast } = useToast();
   const [_, navigation] = useLocation();
   const { getToken } = useAuth();
   const utils = trpc.useUtils();
@@ -90,8 +89,7 @@ function UserProfileForm() {
     onSuccess: async () => {
       // Since we have a new user, invalidate the current user query
       await utils.users.getCurrent.invalidate();
-      toast({
-        title: "Success!",
+      toast("Success!", {
         description: "You've created a Knight Hacks account!",
       });
       navigation("/hackathon/registration");

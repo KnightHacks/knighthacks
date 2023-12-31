@@ -5,6 +5,7 @@ import { useAuth } from "@clerk/clerk-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import type { RouterInput } from "@knighthacks/api";
 import {
@@ -45,7 +46,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { useToast } from "~/components/ui/use-toast";
 import { trpc } from "~/trpc";
 import { cn, uploadResume } from "~/utils";
 
@@ -76,7 +76,6 @@ export function UserProfileForm({
       linkedin: user?.linkedin ?? "",
     },
   });
-  const { toast } = useToast();
   const { getToken } = useAuth();
   const utils = trpc.useUtils();
 
@@ -84,8 +83,7 @@ export function UserProfileForm({
     trpc.users.addProfile.useMutation({
       onSuccess: async () => {
         await utils.users.getCurrent.invalidate();
-        toast({
-          title: "Success!",
+        toast("Success!", {
           description: "You've created a Knight Hacks account!",
         });
       },
@@ -95,8 +93,7 @@ export function UserProfileForm({
     trpc.users.updateProfile.useMutation({
       onSuccess: async () => {
         await utils.users.getCurrent.invalidate();
-        toast({
-          title: "Success!",
+        toast("Success!", {
           description: "You've updated your profile!",
         });
       },
@@ -110,10 +107,8 @@ export function UserProfileForm({
       try {
         resume = await uploadResume(data.resume, token);
       } catch {
-        toast({
-          title: "Error!",
+        toast("Error!", {
           description: "Failed to upload resume",
-          variant: "destructive",
         });
       }
     }

@@ -2,7 +2,7 @@ import { Route, Switch } from "wouter";
 
 import { AdminRoute } from "~/components/admin-route";
 import { AuthenticatedRoute } from "~/components/authenticated-route";
-import { Toaster } from "~/components/ui/toaster.jsx";
+import { Toaster } from "~/components/ui/sonner";
 import { WithNav } from "~/components/with-nav.jsx";
 import { HackathonAccountRegistration } from "./hackathon-account-registration.tsx";
 import { HackathonRegistration } from "./hackathon-registration";
