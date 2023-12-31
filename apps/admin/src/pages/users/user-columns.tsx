@@ -2,6 +2,7 @@ import type { ColumnDef, Row } from "@tanstack/react-table";
 import type { User } from "lucide-react";
 import { useState } from "react";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { toast } from "sonner";
 
 import type { RouterOutput } from "@knighthacks/api";
 
@@ -15,7 +16,6 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { Sheet, SheetContent } from "~/components/ui/sheet";
-import { useToast } from "~/components/ui/use-toast";
 import { trpc } from "~/trpc";
 import { UpdateUserForm } from "./update-user-form";
 import { UserProfileForm } from "./user-profile-form";
@@ -82,13 +82,11 @@ function Actions({ row }: { row: Row<User> }) {
   const [userProfileFormSheetOpen, setUserProfileFormSheetOpen] =
     useState(false);
 
-  const { toast } = useToast();
   const utils = trpc.useUtils();
   const { mutate } = trpc.users.delete.useMutation({
     onSuccess: async () => {
       await utils.users.getAll.invalidate();
-      toast({
-        title: "Success!",
+      toast("Success!", {
         description: "User deleted",
       });
     },
@@ -108,8 +106,7 @@ function Actions({ row }: { row: Row<User> }) {
           <DropdownMenuItem
             onClick={async () => {
               await navigator.clipboard.writeText(user.id);
-              toast({
-                title: "Success!",
+              toast("Success!", {
                 description: "User ID copied",
               });
             }}

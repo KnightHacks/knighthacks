@@ -2,6 +2,7 @@ import type { SubmitHandler } from "react-hook-form";
 import type { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import type { RouterOutput } from "@knighthacks/api";
 import { insertUserSchema } from "@knighthacks/db";
@@ -16,7 +17,6 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { useToast } from "~/components/ui/use-toast";
 import { trpc } from "~/trpc";
 
 type User = RouterOutput["users"]["getAll"][number];
@@ -26,7 +26,6 @@ const updateUserFormSchema = insertUserSchema.omit({ id: true, email: true });
 type UpdateUserFormValues = z.infer<typeof updateUserFormSchema>;
 
 export function UpdateUserForm({ user }: { user: User }) {
-  const { toast } = useToast();
   const utils = trpc.useUtils();
 
   const form = useForm<UpdateUserFormValues>({
@@ -39,16 +38,13 @@ export function UpdateUserForm({ user }: { user: User }) {
   const { mutate, isLoading } = trpc.users.update.useMutation({
     onSuccess: async () => {
       await utils.users.getAll.invalidate();
-      toast({
-        title: "Success!",
+      toast("Success!", {
         description: "User updated",
       });
     },
     onError: (error) => {
-      toast({
-        title: "Error!",
+      toast("Error!", {
         description: error.message,
-        variant: "destructive",
       });
     },
   });
