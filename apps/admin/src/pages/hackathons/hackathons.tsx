@@ -1,7 +1,8 @@
+import type { SubmitHandler } from "react-hook-form";
+import type { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
 
 import { insertHackathonSchema } from "@knighthacks/db";
 
@@ -25,7 +26,7 @@ export function AddHackathonForm() {
   const utils = trpc.useUtils();
   const { mutate, isLoading } = trpc.hackathons.createHackathon.useMutation({
     onSuccess: async () => {
-      await utils.hackathons.getCurrentHackathon.invalidate();
+      await utils.hackathons.getAll.invalidate();
       toast("Success!", { description: "Hackathon added" });
     },
   });
