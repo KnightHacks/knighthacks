@@ -7,6 +7,7 @@ import { WithNav } from "~/components/with-nav.jsx";
 import { HackathonAccountRegistration } from "./hackathon-account-registration.tsx";
 import { HackathonRegistration } from "./hackathon-registration";
 import { HackathonSignIn } from "./hackathon-sign-in";
+import { Hackathons } from "./hackathons";
 import { Hello } from "./hello";
 import { Overview } from "./overview";
 import { SignIn } from "./sign-in";
@@ -23,6 +24,10 @@ export function Pages() {
         <Route path="/sign-in" component={SignIn} />
         <Route path="/sign-up" component={SignUp} />
         <Route path="/hackathon/sign-in" component={HackathonSignIn} />
+        <AuthenticatedRoute
+          path="/hackathons"
+          component={WithNav(Hackathons)}
+        ></AuthenticatedRoute>
         <AuthenticatedRoute
           path="/hackathon/account-registration"
           component={WithNav(HackathonAccountRegistration)}

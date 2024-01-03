@@ -1,7 +1,7 @@
-import { asc, hackathons } from "@knighthacks/db";
+import { asc, hackathons, insertHackathonSchema } from "@knighthacks/db";
 
 import { router } from "../init";
-import { publicProcedure } from "../procedures";
+import { authenticatedProcedure, publicProcedure } from "../procedures";
 
 export const hackathonsRouter = router({
   getCurrentHackathon: publicProcedure.query(async ({ ctx }) => {
@@ -12,4 +12,21 @@ export const hackathonsRouter = router({
 
     return hackathon ?? null;
   }),
+
+  createHackathon: authenticatedProcedure.input(insertHackathonSchema.omit({id: true})).mutation(async ({ctx, input}) => {
+    console.log("Create Hackathon Input: " + input)
+    const newHackathon =  await ctx.db.insert(hackathons).values(input)
+
+    return newHackathon ?? null;
+  }),
+
+  getAll: authenticatedProcedure.query(async ({ ctx }) => {
+    const getHackathons = ctx.db.query.hackathons.findMany();
+
+    return getHackathons ?? null
+  }),
+
+  // updateHackathon: authenticatedProcedure.input(insertHackathonSchema).mutation(async ({ctx, input}) => {
+
+  // })
 });
