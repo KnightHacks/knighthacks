@@ -41,6 +41,6 @@ export const hackathonsRouter = router({
       return await ctx.db
         .update(hackathons)
         .set(input)
-        .where(eq(hackathons.name, input.name));
+        .where(eq(hackathons.id, Number(input.id)));
     }),
 });

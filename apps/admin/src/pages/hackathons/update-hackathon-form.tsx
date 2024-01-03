@@ -47,7 +47,6 @@ export function UpdateHackathonForm({ hackathon }: { hackathon: Hackathon }) {
       });
     },
   });
-
   const onSubmit: SubmitHandler<UpdateUserFormValues> = (values) => {
     mutate({
       id: hackathon.id,
