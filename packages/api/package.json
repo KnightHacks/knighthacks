@@ -19,7 +19,7 @@
     "@knighthacks/db": "workspace:*",
     "@trpc/server": "^10.44.1",
     "cors": "^2.8.5",
-    "hono": "^3.11.4",
+    "hono": "^3.11.7",
     "superjson": "1.9.1",
     "svix": "^1.15.0",
     "typescript": "^5.2.2",
