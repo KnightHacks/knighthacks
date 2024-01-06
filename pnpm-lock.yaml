@@ -192,10 +192,10 @@ importers:
         version: 0.36.0(react@18.2.0)
       '@hono/clerk-auth':
         specifier: ^1.0.0
-        version: 1.0.0(@clerk/backend@0.36.0)(hono@3.11.4)
+        version: 1.0.0(@clerk/backend@0.36.0)(hono@3.11.7)
       '@hono/trpc-server':
         specifier: '*'
-        version: 0.1.0(@trpc/server@10.44.1)(hono@3.11.4)
+        version: 0.1.0(@trpc/server@10.44.1)(hono@3.11.7)
       '@knighthacks/db':
         specifier: workspace:*
         version: link:../db
@@ -206,8 +206,8 @@ importers:
         specifier: ^2.8.5
         version: 2.8.5
       hono:
-        specifier: ^3.11.4
-        version: 3.11.4
+        specifier: ^3.11.7
+        version: 3.11.7
       superjson:
         specifier: 1.9.1
         version: 1.9.1
@@ -1437,17 +1437,17 @@ packages:
     resolution: {integrity: sha512-k+BUNqksTL+AN+o+OV7ILeiE9B5M5X+/jA7LWvCwjbV9ovXTqZyKRhA/x7uYv/ml8WQ0XNLBM7cRFIx4jW0/hg==}
     dev: false
 
-  /@hono/clerk-auth@1.0.0(@clerk/backend@0.36.0)(hono@3.11.4):
+  /@hono/clerk-auth@1.0.0(@clerk/backend@0.36.0)(hono@3.11.7):
     resolution: {integrity: sha512-LbCBwZgPR8GG5w8zMJozyRPrjQAM02dh5Und09f+7IaCLV3uJia/jgeOCazIt18TO+XtNB5uiJF6dqUPhoqDtg==}
     peerDependencies:
       '@clerk/backend': 0.30.*
       hono: 3.*
     dependencies:
       '@clerk/backend': 0.36.0(react@18.2.0)
-      hono: 3.11.4
+      hono: 3.11.7
     dev: false
 
-  /@hono/trpc-server@0.1.0(@trpc/server@10.44.1)(hono@3.11.4):
+  /@hono/trpc-server@0.1.0(@trpc/server@10.44.1)(hono@3.11.7):
     resolution: {integrity: sha512-tgXG/ndgHxLqC09o1bwq8SzLLgzwoCr6KBRDdz9l0k7p0yuW5h67oVSUxCbmFp94hP+ahdIyqnRL84Aw8GvZxQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -1455,7 +1455,7 @@ packages:
       hono: 3.*
     dependencies:
       '@trpc/server': 10.44.1
-      hono: 3.11.4
+      hono: 3.11.7
     dev: false
 
   /@hookform/error-message@2.0.1(react-dom@18.2.0)(react-hook-form@7.49.2)(react@18.2.0):
@@ -4944,8 +4944,8 @@ packages:
     resolution: {integrity: sha512-2bsegYkkHO+h/9MGbn6KWcE45cHZgPANo5LXF7EvWdT0yT2EguSVO1nDgU5c8+ZOPwp2vMNa7YFsJhVcDR9Sdg==}
     dev: true
 
-  /hono@3.11.4:
-    resolution: {integrity: sha512-lU8Et1Nkpa4RqgBvjGUGyu8/2QNdAOR9EqFzNCoP7wM+xtcq2v/DHi9CMJ/ixVxRU9Q2uAh0G3xIKTVYzzC4dg==}
+  /hono@3.11.7:
+    resolution: {integrity: sha512-TcfAq7IdipF+9coxnuzYlSSBXbm9mTyWjjagLCv/2ampboNcKJdi+XCK5G48mHQtpI5+9Rj3J4FfcGgw9vzIww==}
     engines: {node: '>=16.0.0'}
     dev: false
 
