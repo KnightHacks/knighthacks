@@ -10,7 +10,6 @@ import {
 
 import { router } from "../init";
 import { adminProcedure, authenticatedProcedure } from "../procedures";
-import { db } from "../../middlewares";
 
 export const sponsorsRouter = router({
     add: adminProcedure

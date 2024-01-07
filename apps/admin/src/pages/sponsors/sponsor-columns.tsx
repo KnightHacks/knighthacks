@@ -1,5 +1,4 @@
 import type { ColumnDef, Row } from "@tanstack/react-table";
-import type { User } from "lucide-react";
 import { useState } from "react";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { toast } from "sonner";
@@ -41,6 +40,29 @@ export const columns: ColumnDef<sponsor>[] = [
         }
     },
     {
+      accessorKey: 'logo',
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Logo
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        return (
+          <img
+              src={row.original.logo}
+              alt="Logo"
+              className="h-20 w-20 rounded-full"
+          />  
+        ) 
+      }
+  },
+    {
         accessorKey: 'website',
         header: ({ column }) => {
           return (
@@ -61,12 +83,18 @@ export const columns: ColumnDef<sponsor>[] = [
             <Button
               variant="ghost"
               onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="text-center"
             >
               Tier
               <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
           );
-        }
+        },
+        cell: ({ row }) => {
+          return (
+            <p className="text-center">{row.original.tier}</p>
+          )
+        },
     },
     {
         accessorKey: 'hackathonId',
@@ -75,11 +103,17 @@ export const columns: ColumnDef<sponsor>[] = [
             <Button
               variant="ghost"
               onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+              className="text-center"
             >
               Hackathon Id
               <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
           );
+        },
+        cell: ({ row }) => {
+          return (
+            <p className="text-center">{row.original.hackathonId}</p>
+          )
         }
     },
     {
