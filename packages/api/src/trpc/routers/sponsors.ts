@@ -17,5 +17,9 @@ export const sponsorsRouter = router({
         .input(insertSponsorSchema)
         .mutation(async ({ctx, input}) => {
             await ctx.db.insert(sponsors).values({ ...input });
+        }),
+    getAll: adminProcedure
+        .query(async ({ctx}) => {
+            return ctx.db.query.sponsors.findMany()
         })
 });

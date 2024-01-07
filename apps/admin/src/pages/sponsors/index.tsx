@@ -2,6 +2,9 @@ import {useState} from 'react';
 import { Button } from '~/components/ui/button';
 import {Sheet, SheetContent} from '~/components/ui/sheet';
 import { AddSponsorForm } from './add-sponsor-form';
+import { trpc } from '~/trpc';
+import { DataTable } from '~/components/ui/data-table';
+import { columns } from './sponsor-columns';
 
 export function Sponsors() {
     const [addSponsorFormSheetOpen, setAddSponsorFormSheetOpen] = useState(false)
@@ -14,6 +17,7 @@ export function Sponsors() {
               Add Sponsor
             </Button>
           </div>
+          <SponsorTable />
           <Sheet open={addSponsorFormSheetOpen} onOpenChange={setAddSponsorFormSheetOpen}>
             <SheetContent >
                 <AddSponsorForm />
@@ -23,4 +27,15 @@ export function Sponsors() {
 
       </div>
     );
+  }
+
+  export function SponsorTable() {
+    const { data: sponsors, isLoading, error } = trpc.sponsors.getAll.useQuery();
+    console.log(sponsors)
+  
+    if (isLoading) return <div>Loading...</div>;
+  
+    if (error) return <div>Error: {error.message}</div>;
+  
+    return <DataTable columns={columns} data={sponsors} />;
   }
