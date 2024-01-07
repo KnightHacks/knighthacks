@@ -57,7 +57,7 @@ export const columns: ColumnDef<sponsor>[] = [
           <img
               src={row.original.logo}
               alt="Logo"
-              className="h-20 w-20 rounded-full"
+              className="h-[55px] w-[55px] rounded-full"
           />  
         ) 
       }
