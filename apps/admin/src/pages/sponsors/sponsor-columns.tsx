@@ -104,20 +104,9 @@ function Actions({row }: { row: Row<sponsor> }) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-            >
-              Copy Sponsor ID
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => {
-                setSponsorProfileFormSheetOpen(true);
-              }}
-            >
-              View profile
-            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              // mutate
+              // On Click delete sponsor
             >
               Delete Sponsor
             </DropdownMenuItem>
@@ -126,22 +115,6 @@ function Actions({row }: { row: Row<sponsor> }) {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <Sheet
-          open={updateSponsorFormSheetOpen}
-          onOpenChange={setUpdateSponsorFormSheetOpen}
-        >
-          <SheetContent>
-            {/* update sponsor form */}
-          </SheetContent>
-        </Sheet>
-        <Sheet
-          open={sponsorProfileFormSheetOpen}
-          onOpenChange={setSponsorProfileFormSheetOpen}
-        >
-          <SheetContent>
-            {/* sponsor profile form */}
-          </SheetContent>
-        </Sheet>
       </>        
     )
 }

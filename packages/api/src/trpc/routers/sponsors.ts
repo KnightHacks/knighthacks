@@ -21,5 +21,5 @@ export const sponsorsRouter = router({
     getAll: adminProcedure
         .query(async ({ctx}) => {
             return ctx.db.query.sponsors.findMany()
-        })
+        }),
 });
