@@ -11,14 +11,14 @@ export function Hackathons() {
 
   return (
     <div className="px-4">
-      {displayHackathons()}
       <div className="mx-auto max-w-5xl">
-        <div className="mb-4">
+        <div className="left-2 mb-4">
           <Button onClick={() => setAddHackathonFormSheetOpen(true)}>
             Add Hackathon
           </Button>
         </div>
       </div>
+      {displayHackathons()}
       <Sheet
         open={addHackathonFormSheetOpen}
         onOpenChange={setAddHackathonFormSheetOpen}
