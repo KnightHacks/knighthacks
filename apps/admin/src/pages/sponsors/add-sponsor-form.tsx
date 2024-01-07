@@ -13,8 +13,15 @@ import {
     FormLabel,
     FormMessage,
   } from "~/components/ui/form";
-  import { Input } from "~/components/ui/input";
-  import { trpc } from "~/trpc";
+import { Input } from "~/components/ui/input";
+import { trpc } from "~/trpc";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 
   const InsertSponsorFormSchema = insertSponsorSchema;
   type InsertSponsorFormValues = z.infer<typeof InsertSponsorFormSchema>;
@@ -40,6 +47,9 @@ import {
         hackathonId: 1,
       },
     });
+
+    // Fill with valid hackathonId's
+    const hackathonIds = [1, 2, 3]
 
     const onSubmit: SubmitHandler<InsertSponsorFormValues> = (values) => {
       mutate(values)
@@ -109,10 +119,26 @@ import {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>HackathonId</FormLabel>
-                        <FormControl>
-                          <Input type="number" placeholder="HackathonId" {...field} value={field.value || 0} />
-                        </FormControl>
-                        <FormMessage />
+                          <Select onValueChange={(selectedValue) => {
+                            // Convert the selected value to a number
+                            const numericValue = parseInt(selectedValue, 10);
+                            // Now you can use `numericValue` as a number
+                            field.onChange(numericValue);
+                          }} >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select Hackathon Id" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {hackathonIds.map((id) => (
+                                <SelectItem key={id} value={String(id)}>
+                                  {id}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
                       </FormItem>
                     )}
                 />

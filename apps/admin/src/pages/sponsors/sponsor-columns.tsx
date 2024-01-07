@@ -18,6 +18,7 @@ import { Sheet, SheetContent } from "~/components/ui/sheet";
 import { trpc } from "~/trpc";
 import { UpdateSponsorForm } from "./update-sponsor-form";
 
+
 type sponsor = RouterOutput['sponsors']['getAll'][number];
 
 export const columns: ColumnDef<sponsor>[] = [
@@ -148,6 +149,17 @@ function Actions({row }: { row: Row<sponsor> }) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem
+              //On click copy number to clipboard
+              onClick={async () => {
+              await navigator.clipboard.writeText(String(sponsor.id));
+              toast("Success!", {
+                description: "User ID copied",
+              });
+            }}
+            >
+            Copy Sponsor ID
+          </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               // On Click delete sponsor

@@ -3,10 +3,8 @@ import type { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-
 import type { RouterOutput } from "@knighthacks/api";
 import { insertSponsorSchema } from "@knighthacks/db";
-
 import { Button } from "~/components/ui/button";
 import {
   Form,
@@ -16,6 +14,13 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 import { Input } from "~/components/ui/input";
 import { trpc } from "~/trpc";
 
@@ -56,6 +61,9 @@ export function UpdateSponsorForm({sponsor }: {sponsor: Sponsor}) {
   const onSubmit: SubmitHandler<updateSponsorFormValues> = (values) => {
     mutate({ id: sponsor.id, ...values })
   };
+
+  // fill array with all valid hackathonIds
+  const hackathonIds = [1, 2, 3]
 
   return (
     <Form {...form}>
@@ -115,19 +123,35 @@ export function UpdateSponsorForm({sponsor }: {sponsor: Sponsor}) {
             </FormItem>
           )}
         />
-        <FormField
+        <FormField 
           control={form.control}
           name="hackathonId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Last Name</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder="hackathonId" {...field} value={Number(field.value) || 1} />
-              </FormControl>
-              <FormMessage />
+              <FormLabel>HackathonId</FormLabel>
+                <Select defaultValue={String(field.value)} onValueChange={(selectedValue) => {
+                  // Convert the selected value to a number
+                  const numericValue = parseInt(selectedValue, 10);
+                  // Now you can use `numericValue` as a number
+                  field.onChange(numericValue);
+                }} >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Hackathon Id" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {hackathonIds.map((id) => (
+                      <SelectItem key={id} value={String(id)}>
+                        {id}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
             </FormItem>
           )}
-        />
+                />
         <Button type="submit" disabled={isLoading}>
           Update Sponsor
         </Button>
