@@ -17,6 +17,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { Sheet, SheetContent } from "~/components/ui/sheet";
 import { trpc } from "~/trpc";
+import { UpdateSponsorForm } from "./update-sponsor-form";
 
 type sponsor = RouterOutput['sponsors']['getAll'][number];
 
@@ -90,7 +91,6 @@ export const columns: ColumnDef<sponsor>[] = [
 function Actions({row }: { row: Row<sponsor> }) {
     const sponsor = row.original;
 
-    const [sponsorProfileFormSheetOpen, setSponsorProfileFormSheetOpen] = useState(false);
     const [updateSponsorFormSheetOpen, setUpdateSponsorFormSheetOpen] = useState(false);
 
     return (
@@ -115,6 +115,14 @@ function Actions({row }: { row: Row<sponsor> }) {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        <Sheet
+        open={updateSponsorFormSheetOpen}
+        onOpenChange={setUpdateSponsorFormSheetOpen}
+        >
+        <SheetContent>
+          <UpdateSponsorForm sponsor={sponsor} />
+        </SheetContent>
+      </Sheet>
       </>        
     )
 }

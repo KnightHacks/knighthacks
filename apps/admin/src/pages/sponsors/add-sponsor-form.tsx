@@ -42,7 +42,6 @@ import {
     });
 
     const onSubmit: SubmitHandler<InsertSponsorFormValues> = (values) => {
-      values.hackathonId
       mutate(values)
     }
 

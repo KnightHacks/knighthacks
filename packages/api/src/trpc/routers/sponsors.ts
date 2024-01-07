@@ -22,4 +22,9 @@ export const sponsorsRouter = router({
         .query(async ({ctx}) => {
             return ctx.db.query.sponsors.findMany()
         }),
+    update: adminProcedure
+        .input(insertSponsorSchema)
+        .mutation(async ({ctx, input}) => {
+            await ctx.db.update(sponsors).set(input).where(eq(sponsors.id, Number(input.id)))
+        })
 });
