@@ -90,8 +90,18 @@ export const columns: ColumnDef<sponsor>[] = [
 
 function Actions({row }: { row: Row<sponsor> }) {
     const sponsor = row.original;
+    const utils = trpc.useUtils();
 
     const [updateSponsorFormSheetOpen, setUpdateSponsorFormSheetOpen] = useState(false);
+    
+    const { mutate } = trpc.sponsors.delete.useMutation({
+      onSuccess: async () => {
+        await utils.sponsors.getAll.invalidate();
+        toast("Success!", {
+          description: "User deleted",
+        });
+      },
+    });
 
     return (
         <>
@@ -107,6 +117,9 @@ function Actions({row }: { row: Row<sponsor> }) {
             <DropdownMenuSeparator />
             <DropdownMenuItem
               // On Click delete sponsor
+              onClick={() => {
+                mutate( sponsor )
+              }}
             >
               Delete Sponsor
             </DropdownMenuItem>

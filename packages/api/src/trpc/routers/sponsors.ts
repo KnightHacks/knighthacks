@@ -26,5 +26,10 @@ export const sponsorsRouter = router({
         .input(insertSponsorSchema)
         .mutation(async ({ctx, input}) => {
             await ctx.db.update(sponsors).set(input).where(eq(sponsors.id, Number(input.id)))
+        }),
+    delete: adminProcedure
+        .input(insertSponsorSchema)
+        .mutation(async ({ctx, input}) => {
+            await ctx.db.delete(sponsors).where(eq(sponsors.id, Number(input.id)))
         })
 });
