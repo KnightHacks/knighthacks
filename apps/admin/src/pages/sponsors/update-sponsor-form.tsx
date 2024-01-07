@@ -104,19 +104,6 @@ export function UpdateSponsorForm({sponsor }: {sponsor: Sponsor}) {
         />
         <FormField
           control={form.control}
-          name="website"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Website</FormLabel>
-              <FormControl>
-                <Input placeholder="website" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name="tier"
           render={({ field }) => (
             <FormItem>
