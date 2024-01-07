@@ -31,12 +31,14 @@ export function UpdateHackathonForm({ hackathon }: { hackathon: Hackathon }) {
   const form = useForm<UpdateUserFormValues>({
     resolver: zodResolver(updateHackathonFormSchema),
     defaultValues: {
-      name: "Hackathon Name",
+      name: hackathon.name,
+      startDate: hackathon.startDate,
+      endDate: hackathon.endDate,
     },
   });
   const { mutate, isLoading } = trpc.hackathons.updateHackathon.useMutation({
     onSuccess: async () => {
-      await utils.users.getAll.invalidate();
+      await utils.hackathons.getAll.invalidate();
       toast("Success!", {
         description: "Hackathon updated",
       });
