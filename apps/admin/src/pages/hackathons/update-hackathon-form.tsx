@@ -81,7 +81,7 @@ export function UpdateHackathonForm({ hackathon }: { hackathon: Hackathon }) {
             <FormItem>
               <FormLabel>Start Date</FormLabel>
               <FormControl>
-                <Input placeholder="Start Date" {...field} />
+                <Input type="date" placeholder="Start Date" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -94,7 +94,7 @@ export function UpdateHackathonForm({ hackathon }: { hackathon: Hackathon }) {
             <FormItem>
               <FormLabel>End Date</FormLabel>
               <FormControl>
-                <Input placeholder="End Date" {...field} />
+                <Input type="date" placeholder="End Date" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

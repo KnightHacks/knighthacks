@@ -151,11 +151,13 @@ export function UpdateSponsorForm({sponsor }: {sponsor: Sponsor}) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {hackathonIds.map((id) => (
-                      <SelectItem key={id} value={String(id)}>
-                        {id}
-                      </SelectItem>
-                    ))}
+                  {hackathonIds.map((id) => {  
+                    return (  
+                      <SelectItem key={id} value={String(id)}>  
+                        {id}  
+                      </SelectItem>  
+                    )  
+                  })} 
                   </SelectContent>
                 </Select>
                 <FormMessage />

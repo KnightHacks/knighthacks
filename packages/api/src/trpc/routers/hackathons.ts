@@ -34,8 +34,6 @@ export const hackathonsRouter = router({
   }),
 
   updateHackathon: adminProcedure.input(insertHackathonSchema).mutation(async ({ctx, input}) => {
-    await ctx.db.transaction(async (db) => {
-      return await db.update(hackathons).set(input).where(eq(hackathons.name, input.name))
-    })
+    return await ctx.db.update(hackathons).set(input).where(eq(hackathons.name, input.name))
   })
 });
