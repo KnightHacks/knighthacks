@@ -1,4 +1,5 @@
 import type { SubmitHandler } from "react-hook-form";
+import {useState, useEffect} from 'react';
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -27,6 +28,7 @@ import {
   type InsertSponsorFormValues = z.infer<typeof InsertSponsorFormSchema>;
 
   export function AddSponsorForm() {
+    const [hackathonIds, setHackathonIds] = useState<number[]>([]);
 
     const utils = trpc.useUtils();
     const { mutate, isLoading } = trpc.sponsors.add.useMutation({
@@ -49,7 +51,16 @@ import {
     });
 
     // Fill with valid hackathonId's
-    const hackathonIds = [1, 2, 3]
+    // Use hook directly within the component body or useEffect
+    const { data: hackathons } = trpc.hackathons.getAll.useQuery();
+
+    // useEffect to call getHackathonIds on component mount
+    useEffect(() => {
+      if (hackathons) {
+        const fetchedHackathonIds = hackathons.map((hackathon) => hackathon.id) || [];
+        setHackathonIds(fetchedHackathonIds);
+      }
+    }, [hackathons]);
 
     const onSubmit: SubmitHandler<InsertSponsorFormValues> = (values) => {
       mutate(values)

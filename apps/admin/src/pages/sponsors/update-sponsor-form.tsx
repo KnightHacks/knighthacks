@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import type { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,6 +32,7 @@ const updateSponsorFormSchema = insertSponsorSchema;
 type updateSponsorFormValues = z.infer<typeof updateSponsorFormSchema>
 
 export function UpdateSponsorForm({sponsor }: {sponsor: Sponsor}) {
+  const [hackathonIds, setHackathonIds] = useState<number[]>([]);
   const utils = trpc.useUtils();
 
   const form = useForm<updateSponsorFormValues>({
@@ -63,7 +65,15 @@ export function UpdateSponsorForm({sponsor }: {sponsor: Sponsor}) {
   };
 
   // fill array with all valid hackathonIds
-  const hackathonIds = [1, 2, 3]
+  const { data: hackathons } = trpc.hackathons.getAll.useQuery();
+
+  // useEffect to call getHackathonIds on component mount
+  useEffect(() => {
+    if (hackathons) {
+      const fetchedHackathonIds = hackathons.map((hackathon) => hackathon.id) || [];
+      setHackathonIds(fetchedHackathonIds);
+    }
+  }, [hackathons]);
 
   return (
     <Form {...form}>

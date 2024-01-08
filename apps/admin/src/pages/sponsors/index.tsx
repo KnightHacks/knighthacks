@@ -31,7 +31,6 @@ export function Sponsors() {
 
   export function SponsorTable() {
     const { data: sponsors, isLoading, error } = trpc.sponsors.getAll.useQuery();
-    console.log(sponsors)
   
     if (isLoading) return <div>Loading...</div>;
   
