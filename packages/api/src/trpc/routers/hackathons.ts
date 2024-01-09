@@ -22,7 +22,7 @@ export const hackathonsRouter = router({
     }),
 
   getAll: adminProcedure.query(async ({ ctx }) => {
-    const getHackathons = ctx.db.query.hackathons.findMany();
+    const getHackathons = await ctx.db.query.hackathons.findMany();
 
     return getHackathons ?? null;
   }),
