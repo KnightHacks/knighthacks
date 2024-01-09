@@ -31,6 +31,10 @@ export function Pages() {
           component={WithNav(Hackathons)}
         ></AdminRoute>
         <AuthenticatedRoute
+          path="/hackathons"
+          component={WithNav(Hackathons)}
+        ></AuthenticatedRoute>
+        <AuthenticatedRoute
           path="/hackathon/account-registration"
           component={WithNav(HackathonAccountRegistration)}
         />

@@ -21,7 +21,6 @@ const insertHackathonFormSchema = insertHackathonSchema.omit({ id: true });
 
 type InsertHackathonFormValues = z.infer<typeof insertHackathonFormSchema>;
 
-
 export function AddHackathonForm() {
   const utils = trpc.useUtils();
   const { mutate, isLoading } = trpc.hackathons.createHackathon.useMutation({

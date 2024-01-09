@@ -1,3 +1,4 @@
+
 import type { RouterOutput } from "@knighthacks/api";
 import { trpc } from "~/trpc";
 import { DataTable } from "~/components/ui/data-table";
@@ -11,4 +12,5 @@ export function HackathonTable() {
   if (error) return <div>Error: {error.message}</div>;
 
   return <DataTable columns={columns} data={hackathons} />;
+
 }
