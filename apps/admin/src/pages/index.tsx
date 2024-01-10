@@ -13,6 +13,7 @@ import { Overview } from "./overview";
 import { SignIn } from "./sign-in";
 import { SignUp } from "./sign-up";
 import { Users } from "./users";
+import { Sponsors } from "./sponsors";
 
 export function Pages() {
   return (
@@ -20,10 +21,15 @@ export function Pages() {
       <Switch>
         <AdminRoute path="/" component={WithNav(Overview)} />
         <AdminRoute path="/users" component={WithNav(Users)} />
+        <AdminRoute path="/sponsors" component={WithNav(Sponsors)} />
         <Route path="/hello" component={WithNav(Hello)} />
         <Route path="/sign-in" component={SignIn} />
         <Route path="/sign-up" component={SignUp} />
         <Route path="/hackathon/sign-in" component={HackathonSignIn} />
+        <AdminRoute
+          path="/hackathons"
+          component={WithNav(Hackathons)}
+        ></AdminRoute>
         <AuthenticatedRoute
           path="/hackathons"
           component={WithNav(Hackathons)}

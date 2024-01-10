@@ -21,11 +21,6 @@ const insertHackathonFormSchema = insertHackathonSchema.omit({ id: true });
 
 type InsertHackathonFormValues = z.infer<typeof insertHackathonFormSchema>;
 
-function createHackathon() {
-  // Alternative way to mutate (for learning purposes)
-  // const hackathonRes1 = trpc.hackathons.createHackathon.useMutation().mutate({name: "bro", startDate: "bro", endDate: "bro"})
-}
-
 export function AddHackathonForm() {
   const utils = trpc.useUtils();
   const { mutate, isLoading } = trpc.hackathons.createHackathon.useMutation({
@@ -72,7 +67,7 @@ export function AddHackathonForm() {
             <FormItem>
               <FormLabel>Start Date</FormLabel>
               <FormControl>
-                <Input placeholder="Start Date" {...field} />
+                <Input type="date" placeholder="Start Date" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -85,7 +80,7 @@ export function AddHackathonForm() {
             <FormItem>
               <FormLabel>End Date</FormLabel>
               <FormControl>
-                <Input placeholder="End Date" {...field} />
+                <Input type="date" placeholder="End Date" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

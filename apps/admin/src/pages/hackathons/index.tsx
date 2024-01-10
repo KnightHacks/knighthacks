@@ -2,8 +2,10 @@ import { useState } from "react";
 
 import { Button } from "~/components/ui/button";
 import { Sheet, SheetContent } from "~/components/ui/sheet";
-import { displayHackathons } from "./displayHackathons";
+
 import { AddHackathonForm } from "./hackathons";
+import { HackathonTable } from "./hackathonsTable";
+
 
 export function Hackathons() {
   const [addHackathonFormSheetOpen, setAddHackathonFormSheetOpen] =
@@ -18,7 +20,7 @@ export function Hackathons() {
           </Button>
         </div>
       </div>
-      {displayHackathons()}
+      <HackathonTable />
       <Sheet
         open={addHackathonFormSheetOpen}
         onOpenChange={setAddHackathonFormSheetOpen}
