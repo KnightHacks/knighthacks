@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { sponsorTiers } from "@knighthacks/db/src/consts/sponsor-tiers";
+
 import type { RouterOutput } from "@knighthacks/api";
 import { insertSponsorSchema } from "@knighthacks/db";
+import { sponsorTiers } from "@knighthacks/db/src/consts/sponsor-tiers";
 
 import { Button } from "~/components/ui/button";
 import {
