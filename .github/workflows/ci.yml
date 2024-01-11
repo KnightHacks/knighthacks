@@ -1,12 +1,49 @@
 name: CI
- 
+
 on:
   push:
     branches: ["main"]
   pull_request:
     types: [opened, synchronize]
- 
+
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Copy env
+        shell: bash
+        run: cp .env.example .env
+
+      - name: Lint
+        run: pnpm lint && pnpm lint:ws
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Format
+        run: pnpm format
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Typecheck
+        run: turbo typecheck
+
   build:
     name: Build and Test
     timeout-minutes: 15
@@ -15,26 +52,16 @@ jobs:
     # env:
     #  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
     #  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
- 
+
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
- 
-      - uses: pnpm/action-setup@v2.0.1
-        with:
-          version: 6.32.2
- 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'pnpm'
- 
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
       - name: Install dependencies
         run: pnpm install
- 
+
       - name: Build
         run: pnpm build
 
