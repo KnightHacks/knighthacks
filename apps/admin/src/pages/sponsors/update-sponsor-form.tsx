@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import type { z } from "zod";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+
 import type { RouterOutput } from "@knighthacks/api";
 import { insertSponsorSchema } from "@knighthacks/db";
+
 import { Button } from "~/components/ui/button";
 import {
   Form,
@@ -15,6 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
+import { Input } from "~/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -22,16 +25,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { Input } from "~/components/ui/input";
 import { trpc } from "~/trpc";
 
 type Sponsor = RouterOutput["sponsors"]["getAll"][number];
 
 const updateSponsorFormSchema = insertSponsorSchema;
 
-type updateSponsorFormValues = z.infer<typeof updateSponsorFormSchema>
+type updateSponsorFormValues = z.infer<typeof updateSponsorFormSchema>;
 
-export function UpdateSponsorForm({sponsor }: {sponsor: Sponsor}) {
+export function UpdateSponsorForm({ sponsor }: { sponsor: Sponsor }) {
   const [hackathonIds, setHackathonIds] = useState<number[]>([]);
   const utils = trpc.useUtils();
 
@@ -42,7 +44,7 @@ export function UpdateSponsorForm({sponsor }: {sponsor: Sponsor}) {
       website: sponsor.website,
       logo: sponsor.logo,
       tier: sponsor.tier,
-      hackathonId: sponsor.hackathonId
+      hackathonId: sponsor.hackathonId,
     },
   });
 
@@ -61,7 +63,7 @@ export function UpdateSponsorForm({sponsor }: {sponsor: Sponsor}) {
   });
 
   const onSubmit: SubmitHandler<updateSponsorFormValues> = (values) => {
-    mutate({ id: sponsor.id, ...values })
+    mutate({ id: sponsor.id, ...values });
   };
 
   // fill array with all valid hackathonIds
@@ -70,7 +72,8 @@ export function UpdateSponsorForm({sponsor }: {sponsor: Sponsor}) {
   // useEffect to call getHackathonIds on component mount
   useEffect(() => {
     if (hackathons) {
-      const fetchedHackathonIds = hackathons.map((hackathon) => hackathon.id) || [];
+      const fetchedHackathonIds =
+        hackathons.map((hackathon) => hackathon.id) || [];
       setHackathonIds(fetchedHackathonIds);
     }
   }, [hackathons]);
@@ -133,41 +136,44 @@ export function UpdateSponsorForm({sponsor }: {sponsor: Sponsor}) {
             </FormItem>
           )}
         />
-        <FormField 
+        <FormField
           control={form.control}
           name="hackathonId"
           render={({ field }) => (
             <FormItem>
               <FormLabel>HackathonId</FormLabel>
-                <Select defaultValue={String(field.value)} onValueChange={(selectedValue) => {
+              <Select
+                defaultValue={String(field.value)}
+                onValueChange={(selectedValue) => {
                   // Convert the selected value to a number
                   const numericValue = parseInt(selectedValue, 10);
                   // Now you can use `numericValue` as a number
                   field.onChange(numericValue);
-                }} >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select Hackathon Id" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                  {hackathonIds.map((id) => {  
-                    return (  
-                      <SelectItem key={id} value={String(id)}>  
-                        {id}  
-                      </SelectItem>  
-                    )  
-                  })} 
-                  </SelectContent>
-                </Select>
-                <FormMessage />
+                }}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Hackathon Id" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {hackathonIds.map((id) => {
+                    return (
+                      <SelectItem key={id} value={String(id)}>
+                        {id}
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
+              <FormMessage />
             </FormItem>
           )}
-                />
+        />
         <Button type="submit" disabled={isLoading}>
           Update Sponsor
         </Button>
       </form>
     </Form>
-  )
+  );
 }
