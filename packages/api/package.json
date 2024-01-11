@@ -22,7 +22,7 @@
     "hono": "^3.11.7",
     "superjson": "1.9.1",
     "svix": "^1.15.0",
-    "typescript": "^5.2.2",
+    "typescript": "^5.3.3",
     "zod": "^3.22.4"
   },
   "devDependencies": {
