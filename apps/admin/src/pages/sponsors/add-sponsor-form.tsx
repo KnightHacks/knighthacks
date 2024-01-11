@@ -53,8 +53,10 @@ export function AddSponsorForm() {
   });
 
   // Fill with valid hackathonId's
-  // Use hook directly within the component body or useEffect
   const { data: hackathons } = trpc.hackathons.getAll.useQuery();
+
+  // initialize tiers
+  const tiers = ["gold", "silver", "bronze"];
 
   // useEffect to call getHackathonIds on component mount
   useEffect(() => {
@@ -120,9 +122,20 @@ export function AddSponsorForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tier</FormLabel>
-              <FormControl>
-                <Input placeholder="Tier" {...field} />
-              </FormControl>
+              <Select onValueChange={field.onChange}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Tier" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {tiers.map((Tier) => (
+                    <SelectItem key={Tier} value={Tier}>
+                      {Tier}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
