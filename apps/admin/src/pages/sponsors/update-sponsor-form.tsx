@@ -69,6 +69,9 @@ export function UpdateSponsorForm({ sponsor }: { sponsor: Sponsor }) {
   // fill array with all valid hackathonIds
   const { data: hackathons } = trpc.hackathons.getAll.useQuery();
 
+  // Initialize tiers array
+  const tiers = ["gold", "silver", "bronze"];
+
   // useEffect to call getHackathonIds on component mount
   useEffect(() => {
     if (hackathons) {
@@ -129,9 +132,20 @@ export function UpdateSponsorForm({ sponsor }: { sponsor: Sponsor }) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tier</FormLabel>
-              <FormControl>
-                <Input placeholder="tier" {...field} />
-              </FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Tier" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {tiers.map((Tier) => (
+                    <SelectItem key={Tier} value={Tier}>
+                      {Tier}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
