@@ -24,18 +24,7 @@ export function Pages() {
         <Route path="/sign-in" component={SignIn} />
         <Route path="/sign-up" component={SignUp} />
         <Route path="/hackathon/sign-in" component={HackathonSignIn} />
-        <AdminRoute
-          path="/hackathons"
-          component={WithNav(Hackathons)}
-        ></AdminRoute>
-        <AuthenticatedRoute
-          path="/hackathons"
-          component={WithNav(Hackathons)}
-        ></AuthenticatedRoute>
-        <AuthenticatedRoute
-          path="/hackathons"
-          component={WithNav(Hackathons)}
-        ></AuthenticatedRoute>
+        <AdminRoute path="/hackathons" component={WithNav(Hackathons)} />
         <AuthenticatedRoute
           path="/hackathon/account-registration"
           component={WithNav(HackathonAccountRegistration)}
