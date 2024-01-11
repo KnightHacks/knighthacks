@@ -45,7 +45,7 @@ jobs:
         run: turbo typecheck
 
   build:
-    name: Build and Test
+    name: build and test
     timeout-minutes: 15
     runs-on: ubuntu-latest
     # To use Remote Caching, uncomment the next lines and follow the steps below.
