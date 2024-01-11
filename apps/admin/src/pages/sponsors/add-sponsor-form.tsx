@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { sponsorTiers } from '@knighthacks/db/src/consts/sponsor-tiers';
 
 import { insertSponsorSchema } from "@knighthacks/db";
 
@@ -55,8 +56,6 @@ export function AddSponsorForm() {
   // Fill with valid hackathonId's
   const { data: hackathons } = trpc.hackathons.getAll.useQuery();
 
-  // initialize tiers
-  const tiers = ["gold", "silver", "bronze"];
 
   // useEffect to call getHackathonIds on component mount
   useEffect(() => {
@@ -129,9 +128,9 @@ export function AddSponsorForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {tiers.map((Tier) => (
-                    <SelectItem key={Tier} value={Tier}>
-                      {Tier}
+                  {sponsorTiers.map((tier) => (
+                    <SelectItem key={tier} value={tier}>
+                      {tier}
                     </SelectItem>
                   ))}
                 </SelectContent>
