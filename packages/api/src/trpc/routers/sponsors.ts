@@ -1,15 +1,7 @@
-import { z } from "zod";
-
-import {
-  asc,
-  eq,
-  hackathons,
-  insertSponsorSchema,
-  sponsors,
-} from "@knighthacks/db";
+import { eq, insertSponsorSchema, sponsors } from "@knighthacks/db";
 
 import { router } from "../init";
-import { adminProcedure, authenticatedProcedure } from "../procedures";
+import { adminProcedure } from "../procedures";
 
 export const sponsorsRouter = router({
   add: adminProcedure
