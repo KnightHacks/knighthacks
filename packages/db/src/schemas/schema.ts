@@ -2,6 +2,7 @@ import { relations } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
+import { sponsorTiers } from "../consts/sponsor-tiers";
 
 import { gradYears, majors, schools, shirtSizes } from "../consts";
 
@@ -109,7 +110,7 @@ export const sponsors = sqliteTable("sponsors", {
   name: text("name").notNull(),
   logo: text("logo").notNull(),
   website: text("website").notNull(),
-  tier: text("tier", { enum: ["gold", "silver", "bronze", "other"] }).notNull(),
+  tier: text("tier", { enum: sponsorTiers }).notNull(),
   hackathonId: integer("hackathon_id").references(() => hackathons.id, {
     onDelete: "cascade", // If the hackathon is deleted, delete the hacker
     onUpdate: "cascade", // If the hackathon is updated, update the hacker
