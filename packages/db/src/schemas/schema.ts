@@ -2,9 +2,9 @@ import { relations } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
-import { sponsorTiers } from "../consts/sponsor-tiers";
 
 import { gradYears, majors, schools, shirtSizes } from "../consts";
+import { sponsorTiers } from "../consts/sponsor-tiers";
 
 export const users = sqliteTable("users", {
   id: text("id").primaryKey(), // This will be from the oauth provider
