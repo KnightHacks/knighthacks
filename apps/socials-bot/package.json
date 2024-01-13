@@ -3,22 +3,25 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx src/app.ts",
+    "dev": "wrangler dev src/worker.ts --port 8081",
     "register": "tsx src/register.ts",
     "format": "prettier --write .",
     "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
-    "discord.js": "^14.14.1",
+    "@knighthacks/db": "workspace:*",
+    "discord-interactions": "^3.4.0",
     "esbuild": "^0.19.11",
+    "hono": "^3.11.7",
     "ts-pattern": "^5.0.6",
-    "tsx": "^4.6.2",
-    "@knighthacks/db": "workspace:*"
+    "tsx": "^4.6.2"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231121.0",
     "@knighthacks/eslint-config": "workspace:*",
     "@knighthacks/prettier-config": "workspace:*",
-    "eslint": "^8.56.0"
+    "eslint": "^8.56.0",
+    "wrangler": "^3.22.1"
   },
   "eslintConfig": {
     "root": true,
