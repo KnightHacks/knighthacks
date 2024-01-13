@@ -1,1 +1,2 @@
-export * from "./schema";
+export * from "./hackathon";
+export * from "./socials";
