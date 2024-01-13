@@ -17,7 +17,8 @@
     "lint": "turbo lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:ws": "pnpm dlx sherif@latest",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo typecheck",
+    "register": "pnpm with-env turbo register"
   },
   "devDependencies": {
     "dotenv-cli": "^7.3.0",
