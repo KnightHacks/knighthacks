@@ -19,6 +19,7 @@ export const socialEvents = sqliteTable("social_events", {
   date: text("date").notNull(),
   location: text("location").notNull(),
   points: integer("points").notNull(),
+  secret: text("secret").notNull().unique(),
 });
 
 export const socialEventsRelations = relations(socialAttendees, ({ many }) => ({
