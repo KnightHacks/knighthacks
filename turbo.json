@@ -17,7 +17,7 @@
       "persistent": true
     },
     "db:push": {
-      "cache": false
+      "cache": true
     },
     "db:preview": {
       "cache": false
