@@ -6,7 +6,7 @@
     "dev": "wrangler dev src/worker.ts --port 8081",
     "register": "tsx src/register.ts",
     "format": "prettier --write .",
-    "lint": "eslint . --ext .ts,.tsx"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@knighthacks/db": "workspace:*",
@@ -20,15 +20,7 @@
     "@cloudflare/workers-types": "^4.20231121.0",
     "@knighthacks/eslint-config": "workspace:*",
     "@knighthacks/prettier-config": "workspace:*",
-    "eslint": "^8.56.0",
     "wrangler": "^3.22.1"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@knighthacks/eslint-config/base",
-      "@knighthacks/eslint-config/react"
-    ]
   },
   "prettier": "@knighthacks/prettier-config"
 }

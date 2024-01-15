@@ -1,8 +1,7 @@
 {
   "extends": "@knighthacks/tsconfig/base.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "strict": false
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "include": ["."],
   "exclude": ["node_modules"]
