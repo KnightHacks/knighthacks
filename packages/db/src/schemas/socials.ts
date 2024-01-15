@@ -3,7 +3,7 @@ import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const socialAttendees = sqliteTable("social_attendees", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  discord: text("discord").notNull(),
+  discord: text("discord").notNull().unique(),
 });
 
 export const socialAttendeesRelations = relations(
