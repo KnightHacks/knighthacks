@@ -34,10 +34,6 @@ async function verifyDiscordRequest(c: HonoContext, next: Next) {
   return next();
 }
 
-function isAdmin(roles: string[], adminRoleId: string) {
-  return roles.includes(adminRoleId);
-}
-
 const app = new Hono<HonoConfig>().post(
   "/",
   verifyDiscordRequest,
