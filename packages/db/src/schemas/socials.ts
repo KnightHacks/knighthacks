@@ -1,19 +1,16 @@
 import { relations } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-export const socialAttendees = sqliteTable("social_attendees", {
+export const attendees = sqliteTable("attendees", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   discord: text("discord").notNull().unique(),
 });
 
-export const socialAttendeesRelations = relations(
-  socialAttendees,
-  ({ many }) => ({
-    socialAttendeesToSocialEvents: many(socialAttendeesToSocialEvents),
-  }),
-);
+export const attendeesRelations = relations(attendees, ({ many }) => ({
+  attendeesEvents: many(attendeesEvents),
+}));
 
-export const socialEvents = sqliteTable("social_events", {
+export const events = sqliteTable("events", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name").notNull(),
   date: text("date").notNull(),
@@ -22,33 +19,30 @@ export const socialEvents = sqliteTable("social_events", {
   secret: text("secret").notNull().unique(),
 });
 
-export const socialEventsRelations = relations(socialAttendees, ({ many }) => ({
-  socialAttendeesToSocialEvents: many(socialAttendeesToSocialEvents),
+export const eventsRelations = relations(attendees, ({ many }) => ({
+  attendeesEvents: many(attendeesEvents),
 }));
 
-export const socialAttendeesToSocialEvents = sqliteTable(
-  "social_attendee_events",
-  {
-    id: integer("id").primaryKey({ autoIncrement: true }),
-    attendeeId: integer("attendee_id")
-      .notNull()
-      .references(() => socialAttendees.id),
-    eventId: integer("event_id")
-      .notNull()
-      .references(() => socialEvents.id),
-  },
-);
+export const attendeesEvents = sqliteTable("attendees_events", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  attendeeId: integer("attendee_id")
+    .notNull()
+    .references(() => attendees.id),
+  eventId: integer("event_id")
+    .notNull()
+    .references(() => events.id),
+});
 
-export const socialAttendeesToSocialEventsRelations = relations(
-  socialAttendeesToSocialEvents,
+export const attendeesEventsRelations = relations(
+  attendeesEvents,
   ({ one }) => ({
-    socialAttendees: one(socialAttendees, {
-      fields: [socialAttendeesToSocialEvents.attendeeId],
-      references: [socialAttendees.id],
+    attendees: one(attendees, {
+      fields: [attendeesEvents.attendeeId],
+      references: [attendees.id],
     }),
-    socialEvents: one(socialEvents, {
-      fields: [socialAttendeesToSocialEvents.eventId],
-      references: [socialEvents.id],
+    events: one(events, {
+      fields: [attendeesEvents.eventId],
+      references: [events.id],
     }),
   }),
 );
