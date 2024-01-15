@@ -39,6 +39,30 @@ export const commands = [
       },
     ],
   },
+  {
+    name: "clearevents",
+    description: "Clears all events.",
+  },
+  {
+    name: "checkpoints",
+    description: "Checks your points.",
+  },
+  {
+    name: "checkleaderboard",
+    description: "Checks the leaderboard.",
+  },
+  {
+    name: "signin",
+    description: "Signs you into an event.",
+    options: [
+      {
+        name: "secret",
+        description: "The secret password for the event.",
+        type: 3,
+        required: true,
+      },
+    ],
+  },
 ] as const;
 
 export type Command = (typeof commands)[number];
