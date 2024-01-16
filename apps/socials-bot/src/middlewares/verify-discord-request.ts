@@ -9,8 +9,6 @@ export async function verifyDiscordRequest(c: HonoContext, next: Next) {
 
   const text = await c.req.text();
 
-  console.log(text);
-
   const isValidRequest =
     signature &&
     timestamp &&
