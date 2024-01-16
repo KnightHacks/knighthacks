@@ -27,10 +27,16 @@ export const attendeesEvents = sqliteTable("attendees_events", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   attendeeId: integer("attendee_id")
     .notNull()
-    .references(() => attendees.id),
+    .references(() => attendees.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
   eventId: integer("event_id")
     .notNull()
-    .references(() => events.id),
+    .references(() => events.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
 });
 
 export const attendeesEventsRelations = relations(
