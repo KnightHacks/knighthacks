@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup
+        uses: ./tooling/github/setup
+
       - name: Install dependencies
         run: pnpm install
 
