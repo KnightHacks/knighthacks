@@ -215,7 +215,7 @@ importers:
         specifier: workspace:*
         version: link:../../tooling/prettier
       typescript:
-        specifier: 5.3.3
+        specifier: ^5.3.3
         version: 5.3.3
       wrangler:
         specifier: ^3.22.1
