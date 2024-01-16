@@ -6,13 +6,17 @@ export async function clearEvents(
   db: ReturnType<typeof connect>,
   permissions: Permission[],
 ) {
+  console.log(permissions.includes("dev-lead"));
+
   if (
-    !permissions.includes("president") ||
-    !permissions.includes("vice-president")
-  )
+    !permissions.includes("president") &&
+    !permissions.includes("vice-president") &&
+    !permissions.includes("dev-lead")
+  ) {
     throw new Error(
       "You must be the president or vice president to clear events",
     );
+  }
 
   return await db.delete(events);
 }
