@@ -34,6 +34,7 @@ export function UpdateHackathonForm({ hackathon }: { hackathon: Hackathon }) {
       name: hackathon.name,
       startDate: hackathon.startDate,
       endDate: hackathon.endDate,
+      theme: hackathon.theme,
     },
   });
   const { mutate, isLoading } = trpc.hackathons.updateHackathon.useMutation({
@@ -97,6 +98,19 @@ export function UpdateHackathonForm({ hackathon }: { hackathon: Hackathon }) {
               <FormLabel>End Date</FormLabel>
               <FormControl>
                 <Input type="date" placeholder="End Date" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="theme"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Theme</FormLabel>
+              <FormControl>
+                <Input placeholder="Theme" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
