@@ -1,4 +1,4 @@
-name: Deploy
+name: API
 
 on:
   push:
@@ -12,6 +12,11 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
