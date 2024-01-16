@@ -25,5 +25,5 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          workingDirectory: "services/worker"
-          command: publish
+          workingDirectory: "apps/socials-bot"
+          command: deploy
