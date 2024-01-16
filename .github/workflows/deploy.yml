@@ -6,6 +6,7 @@ on:
 
 jobs:
   deploy:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,3 +26,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./apps/socials-bot
           command: deploy
+          packageManager: pnpm
