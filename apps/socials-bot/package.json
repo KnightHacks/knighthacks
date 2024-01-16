@@ -22,7 +22,7 @@
     "@knighthacks/eslint-config": "workspace:*",
     "@knighthacks/prettier-config": "workspace:*",
     "wrangler": "^3.22.1",
-    "typescript": "5.3.3"
+    "typescript": "^5.3.3"
   },
   "prettier": "@knighthacks/prettier-config"
 }
