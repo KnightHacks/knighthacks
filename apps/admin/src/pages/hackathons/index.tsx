@@ -18,7 +18,9 @@ export function Hackathons() {
           </Button>
         </div>
       </div>
-      <HackathonTable />
+      <div className="mx-auto" style={{ maxWidth: 1025 }}>
+        <HackathonTable />
+      </div>
       <Sheet
         open={addHackathonFormSheetOpen}
         onOpenChange={setAddHackathonFormSheetOpen}
