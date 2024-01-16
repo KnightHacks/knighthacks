@@ -22,8 +22,6 @@ jobs:
         run: pnpm build
 
       - name: Deploy
-        uses: cloudflare/wrangler-action@v3
-        with:
+        env:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          workingDirectory: "apps/socials-bot"
-          command: deploy
+        run: pnpm run deploy

@@ -6,6 +6,7 @@
     "with-env": "dotenv -e .env --",
     "test": "turbo run test",
     "build": "turbo run build",
+    "deploy": "turbo run deploy",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
     "db:preview": "pnpm with-env turbo run db:preview",
