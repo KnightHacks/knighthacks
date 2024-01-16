@@ -3,8 +3,6 @@ name: Deploy
 on:
   push:
     branches: ["main"]
-  pull_request:
-    types: [opened, synchronize]
 
 jobs:
   deploy:
@@ -22,6 +20,8 @@ jobs:
         run: pnpm build
 
       - name: Deploy
-        env:
+        uses: cloudflare/wrangler-action@v3
+        with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: pnpm run deploy
+          workingDirectory: ./apps/socials-bot
+          command: deploy
