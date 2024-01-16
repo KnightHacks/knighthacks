@@ -95,7 +95,11 @@ export function AddHackathonForm() {
             <FormItem>
               <FormLabel>Theme</FormLabel>
               <FormControl>
-                <Input placeholder="Theme" {...field} />
+                <Input
+                  placeholder="Theme"
+                  {...field}
+                  value={field.value === null ? "" : field.value}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
