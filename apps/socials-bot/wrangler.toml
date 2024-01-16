@@ -1,4 +1,4 @@
-name = "knighthacks-api"
+name = "knighthacks-socials-bot"
 compatibility_date = "2023-01-01"
 account_id = "091d616e4c63e948b32e03c833fb68f8"
 workers_dev = true
