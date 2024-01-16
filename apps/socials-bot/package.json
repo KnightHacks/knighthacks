@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev src/worker.ts --port 8081",
+    "deploy": "wrangler publish src/worker.ts",
     "register": "tsx src/register.ts",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit"
