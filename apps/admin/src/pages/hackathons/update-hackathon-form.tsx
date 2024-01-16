@@ -110,7 +110,11 @@ export function UpdateHackathonForm({ hackathon }: { hackathon: Hackathon }) {
             <FormItem>
               <FormLabel>Theme</FormLabel>
               <FormControl>
-                <Input placeholder="Theme" {...field} />
+                <Input
+                  placeholder="Theme"
+                  {...field}
+                  value={field.value === null ? "" : field.value}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
