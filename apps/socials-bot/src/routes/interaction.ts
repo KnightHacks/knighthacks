@@ -141,10 +141,13 @@ export const interaction = new Hono<HonoConfig>().post(
           }
         }
         default:
-          return c.text("Unknown command", 400);
+          return c.json({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: "Unknown command",
+            },
+          });
       }
     }
-
-    return c.text("Unknown interaction type", 400);
   },
 );
