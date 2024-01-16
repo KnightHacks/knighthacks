@@ -3,27 +3,19 @@ name: Deploy
 on:
   push:
     branches: ["main"]
+    paths:
+      - "packages/api/**"
+      - ".github/workflows/api.yml"
 
 jobs:
   deploy:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup
-        uses: ./tooling/github/setup
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build
-        run: pnpm build
-
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          workingDirectory: ./apps/socials-bot
+          workingDirectory: ./packages/api
           command: deploy
           packageManager: pnpm
