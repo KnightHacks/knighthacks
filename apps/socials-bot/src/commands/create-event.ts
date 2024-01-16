@@ -1,5 +1,3 @@
-import { InteractionResponseType } from "discord-interactions";
-
 import { connect, events } from "@knighthacks/db";
 
 import { Permission } from "~/utils";
@@ -7,9 +5,9 @@ import { Permission } from "~/utils";
 export async function createEvent(
   interaction: any,
   db: ReturnType<typeof connect>,
-  roles: Permission[],
+  permissions: Permission[],
 ) {
-  if (!roles.includes("officer"))
+  if (!permissions.includes("officer") && !permissions.includes("dev-lead"))
     throw new Error("You must be an officer to create an event");
 
   // Build event object from interaction options
@@ -20,7 +18,7 @@ export async function createEvent(
 
   // Validate event date follows YYYY-MM-DD format
   if (!event.date.match(/\d{4}-\d{2}-\d{2}/))
-    throw new Error("Invalid date format"); 
+    throw new Error("Invalid date format");
 
   const insertedEvent = (await db.insert(events).values(event).returning())[0];
 
