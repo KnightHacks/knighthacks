@@ -36,6 +36,7 @@ export function AddHackathonForm() {
       name: "",
       startDate: "",
       endDate: "",
+      theme: "",
     },
   });
 
@@ -82,6 +83,19 @@ export function AddHackathonForm() {
               <FormLabel>End Date</FormLabel>
               <FormControl>
                 <Input type="date" placeholder="End Date" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="theme"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Theme</FormLabel>
+              <FormControl>
+                <Input placeholder="Theme" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
