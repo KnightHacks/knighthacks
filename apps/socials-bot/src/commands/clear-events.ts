@@ -6,8 +6,6 @@ export async function clearEvents(
   db: ReturnType<typeof connect>,
   permissions: Permission[],
 ) {
-  console.log(permissions.includes("dev-lead"));
-
   if (
     !permissions.includes("president") &&
     !permissions.includes("vice-president") &&
