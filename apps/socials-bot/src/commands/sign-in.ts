@@ -7,7 +7,7 @@ import {
 } from "@knighthacks/db";
 
 export async function signIn(interaction: any, db: ReturnType<typeof connect>) {
-  const { id: discordId } = interaction.member.user;
+  const { id: discordId, username: discordUsername } = interaction.member.user;
   const secret = interaction.data.options[0].value;
 
   // Check if event exists
@@ -21,7 +21,7 @@ export async function signIn(interaction: any, db: ReturnType<typeof connect>) {
 
   // Check if attendee exists
   let attendee = await db.query.attendees.findFirst({
-    where: eq(attendees.discord, discordId),
+    where: eq(attendees.discordId, discordId),
     with: {
       attendeesEvents: {
         with: {
@@ -40,7 +40,8 @@ export async function signIn(interaction: any, db: ReturnType<typeof connect>) {
       await db
         .insert(attendees)
         .values({
-          discord: discordId,
+          discordId,
+          discordUsername,
         })
         .returning({ id: attendees.id })
     )[0];
