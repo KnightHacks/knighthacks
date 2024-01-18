@@ -5,7 +5,6 @@ export async function checkLeaderboard(db: ReturnType<typeof connect>) {
 
   // Get all attendees
   const attendees = await db.query.attendees.findMany({
-    limit: 5,
     with: {
       attendeesEvents: {
         with: {
@@ -30,10 +29,12 @@ export async function checkLeaderboard(db: ReturnType<typeof connect>) {
     };
   });
 
-  // Sort attendees by points
-  const sortedAttendees = attendeesWithPoints.sort((a, b) => {
-    return b.points - a.points;
-  });
+  // Sort attendees by points and get top 10
+  const sortedAttendees = attendeesWithPoints
+    .sort((a, b) => {
+      return b.points - a.points;
+    })
+    .slice(0, 10);
 
   return sortedAttendees;
 }
