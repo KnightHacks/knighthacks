@@ -6,7 +6,7 @@ export async function checkPoints(
 ) {
   const discordId = interaction.member.user.id;
   const attendee = await db.query.attendees.findFirst({
-    where: eq(attendees.discord, discordId),
+    where: eq(attendees.discordId, discordId),
     with: {
       attendeesEvents: {
         with: {
