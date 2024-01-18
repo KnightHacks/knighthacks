@@ -117,7 +117,7 @@ export const interaction = new Hono<HonoConfig>().post(
             const leaderboardString = leaderboard
               .map(
                 (attendee, index) =>
-                  `${index + 1}. <@${attendee.discordUsername}> - ${
+                  `${index + 1}. ${attendee.discordUsername} - ${
                     attendee.points
                   } points`,
               )
