@@ -5,6 +5,7 @@ export async function checkLeaderboard(db: ReturnType<typeof connect>) {
 
   // Get all attendees
   const attendees = await db.query.attendees.findMany({
+    limit: 5,
     with: {
       attendeesEvents: {
         with: {
