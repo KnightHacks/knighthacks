@@ -7,7 +7,7 @@ import { usersRouter } from "./users";
 
 export const appRouter = router({
   hello: publicProcedure.query(() => {
-    return "Hello Hono!";
+    return "Hello from Hono!";
   }),
   users: usersRouter,
   hackathons: hackathonsRouter,
