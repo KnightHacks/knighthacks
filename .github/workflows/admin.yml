@@ -21,6 +21,9 @@ jobs:
 
       - name: Build
         run: pnpm run build --filter=admin
+        env:
+          VITE_API_URL: ${{ secrets.API_URL }}
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
 
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
