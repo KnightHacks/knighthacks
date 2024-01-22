@@ -3,19 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3001",
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.3.9",
+    "@trpc/client": "10.44.1",
+    "@trpc/next": "^10.45.0",
+    "@trpc/react-query": "10.44.1",
+    "@trpc/server": "^10.44.1",
+    "next": "14.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0 ",
-    "next": "14.1.0"
+    "superjson": "1.9.1"
   },
   "devDependencies": {
+    "@knighthacks/api": "workspace:*",
     "@knighthacks/eslint-config": "workspace:*",
     "@knighthacks/prettier-config": "workspace:*",
     "@knighthacks/tailwind-config": "workspace:*",
@@ -24,11 +31,11 @@
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32 ",
-    "typescript": "^5.3.3",
-    "tailwindcss": "3.3.5",
     "eslint": "^8.56.0",
-    "eslint-config-next": "14.1.0"
+    "eslint-config-next": "14.1.0",
+    "postcss": "^8.4.32 ",
+    "tailwindcss": "3.3.5",
+    "typescript": "^5.3.3"
   },
   "eslintConfig": {
     "root": true,
