@@ -187,7 +187,7 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18
+        specifier: '^18.2.0 '
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@knighthacks/eslint-config':
@@ -209,7 +209,7 @@ importers:
         specifier: ^18.2.37
         version: 18.2.43
       '@types/react-dom':
-        specifier: ^18
+        specifier: ^18.2.15
         version: 18.2.17
       autoprefixer:
         specifier: ^10.4.16
