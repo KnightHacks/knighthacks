@@ -15,7 +15,12 @@ const app = new Hono<HonoConfig>()
   .use(
     "*",
     cors({
-      origin: ["http://localhost:3000"],
+      origin: [
+        // Admin tool
+        "http://localhost:3000",
+        // Club website
+        "http://localhost:3001",
+      ],
     }),
   )
   .use("*", db)
