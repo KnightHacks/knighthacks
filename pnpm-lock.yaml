@@ -180,6 +180,21 @@ importers:
 
   apps/club-site:
     dependencies:
+      '@tanstack/react-query':
+        specifier: ^4.3.9
+        version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/client':
+        specifier: 10.44.1
+        version: 10.44.1(@trpc/server@10.44.1)
+      '@trpc/next':
+        specifier: ^10.45.0
+        version: 10.45.0(@tanstack/react-query@4.36.1)(@trpc/client@10.44.1)(@trpc/react-query@10.44.1)(@trpc/server@10.44.1)(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/react-query':
+        specifier: 10.44.1
+        version: 10.44.1(@tanstack/react-query@4.36.1)(@trpc/client@10.44.1)(@trpc/server@10.44.1)(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/server':
+        specifier: ^10.44.1
+        version: 10.44.1
       next:
         specifier: 14.1.0
         version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
@@ -189,7 +204,13 @@ importers:
       react-dom:
         specifier: '^18.2.0 '
         version: 18.2.0(react@18.2.0)
+      superjson:
+        specifier: 1.9.1
+        version: 1.9.1
     devDependencies:
+      '@knighthacks/api':
+        specifier: workspace:*
+        version: link:../../packages/api
       '@knighthacks/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
@@ -3300,6 +3321,26 @@ packages:
       '@trpc/server': 10.44.1
     dependencies:
       '@trpc/server': 10.44.1
+    dev: false
+
+  /@trpc/next@10.45.0(@tanstack/react-query@4.36.1)(@trpc/client@10.44.1)(@trpc/react-query@10.44.1)(@trpc/server@10.44.1)(next@14.1.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-saXajAb5GBpos9BNEtq/BeTOxmM4oCP3kyuGlMopNtHoacr71xHCItFnLsPWffM4DVW88uOXCFWaOtpOs5ThBw==}
+    peerDependencies:
+      '@tanstack/react-query': ^4.18.0
+      '@trpc/client': 10.45.0
+      '@trpc/react-query': 10.45.0
+      '@trpc/server': 10.45.0
+      next: '*'
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@tanstack/react-query': 4.36.1(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/client': 10.44.1(@trpc/server@10.44.1)
+      '@trpc/react-query': 10.44.1(@tanstack/react-query@4.36.1)(@trpc/client@10.44.1)(@trpc/server@10.44.1)(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/server': 10.44.1
+      next: 14.1.0(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@trpc/react-query@10.44.1(@tanstack/react-query@4.36.1)(@trpc/client@10.44.1)(@trpc/server@10.44.1)(react-dom@18.2.0)(react@18.2.0):
