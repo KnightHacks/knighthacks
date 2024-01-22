@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "react": "^18",
@@ -14,13 +16,17 @@
     "next": "14.1.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@knighthacks/eslint-config": "workspace:*",
+    "@knighthacks/prettier-config": "workspace:*",
+    "@knighthacks/tailwind-config": "workspace:*",
+    "@knighthacks/tsconfig": "workspace:*",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
     "postcss": "^8",
-    "tailwindcss": "^3.3.0",
+    "typescript": "^5.3.3",
+    "tailwindcss": "3.3.5",
     "eslint": "^8",
     "eslint-config-next": "14.1.0"
   },
