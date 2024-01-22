@@ -93,6 +93,7 @@ export function UserProfileForm({
     trpc.users.updateProfile.useMutation({
       onSuccess: async () => {
         await utils.users.getCurrent.invalidate();
+        await utils.users.getAll.invalidate();
         toast("Success!", {
           description: "You've updated your profile!",
         });
@@ -106,6 +107,7 @@ export function UserProfileForm({
     if (data.resume && token) {
       try {
         resume = await uploadResume(data.resume, token);
+        console.log(resume);
       } catch {
         toast("Error!", {
           description: "Failed to upload resume",
@@ -116,7 +118,7 @@ export function UserProfileForm({
     if (user) {
       updateProfile({
         ...data,
-        resume,
+        resume: resume ?? user.resume,
       });
       return;
     }
@@ -128,304 +130,344 @@ export function UserProfileForm({
   };
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="mx-auto flex flex-1 flex-col justify-center space-y-6"
-      >
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Phone</FormLabel>
-              <FormControl>
-                <Input placeholder="Phone" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="age"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Age</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder="Age" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="shirtSize"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Shirt Size</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+    <>
+      <h1 className="mb-2 text-lg font-semibold">
+        {user ? "Update Profile" : "Create Profile"}
+      </h1>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="mx-auto flex flex-1 flex-col justify-center space-y-6"
+        >
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select your shirt size" />
-                  </SelectTrigger>
+                  <Input placeholder="Phone" {...field} />
                 </FormControl>
-                <SelectContent>
-                  {shirtSizes.map((size) => (
-                    <SelectItem key={size} value={size}>
-                      {size}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="major"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Major</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      className={cn(
-                        "justify-between",
-                        !field.value && "text-muted-foreground",
-                      )}
-                    >
-                      {field.value
-                        ? majors.find((major) => major === field.value)
-                        : "Select your major"}
-                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="p-0">
-                  <MajorsComboBox value={field.value} form={form} />
-                </PopoverContent>
-              </Popover>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="school"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>School</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      className={cn(
-                        "justify-between",
-                        !field.value && "text-muted-foreground",
-                      )}
-                    >
-                      {field.value
-                        ? schools.find((school) => school === field.value)
-                        : "Select your school"}
-                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="p-0">
-                  <SchoolsCombobox value={field.value} form={form} />
-                </PopoverContent>
-              </Popover>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="gradYear"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Graduation Year</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="age"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Age</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select your graduation year" />
-                  </SelectTrigger>
+                  <Input type="number" placeholder="Age" {...field} />
                 </FormControl>
-                <SelectContent>
-                  {gradYears.map((gradYear) => (
-                    <SelectItem key={gradYear} value={gradYear}>
-                      {gradYear}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="address1"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Address Line 1</FormLabel>
-              <FormControl>
-                <Input placeholder="Address Line 1" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="address2"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Address Line 2</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Address Line 2"
-                  {...field}
-                  value={field.value ?? ""}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="city"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>City</FormLabel>
-              <FormControl>
-                <Input placeholder="City" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="state"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>State</FormLabel>
-              <FormControl>
-                <Input placeholder="State" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="zip"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Zip Code</FormLabel>
-              <FormControl>
-                <Input placeholder="Zip Code" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="country"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Country</FormLabel>
-              <FormControl>
-                <Input placeholder="Country" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="github"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>GitHub</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="GitHub"
-                  {...field}
-                  value={field.value ?? ""}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="personalWebsite"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Personal Website</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Personal Website"
-                  {...field}
-                  value={field.value ?? ""}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="linkedin"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>LinkedIn</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Personal Website"
-                  {...field}
-                  value={field.value ?? ""}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="resume"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Resume</FormLabel>
-              <FormControl>
-                <Input
-                  type="file"
-                  accept="application/pdf"
-                  onChange={(e) => field.onChange(e.target.files?.[0])}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" disabled={isAddingUser || isUpdatingUser}>
-          Submit
-        </Button>
-      </form>
-    </Form>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="shirtSize"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Shirt Size</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your shirt size" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {shirtSizes.map((size) => (
+                      <SelectItem key={size} value={size}>
+                        {size}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="major"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Major</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className={cn(
+                          "justify-between",
+                          !field.value && "text-muted-foreground",
+                        )}
+                      >
+                        {field.value
+                          ? majors.find((major) => major === field.value)
+                          : "Select your major"}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="p-0">
+                    <MajorsComboBox value={field.value} form={form} />
+                  </PopoverContent>
+                </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="school"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>School</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className={cn(
+                          "justify-between",
+                          !field.value && "text-muted-foreground",
+                        )}
+                      >
+                        {field.value
+                          ? schools.find((school) => school === field.value)
+                          : "Select your school"}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="p-0">
+                    <SchoolsCombobox value={field.value} form={form} />
+                  </PopoverContent>
+                </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="gradYear"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Graduation Year</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your graduation year" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {gradYears.map((gradYear) => (
+                      <SelectItem key={gradYear} value={gradYear}>
+                        {gradYear}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="address1"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Address Line 1</FormLabel>
+                <FormControl>
+                  <Input placeholder="Address Line 1" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="address2"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Address Line 2</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Address Line 2"
+                    {...field}
+                    value={field.value ?? ""}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>City</FormLabel>
+                <FormControl>
+                  <Input placeholder="City" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="state"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>State</FormLabel>
+                <FormControl>
+                  <Input placeholder="State" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="zip"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Zip Code</FormLabel>
+                <FormControl>
+                  <Input placeholder="Zip Code" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="country"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Country</FormLabel>
+                <FormControl>
+                  <Input placeholder="Country" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="github"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>GitHub</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="GitHub"
+                    {...field}
+                    value={field.value ?? ""}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="personalWebsite"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Personal Website</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Personal Website"
+                    {...field}
+                    value={field.value ?? ""}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="linkedin"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>LinkedIn</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Personal Website"
+                    {...field}
+                    value={field.value ?? ""}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="resume"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Resume</FormLabel>
+                <FormControl>
+                  <Input
+                    type="file"
+                    accept="application/pdf"
+                    onChange={(e) => field.onChange(e.target.files?.[0])}
+                  />
+                </FormControl>
+                {user?.resume && (
+                  <button
+                    className="text-left text-sm text-blue-500 underline"
+                    type="button"
+                    onClick={async () => {
+                      const token = await getToken();
+
+                      const resume = await fetch(
+                        `${
+                          import.meta.env.VITE_API_URL
+                        }/resume/download/${user?.resume}`,
+                        {
+                          method: "GET",
+                          headers: {
+                            Authorization: `Bearer ${token}`,
+                          },
+                        },
+                      );
+
+                      const blob = await resume.blob();
+                      const url = URL.createObjectURL(blob);
+                      window.open(url);
+                      URL.revokeObjectURL(url);
+                    }}
+                  >
+                    {user?.resume}
+                  </button>
+                )}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button type="submit" disabled={isAddingUser || isUpdatingUser}>
+            Submit
+          </Button>
+        </form>
+      </Form>
+    </>
   );
 }
 
