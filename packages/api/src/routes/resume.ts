@@ -35,7 +35,11 @@ export const resume = new Hono<HonoConfig>()
     const auth = getAuth(c);
 
     // If the user isn't authenticated, then they're unauthorized
-    if (!auth?.sessionClaims) return c.text("Unauthorized", 401);
+    if (
+      !auth?.sessionClaims ||
+      !auth.sessionClaims.email.endsWith("@knighthacks.org")
+    )
+      return c.text("Unauthorized", 401);
 
     // Get user from session
     const user = await db.query.users.findFirst({
@@ -59,11 +63,10 @@ export const resume = new Hono<HonoConfig>()
     if (!object) return c.text("File not found", 404);
 
     const file = await object.arrayBuffer();
-    const contentType = object.httpMetadata?.contentType ?? "";
 
     return c.body(file, {
       headers: {
-        "Content-Type": contentType,
+        "Content-Type": "application/pdf",
       },
     });
   });
