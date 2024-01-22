@@ -1,0 +1,32 @@
+name: Admin
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "apps/admin/**"
+      - ".github/workflows/admin.yml"
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  deploy:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Build
+        run: pnpm run build --filter=admin
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: ./apps/admin
+          command: pages deploy dist --project-name=knighthacks-admin
+          packageManager: pnpm
