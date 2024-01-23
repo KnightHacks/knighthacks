@@ -21,7 +21,7 @@ const app = new Hono<HonoConfig>()
         // Club website dev server
         "http://localhost:3001",
         // Club website production server
-        "https://knighthacks-admin.pages.dev/sponsors",
+        "https://knighthacks-admin.pages.dev",
       ],
     }),
   )
