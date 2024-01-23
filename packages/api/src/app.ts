@@ -16,10 +16,12 @@ const app = new Hono<HonoConfig>()
     "*",
     cors({
       origin: [
-        // Admin tool
+        // Admin tool dev server
         "http://localhost:3000",
-        // Club website
+        // Club website dev server
         "http://localhost:3001",
+        // Club website production server
+        "https://knighthacks-admin.pages.dev/sponsors",
       ],
     }),
   )
