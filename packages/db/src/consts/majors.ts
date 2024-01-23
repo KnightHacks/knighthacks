@@ -198,4 +198,6 @@ export const majors = [
   "Law Enforcement Administration",
   "Police Science",
   "Sport and Fitness Administration",
+  "One Piece",
+  "Other",
 ] as const;
