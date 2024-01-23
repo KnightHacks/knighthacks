@@ -3,7 +3,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "with-env": "dotenv -e .env --",
+    "with-env": "dotenv -e .env.dev --",
     "test": "turbo run test",
     "build": "pnpm with-env turbo run build",
     "deploy": "turbo run deploy",
