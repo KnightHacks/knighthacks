@@ -25,11 +25,11 @@ jobs:
           command: deploy
           packageManager: pnpm
           secrets: |
-            TURSO_URL=${{ secrets.TURSO_URL }}
-            TURSO_AUTH_TOKEN=${{ secrets.TURSO_AUTH_TOKEN }}
-            CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }}
-            CLERK_PUBLISHABLE_KEY=${{ secrets.CLERK_PUBLISHABLE_KEY }}
-            CLERK_WEBHOOK_SECRET_KEY=${{secrets.CLERK_WEBHOOK_SECRET_KEY}}
+            TURSO_URL
+            TURSO_AUTH_TOKEN
+            CLERK_SECRET_KEY
+            CLERK_PUBLISHABLE_KEY
+            CLERK_WEBHOOK_SECRET_KEY
         env:
           TURSO_URL: ${{ secrets.TURSO_URL }}
           TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
