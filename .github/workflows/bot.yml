@@ -6,6 +6,10 @@ on:
     paths:
       - "apps/socials-bot/**"
       - ".github/workflows/bot.yml"
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
 
 jobs:
   deploy:
@@ -16,7 +20,7 @@ jobs:
 
       - name: Setup
         uses: ./tooling/github/setup
-        
+
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:

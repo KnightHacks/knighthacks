@@ -6,6 +6,10 @@ on:
     paths:
       - "packages/api/**"
       - ".github/workflows/api.yml"
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
 
 jobs:
   deploy:
