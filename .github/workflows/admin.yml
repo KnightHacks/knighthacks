@@ -8,10 +8,6 @@ on:
       - ".github/workflows/admin.yml"
   pull_request:
     types: [opened, synchronize]
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
 
 jobs:
   deploy:
