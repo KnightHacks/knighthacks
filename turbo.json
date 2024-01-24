@@ -1,39 +1,30 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDotEnv": [".env.dev"],
+  "globalDotEnv": [".env"],
+  "globalEnv": ["API_URL", "VITE_API_URL", "VITE_CLERK_PUBLISHABLE_KEY"],
   "pipeline": {
     "topo": {
       "dependsOn": ["^topo"]
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
-    },
-    "deploy": {
-      "cache": true
-    },
-    "test": {
-      "dependsOn": ["^build"]
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "next-env.d.ts",
+        ".output/**",
+        ".vercel/output/**",
+        "dist/**"
+      ]
     },
     "dev": {
       "cache": false,
       "persistent": true
     },
-    "preview": {
-      "cache": false,
-      "persistent": true
-    },
-    "db:push": {
-      "cache": true
-    },
-    "db:preview": {
-      "cache": false,
-      "persistent": true
-    },
-    "db:generate": {
-      "cache": true
-    },
     "clean": {
+      "cache": false
+    },
+    "//#clean": {
       "cache": false
     },
     "format": {
@@ -47,9 +38,6 @@
     "typecheck": {
       "dependsOn": ["^topo"],
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]
-    },
-    "register": {
-      "cache": true
     }
   }
 }
