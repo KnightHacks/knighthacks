@@ -53,18 +53,19 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
+    "@knighthacks/tailwind-config": "workspace:*",
     "@knighthacks/eslint-config": "workspace:*",
     "@knighthacks/prettier-config": "workspace:*",
-    "@knighthacks/tailwind-config": "workspace:*",
     "@knighthacks/tsconfig": "workspace:*",
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "autoprefixer": "^10.4.16",
-    "eslint": "^8.56.0",
     "postcss": "^8.4.32",
     "tailwindcss": "3.3.5",
-    "typescript": "^5.3.3",
     "vite": "^5.0.0",
     "dotenv-cli": "latest"
   },
