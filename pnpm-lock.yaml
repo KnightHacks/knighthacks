@@ -159,6 +159,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.16(postcss@8.4.32)
+      dotenv-cli:
+        specifier: latest
+        version: 7.3.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -232,6 +235,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.16(postcss@8.4.32)
+      dotenv-cli:
+        specifier: latest
+        version: 7.3.0
       eslint:
         specifier: ^8.56.0
         version: 8.56.0

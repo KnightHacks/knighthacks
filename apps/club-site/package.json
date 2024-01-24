@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3001",
-    "build": "next build",
-    "start": "next start -p 3001",
+    "with-env": "dotenv -e ../../.env --",
+    "dev": "pnpm with-env next dev -p 3001",
+    "build": "pnpm with-env next build",
+    "start": "pnpm with-env next start -p 3001",
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
@@ -35,7 +36,8 @@
     "eslint-config-next": "14.1.0",
     "postcss": "^8.4.32 ",
     "tailwindcss": "3.3.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "dotenv-cli": "latest"
   },
   "eslintConfig": {
     "root": true,
