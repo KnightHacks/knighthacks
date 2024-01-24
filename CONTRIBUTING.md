@@ -12,24 +12,44 @@ This repository is a monorepo.
 
 - We use [pnpm](https://pnpm.io) and [`workspaces`](https://pnpm.io/workspaces) for development.
 - We use [Turborepo](https://turbo.build/repo) as our build system.
-- We use [Vercel](https://vercel.com) for hosting.
+- We use [Cloudflare](https://cloudflare.com) for hosting.
 - We use [Prettier](https://prettier.io) for code formatting.
 - We use [ESLint](https://eslint.org) for linting.
-  This repository is structured as follows:
+- We use [Turso](https://turso.tech) for our database.
+- We use [Clerk](https://clerk.dev) for authentication.
+
+This repository is structured as follows:
 
 ```
 apps
-└── admin
+├── admin
+├── club-site
+├── hackathon-site
+└── socials-bot
 packages
 ├── api
 └── db
+tooling
+├── eslint
+├── github
+├── prettier
+├── tailwind
+└── typescript
 ```
 
-| Path           | Description                |
-| -------------- | -------------------------- |
-| `apps/admin`   | React admin dashboard      |
-| `packages/api` | Hono tRPC server           |
-| `packages/db`  | Database schema and config |
+| Path                  | Description                        |
+| --------------------- | ---------------------------------- |
+| `apps/admin`          | React admin dashboard              |
+| `apps/club-site`      | Knight Hacks club website          |
+| `apps/hackathon-site` | Fall 2024 hackathon website        |
+| `apps/socials-bot`    | Discord bot for social events      |
+| `packages/api`        | Knight Hacks API                   |
+| `packages/db`         | Database schema and config         |
+| `tooling/eslint`      | Eslint configuration files         |
+| `tooling/github`      | GitHub Actions scripts             |
+| `tooling/prettier`    | Prettier configuration files       |
+| `tooling/tailwind`    | Shared Tailwind configuration file |
+| `tooling/typescript`  | TypeScript configuration files     |
 
 ## Development
 
@@ -48,7 +68,7 @@ cd knighthacks
 ### Create a new Branch
 
 ```bash
-git checkout -b my-new-branch
+git checkout -b <project-name>/<branch-name>
 ```
 
 ### Install dependencies
@@ -59,17 +79,17 @@ pnpm install
 
 ### Run a workspace
 
-You can use the `pnpm --filter=[WORKSPACE]` command to start the development process for a workspace.
+You can use the `pnpm dev --filter=<WORKSPACE>` or `pnpm dev -F <WORKSPACE>` to run a particular workspace.
 
 #### Examples
 
-1. To run the admin dashboard:
+To run the admin dashboard:
 
 ```bash
 pnpm --filter=admin dev
 ```
 
-2. To run the `api` package:
+To run the api:
 
 ```bash
 pnpm --filter=api dev
