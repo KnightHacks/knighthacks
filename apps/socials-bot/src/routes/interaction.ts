@@ -33,6 +33,7 @@ export const interaction = new Hono<HonoConfig>().post(
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
             data: {
               content: "Pong!",
+              flags: 1 << 6,
             },
           });
         case "createevent": {
@@ -44,6 +45,7 @@ export const interaction = new Hono<HonoConfig>().post(
               type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
               data: {
                 content: `Created new event ${event.name} on ${event.date} at ${event.location} worth ${event.points} points!`,
+                flags: 1 << 6,
               },
             });
           } catch (error) {
@@ -52,6 +54,7 @@ export const interaction = new Hono<HonoConfig>().post(
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {
                   content: error.message,
+                  flags: 1 << 6,
                 },
               });
             }
@@ -65,6 +68,7 @@ export const interaction = new Hono<HonoConfig>().post(
               type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
               data: {
                 content: "Signed you in!",
+                flags: 1 << 6,
               },
             });
           } catch (error) {
@@ -73,6 +77,7 @@ export const interaction = new Hono<HonoConfig>().post(
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {
                   content: error.message,
+                  flags: 1 << 6,
                 },
               });
             }
@@ -85,6 +90,7 @@ export const interaction = new Hono<HonoConfig>().post(
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
             data: {
               content: `You have ${points} points!`,
+              flags: 1 << 6,
             },
           });
         }
@@ -97,6 +103,7 @@ export const interaction = new Hono<HonoConfig>().post(
               type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
               data: {
                 content: "Cleared all events!",
+                flags: 1 << 6,
               },
             });
           } catch (error) {
@@ -105,6 +112,7 @@ export const interaction = new Hono<HonoConfig>().post(
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {
                   content: error.message,
+                  flags: 1 << 6,
                 },
               });
             }
@@ -127,6 +135,7 @@ export const interaction = new Hono<HonoConfig>().post(
               type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
               data: {
                 content: `**Leaderboard**\n${leaderboardString}`,
+                flags: 1 << 6,
               },
             });
           } catch (error) {
@@ -135,6 +144,7 @@ export const interaction = new Hono<HonoConfig>().post(
                 type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
                 data: {
                   content: error.message,
+                  flags: 1 << 6,
                 },
               });
             }
@@ -145,6 +155,7 @@ export const interaction = new Hono<HonoConfig>().post(
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
             data: {
               content: "Unknown command",
+              flags: 1 << 6,
             },
           });
       }
