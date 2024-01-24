@@ -168,6 +168,9 @@ importers:
       postcss:
         specifier: ^8.4.32
         version: 8.4.32
+      prettier:
+        specifier: ^3.1.1
+        version: 3.1.1
       tailwindcss:
         specifier: 3.3.5
         version: 3.3.5
@@ -217,9 +220,6 @@ importers:
       '@knighthacks/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
-      '@knighthacks/tailwind-config':
-        specifier: workspace:*
-        version: link:../../tooling/tailwind
       '@knighthacks/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
@@ -247,12 +247,18 @@ importers:
       postcss:
         specifier: '^8.4.32 '
         version: 8.4.32
+      prettier:
+        specifier: ^3.1.1
+        version: 3.1.1
       tailwindcss:
         specifier: 3.3.5
         version: 3.3.5
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
+      wrangler:
+        specifier: ^3.22.1
+        version: 3.22.1
 
   apps/socials-bot:
     dependencies:
@@ -262,18 +268,9 @@ importers:
       discord-interactions:
         specifier: ^3.4.0
         version: 3.4.0
-      esbuild:
-        specifier: ^0.19.11
-        version: 0.19.11
       hono:
         specifier: ^3.11.7
         version: 3.11.7
-      ts-pattern:
-        specifier: ^5.0.6
-        version: 5.0.6
-      tsx:
-        specifier: ^4.6.2
-        version: 4.6.2
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^4.20231121.0
@@ -284,6 +281,15 @@ importers:
       '@knighthacks/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
+      '@knighthacks/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/typescript
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.1.1
+        version: 3.1.1
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
@@ -342,6 +348,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      prettier:
+        specifier: ^3.1.1
+        version: 3.1.1
       tsup:
         specifier: ^8.0.1
         version: 8.0.1(typescript@5.3.3)
@@ -6999,10 +7008,6 @@ packages:
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
-  /ts-pattern@5.0.6:
-    resolution: {integrity: sha512-Y+jOjihlFriWzcBjncPCf2/am+Hgz7LtsWs77pWg5vQQKLQj07oNrJryo/wK2G0ndNaoVn2ownFMeoeAuReu3Q==}
-    dev: false
-
   /tsconfig-paths@3.15.0:
     resolution: {integrity: sha512-2Ac2RgzDe/cn48GvOe3M+o82pEFewD3UPbyoUHHdKasHwJKjds4fLXWf/Ux5kATBKN20oaFGu+jbElp1pos0mg==}
     dependencies:
@@ -7056,17 +7061,6 @@ packages:
       - supports-color
       - ts-node
     dev: true
-
-  /tsx@4.6.2:
-    resolution: {integrity: sha512-QPpBdJo+ZDtqZgAnq86iY/PD2KYCUPSUGIunHdGwyII99GKH+f3z3FZ8XNFLSGQIA4I365ui8wnQpl8OKLqcsg==}
-    engines: {node: '>=18.0.0'}
-    hasBin: true
-    dependencies:
-      esbuild: 0.18.20
-      get-tsconfig: 4.7.2
-    optionalDependencies:
-      fsevents: 2.3.3
-    dev: false
 
   /turbo-darwin-64@1.11.1:
     resolution: {integrity: sha512-JmwL8kcfxncDf2SZFioSa6dUvpMq/HbMcurh9mGm6BxWLQoB0d3fP/q3HizgCSbOE4ihScXoQ+c/C2xhl6Ngjg==}
