@@ -21,7 +21,6 @@
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {
-    "dotenv-cli": "^7.3.0",
     "@knighthacks/tsconfig": "workspace:*",
     "@knighthacks/prettier-config": "workspace:*",
     "eslint": "^8.54.0",
