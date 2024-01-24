@@ -5,30 +5,31 @@
   "types": "src/index.ts",
   "type": "module",
   "scripts": {
-    "db:push": "drizzle-kit push:sqlite",
-    "db:preview": "drizzle-kit studio --port 5555",
-    "db:generate": "drizzle-kit generate:sqlite",
+    "with-env": "dotenv -e ../../.env --",
+    "push": "pnpm with-env drizzle-kit push:sqlite",
+    "studio": "pnpm with-env drizzle-kit studio",
+    "generate": "pnpm with-env drizzle-kit generate:sqlite",
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .turbo node_modules"
   },
   "license": "MIT",
-  "devDependencies": {
-    "@knighthacks/eslint-config": "workspace:*",
-    "drizzle-kit": "^0.20.6",
-    "eslint": "^8.56.0",
-    "tsup": "^8.0.1",
-    "tsx": "^4.6.2",
-    "typescript": "^5.3.3"
-  },
   "dependencies": {
+    "drizzle-kit": "^0.20.6",
+    "@libsql/client": "0.4.0-pre.5",
+    "drizzle-orm": "^0.29.1",
+    "zod": "^3.22.4",
+    "drizzle-zod": "^0.5.1"
+  },
+  "devDependencies": {
     "@knighthacks/eslint-config": "workspace:*",
     "@knighthacks/prettier-config": "workspace:*",
     "@knighthacks/tsconfig": "workspace:*",
-    "@libsql/client": "0.4.0-pre.5",
-    "drizzle-orm": "^0.29.1",
-    "drizzle-zod": "^0.5.1",
-    "zod": "^3.22.4"
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3",
+    "dotenv-cli": "latest"
   },
   "eslintConfig": {
     "root": true,
