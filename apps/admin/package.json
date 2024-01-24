@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "with-env": "dotenv -e ../../.env --",
+    "dev": "pnpm with-env vite",
+    "build": "pnpm with-env vite build",
+    "preview": "pnpm with-env vite preview",
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit",
@@ -64,7 +65,8 @@
     "postcss": "^8.4.32",
     "tailwindcss": "3.3.5",
     "typescript": "^5.3.3",
-    "vite": "^5.0.0"
+    "vite": "^5.0.0",
+    "dotenv-cli": "latest"
   },
   "eslintConfig": {
     "root": true,
