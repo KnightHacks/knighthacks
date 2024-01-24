@@ -1,6 +1,6 @@
 # KnightHacks Monorepo
 
-Welcome to the KnightHacks monorepo! This repository contains all of the code for KnightHacks' website, dashboard, and other projects.
+Welcome to the KnightHacks monorepo! This repository contains all of the source for Knight Hacks' various projects.
 
 ## Contributing
 
