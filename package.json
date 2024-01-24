@@ -2,25 +2,23 @@
   "name": "knight-hacks",
   "private": true,
   "license": "MIT",
+  "engines": {
+    "node": ">=20.10"
+  },
   "scripts": {
-    "with-env": "dotenv -e .env.dev --",
-    "test": "turbo run test",
-    "build": "pnpm with-env turbo run build",
-    "deploy": "turbo run deploy",
+    "build": "turbo run build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
-    "db:preview": "pnpm with-env turbo run db:preview",
-    "db:push": "pnpm with-env turbo run db:push",
-    "db:generate": "pnpm with-env turbo run db:generate",
-    "dev": "pnpm with-env turbo run dev --parallel",
-    "preview": "turbo run preview --parallel",
+    "postinstall": "pnpm lint:ws",
+    "db:studio": "pnpm -F db studio",
+    "db:push": "pnpm -F db push",
+    "dev": " turbo run dev --parallel",
     "format": "turbo format --continue -- --cache --cache-location node_modules/.cache/.prettiercache",
     "format:fix": "turbo format --continue -- --write --cache --cache-location node_modules/.cache/.prettiercache",
     "lint": "turbo lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:ws": "pnpm dlx sherif@latest",
-    "typecheck": "turbo typecheck",
-    "register": "pnpm with-env turbo register"
+    "typecheck": "turbo typecheck"
   },
   "devDependencies": {
     "dotenv-cli": "^7.3.0",
