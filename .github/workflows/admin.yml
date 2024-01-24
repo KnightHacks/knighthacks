@@ -6,7 +6,12 @@ on:
     paths:
       - "apps/admin/**"
       - ".github/workflows/admin.yml"
-
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main]
+    paths:
+      - "apps/admin/**"
+      - ".github/workflows/admin.yml"
 jobs:
   deploy:
     timeout-minutes: 60
