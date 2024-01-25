@@ -12,6 +12,7 @@ on:
     paths:
       - "apps/admin/**"
       - ".github/workflows/admin.yml"
+  workflow_dispatch: {}
 
 jobs:
   deploy:
