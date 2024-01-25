@@ -6,6 +6,7 @@ on:
     paths:
       - "apps/socials-bot/**"
       - ".github/workflows/bot.yml"
+  workflow_dispatch: {}
 
 jobs:
   deploy:

@@ -6,6 +6,7 @@ on:
     paths:
       - "packages/api/**"
       - ".github/workflows/api.yml"
+  workflow_dispatch: {}
 
 jobs:
   deploy:
