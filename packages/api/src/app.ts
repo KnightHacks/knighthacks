@@ -23,7 +23,8 @@ const app = new Hono<HonoConfig>()
         // Knight Hacks 2024 dev server
         "http://localhost:3002",
         // Admin tool production server
-        "https://knighthacks-admin.pages.dev/sponsors",
+        "https://knighthacks-admin.pages.dev",
+        "https://admin.knighthacks.org",
       ],
     }),
   )
