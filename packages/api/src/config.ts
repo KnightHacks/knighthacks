@@ -6,8 +6,8 @@ import type { Context, Input } from "hono";
 import type { connect } from "@knighthacks/db";
 
 export type Bindings = {
-  TURSO_URL: string;
-  TURSO_AUTH_TOKEN: string;
+  DATABASE_URL: string;
+  DATABASE_AUTH_TOKEN: string;
   CLERK_SECRET_KEY: string;
   CLERK_PUBLISHABLE_KEY: string;
   CLERK_WEBHOOK_SECRET_KEY: string;
