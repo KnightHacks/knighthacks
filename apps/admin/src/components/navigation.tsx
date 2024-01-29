@@ -15,7 +15,7 @@ export function Navigation() {
   const { isLoaded } = useUser();
 
   const profile = isLoaded ? (
-    <UserButton />
+    <UserButton afterSignOutUrl="https://admin.knighthacks.org/sign-in" />
   ) : (
     <Skeleton className="h-8 w-8 rounded-full" />
   );
