@@ -3,7 +3,7 @@ import { drizzle } from "drizzle-orm/libsql";
 
 import * as schema from "./schemas";
 
-export function connect(url: string, authToken: string) {
+export function connect(url: string, authToken?: string) {
   const client = createClient({
     url,
     authToken,
