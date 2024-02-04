@@ -1,7 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDotEnv": [".env"],
-  "globalEnv": ["API_URL", "VITE_API_URL", "VITE_CLERK_PUBLISHABLE_KEY"],
   "pipeline": {
     "topo": {
       "dependsOn": ["^topo"]
