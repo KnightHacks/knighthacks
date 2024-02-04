@@ -47,6 +47,5 @@ dist
 next-env.d.ts
 
 # db
-*.sqlite3
-*.sqlite
-*.db
+*.sqlite*
+*.db*
