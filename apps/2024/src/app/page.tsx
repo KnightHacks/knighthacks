@@ -1,10 +1,11 @@
-import { Hello } from "~/components/Hello";
+import { Button } from "@knighthacks/ui/components/ui/button";
+
 
 export default function Home() {
   return (
     <div>
       <div>This is the home page!</div>
-      <Hello />
+      <Button>Click me</Button>
     </div>
   );
 }
