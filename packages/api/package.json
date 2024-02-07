@@ -7,7 +7,7 @@
   "types": "src/index.ts",
   "scripts": {
     "deploy": "wrangler deploy --minify",
-    "dev": "wrangler dev --port 8080 --remote",
+    "dev": "wrangler dev --port 8080",
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit",
