@@ -480,6 +480,30 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
+  packages/ui:
+    devDependencies:
+      '@knighthacks/eslint-config':
+        specifier: workspace:*
+        version: link:../../tooling/eslint
+      '@knighthacks/prettier-config':
+        specifier: workspace:*
+        version: link:../../tooling/prettier
+      '@knighthacks/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/typescript
+      dotenv-cli:
+        specifier: latest
+        version: 7.3.0
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.1.1
+        version: 3.1.1
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
   tooling/eslint:
     dependencies:
       '@next/eslint-plugin-next':
