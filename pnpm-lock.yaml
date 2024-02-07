@@ -451,6 +451,9 @@ importers:
       drizzle-zod:
         specifier: ^0.5.1
         version: 0.5.1(drizzle-orm@0.29.1)(zod@3.22.4)
+      turso:
+        specifier: ^0.1.0
+        version: 0.1.0
       zod:
         specifier: ^3.22.4
         version: 3.22.4
@@ -7199,6 +7202,10 @@ packages:
       turbo-windows-64: 1.11.1
       turbo-windows-arm64: 1.11.1
     dev: true
+
+  /turso@0.1.0:
+    resolution: {integrity: sha512-gM6zaKIQA35QoujeknL1oNFjgduei9sgVRrKc9XRSG1P+VAUAQzfKJGlLQqcnsHFh+a1kqRV16gI/mCvyEJS1Q==}
+    dev: false
 
   /tweetnacl@1.0.3:
     resolution: {integrity: sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==}
