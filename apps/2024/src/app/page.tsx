@@ -1,4 +1,4 @@
-import { Button } from "@knighthacks/ui/components/ui/button";
+import { Button } from "@knighthacks/design-system/components";
 
 export default function Home() {
   return (

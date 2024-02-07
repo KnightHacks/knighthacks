@@ -26,9 +26,9 @@ importers:
 
   apps/2024:
     dependencies:
-      '@knighthacks/ui':
+      '@knighthacks/design-system':
         specifier: workspace:*
-        version: link:../../packages/ui
+        version: link:../../packages/design-system
       '@tanstack/react-query':
         specifier: ^4.3.9
         version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
@@ -483,7 +483,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
-  packages/ui:
+  packages/design-system:
     dependencies:
       '@radix-ui/react-slot':
         specifier: ^1.0.2
@@ -500,6 +500,9 @@ importers:
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
+      dialog:
+        specifier: ^0.3.1
+        version: 0.3.1
       lucide-react:
         specifier: ^0.300.0
         version: 0.300.0(react@18.2.0)
@@ -515,6 +518,9 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.3.5)
+      tsx:
+        specifier: ^4.7.0
+        version: 4.7.0
     devDependencies:
       '@knighthacks/eslint-config':
         specifier: workspace:*
@@ -525,6 +531,9 @@ importers:
       '@knighthacks/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
+      '@types/node':
+        specifier: ^20
+        version: 20.10.4
       '@types/react':
         specifier: ^18.2.37
         version: 18.2.43
@@ -4313,6 +4322,11 @@ packages:
     resolution: {integrity: sha512-ypdmJU/TbBby2Dxibuv7ZLW3Bs1QEmM7nHjEANfohJLvE0XVujisn1qPJcZxg+qDucsr+bP6fLD1rPS3AhJ7EQ==}
     dev: false
 
+  /dialog@0.3.1:
+    resolution: {integrity: sha512-RYndSaXW/tYkfVbUKmyQzerHH080Pis7YabDxIHXRdYO6yo9/VqTIhPRB5RpoHwYlixeiUOvJCF7di+lmBaH6w==}
+    hasBin: true
+    dev: false
+
   /didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
 
@@ -7207,6 +7221,17 @@ packages:
       - supports-color
       - ts-node
     dev: true
+
+  /tsx@4.7.0:
+    resolution: {integrity: sha512-I+t79RYPlEYlHn9a+KzwrvEwhJg35h/1zHsLC2JXvhC2mdynMv6Zxzvhv5EMV6VF5qJlLlkSnMVvdZV3PSIGcg==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+    dependencies:
+      esbuild: 0.19.11
+      get-tsconfig: 4.7.2
+    optionalDependencies:
+      fsevents: 2.3.3
+    dev: false
 
   /turbo-darwin-64@1.11.1:
     resolution: {integrity: sha512-JmwL8kcfxncDf2SZFioSa6dUvpMq/HbMcurh9mGm6BxWLQoB0d3fP/q3HizgCSbOE4ihScXoQ+c/C2xhl6Ngjg==}

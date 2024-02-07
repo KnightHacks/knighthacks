@@ -1,17 +1,19 @@
 {
-  "name": "@knighthacks/ui",
+  "name": "@knighthacks/design-system",
   "version": "0.0.0",
   "exports": {
     "./globals.css": "./src/globals.css",
     "./postcss.config": "./postcss.config.js",
     "./tailwind.config": "./tailwind.config.ts",
     "./lib/*": "./src/lib/*.ts",
-    "./components/*": "./src/components/*.tsx"
+    "./components": "./src/index.ts"
   },
+  "main": "src/index.ts",
   "type": "module",
   "scripts": {
     "add": "pnpm dlx shadcn-ui@latest add",
     "lint": "eslint .",
+    "export": "tsx export",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf .turbo node_modules"
@@ -23,21 +25,24 @@
     "button": "^1.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "dialog": "^0.3.1",
     "lucide-react": "^0.300.0",
     "postcss": "^8.4.32",
     "tailwind-merge": "^2.2.0",
     "tailwindcss": "3.3.5",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "tsx": "^4.7.0"
   },
   "devDependencies": {
     "@knighthacks/eslint-config": "workspace:*",
     "@knighthacks/prettier-config": "workspace:*",
     "@knighthacks/tsconfig": "workspace:*",
+    "@types/node": "^20",
+    "@types/react": "^18.2.37",
     "dotenv-cli": "latest",
     "eslint": "^8.56.0",
     "prettier": "^3.1.1",
-    "typescript": "^5.3.3",
-    "@types/react": "^18.2.37"
+    "typescript": "^5.3.3"
   },
   "eslintConfig": {
     "root": true,
