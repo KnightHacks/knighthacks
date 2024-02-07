@@ -26,6 +26,9 @@ importers:
 
   apps/2024:
     dependencies:
+      '@knighthacks/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@tanstack/react-query':
         specifier: ^4.3.9
         version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
@@ -481,6 +484,37 @@ importers:
         version: 5.3.3
 
   packages/ui:
+    dependencies:
+      '@radix-ui/react-slot':
+        specifier: ^1.0.2
+        version: 1.0.2(@types/react@18.2.43)(react@18.2.0)
+      autoprefixer:
+        specifier: ^10.4.16
+        version: 10.4.16(postcss@8.4.32)
+      button:
+        specifier: ^1.1.1
+        version: 1.1.1
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
+      clsx:
+        specifier: ^2.0.0
+        version: 2.0.0
+      lucide-react:
+        specifier: ^0.300.0
+        version: 0.300.0(react@18.2.0)
+      postcss:
+        specifier: ^8.4.32
+        version: 8.4.32
+      tailwind-merge:
+        specifier: ^2.2.0
+        version: 2.2.0
+      tailwindcss:
+        specifier: 3.3.5
+        version: 3.3.5
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.3.5)
     devDependencies:
       '@knighthacks/eslint-config':
         specifier: workspace:*
@@ -491,6 +525,9 @@ importers:
       '@knighthacks/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
+      '@types/react':
+        specifier: ^18.2.37
+        version: 18.2.43
       dotenv-cli:
         specifier: latest
         version: 7.3.0
@@ -3988,6 +4025,10 @@ packages:
     engines: {node: '>=10.16.0'}
     dependencies:
       streamsearch: 1.1.0
+    dev: false
+
+  /button@1.1.1:
+    resolution: {integrity: sha512-/eICyCdXkem6L3i02jNfo7CgY0lDtELov2IhiTAUkkl3kTnnr/Jee0Fjnj4TuLwl8wkdtplZaWWXMCeowmkmpA==}
     dev: false
 
   /cac@6.7.14:

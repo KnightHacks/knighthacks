@@ -3,7 +3,8 @@
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "ui/*": ["../../packages/ui/src/*"]
     },
     "plugins": [
       {
