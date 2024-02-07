@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import "@knighthacks/ui/globals.css";
+import "@knighthacks/design-system/globals.css";
 
 import { TRPCProvider } from "~/trpc";
 

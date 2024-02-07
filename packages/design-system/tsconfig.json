@@ -4,7 +4,7 @@
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "baseUrl": ".",
     "paths": {
-      "ui/*": ["src/*"]
+      "@design-system/*": ["src/*"]
     }
   },
   "include": ["."],
