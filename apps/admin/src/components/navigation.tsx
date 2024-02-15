@@ -15,7 +15,9 @@ export function Navigation() {
   const { isLoaded } = useUser();
 
   const profile = isLoaded ? (
-    <UserButton afterSignOutUrl="https://admin.knighthacks.org/sign-in" />
+    <UserButton
+      afterSignOutUrl={import.meta.env.VITE_ADMIN_AFTER_SIGN_OUT_URL as string}
+    />
   ) : (
     <Skeleton className="h-8 w-8 rounded-full" />
   );

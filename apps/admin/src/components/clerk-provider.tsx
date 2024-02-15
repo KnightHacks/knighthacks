@@ -16,10 +16,10 @@ export function ClerkProviderWithTheme({
         baseTheme: theme === "dark" ? dark : undefined,
       }}
       publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY as string}
-      afterSignInUrl="https://admin.knighthacks.org/"
-      afterSignUpUrl="https://admin.knighthacks.org/"
-      signInUrl="https://admin.knighthacks.org/sign-in"
-      signUpUrl="https://admin.knighthacks.org/sign-up"
+      afterSignInUrl={import.meta.env.VITE_ADMIN_AFTER_SIGN_IN_URL as string}
+      afterSignUpUrl={import.meta.env.VITE_ADMIN_AFTER_SIGN_UP_URL as string}
+      signInUrl={import.meta.env.VITE_ADMIN_SIGN_IN_URL as string}
+      signUpUrl={import.meta.env.VITE_ADMIN_SIGN_UP_URL as string}
     >
       {children}
     </ClerkProvider>
