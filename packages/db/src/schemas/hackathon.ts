@@ -61,17 +61,23 @@ export const userProfileRelations = relations(userProfiles, ({ one }) => {
 
 export const hackers = sqliteTable("hackers", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  userId: text("user_id").references(() => users.id, {
-    onDelete: "cascade", // If the user is deleted, delete the hacker
-    onUpdate: "cascade", // If the user is updated, update the hacker
-  }),
-  hackathonId: integer("hackathon_id").references(() => hackathons.id, {
-    onDelete: "cascade", // If the hackathon is deleted, delete the hacker
-    onUpdate: "cascade", // If the hackathon is updated, update the hacker
-  }),
+  userId: text("user_id")
+    .references(() => users.id, {
+      onDelete: "cascade", // If the user is deleted, delete the hacker
+      onUpdate: "cascade", // If the user is updated, update the hacker
+    })
+    .notNull(),
+  hackathonId: integer("hackathon_id")
+    .references(() => hackathons.id, {
+      onDelete: "cascade", // If the hackathon is deleted, delete the hacker
+      onUpdate: "cascade", // If the hackathon is updated, update the hacker
+    })
+    .notNull(),
   status: text("status", {
     enum: ["applied", "accepted", "waitlisted", "checkedin"],
-  }).default("applied"),
+  })
+    .default("applied")
+    .notNull(),
   whyAttend: text("why_attend").notNull(),
   whatLearn: text("what_learn").notNull(),
 });
@@ -211,7 +217,7 @@ export const insertUserProfileFormSchema = createInsertSchema(userProfiles, {
 export const selectUserMetadataSchema = createSelectSchema(userProfiles);
 
 export const insertHackerSchema = createInsertSchema(hackers);
-export const insertHackerRequestSchema = createInsertSchema(hackers, {
+export const insertHackerFormSchema = createInsertSchema(hackers, {
   whyAttend: (schema) =>
     schema.whyAttend.min(1, {
       message: "This field is required",
