@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.29.7",
     "@knighthacks/design-system": "workspace:*",
     "@tanstack/react-query": "^4.3.9",
     "@trpc/client": "^10.45.0",
