@@ -8,6 +8,7 @@ import { HackathonAccountRegistration } from "./hackathon-account-registration.t
 import { HackathonRegistration } from "./hackathon-registration";
 import { HackathonSignIn } from "./hackathon-sign-in";
 import { Hackathons } from "./hackathons";
+import { Hackers } from "./hackers";
 import { Overview } from "./overview";
 import { SignIn } from "./sign-in";
 import { SignUp } from "./sign-up";
@@ -25,6 +26,7 @@ export function Pages() {
         <Route path="/sign-up" component={SignUp} />
         <Route path="/hackathon/sign-in" component={HackathonSignIn} />
         <AdminRoute path="/hackathons" component={WithNav(Hackathons)} />
+        <AdminRoute path="/hackers" component={WithNav(Hackers)} />
         <AuthenticatedRoute
           path="/hackathon/account-registration"
           component={WithNav(HackathonAccountRegistration)}
