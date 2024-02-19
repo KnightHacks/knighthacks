@@ -5,7 +5,8 @@ import {
   eq,
   hackathons,
   hackers,
-  insertHackerRequestSchema,
+  insertHackerFormSchema,
+  insertHackerSchema,
 } from "@knighthacks/db";
 
 import { router } from "../init";
@@ -13,7 +14,7 @@ import { adminProcedure, authenticatedProcedure } from "../procedures";
 
 export const hackersRouter = router({
   register: authenticatedProcedure
-    .input(insertHackerRequestSchema)
+    .input(insertHackerFormSchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (tx) => {
         const hackathon = await tx.query.hackathons.findFirst({
@@ -36,6 +37,7 @@ export const hackersRouter = router({
     return ctx.db.query.hackers.findMany({
       with: {
         hackathon: true,
+        user: true,
       },
     });
   }),
@@ -70,28 +72,20 @@ export const hackersRouter = router({
       return hacker.status;
     });
   }),
-  update: authenticatedProcedure
-    .input(insertHackerRequestSchema)
+  update: adminProcedure
+    .input(insertHackerSchema)
     .mutation(async ({ ctx, input }) => {
-      await ctx.db.transaction(async (tx) => {
-        const hackathon = await tx.query.hackathons.findFirst({
-          orderBy: [asc(hackathons.startDate)],
-        });
-
-        if (!hackathon) {
-          tx.rollback();
-          return;
-        }
-
-        await tx
-          .update(hackers)
-          .set(input)
-          .where(eq(hackers.userId, ctx.user.id));
-      });
+      await ctx.db
+        .update(hackers)
+        .set(input)
+        .where(eq(hackers.id, Number(input.id)));
     }),
-  delete: authenticatedProcedure
-    .input(z.string())
+  delete: adminProcedure.input(z.number()).mutation(async ({ ctx, input }) => {
+    await ctx.db.delete(hackers).where(eq(hackers.id, input));
+  }),
+  add: adminProcedure
+    .input(insertHackerSchema)
     .mutation(async ({ ctx, input }) => {
-      await ctx.db.delete(hackers).where(eq(hackers.userId, input));
+      await ctx.db.insert(hackers).values(input);
     }),
 });
