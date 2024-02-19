@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Redirect } from "wouter";
 
 import type { RouterOutput } from "@knighthacks/api";
-import { insertHackerRequestSchema } from "@knighthacks/db";
+import { insertHackerFormSchema } from "@knighthacks/db";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -32,7 +32,7 @@ export function HackathonRegistration() {
   return <HackerRegistration currentUser={currentUser} />;
 }
 
-type HackerRegistrationFormValues = z.infer<typeof insertHackerRequestSchema>;
+type HackerRegistrationFormValues = z.infer<typeof insertHackerFormSchema>;
 
 function HackerRegistration({
   currentUser,
@@ -46,7 +46,7 @@ function HackerRegistration({
     },
   });
   const form = useForm<HackerRegistrationFormValues>({
-    resolver: zodResolver(insertHackerRequestSchema),
+    resolver: zodResolver(insertHackerFormSchema),
   });
 
   const onSubmit: SubmitHandler<HackerRegistrationFormValues> = (data) => {
