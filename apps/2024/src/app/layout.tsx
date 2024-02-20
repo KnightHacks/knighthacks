@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 
 import "@knighthacks/design-system/globals.css";
 
-import { TRPCProvider } from "~/trpc";
+import { Providers } from "./components/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +18,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <TRPCProvider>{children}</TRPCProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} flex min-h-screen flex-col`}>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
