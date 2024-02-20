@@ -1,6 +1,6 @@
 import { ThemeToggle } from "@knighthacks/design-system/components";
 
-import { SignInSignOutButton } from "./components/sign-in-sign-out-button";
+import { SignInSignOutButton } from "../components/sign-in-sign-out-button";
 
 export default function Home() {
   return (
