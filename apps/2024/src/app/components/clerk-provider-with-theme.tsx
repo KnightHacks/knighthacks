@@ -1,3 +1,5 @@
+"use client";
+
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { useTheme } from "next-themes";
@@ -33,6 +35,10 @@ export function ClerkProviderWithTheme({
           footerActionText: "text-muted-foreground",
         },
       }}
+      afterSignInUrl={process.env.NEXT_PUBLIC_2024_AFTER_SIGN_IN_URL}
+      afterSignUpUrl={process.env.NEXT_PUBLIC_2024_AFTER_SIGN_UP_URL}
+      signUpUrl={process.env.NEXT_PUBLIC_2024_SIGN_UP_URL}
+      signInUrl={process.env.NEXT_PUBLIC_2024_SIGN_IN_URL}
     >
       {children}
     </ClerkProvider>
