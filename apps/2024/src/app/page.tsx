@@ -1,4 +1,5 @@
 import { Button } from "@knighthacks/design-system/components";
+
 import { HackathonRegister } from "~/components/hackathon-register";
 
 export default function Home() {
@@ -6,7 +7,7 @@ export default function Home() {
     <div>
       <div>This is the home page!</div>
       <Button>Register for Hackathonnnnn</Button>
-      <HackathonRegister/>
+      <HackathonRegister />
     </div>
   );
 }
