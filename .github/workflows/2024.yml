@@ -1,0 +1,44 @@
+name: Admin
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "apps/2024/**"
+      - ".github/workflows/2024.yml"
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main]
+    paths:
+      - "apps/2024/**"
+      - ".github/workflows/2024.yml"
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Build
+        run: pnpm run build --filter=2024
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.API_URL }}
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
+          NEXT_PUBLIC_2024_AFTER_SIGN_IN_URL: ${{ secrets.HACKATHON_2024_AFTER_SIGN_IN_URL}}
+          NEXT_PUBLIC_2024_AFTER_SIGN_UP_URL: ${{ secrets.HACKATHON_2024_AFTER_SIGN_UP_URL}}
+          NEXT_PUBLIC_2024_SIGN_IN_URL: ${{ secrets.HACKATHON_2024_SIGN_IN_URL}}
+          NEXT_PUBLIC_SIGN_UP_URL: ${{ secrets.HACKATHON_2024_SIGN_UP_URL}}
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: ./apps/2024
+          command: pages deploy dist --project-name=2024
+          packageManager: pnpm
