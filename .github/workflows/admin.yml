@@ -30,7 +30,7 @@ jobs:
           VITE_API_URL: ${{ secrets.API_URL }}
           VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
           VITE_ADMIN_AFTER_SIGN_IN_URL: ${{ secrets.ADMIN_AFTER_SIGN_IN_URL}}
-          VITE_ADMIN_AFTER_SIGN_OUT_URL: ${{ secrets.ADMIN_AFTER_SIGN_OUT_URL}}
+          VITE_ADMIN_AFTER_SIGN_UP_URL: ${{ secrets.ADMIN_AFTER_SIGN_UP_URL}}
           VITE_ADMIN_SIGN_IN_URL: ${{ secrets.ADMIN_SIGN_IN_URL}}
           VITE_ADMIN_SIGN_UP_URL: ${{ secrets.ADMIN_SIGN_UP_URL}}
 
