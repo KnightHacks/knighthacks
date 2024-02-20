@@ -1,13 +1,13 @@
-import { Button } from "@knighthacks/design-system/components";
+import { ThemeToggle } from "@knighthacks/design-system/components";
 
-import { HackathonRegister } from "~/components/hackathon-register";
+import { SignInSignOutButton } from "./components/sign-in-sign-out-button";
 
 export default function Home() {
   return (
     <div>
       <div>This is the home page!</div>
-      <Button>Register for Hackathonnnnn</Button>
-      <HackathonRegister />
+      <ThemeToggle />
+      <SignInSignOutButton />
     </div>
   );
 }
