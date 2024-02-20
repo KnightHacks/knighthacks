@@ -27,6 +27,7 @@ jobs:
       - name: Build
         run: pnpm --filter=2024 exec npx @cloudflare/next-on-pages@1
         env:
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
           NEXT_PUBLIC_API_URL: ${{ secrets.API_URL }}
           NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
           NEXT_PUBLIC_2024_AFTER_SIGN_IN_URL: ${{ secrets.HACKATHON_2024_AFTER_SIGN_IN_URL}}
