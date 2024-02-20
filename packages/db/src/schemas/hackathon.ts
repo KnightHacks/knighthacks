@@ -7,8 +7,8 @@ import { gradYears, majors, schools, shirtSizes } from "../consts";
 import { sponsorTiers } from "../consts/sponsor-tiers";
 
 export const users = sqliteTable("users", {
-  id: text("id").primaryKey(), // This will be from the oauth provider
-  email: text("email").notNull().unique(), // This will be from the oauth provider
+  id: text("id").primaryKey(), // This will be generated from Clerk
+  email: text("email").notNull().unique(),
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
 });
