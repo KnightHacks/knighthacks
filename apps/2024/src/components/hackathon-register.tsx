@@ -1,4 +1,5 @@
-import { Button } from "./ui/button"
+import { Button } from "@knighthacks/design-system/components";
+
 import {
   Dialog,
   DialogContent,
@@ -6,9 +7,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog"
-import { Input } from "./ui/input"
-import { Label } from "./ui/label"
+} from "../../../../packages/design-system/src/components/ui/dialog";
+import { Input } from "../../../../packages/design-system/src/components/ui/input";
+import { Label } from "../../../../packages/design-system/src/components/ui/label";
 
 export function HackathonRegister() {
   return (
@@ -23,13 +24,13 @@ export function HackathonRegister() {
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-            Why do you want to attend Knight Hacks?
+              Why do you want to attend Knight Hacks?
             </Label>
             <Input id="name" className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="username" className="text-right">
-            What do you want to learn at Knight Hacks?
+              What do you want to learn at Knight Hacks?
             </Label>
             <Input id="username" className="col-span-3" />
           </div>
@@ -39,5 +40,5 @@ export function HackathonRegister() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

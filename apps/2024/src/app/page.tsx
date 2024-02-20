@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
       <div>This is the home page!</div>
-      <Button>Register for Hackathon</Button>
+      <Button>Register for Hackathonnnnn</Button>
       <HackathonRegister/>
     </div>
   );
