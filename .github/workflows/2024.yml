@@ -25,7 +25,7 @@ jobs:
         uses: ./tooling/github/setup
 
       - name: Build
-        run: pnpm run build --filter=2024
+        run: pnpm --filter=2024 exec npx @cloudflare/next-on-pages@1
         env:
           NEXT_PUBLIC_API_URL: ${{ secrets.API_URL }}
           NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
@@ -40,5 +40,5 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: ./apps/2024
-          command: pages deploy dist --project-name=2024
+          command: pages deploy .vercel/output/static --project-name=2024
           packageManager: pnpm
