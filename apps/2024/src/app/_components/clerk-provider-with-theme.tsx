@@ -26,12 +26,12 @@ export function ClerkProviderWithTheme({
           socialButtonsIconButton:
             "bg-background border border-input text-foreground focus:ring-2 focus:ring-offset-2 focus:ring-offset-background focus:transition-none dark:hover:bg-slate-900 hover:bg-slate-100 focus:ring-ring",
           formFieldInput:
-            "bg-background rounded-md text-foreground border border-input placeholder:text-muted-foreground focus:ring-2 focus:ring-offset-2 focus:ring-offset-background focus:transition-none focus:ring-ring",
+            "bg-background rounded-md text-foreground border border-input placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:transition-none focus-visible:ring-ring",
           formButtonPrimary:
-            "bg-primary text-background focus:ring-2 focus:ring-offset-2 focus:ring-offset-background focus:transition-none hover:bg-primary/90 focus:ring-ring",
+            "bg-primary text-background focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:transition-none hover:bg-primary/90 focus-visible:ring-ring",
           formFieldLabel: "text-foreground",
           footerActionLink:
-            "text-primary underline outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background focus:transition-none focus:ring-ring",
+            "text-primary underline outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:transition-none focus-visible:ring-ring",
           footerActionText: "text-muted-foreground",
         },
       }}

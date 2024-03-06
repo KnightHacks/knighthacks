@@ -29,8 +29,8 @@
     "@knighthacks/prettier-config": "workspace:*",
     "@knighthacks/tsconfig": "workspace:*",
     "dotenv-cli": "latest",
-    "eslint": "^8.56.0",
-    "prettier": "^3.1.1",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {

@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemeProvider } from "@knighthacks/design-system/components";
+import { ThemeProvider } from "@knighthacks/ui/theme";
 
 import { TRPCProvider } from "~/trpc";
 import { ClerkProviderWithTheme } from "./clerk-provider-with-theme";
