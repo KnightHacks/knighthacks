@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 
-import { Button, Textarea } from "@knighthacks/design-system/components";
+import { Button } from "@knighthacks/ui/button";
+import { Textarea } from "@knighthacks/ui/textarea";
 
-import { trpc } from "../../trpc";
+import { trpc } from "~/trpc";
 
 export default function HackathonRegister() {
   const [whyAttend, setWhyAttend] = useState("");

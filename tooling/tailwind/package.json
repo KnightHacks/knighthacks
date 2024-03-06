@@ -4,26 +4,27 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./index.ts"
+    "./native": "./native.ts",
+    "./web": "./web.ts"
   },
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32",
-    "tailwindcss": "3.3.5"
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@knighthacks/eslint-config": "workspace:*",
     "@knighthacks/prettier-config": "workspace:*",
     "@knighthacks/tsconfig": "workspace:*",
-    "eslint": "^8.56.0",
-    "prettier": "^3.1.1",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {

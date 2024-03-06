@@ -4,7 +4,7 @@ export const runtime = "edge";
 
 export default function SignIn() {
   return (
-    <div className="flex flex-1 items-center justify-center">
+    <div className="flex min-h-screen items-center justify-center">
       <ClerkSignIn />
     </div>
   );

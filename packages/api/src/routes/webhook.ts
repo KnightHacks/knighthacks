@@ -60,8 +60,9 @@ export const webhook = new Hono<HonoConfig>().post("/", async (c) => {
 });
 
 function getPrimaryEmail(emails: EmailAddressJSON[], primaryEmailId: string) {
-  const primaryEmail = emails.find((e) => e.id === primaryEmailId)
-    ?.email_address;
+  const primaryEmail = emails.find(
+    (e) => e.id === primaryEmailId,
+  )?.email_address;
 
   // This in theory should never happen since users need to provide an email address to sign up
   if (!primaryEmail) {

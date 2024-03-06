@@ -1,13 +1,14 @@
-import { ThemeToggle } from "@knighthacks/design-system/components";
+import { currentUser } from "@clerk/nextjs";
 
-import { SignInSignOutButton } from "../components/sign-in-sign-out-button";
+import { SignOut } from "./_components/sign-out";
 
-export default function Home() {
+export default async function Home() {
+  const user = await currentUser();
+
   return (
     <div>
       <div>This is the home page!</div>
-      <ThemeToggle />
-      <SignInSignOutButton />
+      {user && <SignOut />}
     </div>
   );
 }
