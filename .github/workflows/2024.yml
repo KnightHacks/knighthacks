@@ -42,5 +42,7 @@ jobs:
           workingDirectory: ./apps/2024
           command: pages deploy .vercel/output/static --project-name=2024
           packageManager: pnpm
+          secrets: |
+            CLERK_SECRET_KEY
         env:
           CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
