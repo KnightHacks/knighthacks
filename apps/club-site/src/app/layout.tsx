@@ -4,10 +4,10 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import { cn } from "@knighthacks/ui";
-import { ThemeProvider, ThemeToggle } from "@knighthacks/ui/theme";
+import { ThemeToggle } from "@knighthacks/ui/theme";
 import { Toaster } from "@knighthacks/ui/toast";
 
-import { TRPCProvider } from "~/trpc";
+import { Providers } from "./_components/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,15 +47,13 @@ export default function RootLayout({
           inter.className,
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <TRPCProvider>
-            {children}
-            <div className="absolute bottom-4 right-4">
-              <ThemeToggle />
-            </div>
-            <Toaster />
-          </TRPCProvider>
-        </ThemeProvider>
+        <Providers>
+          {children}
+          <div className="absolute bottom-4 right-4">
+            <ThemeToggle />
+          </div>
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );
