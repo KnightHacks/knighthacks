@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit",
-    "clean": "git clean -xdf dist .turbo node_modules .wrangler .next"
+    "clean": "git clean -xdf dist .turbo node_modules .wrangler .next .vercel"
   },
   "dependencies": {
     "@knighthacks/ui": "workspace:*",
