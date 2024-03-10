@@ -13,7 +13,10 @@
     "./toast": "./src/toast.tsx",
     "./textarea": "./src/textarea.tsx",
     "./navigation": "./src/navigation.tsx",
-    "./skeleton": "./src/skeleton.tsx"
+    "./skeleton": "./src/skeleton.tsx",
+    "./dropdown-menu": "./src/dropdown-menu.tsx",
+    "./sheet": "./src/sheet.tsx",
+    "./table": "./src/table.tsx"
   },
   "license": "MIT",
   "scripts": {
@@ -25,6 +28,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
+    "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-label": "^2.0.2",
