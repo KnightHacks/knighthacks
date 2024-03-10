@@ -1,6 +1,6 @@
 import { currentUser } from "@clerk/nextjs";
 
-import { SignOut } from "./_components/sign-out";
+import { SignOut } from "../_components/sign-out";
 
 export const runtime = "edge";
 
