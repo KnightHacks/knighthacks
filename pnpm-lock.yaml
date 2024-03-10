@@ -275,6 +275,100 @@ importers:
         specifier: ^5.0.0
         version: 5.0.7
 
+  apps/admin-new:
+    dependencies:
+      '@clerk/nextjs':
+        specifier: ^4.29.7
+        version: 4.29.7(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+      '@clerk/themes':
+        specifier: ^1.7.9
+        version: 1.7.9(react@18.2.0)
+      '@knighthacks/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@tanstack/react-query':
+        specifier: ^4.3.9
+        version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/client':
+        specifier: ^10.45.0
+        version: 10.45.0(@trpc/server@10.45.0)
+      '@trpc/next':
+        specifier: ^10.45.0
+        version: 10.45.0(@tanstack/react-query@4.36.1)(@trpc/client@10.45.0)(@trpc/react-query@10.45.0)(@trpc/server@10.45.0)(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/react-query':
+        specifier: ^10.45.0
+        version: 10.45.0(@tanstack/react-query@4.36.1)(@trpc/client@10.45.0)(@trpc/server@10.45.0)(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/server':
+        specifier: ^10.45.0
+        version: 10.45.0
+      next:
+        specifier: 14.1.0
+        version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
+      next-themes:
+        specifier: ^0.2.1
+        version: 0.2.1(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: '^18.2.0 '
+        version: 18.2.0(react@18.2.0)
+      superjson:
+        specifier: 1.9.1
+        version: 1.9.1
+    devDependencies:
+      '@knighthacks/api':
+        specifier: workspace:*
+        version: link:../../packages/api
+      '@knighthacks/eslint-config':
+        specifier: workspace:*
+        version: link:../../tooling/eslint
+      '@knighthacks/prettier-config':
+        specifier: workspace:*
+        version: link:../../tooling/prettier
+      '@knighthacks/tailwind-config':
+        specifier: workspace:*
+        version: link:../../tooling/tailwind
+      '@knighthacks/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/typescript
+      '@types/node':
+        specifier: ^20
+        version: 20.10.4
+      '@types/react':
+        specifier: ^18.2.57
+        version: 18.2.63
+      '@types/react-dom':
+        specifier: ^18.2.15
+        version: 18.2.17
+      autoprefixer:
+        specifier: ^10.4.16
+        version: 10.4.16(postcss@8.4.35)
+      dotenv-cli:
+        specifier: latest
+        version: 7.4.1
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      eslint-config-next:
+        specifier: 14.1.0
+        version: 14.1.0(eslint@8.57.0)(typescript@5.3.3)
+      postcss:
+        specifier: ^8.4.35
+        version: 8.4.35
+      prettier:
+        specifier: ^3.2.5
+        version: 3.2.5
+      tailwindcss:
+        specifier: ^3.4.1
+        version: 3.4.1
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+      wrangler:
+        specifier: ^3.22.1
+        version: 3.22.1
+
   apps/club-site:
     dependencies:
       '@knighthacks/ui':
@@ -4603,6 +4697,16 @@ packages:
 
   /dotenv-cli@7.3.0:
     resolution: {integrity: sha512-314CA4TyK34YEJ6ntBf80eUY+t1XaFLyem1k9P0sX1gn30qThZ5qZr/ZwE318gEnzyYP9yj9HJk6SqwE0upkfw==}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+      dotenv: 16.4.0
+      dotenv-expand: 10.0.0
+      minimist: 1.2.8
+    dev: true
+
+  /dotenv-cli@7.4.1:
+    resolution: {integrity: sha512-fE1aywjRrWGxV3miaiUr3d2zC/VAiuzEGghi+QzgIA9fEf/M5hLMaRSXb4IxbUAwGmaLi0IozdZddnVU96acag==}
     hasBin: true
     dependencies:
       cross-spawn: 7.0.3
