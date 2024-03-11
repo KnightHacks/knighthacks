@@ -18,15 +18,9 @@ export default authMiddleware({
     if (
       auth.userId &&
       !auth.sessionClaims?.email.endsWith("@knighthacks.org") &&
-      !auth.sessionClaims?.isEmailVerified &&
       req.nextUrl.pathname !== "/unauthorized"
     ) {
       return NextResponse.redirect(new URL("/unauthorized", req.url));
-    }
-
-    // If the user is signed in, is authorized, and trying to access unauthorized, redirect to home
-    if (req.nextUrl.pathname === "/unauthorized" && auth.userId) {
-      return NextResponse.redirect(new URL("/", req.url));
     }
 
     // If the user is signed in and authorized, allow the request
