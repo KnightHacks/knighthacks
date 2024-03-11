@@ -14,17 +14,23 @@
   "dependencies": {
     "@clerk/nextjs": "^4.29.7",
     "@clerk/themes": "^1.7.9",
+    "@hookform/resolvers": "^3.3.4",
     "@knighthacks/ui": "workspace:*",
+    "@knighthacks/db": "workspace:*",
     "@tanstack/react-query": "^4.3.9",
     "@trpc/client": "^10.45.0",
     "@trpc/next": "^10.45.0",
     "@trpc/react-query": "^10.45.0",
     "@trpc/server": "^10.45.0",
+    "lucide-react": "^0.300.0",
     "next": "14.1.0",
     "next-themes": "^0.2.1",
     "react": "18.2.0",
     "react-dom": "^18.2.0 ",
-    "superjson": "1.9.1"
+    "react-hook-form": "^7.50.1",
+    "sonner": "^1.4.1",
+    "superjson": "1.9.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@knighthacks/api": "workspace:*",

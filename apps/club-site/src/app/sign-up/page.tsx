@@ -1,9 +1,5 @@
-"use client";
-
 import { redirect } from "next/navigation";
-import { auth, SignIn as ClerkSignIn } from "@clerk/nextjs";
-
-export const runtime = "edge";
+import { auth, SignUp as ClerkSignUp } from "@clerk/nextjs";
 
 export default function SignUp() {
   const { userId }: { userId: string | null } = auth();
@@ -11,6 +7,5 @@ export default function SignUp() {
   if (userId) {
     redirect("/profile");
   }
-
-  return <ClerkSignIn />;
+  return <ClerkSignUp />;
 }

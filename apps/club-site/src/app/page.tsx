@@ -1,10 +1,10 @@
-import SignInComp from "~/app/sign-in/page";
+import { Hello } from "./_components/hello";
 
 export default function Home() {
   return (
     <div>
-      <div>This is the home page!</div>
-      <SignInComp />
+      <h1>This is the home page</h1>
+      <Hello />
     </div>
   );
 }
