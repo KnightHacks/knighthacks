@@ -14,16 +14,16 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NODE_ENV === "production"
-      ? "https://2024.knighthacks.org"
+      ? "https://admin.knighthacks.org"
       : "http://localhost:3000",
   ),
-  title: "KnightHacks 2024",
-  description: "The official website for KnightHacks 2024",
+  title: "KnightHacks Admin Tool",
+  description: "The official KnightHacks admin tool",
   openGraph: {
-    title: "KnightHacks 2024",
-    description: "The official website for KnightHacks 2024",
-    url: "https://2024.knighthacks.org",
-    siteName: "KnightHacks 2024",
+    title: "KnightHacks Admin Tool",
+    description: "The official KnightHacks admin tool",
+    url: "https://admin.knighthacks.org",
+    siteName: "KnightHacks Admin",
   },
 };
 
