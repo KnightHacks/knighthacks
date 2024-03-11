@@ -1,10 +1,40 @@
-import { authMiddleware } from "@clerk/nextjs";
+import { NextResponse } from "next/server";
+import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
 
-// This example protects all routes including api/trpc routes
-// Please edit this to allow other routes to be public as needed.
-// See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
 export default authMiddleware({
-  signInUrl: "/sign-in",
+  afterAuth: async (auth, req) => {
+    // If the user is not signed in and is trying to access an unauthorized route, redirect to sign in
+    if (req.nextUrl.pathname === "/unauthorized" && !auth.userId) {
+      return NextResponse.redirect(new URL("/sign-in", req.url));
+    }
+
+    // If the user is not signed in, redirect to sign in
+    if (!auth.userId && !auth.isPublicRoute) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return redirectToSignIn({ returnBackUrl: req.url });
+    }
+
+    // If the user is signed in, but is not authorized, redirect to unauthorized
+    if (
+      auth.userId &&
+      !auth.sessionClaims?.email.endsWith("@knighthacks.org") &&
+      !auth.sessionClaims?.isEmailVerified &&
+      req.nextUrl.pathname !== "/unauthorized"
+    ) {
+      return NextResponse.redirect(new URL("/unauthorized", req.url));
+    }
+
+    // If the user is signed in, is authorized, and trying to access unauthorized, redirect to home
+    if (req.nextUrl.pathname === "/unauthorized" && auth.userId) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+
+    // If the user is signed in and authorized, allow the request
+    if (auth.userId && !auth.isPublicRoute) return NextResponse.next();
+
+    // If the user is not signed in and the route is public, allow the request
+    return NextResponse.next();
+  },
 });
 
 export const config = {
