@@ -16,6 +16,7 @@
     "@clerk/nextjs": "^4.29.7",
     "@clerk/themes": "^1.7.9",
     "@knighthacks/ui": "workspace:*",
+    "@knighthacks/validators": "workspace:*",
     "@tanstack/react-query": "^4.3.9",
     "@tanstack/react-table": "^8.11.2",
     "@trpc/client": "^10.45.0",
