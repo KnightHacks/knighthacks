@@ -16,10 +16,11 @@ import { Sheet, SheetContent } from "@knighthacks/ui/sheet";
 import { toast } from "@knighthacks/ui/toast";
 
 import { trpc } from "~/trpc";
+import { AddUserProfileForm } from "./add-user-profile-form";
+import { UpdateUserForm } from "./update-user-form";
+import { UpdateProfileForm } from "./update-user-profile-form";
 
-type User = RouterOutput["users"]["getAll"][number];
-
-export const columns: ColumnDef<User>[] = [
+export const columns: ColumnDef<RouterOutput["users"]["getAll"][number]>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -72,7 +73,11 @@ export const columns: ColumnDef<User>[] = [
   },
 ];
 
-function Actions({ row }: { row: Row<User> }) {
+function Actions({
+  row,
+}: {
+  row: Row<RouterOutput["users"]["getAll"][number]>;
+}) {
   const user = row.original;
 
   const [updateUserFormSheetOpen, setUpdateUserFormSheetOpen] = useState(false);
@@ -134,14 +139,20 @@ function Actions({ row }: { row: Row<User> }) {
         open={updateUserFormSheetOpen}
         onOpenChange={setUpdateUserFormSheetOpen}
       >
-        <SheetContent>{/* <UpdateUserForm user={user} /> */}</SheetContent>
+        <SheetContent>
+          <UpdateUserForm user={user} />
+        </SheetContent>
       </Sheet>
       <Sheet
         open={userProfileFormSheetOpen}
         onOpenChange={setUserProfileFormSheetOpen}
       >
         <SheetContent>
-          {/* <UserProfileForm user={user.profile} /> */}
+          {user.profile ? (
+            <UpdateProfileForm userProfile={user.profile} />
+          ) : (
+            <AddUserProfileForm userId={user.id} />
+          )}
         </SheetContent>
       </Sheet>
     </>
