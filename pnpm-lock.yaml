@@ -564,8 +564,32 @@ importers:
         specifier: ^3.22.1
         version: 3.22.1
 
+  packages/consts:
+    devDependencies:
+      '@knighthacks/eslint-config':
+        specifier: workspace:*
+        version: link:../../tooling/eslint
+      '@knighthacks/prettier-config':
+        specifier: workspace:*
+        version: link:../../tooling/prettier
+      '@knighthacks/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/typescript
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      prettier:
+        specifier: ^3.2.5
+        version: 3.2.5
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
   packages/db:
     dependencies:
+      '@knighthacks/consts':
+        specifier: workspace:*
+        version: link:../consts
       '@libsql/client':
         specifier: 0.4.0-pre.5
         version: 0.4.0-pre.5

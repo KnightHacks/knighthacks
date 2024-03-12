@@ -3,8 +3,13 @@ import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
-import { gradYears, majors, schools, shirtSizes } from "../consts";
-import { sponsorTiers } from "../consts/sponsor-tiers";
+import {
+  gradYears,
+  majors,
+  schools,
+  shirtSizes,
+  sponsorTiers,
+} from "@knighthacks/consts";
 
 export const users = sqliteTable("users", {
   id: text("id").primaryKey(), // This will be generated from Clerk
