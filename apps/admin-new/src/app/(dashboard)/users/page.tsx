@@ -7,7 +7,7 @@ import { Sheet, SheetContent } from "@knighthacks/ui/sheet";
 
 import { DataTable } from "~/app/_components/data-table";
 import { trpc } from "~/trpc";
-import { AddForm } from "./add-form";
+import { AddUserForm } from "./add-user-form";
 import { columns } from "./columns";
 
 export default function Users() {
@@ -25,7 +25,7 @@ export default function Users() {
       </div>
       <Sheet open={addUserFormSheetOpen} onOpenChange={setAddUserFormSheetOpen}>
         <SheetContent>
-          <AddForm />
+          <AddUserForm />
         </SheetContent>
       </Sheet>
     </div>
