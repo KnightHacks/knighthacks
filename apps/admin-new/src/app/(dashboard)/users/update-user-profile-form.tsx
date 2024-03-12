@@ -399,6 +399,33 @@ export function UpdateProfileForm({
                     onChange={(e) => field.onChange(e.target.files?.[0])}
                   />
                 </FormControl>
+                {userProfile.resume && (
+                  <Button
+                    variant="link"
+                    type="button"
+                    className="h-fit text-wrap p-0"
+                    onClick={async () => {
+                      const token = await getToken();
+
+                      const resume = await fetch(
+                        `${process.env.NEXT_PUBLIC_API_URL}/resume/download/${userProfile.resume}`,
+                        {
+                          method: "GET",
+                          headers: {
+                            Authorization: `Bearer ${token}`,
+                          },
+                        },
+                      );
+
+                      const blob = await resume.blob();
+                      const url = URL.createObjectURL(blob);
+                      window.open(url);
+                      URL.revokeObjectURL(url);
+                    }}
+                  >
+                    {userProfile.resume}
+                  </Button>
+                )}
                 <FormMessage />
               </FormItem>
             )}
