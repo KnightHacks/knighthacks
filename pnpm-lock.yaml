@@ -721,6 +721,9 @@ importers:
 
   packages/validators:
     dependencies:
+      '@knighthacks/consts':
+        specifier: workspace:*
+        version: link:../consts
       zod:
         specifier: ^3.22.4
         version: 3.22.4
