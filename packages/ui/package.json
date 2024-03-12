@@ -21,7 +21,7 @@
     "./dialog": "./src/dialog.tsx",
     "./command": "./src/command.tsx",
     "./scroll-area": "./src/scroll-area.tsx",
-    "./popover": "./src/popover.tsx",
+    "./popover": "./src/popover.tsx"
   },
   "license": "MIT",
   "scripts": {
