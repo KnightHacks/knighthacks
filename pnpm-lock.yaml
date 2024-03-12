@@ -283,9 +283,9 @@ importers:
       '@clerk/themes':
         specifier: ^1.7.9
         version: 1.7.9(react@18.2.0)
-      '@knighthacks/db':
+      '@knighthacks/consts':
         specifier: workspace:*
-        version: link:../../packages/db
+        version: link:../../packages/consts
       '@knighthacks/ui':
         specifier: workspace:*
         version: link:../../packages/ui
