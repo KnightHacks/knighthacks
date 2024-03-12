@@ -1,14 +1,13 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
+import { asc, eq, hackathons, userProfiles, users } from "@knighthacks/db";
 import {
-  asc,
-  eq,
-  hackathons,
-  insertUserProfileSchema,
-  insertUserSchema,
-  userProfiles,
-  users,
-} from "@knighthacks/db";
+  AddUserProfileSchema,
+  AddUserSchema,
+  UpdateUserProfileSchema,
+  UpdateUserSchema,
+} from "@knighthacks/validators";
 
 import { router } from "../init";
 import { adminProcedure, authenticatedProcedure } from "../procedures";
@@ -20,20 +19,37 @@ export const usersRouter = router({
     });
   }),
   addProfile: authenticatedProcedure
-    .input(insertUserProfileSchema)
+    .input(AddUserProfileSchema)
     .mutation(({ ctx, input }) => {
-      return ctx.db.insert(userProfiles).values({
-        ...input,
-        userId: ctx.user.id,
-      });
+      if (
+        ctx.user.email !== input.userId &&
+        !ctx.user.email.endsWith("@knighthacks.org")
+      ) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "Not authorized to add profile for other user",
+        });
+      }
+
+      return ctx.db.insert(userProfiles).values(input);
     }),
   updateProfile: authenticatedProcedure
-    .input(insertUserProfileSchema)
+    .input(UpdateUserProfileSchema)
     .mutation(({ ctx, input }) => {
+      if (
+        ctx.user.email !== input.userId &&
+        !ctx.user.email.endsWith("@knighthacks.org")
+      ) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "Not authorized to add profile for other user",
+        });
+      }
+
       return ctx.db
         .update(userProfiles)
         .set(input)
-        .where(eq(userProfiles.userId, ctx.user.id));
+        .where(eq(userProfiles.userId, input.userId));
     }),
   getCurrent: authenticatedProcedure.query(async ({ ctx }) => {
     const user = await ctx.db.query.users.findFirst({
@@ -63,34 +79,43 @@ export const usersRouter = router({
   }),
   delete: adminProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
     await ctx.db.transaction(async (db) => {
-      await ctx.clerk.users.deleteUser(input); // Delete user from Clerk
-      await db.delete(users).where(eq(users.id, input)); // Delete user from database
+      await ctx.clerk.users.deleteUser(input);
+      await db.delete(users).where(eq(users.id, input));
     });
   }),
-  add: adminProcedure
-    .input(insertUserSchema.omit({ id: true }))
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.transaction(async (db) => {
-        // Create user in Clerk
-        const user = await ctx.clerk.users.createUser({
-          firstName: input.firstName,
-          lastName: input.lastName,
-          emailAddress: [input.email],
-        });
-        await db.insert(users).values({ ...input, id: user.id }); // Create user in database
+  add: adminProcedure.input(AddUserSchema).mutation(async ({ ctx, input }) => {
+    await ctx.db.transaction(async (db) => {
+      // Check if email is already in use
+      const existingUser = await ctx.db.query.users.findFirst({
+        where: eq(users.email, input.email),
       });
-    }),
+
+      if (existingUser) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Email is already in use",
+        });
+      }
+
+      const user = await ctx.clerk.users.createUser({
+        firstName: input.firstName,
+        lastName: input.lastName,
+        emailAddress: [input.email],
+      });
+
+      await db.insert(users).values({ ...input, id: user.id });
+    });
+  }),
   update: adminProcedure
-    .input(insertUserSchema.omit({ email: true }))
+    .input(UpdateUserSchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (db) => {
-        // Update user in Clerk
         await ctx.clerk.users.updateUser(input.id, {
           firstName: input.firstName,
           lastName: input.lastName,
-          // TOOD: Find a way to update email
+          // TODO: Find a way to update email
         });
-        await db.update(users).set(input).where(eq(users.id, input.id)); // Update user in database
+        await db.update(users).set(input).where(eq(users.id, input.id));
       });
     }),
   getById: adminProcedure.input(z.string()).query(async ({ ctx, input }) => {
