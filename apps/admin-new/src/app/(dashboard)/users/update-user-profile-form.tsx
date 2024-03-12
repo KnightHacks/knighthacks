@@ -4,7 +4,7 @@ import { useAuth } from "@clerk/nextjs";
 import type { RouterOutput } from "@knighthacks/api";
 import type { AddUserProfileFormSchema } from "@knighthacks/validators";
 import { gradYears, majors, schools, shirtSizes } from "@knighthacks/consts";
-import { CheckIcon, cn, DoubleArrowUpIcon } from "@knighthacks/ui";
+import { CheckIcon, ChevronDownIcon, cn } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";
 import {
   Command,
@@ -72,6 +72,7 @@ export function UpdateProfileForm({
 
   const updateProfile = trpc.users.updateProfile.useMutation({
     onSuccess: async () => {
+      console.log(process.env.NEXT_PUBLIC_API_URL);
       await utils.users.getCurrent.invalidate();
       await utils.users.getAll.invalidate();
       toast("Success!", {
@@ -89,6 +90,7 @@ export function UpdateProfileForm({
             const token = await getToken();
 
             let resumeKey = "";
+            console.log(data.resume, token);
             if (data.resume && token) {
               try {
                 resumeKey = await uploadResume(data.resume, token);
@@ -180,7 +182,7 @@ export function UpdateProfileForm({
                         {field.value
                           ? majors.find((major) => major === field.value)
                           : "Select your major"}
-                        <DoubleArrowUpIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -212,7 +214,7 @@ export function UpdateProfileForm({
                         {field.value
                           ? schools.find((school) => school === field.value)
                           : "Select your school"}
-                        <DoubleArrowUpIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -506,6 +508,7 @@ function SchoolsCombobox({
 export async function uploadResume(resume: File, token: string) {
   const formData = new FormData();
   formData.append("resume", resume);
+  console.log(process.env.NEXT_PUBLIC_API_URL);
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/resume/upload/${resume.name}`,
     {
