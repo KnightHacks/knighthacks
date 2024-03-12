@@ -16,13 +16,18 @@ import { AddUserSchema } from "@knighthacks/validators";
 
 import { trpc } from "~/trpc";
 
-export function AddForm() {
+export function AddUserForm() {
   const utils = trpc.useUtils();
   const addUser = trpc.users.add.useMutation({
     onSuccess: async () => {
       await utils.users.getAll.invalidate();
       toast("Success!", {
         description: "User added",
+      });
+    },
+    onError: (error) => {
+      toast("Error!", {
+        description: error.message,
       });
     },
   });
