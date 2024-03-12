@@ -35,24 +35,25 @@ export const resume = new Hono<HonoConfig>()
     const auth = getAuth(c);
 
     // If the user isn't authenticated, then they're unauthorized
-    if (
-      !auth?.sessionClaims ||
-      !auth.sessionClaims.email.endsWith("@knighthacks.org")
-    )
-      return c.text("Unauthorized", 401);
+    if (!auth?.sessionClaims) return c.text("Unauthorized", 401);
 
     // Get user from session
     const user = await db.query.users.findFirst({
       where: eq(users.email, auth.sessionClaims?.email),
       with: {
-        profile: true,
+      profile: true,
       },
     });
 
-    // If the user doesn't exist or the resume key doesn't match,
-    // then the user is unauthorized to download the file
-    if (!user?.profile?.resume || user.profile.resume !== key)
+    if (!user) return c.text("Unauthorized", 401);
+
+    // Check if the user's resume matches the key and if they're an admin
+    if (
+      key !== user.profile?.resume &&
+      !user.email.endsWith("@knighthacks.org")
+    ) {
       return c.text("Unauthorized", 401);
+    }
 
     const bucket = c.env.KNIGHT_HACKS_BUCKET;
 
@@ -66,7 +67,7 @@ export const resume = new Hono<HonoConfig>()
 
     return c.body(file, {
       headers: {
-        "Content-Type": "application/pdf",
+      "Content-Type": "application/pdf",
       },
     });
   });
