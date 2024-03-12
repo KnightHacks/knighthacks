@@ -19,7 +19,7 @@ export function TRPCProvider(props: { children: React.ReactNode }) {
       transformer: superjson,
       links: [
         unstable_httpBatchStreamLink({
-          url: `${process.env.NEXT_PUBLIC_API_URl}/trpc`,
+          url: `${process.env.NEXT_PUBLIC_API_URL}/trpc`,
           async headers() {
             return {
               Authorization: `Bearer ${await getToken()}`,
