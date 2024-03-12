@@ -31,7 +31,7 @@ export const userProfiles = sqliteTable("user_profiles", {
   userId: text("user_id").references(() => users.id, {
     onDelete: "cascade", // If the user is deleted, delete the metadata
     onUpdate: "cascade", // If the user is updated, update the metadata
-  }),
+  }).notNull(),
   isMember: integer("is_member", { mode: "boolean" }).default(false), // Whether or not they are a dues paying member
   phone: text("phone").notNull().unique(),
   age: integer("age").notNull(),
