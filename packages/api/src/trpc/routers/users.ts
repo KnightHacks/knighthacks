@@ -22,7 +22,7 @@ export const usersRouter = router({
     .input(AddUserProfileSchema)
     .mutation(({ ctx, input }) => {
       if (
-        ctx.user.email !== input.userId &&
+        ctx.user.id !== input.userId &&
         !ctx.user.email.endsWith("@knighthacks.org")
       ) {
         throw new TRPCError({
@@ -37,7 +37,7 @@ export const usersRouter = router({
     .input(UpdateUserProfileSchema)
     .mutation(({ ctx, input }) => {
       if (
-        ctx.user.email !== input.userId &&
+        ctx.user.id !== input.userId &&
         !ctx.user.email.endsWith("@knighthacks.org")
       ) {
         throw new TRPCError({
