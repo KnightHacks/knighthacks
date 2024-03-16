@@ -21,7 +21,7 @@ export default function Users() {
             Add User
           </Button>
         </div>
-        <UserTable />
+        <UsersTable />
       </div>
       <Sheet open={addUserFormSheetOpen} onOpenChange={setAddUserFormSheetOpen}>
         <SheetContent>
@@ -32,7 +32,7 @@ export default function Users() {
   );
 }
 
-export function UserTable() {
+export function UsersTable() {
   const { data: users, isLoading, error } = trpc.users.getAll.useQuery();
 
   if (isLoading) return <div>Loading...</div>;
