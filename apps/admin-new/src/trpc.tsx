@@ -9,13 +9,13 @@ import superjson from "superjson";
 
 import type { AppRouter } from "@knighthacks/api";
 
-export const trpc = createTRPCReact<AppRouter>();
+export const api = createTRPCReact<AppRouter>();
 
 export function TRPCProvider(props: { children: React.ReactNode }) {
   const { getToken } = useAuth();
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
-    trpc.createClient({
+    api.createClient({
       transformer: superjson,
       links: [
         unstable_httpBatchStreamLink({
@@ -32,9 +32,9 @@ export function TRPCProvider(props: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <api.Provider client={trpcClient} queryClient={queryClient}>
         {props.children}
-      </trpc.Provider>
+      </api.Provider>
     </QueryClientProvider>
   );
 }

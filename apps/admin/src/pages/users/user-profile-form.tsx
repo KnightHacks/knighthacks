@@ -93,7 +93,7 @@ export function UserProfileForm({
     trpc.users.updateProfile.useMutation({
       onSuccess: async () => {
         await utils.users.getCurrent.invalidate();
-        await utils.users.getAll.invalidate();
+        await utils.users.all.invalidate();
         toast("Success!", {
           description: "You've updated your profile!",
         });

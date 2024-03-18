@@ -21,7 +21,8 @@
     "./dialog": "./src/dialog.tsx",
     "./command": "./src/command.tsx",
     "./scroll-area": "./src/scroll-area.tsx",
-    "./popover": "./src/popover.tsx"
+    "./popover": "./src/popover.tsx",
+    "./calendar": "./src/calendar.tsx"
   },
   "license": "MIT",
   "scripts": {
@@ -44,7 +45,9 @@
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "cmdk": "^0.2.0",
+    "date-fns": "^3.5.0",
     "next-themes": "^0.2.1",
+    "react-day-picker": "^8.10.0",
     "react-hook-form": "^7.50.1",
     "sonner": "^1.4.3",
     "tailwind-merge": "^2.2.1",

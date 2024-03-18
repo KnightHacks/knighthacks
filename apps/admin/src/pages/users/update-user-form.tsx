@@ -19,7 +19,7 @@ import {
 import { Input } from "~/components/ui/input";
 import { trpc } from "~/trpc";
 
-type User = RouterOutput["users"]["getAll"][number];
+type User = RouterOutput["users"]["all"][number];
 
 const updateUserFormSchema = insertUserSchema.omit({ id: true, email: true });
 
@@ -37,7 +37,7 @@ export function UpdateUserForm({ user }: { user: User }) {
   });
   const { mutate, isLoading } = trpc.users.update.useMutation({
     onSuccess: async () => {
-      await utils.users.getAll.invalidate();
+      await utils.users.all.invalidate();
       toast("Success!", {
         description: "User updated",
       });
