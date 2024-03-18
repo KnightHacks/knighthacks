@@ -68,7 +68,7 @@ export function CreateUserProfileForm({ userId }: { userId: string }) {
     onSuccess: async () => {
       await utils.user.current.invalidate();
       toast("Success!", {
-        description: "Created profile",
+        description: "Created user profile",
       });
     },
     onError: (error) => {

@@ -76,7 +76,7 @@ export function UpdateProfileForm({
       await utils.user.current.invalidate();
       await utils.user.all.invalidate();
       toast("Success!", {
-        description: "Updated profile",
+        description: "Updated user profile",
       });
     },
   });

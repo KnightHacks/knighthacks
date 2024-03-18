@@ -54,15 +54,15 @@ export const UpdateUserProfileSchema = CreateUserProfileSchema.extend({
   userId: z.string(),
 });
 
-export const UpdateUserProfileFormSchema = UpdateUserProfileSchema.extend({
-  resume: z.instanceof(File).optional(),
+export const UpdateUserProfileFormSchema = AddUserProfileFormSchema.extend({
+  userId: z.string(),
 });
 
 export const CreateHackathonSchema = z.object({
   name: z.string().min(1, { message: "Hackathon name is required" }),
   startDate: z.string().min(1, { message: "Start date is required" }),
   endDate: z.string().min(1, { message: "End date is required" }),
-  theme: z.string().min(1, { message: "Theme is required" }),
+  theme: z.string().optional(),
 });
 
 export const CreateHackathonFormSchema = CreateHackathonSchema.omit({
@@ -80,6 +80,14 @@ export const CreateHackathonFormSchema = CreateHackathonSchema.omit({
       },
     )
     .refine((date) => !!date.to, "Start and end date is required"),
+});
+
+export const UpdateHackathonSchema = CreateHackathonSchema.extend({
+  hackathonId: z.number(),
+});
+
+export const UpdateHackathonFormSchema = CreateHackathonFormSchema.extend({
+  hackathonId: z.number(),
 });
 
 export * from "zod";

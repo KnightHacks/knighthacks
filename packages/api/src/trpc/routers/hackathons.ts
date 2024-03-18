@@ -1,7 +1,10 @@
 import { z } from "zod";
 
-import { asc, eq, hackathons, insertHackathonSchema } from "@knighthacks/db";
-import { CreateHackathonSchema } from "@knighthacks/validators";
+import { asc, eq, hackathons } from "@knighthacks/db";
+import {
+  CreateHackathonSchema,
+  UpdateHackathonSchema,
+} from "@knighthacks/validators";
 
 import { router } from "../init";
 import { adminProcedure, publicProcedure } from "../procedures";
@@ -22,15 +25,17 @@ export const hackathonRouter = router({
   all: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.hackathons.findMany();
   }),
-  delete: adminProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
-    return ctx.db.delete(hackathons).where(eq(hackathons.name, input));
+  delete: adminProcedure.input(z.number()).mutation(async ({ ctx, input }) => {
+    return ctx.db.delete(hackathons).where(eq(hackathons.id, input));
   }),
   update: adminProcedure
-    .input(insertHackathonSchema)
+    .input(UpdateHackathonSchema)
     .mutation(async ({ ctx, input }) => {
-      return await ctx.db
+      const { hackathonId, ...hackathon } = input;
+      await ctx.db
         .update(hackathons)
-        .set(input)
-        .where(eq(hackathons.id, Number(input.id)));
+        .set(hackathon)
+        .where(eq(hackathons.id, hackathonId));
     }),
 });
+z;

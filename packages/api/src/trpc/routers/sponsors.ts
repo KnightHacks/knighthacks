@@ -4,12 +4,12 @@ import { router } from "../init";
 import { adminProcedure } from "../procedures";
 
 export const sponsorRouter = router({
-  add: adminProcedure
+  create: adminProcedure
     .input(insertSponsorSchema)
     .mutation(async ({ ctx, input }) => {
-      await ctx.db.insert(sponsors).values({ ...input });
+      await ctx.db.insert(sponsors).values(input);
     }),
-  getAll: adminProcedure.query(async ({ ctx }) => {
+  all: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.sponsors.findMany();
   }),
   update: adminProcedure

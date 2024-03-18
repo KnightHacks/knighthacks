@@ -35,7 +35,7 @@ export function UpdateUserForm({
     onSuccess: async () => {
       await utils.user.all.invalidate();
       toast("Success!", {
-        description: "User updated",
+        description: "Updated user",
       });
     },
     onError: (error) => {
