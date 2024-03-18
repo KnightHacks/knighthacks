@@ -20,7 +20,7 @@ import {
   PopoverTrigger,
 } from "@knighthacks/ui/popover";
 import { toast } from "@knighthacks/ui/toast";
-import { CreateHackathonFormSchema } from "@knighthacks/validators";
+import { UpdateHackathonFormSchema } from "@knighthacks/validators";
 
 import { api } from "~/trpc";
 
@@ -45,8 +45,9 @@ export function UpdateHackathonForm({
   });
 
   const form = useForm({
-    schema: CreateHackathonFormSchema,
+    schema: UpdateHackathonFormSchema,
     defaultValues: {
+      hackathonId: hackathon.id,
       name: hackathon.name,
       date: {
         from: new Date(hackathon.startDate),
@@ -142,7 +143,7 @@ export function UpdateHackathonForm({
             </FormItem>
           )}
         />
-        <Button type="submit">Create Hackathon</Button>
+        <Button type="submit">Update Hackathon</Button>
       </form>
     </Form>
   );
