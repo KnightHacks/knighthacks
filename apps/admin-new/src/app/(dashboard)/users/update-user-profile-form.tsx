@@ -403,7 +403,7 @@ export function UpdateProfileForm({
                   <Button
                     variant="link"
                     type="button"
-                    className="text-wrap h-fit p-0"
+                    className="h-fit text-wrap p-0"
                     onClick={async () => {
                       const token = await getToken();
 
@@ -431,7 +431,7 @@ export function UpdateProfileForm({
             )}
           />
 
-          <Button type="submit">Submit</Button>
+          <Button type="submit">Update User Profile</Button>
         </form>
       </Form>
     </>
