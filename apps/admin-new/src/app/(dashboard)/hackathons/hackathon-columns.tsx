@@ -131,7 +131,7 @@ function Actions({
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => {
-              mutate(hackathon.name);
+              mutate(hackathon.id);
             }}
           >
             Delete Hackathon
