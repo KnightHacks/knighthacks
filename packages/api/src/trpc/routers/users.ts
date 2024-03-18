@@ -110,14 +110,10 @@ export const userRouter = router({
     }),
   update: adminProcedure
     .input(UpdateUserSchema)
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input: { userId, ...user } }) => {
       await ctx.db.transaction(async (db) => {
-        await ctx.clerk.users.updateUser(input.userId, {
-          firstName: input.firstName,
-          lastName: input.lastName,
-          // TODO: Find a way to update email
-        });
-        await db.update(users).set(input).where(eq(users.id, input.userId));
+        await ctx.clerk.users.updateUser(userId, user);
+        await db.update(users).set(user).where(eq(users.id, userId));
       });
     }),
   byId: adminProcedure.input(z.string()).query(async ({ ctx, input }) => {

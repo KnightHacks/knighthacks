@@ -22,7 +22,7 @@ export function CreateUserForm() {
     onSuccess: async () => {
       await utils.user.all.invalidate();
       toast("Success!", {
-        description: "User added",
+        description: "Created user",
       });
     },
     onError: (error) => {
