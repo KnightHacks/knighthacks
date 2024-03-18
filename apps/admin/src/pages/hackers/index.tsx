@@ -30,7 +30,7 @@ export function Hackers() {
 }
 
 export function HackersTable() {
-  const { data: users, isLoading, error } = trpc.hackers.getAll.useQuery();
+  const { data: users, isLoading, error } = trpc.hacker.getAll.useQuery();
 
   if (isLoading) return <div>Loading...</div>;
 

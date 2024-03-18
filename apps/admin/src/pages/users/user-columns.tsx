@@ -20,7 +20,7 @@ import { trpc } from "~/trpc";
 import { UpdateUserForm } from "./update-user-form";
 import { UserProfileForm } from "./user-profile-form";
 
-type User = RouterOutput["users"]["getAll"][number];
+type User = RouterOutput["users"]["all"][number];
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -85,7 +85,7 @@ function Actions({ row }: { row: Row<User> }) {
   const utils = trpc.useUtils();
   const { mutate } = trpc.users.delete.useMutation({
     onSuccess: async () => {
-      await utils.users.getAll.invalidate();
+      await utils.users.all.invalidate();
       toast("Success!", {
         description: "User deleted",
       });

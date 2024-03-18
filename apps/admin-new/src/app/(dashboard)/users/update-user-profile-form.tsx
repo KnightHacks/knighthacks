@@ -39,12 +39,12 @@ import {
 import { toast } from "@knighthacks/ui/toast";
 import { UpdateUserProfileFormSchema } from "@knighthacks/validators";
 
-import { trpc } from "~/trpc";
+import { api } from "~/trpc";
 
 export function UpdateProfileForm({
   userProfile,
 }: {
-  userProfile: NonNullable<RouterOutput["users"]["getAll"][number]["profile"]>;
+  userProfile: NonNullable<RouterOutput["user"]["all"][number]["profile"]>;
 }) {
   const form = useForm({
     schema: UpdateUserProfileFormSchema,
@@ -68,13 +68,13 @@ export function UpdateProfileForm({
     },
   });
   const { getToken } = useAuth();
-  const utils = trpc.useUtils();
+  const utils = api.useUtils();
 
-  const updateProfile = trpc.users.updateProfile.useMutation({
+  const updateProfile = api.user.updateProfile.useMutation({
     onSuccess: async () => {
       console.log(process.env.NEXT_PUBLIC_API_URL);
-      await utils.users.getCurrent.invalidate();
-      await utils.users.getAll.invalidate();
+      await utils.user.current.invalidate();
+      await utils.user.all.invalidate();
       toast("Success!", {
         description: "Updated profile",
       });
@@ -403,7 +403,7 @@ export function UpdateProfileForm({
                   <Button
                     variant="link"
                     type="button"
-                    className="h-fit text-wrap p-0"
+                    className="text-wrap h-fit p-0"
                     onClick={async () => {
                       const token = await getToken();
 

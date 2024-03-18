@@ -3,7 +3,7 @@ import { eq, insertSponsorSchema, sponsors } from "@knighthacks/db";
 import { router } from "../init";
 import { adminProcedure } from "../procedures";
 
-export const sponsorsRouter = router({
+export const sponsorRouter = router({
   add: adminProcedure
     .input(insertSponsorSchema)
     .mutation(async ({ ctx, input }) => {

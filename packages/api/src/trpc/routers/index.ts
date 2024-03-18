@@ -1,18 +1,18 @@
 import { router } from "../init";
 import { publicProcedure } from "../procedures";
-import { hackathonsRouter } from "./hackathons";
-import { hackersRouter } from "./hackers";
-import { sponsorsRouter } from "./sponsors";
-import { usersRouter } from "./users";
+import { hackathonRouter } from "./hackathons";
+import { hackerRouter } from "./hackers";
+import { sponsorRouter } from "./sponsors";
+import { userRouter } from "./users";
 
 export const appRouter = router({
   hello: publicProcedure.query(() => {
     return "Hello from Hono!";
   }),
-  users: usersRouter,
-  hackathons: hackathonsRouter,
-  hackers: hackersRouter,
-  sponsors: sponsorsRouter,
+  user: userRouter,
+  hackathon: hackathonRouter,
+  hacker: hackerRouter,
+  sponsor: sponsorRouter,
 });
 
 export type AppRouter = typeof appRouter;

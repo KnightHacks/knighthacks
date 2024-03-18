@@ -1,41 +1,31 @@
 import { z } from "zod";
 
 import { asc, eq, hackathons, insertHackathonSchema } from "@knighthacks/db";
+import { CreateHackathonSchema } from "@knighthacks/validators";
 
 import { router } from "../init";
 import { adminProcedure, publicProcedure } from "../procedures";
 
-export const hackathonsRouter = router({
-  getCurrentHackathon: publicProcedure.query(async ({ ctx }) => {
+export const hackathonRouter = router({
+  current: publicProcedure.query(async ({ ctx }) => {
     // Get hackathon with the closest start date
     const hackathon = await ctx.db.query.hackathons.findFirst({
       orderBy: [asc(hackathons.startDate)],
     });
-
     return hackathon ?? null;
   }),
-  createHackathon: adminProcedure
-    .input(insertHackathonSchema.omit({ id: true }))
+  create: adminProcedure
+    .input(CreateHackathonSchema)
     .mutation(async ({ ctx, input }) => {
-      const newHackathon = await ctx.db.insert(hackathons).values(input);
-      return newHackathon ?? null;
+      await ctx.db.insert(hackathons).values(input);
     }),
-
-  getAll: adminProcedure.query(async ({ ctx }) => {
-    const getHackathons = await ctx.db.query.hackathons.findMany();
-
-    return getHackathons ?? null;
+  all: adminProcedure.query(async ({ ctx }) => {
+    return ctx.db.query.hackathons.findMany();
   }),
-
-  deleteHackathon: adminProcedure
-    .input(z.string())
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.transaction(async (db) => {
-        return await db.delete(hackathons).where(eq(hackathons.name, input));
-      });
-    }),
-
-  updateHackathon: adminProcedure
+  delete: adminProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
+    return ctx.db.delete(hackathons).where(eq(hackathons.name, input));
+  }),
+  update: adminProcedure
     .input(insertHackathonSchema)
     .mutation(async ({ ctx, input }) => {
       return await ctx.db

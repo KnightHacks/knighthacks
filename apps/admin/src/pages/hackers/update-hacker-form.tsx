@@ -168,7 +168,7 @@ function UserSelect({
 }: {
   form: ReturnType<typeof useForm<InsertHackerFormValues>>;
 }) {
-  const { data: users, isLoading, isError } = trpc.users.getAll.useQuery();
+  const { data: users, isLoading, isError } = trpc.users.all.useQuery();
 
   if (isLoading) {
     return <div>Loading...</div>;

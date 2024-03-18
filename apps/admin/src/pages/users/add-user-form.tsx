@@ -24,9 +24,9 @@ type InsertUserFormValues = z.infer<typeof insertUserFormSchema>;
 
 export function AddUserForm() {
   const utils = trpc.useUtils();
-  const { mutate, isLoading } = trpc.users.add.useMutation({
+  const { mutate, isLoading } = trpc.users.create.useMutation({
     onSuccess: async () => {
-      await utils.users.getAll.invalidate();
+      await utils.users.all.invalidate();
       toast("Success!", {
         description: "User added",
       });

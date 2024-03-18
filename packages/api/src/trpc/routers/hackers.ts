@@ -12,7 +12,7 @@ import {
 import { router } from "../init";
 import { adminProcedure, authenticatedProcedure } from "../procedures";
 
-export const hackersRouter = router({
+export const hackerRouter = router({
   register: authenticatedProcedure
     .input(insertHackerFormSchema)
     .mutation(async ({ ctx, input }) => {

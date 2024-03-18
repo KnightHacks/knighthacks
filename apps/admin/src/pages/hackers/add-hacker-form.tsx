@@ -29,9 +29,9 @@ type InsertUserFormValues = z.infer<typeof insertHackerFormSchema>;
 
 export function AddHackerForm() {
   const utils = trpc.useUtils();
-  const { mutate, isLoading } = trpc.hackers.add.useMutation({
+  const { mutate, isLoading } = trpc.hacker.add.useMutation({
     onSuccess: async () => {
-      await utils.hackers.getAll.invalidate();
+      await utils.hacker.getAll.invalidate();
       toast("Success!", {
         description: "User added",
       });
@@ -111,7 +111,7 @@ function HackathonSelect({
     data: hackathons,
     isLoading,
     isError,
-  } = trpc.hackathons.getAll.useQuery();
+  } = trpc.hackathon.getAll.useQuery();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -158,7 +158,7 @@ function UserSelect({
 }: {
   form: ReturnType<typeof useForm<InsertUserFormValues>>;
 }) {
-  const { data: users, isLoading, isError } = trpc.users.getAll.useQuery();
+  const { data: users, isLoading, isError } = trpc.users.all.useQuery();
 
   if (isLoading) {
     return <div>Loading...</div>;

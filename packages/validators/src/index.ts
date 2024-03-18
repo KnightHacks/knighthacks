@@ -2,17 +2,17 @@ import { z } from "zod";
 
 import { gradYears, majors, schools, shirtSizes } from "@knighthacks/consts";
 
-export const AddUserSchema = z.object({
+export const CreateUserSchema = z.object({
   email: z.string().email("Invalid email address"),
   firstName: z.string().min(1, { message: "First name is required" }),
   lastName: z.string().min(1, { message: "Last name is required" }),
 });
 
-export const UpdateUserSchema = AddUserSchema.extend({
+export const UpdateUserSchema = CreateUserSchema.extend({
   userId: z.string(),
 }).omit({ email: true });
 
-export const AddUserProfileSchema = z.object({
+export const CreateUserProfileSchema = z.object({
   userId: z.string(),
   phone: z.string().min(1, { message: "Phone number is required" }),
   address1: z.string().min(1, { message: "Address is required" }),
@@ -46,16 +46,40 @@ export const AddUserProfileSchema = z.object({
   resume: z.string().optional(),
 });
 
-export const AddUserProfileFormSchema = AddUserProfileSchema.extend({
+export const AddUserProfileFormSchema = CreateUserProfileSchema.extend({
   resume: z.instanceof(File).optional(),
 });
 
-export const UpdateUserProfileSchema = AddUserProfileSchema.extend({
+export const UpdateUserProfileSchema = CreateUserProfileSchema.extend({
   userId: z.string(),
 });
 
 export const UpdateUserProfileFormSchema = UpdateUserProfileSchema.extend({
   resume: z.instanceof(File).optional(),
+});
+
+export const CreateHackathonSchema = z.object({
+  name: z.string().min(1, { message: "Hackathon name is required" }),
+  startDate: z.string().min(1, { message: "Start date is required" }),
+  endDate: z.string().min(1, { message: "End date is required" }),
+  theme: z.string().min(1, { message: "Theme is required" }),
+});
+
+export const CreateHackathonFormSchema = CreateHackathonSchema.omit({
+  startDate: true,
+  endDate: true,
+}).extend({
+  date: z
+    .object(
+      {
+        from: z.date().optional(),
+        to: z.date().optional(),
+      },
+      {
+        required_error: "Start and end date is required",
+      },
+    )
+    .refine((date) => !!date.to, "Start and end date is required"),
 });
 
 export * from "zod";

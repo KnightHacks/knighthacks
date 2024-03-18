@@ -15,66 +15,53 @@ import {
 import { Sheet, SheetContent } from "@knighthacks/ui/sheet";
 import { toast } from "@knighthacks/ui/toast";
 
-import { trpc } from "~/trpc";
+import { api } from "~/trpc";
+import { CreateUserProfileForm } from "./create-user-profile-form.tsx";
+import { UpdateUserForm } from "./update-user-form";
+import { UpdateProfileForm } from "./update-user-profile-form";
 
-export const columns: ColumnDef<
-  RouterOutput["hackathons"]["getAll"][number]
->[] = [
+export const userColumns: ColumnDef<RouterOutput["user"]["all"][number]>[] = [
   {
     accessorKey: "id",
     header: "ID",
   },
   {
-    accessorKey: "name",
+    accessorKey: "firstName",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Hackathon Name
+          First Name
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "startDate",
+    accessorKey: "lastName",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Start Date
+          Last Name
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "endDate",
+    accessorKey: "email",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          End Date
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "theme",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Theme
+          Email
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -86,22 +73,19 @@ export const columns: ColumnDef<
   },
 ];
 
-function Actions({
-  row,
-}: {
-  row: Row<RouterOutput["hackathons"]["getAll"][number]>;
-}) {
-  const hackathon = row.original;
+function Actions({ row }: { row: Row<RouterOutput["user"]["all"][number]> }) {
+  const user = row.original;
 
-  const [updateHackathonFormSheetOpen, setUpdateHackathonFormSheetOpen] =
+  const [updateUserFormSheetOpen, setUpdateUserFormSheetOpen] = useState(false);
+  const [userProfileFormSheetOpen, setUserProfileFormSheetOpen] =
     useState(false);
 
-  const utils = trpc.useUtils();
-  const { mutate } = trpc.hackathons.deleteHackathon.useMutation({
+  const utils = api.useUtils();
+  const deleteUser = api.user.delete.useMutation({
     onSuccess: async () => {
-      await utils.hackathons.getAll.invalidate();
+      await utils.user.all.invalidate();
       toast("Success!", {
-        description: "Hackathon deleted",
+        description: "User deleted",
       });
     },
   });
@@ -119,35 +103,52 @@ function Actions({
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
             onClick={async () => {
-              await navigator.clipboard.writeText(hackathon.name);
+              await navigator.clipboard.writeText(user.id);
               toast("Success!", {
-                description: "Hackathon Name copied",
+                description: "User ID copied",
               });
             }}
           >
-            Copy Hackathon name
+            Copy user ID
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              setUserProfileFormSheetOpen(true);
+            }}
+          >
+            View profile
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => {
-              mutate(hackathon.name);
+              deleteUser.mutate(user.id);
             }}
           >
-            Delete Hackathon
+            Delete user
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => setUpdateHackathonFormSheetOpen(true)}
-          >
-            Update Hackathon
+          <DropdownMenuItem onClick={() => setUpdateUserFormSheetOpen(true)}>
+            Update user
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       <Sheet
-        open={updateHackathonFormSheetOpen}
-        onOpenChange={setUpdateHackathonFormSheetOpen}
+        open={updateUserFormSheetOpen}
+        onOpenChange={setUpdateUserFormSheetOpen}
       >
         <SheetContent>
-          {/* <UpdateHackathonForm hackathon={hackathon} /> */}
+          <UpdateUserForm user={user} />
+        </SheetContent>
+      </Sheet>
+      <Sheet
+        open={userProfileFormSheetOpen}
+        onOpenChange={setUserProfileFormSheetOpen}
+      >
+        <SheetContent>
+          {user.profile ? (
+            <UpdateProfileForm userProfile={user.profile} />
+          ) : (
+            <CreateUserProfileForm userId={user.id} />
+          )}
         </SheetContent>
       </Sheet>
     </>

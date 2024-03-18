@@ -18,7 +18,7 @@ import { Sheet, SheetContent } from "~/components/ui/sheet";
 import { trpc } from "~/trpc";
 import { UpdateHackerForm } from "./update-hacker-form";
 
-type Hacker = RouterOutput["hackers"]["getAll"][number];
+type Hacker = RouterOutput["hacker"]["getAll"][number];
 
 export const columns: ColumnDef<Hacker>[] = [
   {

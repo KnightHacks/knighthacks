@@ -37,9 +37,9 @@ import {
 import { toast } from "@knighthacks/ui/toast";
 import { AddUserProfileFormSchema } from "@knighthacks/validators";
 
-import { trpc } from "~/trpc";
+import { api } from "~/trpc";
 
-export function AddUserProfileForm({ userId }: { userId: string }) {
+export function CreateUserProfileForm({ userId }: { userId: string }) {
   const form = useForm({
     schema: AddUserProfileFormSchema,
     defaultValues: {
@@ -62,11 +62,11 @@ export function AddUserProfileForm({ userId }: { userId: string }) {
     },
   });
   const { getToken } = useAuth();
-  const utils = trpc.useUtils();
+  const utils = api.useUtils();
 
-  const addProfile = trpc.users.addProfile.useMutation({
+  const addProfile = api.user.createProfile.useMutation({
     onSuccess: async () => {
-      await utils.users.getCurrent.invalidate();
+      await utils.user.current.invalidate();
       toast("Success!", {
         description: "Created profile",
       });

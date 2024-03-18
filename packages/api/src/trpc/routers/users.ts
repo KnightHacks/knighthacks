@@ -3,8 +3,8 @@ import { z } from "zod";
 
 import { asc, eq, hackathons, userProfiles, users } from "@knighthacks/db";
 import {
-  AddUserProfileSchema,
-  AddUserSchema,
+  CreateUserProfileSchema,
+  CreateUserSchema,
   UpdateUserProfileSchema,
   UpdateUserSchema,
 } from "@knighthacks/validators";
@@ -12,14 +12,14 @@ import {
 import { router } from "../init";
 import { adminProcedure, authenticatedProcedure } from "../procedures";
 
-export const usersRouter = router({
-  getAll: adminProcedure.query(async ({ ctx }) => {
+export const userRouter = router({
+  all: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.users.findMany({
       with: { hackers: true, profile: true },
     });
   }),
-  addProfile: authenticatedProcedure
-    .input(AddUserProfileSchema)
+  createProfile: authenticatedProcedure
+    .input(CreateUserProfileSchema)
     .mutation(({ ctx, input }) => {
       if (
         ctx.user.id !== input.userId &&
@@ -51,7 +51,7 @@ export const usersRouter = router({
         .set(input)
         .where(eq(userProfiles.userId, input.userId));
     }),
-  getCurrent: authenticatedProcedure.query(async ({ ctx }) => {
+  current: authenticatedProcedure.query(async ({ ctx }) => {
     const user = await ctx.db.query.users.findFirst({
       where: eq(users.email, ctx.user.email),
       with: { hackers: true, profile: true },
@@ -83,29 +83,31 @@ export const usersRouter = router({
       await db.delete(users).where(eq(users.id, input));
     });
   }),
-  add: adminProcedure.input(AddUserSchema).mutation(async ({ ctx, input }) => {
-    await ctx.db.transaction(async (db) => {
-      // Check if email is already in use
-      const existingUser = await ctx.db.query.users.findFirst({
-        where: eq(users.email, input.email),
-      });
-
-      if (existingUser) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Email is already in use",
+  create: adminProcedure
+    .input(CreateUserSchema)
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.transaction(async (db) => {
+        // Check if email is already in use
+        const existingUser = await ctx.db.query.users.findFirst({
+          where: eq(users.email, input.email),
         });
-      }
 
-      const user = await ctx.clerk.users.createUser({
-        firstName: input.firstName,
-        lastName: input.lastName,
-        emailAddress: [input.email],
+        if (existingUser) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Email is already in use",
+          });
+        }
+
+        const user = await ctx.clerk.users.createUser({
+          firstName: input.firstName,
+          lastName: input.lastName,
+          emailAddress: [input.email],
+        });
+
+        await db.insert(users).values({ ...input, id: user.id });
       });
-
-      await db.insert(users).values({ ...input, id: user.id });
-    });
-  }),
+    }),
   update: adminProcedure
     .input(UpdateUserSchema)
     .mutation(async ({ ctx, input }) => {
@@ -118,7 +120,7 @@ export const usersRouter = router({
         await db.update(users).set(input).where(eq(users.id, input.userId));
       });
     }),
-  getById: adminProcedure.input(z.string()).query(async ({ ctx, input }) => {
+  byId: adminProcedure.input(z.string()).query(async ({ ctx, input }) => {
     return ctx.db.query.users.findFirst({
       where: eq(users.id, input),
       with: { hackers: true, profile: true },
