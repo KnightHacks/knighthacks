@@ -35,9 +35,9 @@ export const userRouter = router({
     }),
   updateProfile: authenticatedProcedure
     .input(UpdateUserProfileSchema)
-    .mutation(({ ctx, input }) => {
+    .mutation(({ ctx, input: { userId, ...userProfile } }) => {
       if (
-        ctx.user.id !== input.userId &&
+        ctx.user.id !== userId &&
         !ctx.user.email.endsWith("@knighthacks.org")
       ) {
         throw new TRPCError({
@@ -48,8 +48,8 @@ export const userRouter = router({
 
       return ctx.db
         .update(userProfiles)
-        .set(input)
-        .where(eq(userProfiles.userId, input.userId));
+        .set(userProfile)
+        .where(eq(userProfiles.userId, userId));
     }),
   current: authenticatedProcedure.query(async ({ ctx }) => {
     const user = await ctx.db.query.users.findFirst({
