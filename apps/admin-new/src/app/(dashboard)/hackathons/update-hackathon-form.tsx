@@ -30,11 +30,11 @@ export function UpdateHackathonForm({
   hackathon: NonNullable<RouterOutput["hackathon"]["all"][number]>;
 }) {
   const utils = api.useUtils();
-  const createHackathon = api.hackathon.update.useMutation({
+  const updateHackathon = api.hackathon.update.useMutation({
     onSuccess: async () => {
       await utils.hackathon.all.invalidate();
       toast("Success!", {
-        description: "Hackathon added",
+        description: "Updated hackathon",
       });
     },
     onError: (error) => {
@@ -61,8 +61,10 @@ export function UpdateHackathonForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(async (data) => {
-          createHackathon.mutate({
-            ...data,
+          updateHackathon.mutate({
+            hackathonId: data.hackathonId,
+            name: data.name,
+            theme: data.theme,
             startDate: data.date.from?.toISOString().split("T")[0] ?? "",
             endDate: data.date.to?.toISOString().split("T")[0] ?? "",
           });

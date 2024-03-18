@@ -18,7 +18,7 @@ export default function Users() {
       <div className="mx-auto max-w-5xl">
         <div className="mb-4">
           <Button onClick={() => setCreateUserFormSheetOpen(true)}>
-            Add User
+            Create User
           </Button>
         </div>
         <UsersTable />

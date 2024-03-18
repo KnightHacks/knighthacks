@@ -29,7 +29,7 @@ export function CreateHackathonForm() {
     onSuccess: async () => {
       await utils.hackathon.all.invalidate();
       toast("Success!", {
-        description: "Hackathon added",
+        description: "Created hackathon",
       });
     },
     onError: (error) => {
