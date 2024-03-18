@@ -402,7 +402,7 @@ export function CreateUserProfileForm({ userId }: { userId: string }) {
             )}
           />
 
-          <Button type="submit">Submit</Button>
+          <Button type="submit">Create User Profile</Button>
         </form>
       </Form>
     </>
