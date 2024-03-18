@@ -12,15 +12,15 @@ import {
 } from "@knighthacks/ui/form";
 import { Input } from "@knighthacks/ui/input";
 import { toast } from "@knighthacks/ui/toast";
-import { AddUserSchema } from "@knighthacks/validators";
+import { CreateUserSchema } from "@knighthacks/validators";
 
-import { trpc } from "~/trpc";
+import { api } from "~/trpc";
 
-export function AddUserForm() {
-  const utils = trpc.useUtils();
-  const addUser = trpc.users.add.useMutation({
+export function CreateUserForm() {
+  const utils = api.useUtils();
+  const createUser = api.user.create.useMutation({
     onSuccess: async () => {
-      await utils.users.getAll.invalidate();
+      await utils.user.all.invalidate();
       toast("Success!", {
         description: "User added",
       });
@@ -33,7 +33,7 @@ export function AddUserForm() {
   });
 
   const form = useForm({
-    schema: AddUserSchema,
+    schema: CreateUserSchema,
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -45,7 +45,7 @@ export function AddUserForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(async (data) => {
-          addUser.mutate(data);
+          createUser.mutate(data);
         })}
         className="flex flex-col justify-center space-y-6"
       >
@@ -88,7 +88,7 @@ export function AddUserForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Add User</Button>
+        <Button type="submit">Create User</Button>
       </form>
     </Form>
   );

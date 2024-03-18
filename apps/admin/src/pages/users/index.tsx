@@ -30,7 +30,7 @@ export function Users() {
 }
 
 export function UserTable() {
-  const { data: users, isLoading, error } = trpc.users.getAll.useQuery();
+  const { data: users, isLoading, error } = trpc.users.all.useQuery();
 
   if (isLoading) return <div>Loading...</div>;
 

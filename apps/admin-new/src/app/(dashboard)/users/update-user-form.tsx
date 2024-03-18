@@ -13,14 +13,14 @@ import { Input } from "@knighthacks/ui/input";
 import { toast } from "@knighthacks/ui/toast";
 import { UpdateUserSchema } from "@knighthacks/validators";
 
-import { trpc } from "~/trpc";
+import { api } from "~/trpc";
 
 export function UpdateUserForm({
   user,
 }: {
-  user: NonNullable<RouterOutput["users"]["getAll"][number]>;
+  user: NonNullable<RouterOutput["user"]["all"][number]>;
 }) {
-  const utils = trpc.useUtils();
+  const utils = api.useUtils();
 
   const form = useForm({
     schema: UpdateUserSchema,
@@ -31,9 +31,9 @@ export function UpdateUserForm({
     },
   });
 
-  const updateUser = trpc.users.update.useMutation({
+  const updateUser = api.user.update.useMutation({
     onSuccess: async () => {
-      await utils.users.getAll.invalidate();
+      await utils.user.all.invalidate();
       toast("Success!", {
         description: "User updated",
       });
