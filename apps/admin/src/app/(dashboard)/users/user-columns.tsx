@@ -1,12 +1,9 @@
 import type { ColumnDef, Row } from "@tanstack/react-table";
-import type { User } from "lucide-react";
 import { useState } from "react";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { toast } from "sonner";
 
 import type { RouterOutput } from "@knighthacks/api";
-
-import { Button } from "~/components/ui/button";
+import { CaretSortIcon, DotsHorizontalIcon } from "@knighthacks/ui";
+import { Button } from "@knighthacks/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,15 +11,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
-import { Sheet, SheetContent } from "~/components/ui/sheet";
-import { trpc } from "~/trpc";
-import { UpdateUserForm } from "./update-user-form";
-import { UserProfileForm } from "./user-profile-form";
+} from "@knighthacks/ui/dropdown-menu";
+import { Sheet, SheetContent } from "@knighthacks/ui/sheet";
+import { toast } from "@knighthacks/ui/toast";
 
-type User = RouterOutput["users"]["all"][number];
+import { api } from "~/trpc";
+import { CreateUserProfileForm } from "./create-user-profile-form.tsx.jsx";
+import { UpdateUserForm } from "./update-user-form.jsx";
+import { UpdateProfileForm } from "./update-user-profile-form.jsx";
 
-export const columns: ColumnDef<User>[] = [
+export const userColumns: ColumnDef<RouterOutput["user"]["all"][number]>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -36,7 +34,7 @@ export const columns: ColumnDef<User>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           First Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -50,7 +48,7 @@ export const columns: ColumnDef<User>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Last Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -64,7 +62,7 @@ export const columns: ColumnDef<User>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -75,17 +73,17 @@ export const columns: ColumnDef<User>[] = [
   },
 ];
 
-function Actions({ row }: { row: Row<User> }) {
+function Actions({ row }: { row: Row<RouterOutput["user"]["all"][number]> }) {
   const user = row.original;
 
   const [updateUserFormSheetOpen, setUpdateUserFormSheetOpen] = useState(false);
   const [userProfileFormSheetOpen, setUserProfileFormSheetOpen] =
     useState(false);
 
-  const utils = trpc.useUtils();
-  const { mutate } = trpc.users.delete.useMutation({
+  const utils = api.useUtils();
+  const deleteUser = api.user.delete.useMutation({
     onSuccess: async () => {
-      await utils.users.all.invalidate();
+      await utils.user.all.invalidate();
       toast("Success!", {
         description: "User deleted",
       });
@@ -98,7 +96,7 @@ function Actions({ row }: { row: Row<User> }) {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
             <span className="sr-only">Open menu</span>
-            <MoreHorizontal className="h-4 w-4" />
+            <DotsHorizontalIcon className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
@@ -123,7 +121,7 @@ function Actions({ row }: { row: Row<User> }) {
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => {
-              mutate(user.id);
+              deleteUser.mutate(user.id);
             }}
           >
             Delete user
@@ -146,7 +144,11 @@ function Actions({ row }: { row: Row<User> }) {
         onOpenChange={setUserProfileFormSheetOpen}
       >
         <SheetContent>
-          <UserProfileForm user={user.profile} />
+          {user.profile ? (
+            <UpdateProfileForm userProfile={user.profile} />
+          ) : (
+            <CreateUserProfileForm userId={user.id} />
+          )}
         </SheetContent>
       </Sheet>
     </>

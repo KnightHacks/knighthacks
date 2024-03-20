@@ -7,8 +7,8 @@ import { Sheet, SheetContent } from "@knighthacks/ui/sheet";
 
 import { DataTable } from "~/app/_components/data-table";
 import { api } from "~/trpc";
-import { CreateUserForm } from "./create-user-form.tsx";
-import { userColumns } from "./user-columns";
+import { CreateUserForm } from "./create-user-form.tsx.jsx";
+import { userColumns } from "./user-columns.jsx";
 
 export default function Users() {
   const [createUserFormSheetOpen, setCreateUserFormSheetOpen] = useState(false);

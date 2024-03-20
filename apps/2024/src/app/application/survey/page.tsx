@@ -10,7 +10,7 @@ import { trpc } from "~/trpc";
 export default function HackathonRegister() {
   const [whyAttend, setWhyAttend] = useState("");
   const [whatLearn, setWhatLearn] = useState("");
-  const { mutate } = trpc.hackers.register.useMutation();
+  const { mutate } = trpc.hacker.register.useMutation();
 
   const userId = "1";
   const hackathonId = 1;
