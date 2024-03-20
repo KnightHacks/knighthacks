@@ -24,7 +24,9 @@
     "next-themes": "^0.2.1",
     "react": "18.2.0",
     "react-dom": "^18.2.0 ",
-    "superjson": "1.9.1"
+    "superjson": "1.9.1",
+    "@knighthacks/consts": "workspace:*",
+    "@knighthacks/validators": "workspace:*"
   },
   "devDependencies": {
     "@knighthacks/api": "workspace:*",
