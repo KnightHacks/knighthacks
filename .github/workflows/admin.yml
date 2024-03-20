@@ -4,13 +4,13 @@ on:
   push:
     branches: ["main"]
     paths:
-      - "apps/2024/**"
+      - "apps/admin/**"
       - ".github/workflows/2024.yml"
   pull_request:
     types: [opened, synchronize]
     branches: [main]
     paths:
-      - "apps/2024/**"
+      - "apps/admin/**"
       - ".github/workflows/2024.yml"
   workflow_dispatch: {}
 
@@ -26,7 +26,7 @@ jobs:
         uses: ./tooling/github/setup
 
       - name: Build
-        run: pnpm --filter=2024 exec pnpm dlx @cloudflare/next-on-pages@1
+        run: pnpm --filter=admin exec pnpm dlx @cloudflare/next-on-pages@1
         env:
           NEXT_PUBLIC_API_URL: ${{ vars.API_URL }}
           NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ vars.CLERK_PUBLISHABLE_KEY }}
@@ -41,8 +41,8 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: ./apps/2024
-          command: pages deploy .vercel/output/static --project-name=2024
+          workingDirectory: ./apps/admin
+          command: pages deploy .vercel/output/static --project-name=admin
           packageManager: pnpm
 
       - name: Print Deployment URL
