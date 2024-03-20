@@ -123,10 +123,12 @@ export const sponsors = sqliteTable("sponsors", {
   logo: text("logo").notNull(),
   website: text("website").notNull(),
   tier: text("tier", { enum: SPONSOR_TIERS }).notNull(),
-  hackathonId: integer("hackathon_id").references(() => hackathons.id, {
-    onDelete: "cascade", // If the hackathon is deleted, delete the hacker
-    onUpdate: "cascade", // If the hackathon is updated, update the hacker
-  }),
+  hackathonId: integer("hackathon_id")
+    .references(() => hackathons.id, {
+      onDelete: "cascade", // If the hackathon is deleted, delete the hacker
+      onUpdate: "cascade", // If the hackathon is updated, update the hacker
+    })
+    .notNull(),
 });
 
 export const sponsorsRelations = relations(sponsors, ({ one }) => {
