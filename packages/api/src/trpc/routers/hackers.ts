@@ -1,20 +1,17 @@
 import { z } from "zod";
 
+import { asc, eq, hackathons, hackers } from "@knighthacks/db";
 import {
-  asc,
-  eq,
-  hackathons,
-  hackers,
-  insertHackerFormSchema,
-  insertHackerSchema,
-} from "@knighthacks/db";
+  CreateHackerSchema,
+  UpdateHackerSchema,
+} from "@knighthacks/validators";
 
 import { router } from "../init";
 import { adminProcedure, authenticatedProcedure } from "../procedures";
 
 export const hackerRouter = router({
   register: authenticatedProcedure
-    .input(insertHackerFormSchema)
+    .input(CreateHackerSchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (tx) => {
         const hackathon = await tx.query.hackathons.findFirst({
@@ -33,7 +30,7 @@ export const hackerRouter = router({
         });
       });
     }),
-  getAll: adminProcedure.query(async ({ ctx }) => {
+  all: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.hackers.findMany({
       with: {
         hackathon: true,
@@ -41,7 +38,7 @@ export const hackerRouter = router({
       },
     });
   }),
-  getMyHackathons: authenticatedProcedure.query(async ({ ctx }) => {
+  allHackathons: authenticatedProcedure.query(async ({ ctx }) => {
     return ctx.db.query.hackers.findMany({
       where: eq(hackers.userId, ctx.user.id),
       with: {
@@ -49,7 +46,7 @@ export const hackerRouter = router({
       },
     });
   }),
-  getMyStatus: authenticatedProcedure.query(async ({ ctx }) => {
+  status: authenticatedProcedure.query(async ({ ctx }) => {
     return await ctx.db.transaction(async (tx) => {
       const hackathon = await tx.query.hackathons.findFirst({
         orderBy: [asc(hackathons.startDate)],
@@ -73,18 +70,15 @@ export const hackerRouter = router({
     });
   }),
   update: adminProcedure
-    .input(insertHackerSchema)
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db
-        .update(hackers)
-        .set(input)
-        .where(eq(hackers.id, Number(input.id)));
+    .input(UpdateHackerSchema)
+    .mutation(async ({ ctx, input: { hackerId, ...hacker } }) => {
+      await ctx.db.update(hackers).set(hacker).where(eq(hackers.id, hackerId));
     }),
   delete: adminProcedure.input(z.number()).mutation(async ({ ctx, input }) => {
     await ctx.db.delete(hackers).where(eq(hackers.id, input));
   }),
-  add: adminProcedure
-    .input(insertHackerSchema)
+  create: adminProcedure
+    .input(CreateHackerSchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.insert(hackers).values(input);
     }),
