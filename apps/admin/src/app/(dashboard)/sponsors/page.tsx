@@ -18,7 +18,7 @@ export default function Sponsors() {
       <div className="mx-auto max-w-5xl">
         <div className="mb-4">
           <Button onClick={() => setAddSponsorFormSheetOpen(true)}>
-            Add Sponsor
+            Create Sponsor
           </Button>
         </div>
         <SponsorTable />
