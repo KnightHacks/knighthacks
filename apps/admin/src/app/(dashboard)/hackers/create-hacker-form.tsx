@@ -85,7 +85,7 @@ export function CreateHackerForm() {
         <HackathonSelect form={form} />
         <UserSelect form={form} />
         <StatusSelect form={form} />
-        <Button type="submit">Add User</Button>
+        <Button type="submit">Create Hacker</Button>
       </form>
     </Form>
   );

@@ -19,7 +19,7 @@ export default function Hackers() {
       <div className="mx-auto max-w-5xl">
         <div className="mb-4">
           <Button onClick={() => setCreateHackathonFormSheetOpen(true)}>
-            Create Hackathon
+            Create Hacker
           </Button>
         </div>
         <HackathonsTable />
