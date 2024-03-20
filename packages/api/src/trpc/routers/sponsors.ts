@@ -1,11 +1,17 @@
-import { eq, insertSponsorSchema, sponsors } from "@knighthacks/db";
+import { z } from "zod";
+
+import { eq, sponsors } from "@knighthacks/db";
+import {
+  CreateSponsorSchema,
+  UpdateSponsorSchema,
+} from "@knighthacks/validators";
 
 import { router } from "../init";
 import { adminProcedure } from "../procedures";
 
 export const sponsorRouter = router({
   create: adminProcedure
-    .input(insertSponsorSchema)
+    .input(CreateSponsorSchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.insert(sponsors).values(input);
     }),
@@ -13,16 +19,14 @@ export const sponsorRouter = router({
     return ctx.db.query.sponsors.findMany();
   }),
   update: adminProcedure
-    .input(insertSponsorSchema)
-    .mutation(async ({ ctx, input }) => {
+    .input(UpdateSponsorSchema)
+    .mutation(async ({ ctx, input: { sponsorId, ...sponsor } }) => {
       await ctx.db
         .update(sponsors)
-        .set(input)
-        .where(eq(sponsors.id, Number(input.id)));
+        .set(sponsor)
+        .where(eq(sponsors.id, sponsorId));
     }),
-  delete: adminProcedure
-    .input(insertSponsorSchema)
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.delete(sponsors).where(eq(sponsors.id, Number(input.id)));
-    }),
+  delete: adminProcedure.input(z.number()).mutation(async ({ ctx, input }) => {
+    await ctx.db.delete(sponsors).where(eq(sponsors.id, input));
+  }),
 });
