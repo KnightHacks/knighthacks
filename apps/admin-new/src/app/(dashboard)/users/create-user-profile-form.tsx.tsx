@@ -1,7 +1,12 @@
 import { useMemo, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 
-import { gradYears, majors, schools, shirtSizes } from "@knighthacks/consts";
+import {
+  GRADUATION_YEARS,
+  MAJORS,
+  SCHOOLS,
+  SHIRT_SIZES,
+} from "@knighthacks/consts";
 import { CheckIcon, cn, DoubleArrowUpIcon } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";
 import {
@@ -149,7 +154,7 @@ export function CreateUserProfileForm({ userId }: { userId: string }) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {shirtSizes.map((size) => (
+                    {SHIRT_SIZES.map((size) => (
                       <SelectItem key={size} value={size}>
                         {size}
                       </SelectItem>
@@ -178,7 +183,7 @@ export function CreateUserProfileForm({ userId }: { userId: string }) {
                         )}
                       >
                         {field.value
-                          ? majors.find((major) => major === field.value)
+                          ? MAJORS.find((major) => major === field.value)
                           : "Select your major"}
                         <DoubleArrowUpIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
@@ -210,7 +215,7 @@ export function CreateUserProfileForm({ userId }: { userId: string }) {
                         )}
                       >
                         {field.value
-                          ? schools.find((school) => school === field.value)
+                          ? SCHOOLS.find((school) => school === field.value)
                           : "Select your school"}
                         <DoubleArrowUpIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
@@ -240,7 +245,7 @@ export function CreateUserProfileForm({ userId }: { userId: string }) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {gradYears.map((gradYear) => (
+                    {GRADUATION_YEARS.map((gradYear) => (
                       <SelectItem key={gradYear} value={gradYear}>
                         {gradYear}
                       </SelectItem>
@@ -413,14 +418,14 @@ function MajorsComboBox({
   value,
   form,
 }: {
-  value: (typeof majors)[number];
+  value: (typeof MAJORS)[number];
   form: ReturnType<typeof useForm<typeof AddUserProfileFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
   const filteredMajors = useMemo(() => {
-    return majors
-      .filter((major) => major.toLowerCase().includes(search.toLowerCase()))
-      .slice(0, 10);
+    return MAJORS.filter((major) =>
+      major.toLowerCase().includes(search.toLowerCase()),
+    ).slice(0, 10);
   }, [search]);
 
   return (
@@ -460,14 +465,14 @@ function SchoolsCombobox({
   value,
   form,
 }: {
-  value: (typeof schools)[number];
+  value: (typeof SCHOOLS)[number];
   form: ReturnType<typeof useForm<typeof AddUserProfileFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
   const filteredSchools = useMemo(() => {
-    return schools
-      .filter((school) => school.toLowerCase().includes(search.toLowerCase()))
-      .slice(0, 10);
+    return SCHOOLS.filter((school) =>
+      school.toLowerCase().includes(search.toLowerCase()),
+    ).slice(0, 10);
   }, [search]);
 
   return (
