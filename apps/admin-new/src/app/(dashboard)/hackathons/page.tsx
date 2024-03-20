@@ -10,7 +10,7 @@ import { api } from "~/trpc";
 import { CreateHackathonForm } from "./create-hackathon-form";
 import { hackathonColumns } from "./hackathon-columns";
 
-export default function Hackers() {
+export default function Hackathons() {
   const [createHackathonFormSheetOpen, setCreateHackathonFormSheetOpen] =
     useState(false);
 
