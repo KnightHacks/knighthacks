@@ -10,10 +10,17 @@ export function ClerkProviderWithTheme({
   children: React.ReactNode;
 }) {
   const { resolvedTheme } = useTheme();
+
+  const checkDarkTheme =
+    typeof window !== "undefined" &&
+    (resolvedTheme === "dark" ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches &&
+        resolvedTheme === "system"));
+
   return (
     <ClerkProvider
       appearance={{
-        baseTheme: resolvedTheme === "dark" ? dark : undefined,
+        baseTheme: checkDarkTheme ? dark : undefined,
         variables: {
           colorPrimary: "#2563eb",
         },
