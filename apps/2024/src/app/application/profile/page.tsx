@@ -3,6 +3,8 @@ import { auth } from "@clerk/nextjs";
 
 import { ProfileForm } from "./profile-form";
 
+export const runtime = "edge";
+
 export default function Profile() {
   const { userId } = auth();
 
