@@ -13,6 +13,7 @@
     "clean": "git clean -xdf dist .turbo node_modules .wrangler .next .vercel"
   },
   "dependencies": {
+    "@knighthacks/api": "workspace:*",
     "@clerk/nextjs": "^4.29.7",
     "@clerk/themes": "^1.7.9",
     "@knighthacks/consts": "workspace:*",
@@ -33,7 +34,6 @@
     "superjson": "1.9.1"
   },
   "devDependencies": {
-    "@knighthacks/api": "workspace:*",
     "@knighthacks/eslint-config": "workspace:*",
     "@knighthacks/prettier-config": "workspace:*",
     "@knighthacks/tailwind-config": "workspace:*",

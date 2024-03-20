@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@knighthacks/ui/button";
 import {
   Form,

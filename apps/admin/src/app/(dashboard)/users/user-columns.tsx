@@ -16,9 +16,9 @@ import { Sheet, SheetContent } from "@knighthacks/ui/sheet";
 import { toast } from "@knighthacks/ui/toast";
 
 import { api } from "~/trpc";
-import { CreateUserProfileForm } from "./create-user-profile-form.tsx.jsx";
-import { UpdateUserForm } from "./update-user-form.jsx";
-import { UpdateProfileForm } from "./update-user-profile-form.jsx";
+import { CreateUserProfileForm } from "./create-user-profile-form";
+import { UpdateUserForm } from "./update-user-form";
+import { UpdateProfileForm } from "./update-user-profile-form";
 
 export const userColumns: ColumnDef<RouterOutput["user"]["all"][number]>[] = [
   {

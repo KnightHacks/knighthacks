@@ -126,6 +126,9 @@ importers:
       '@clerk/themes':
         specifier: ^1.7.9
         version: 1.7.9(react@18.2.0)
+      '@knighthacks/api':
+        specifier: workspace:*
+        version: link:../../packages/api
       '@knighthacks/consts':
         specifier: workspace:*
         version: link:../../packages/consts
@@ -175,9 +178,6 @@ importers:
         specifier: 1.9.1
         version: 1.9.1
     devDependencies:
-      '@knighthacks/api':
-        specifier: workspace:*
-        version: link:../../packages/api
       '@knighthacks/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
