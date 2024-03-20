@@ -41,7 +41,7 @@ export const resume = new Hono<HonoConfig>()
     const user = await db.query.users.findFirst({
       where: eq(users.email, auth.sessionClaims?.email),
       with: {
-      profile: true,
+        profile: true,
       },
     });
 
@@ -67,7 +67,7 @@ export const resume = new Hono<HonoConfig>()
 
     return c.body(file, {
       headers: {
-      "Content-Type": "application/pdf",
+        "Content-Type": "application/pdf",
       },
     });
   });
