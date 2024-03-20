@@ -6,6 +6,7 @@ import {
   MAJORS,
   SCHOOLS,
   SHIRT_SIZES,
+  SPONSOR_TIERS,
 } from "@knighthacks/consts";
 
 export const CreateUserSchema = z.object({
@@ -110,6 +111,18 @@ export const CreateHackerSchema = z.object({
 
 export const UpdateHackerSchema = CreateHackerSchema.extend({
   hackerId: z.number(),
+});
+
+export const CreateSponsorSchema = z.object({
+  name: z.string().min(1, { message: "Sponsor name is required" }),
+  logo: z.string().url({ message: "Invalid logo URL" }),
+  website: z.string().url({ message: "Invalid website URL" }),
+  tier: z.enum(SPONSOR_TIERS),
+  hackathonId: z.number(),
+});
+
+export const UpdateSponsorSchema = CreateSponsorSchema.extend({
+  sponsorId: z.number(),
 });
 
 export * from "zod";
