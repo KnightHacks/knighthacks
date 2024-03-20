@@ -1,6 +1,12 @@
 import { z } from "zod";
 
-import { gradYears, majors, schools, shirtSizes } from "@knighthacks/consts";
+import {
+  APPLICATION_STATUSES,
+  GRADUATION_YEARS,
+  MAJORS,
+  SCHOOLS,
+  SHIRT_SIZES,
+} from "@knighthacks/consts";
 
 export const CreateUserSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -39,10 +45,10 @@ export const CreateUserProfileSchema = z.object({
   age: z.coerce
     .number()
     .min(18, { message: "You must be at least 18 years old" }),
-  major: z.enum(majors),
-  school: z.enum(schools),
-  gradYear: z.enum(gradYears),
-  shirtSize: z.enum(shirtSizes),
+  major: z.enum(MAJORS),
+  school: z.enum(SCHOOLS),
+  gradYear: z.enum(GRADUATION_YEARS),
+  shirtSize: z.enum(SHIRT_SIZES),
   resume: z.string().optional(),
 });
 
@@ -88,6 +94,22 @@ export const UpdateHackathonSchema = CreateHackathonSchema.extend({
 
 export const UpdateHackathonFormSchema = CreateHackathonFormSchema.extend({
   hackathonId: z.number(),
+});
+
+export const CreateHackerSchema = z.object({
+  hackathonId: z.number(),
+  userId: z.string(),
+  whyAttend: z
+    .string()
+    .min(1, { message: "Why do you want to attend is required" }),
+  whatLearn: z
+    .string()
+    .min(1, { message: "What do you want to learn is required" }),
+  status: z.enum(APPLICATION_STATUSES),
+});
+
+export const UpdateHackerSchema = CreateHackerSchema.extend({
+  hackerId: z.number(),
 });
 
 export * from "zod";
