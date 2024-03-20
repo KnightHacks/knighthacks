@@ -5,13 +5,13 @@ on:
     branches: ["main"]
     paths:
       - "apps/admin/**"
-      - ".github/workflows/2024.yml"
+      - ".github/workflows/admin.yml"
   pull_request:
     types: [opened, synchronize]
     branches: [main]
     paths:
       - "apps/admin/**"
-      - ".github/workflows/2024.yml"
+      - ".github/workflows/admin.yml"
   workflow_dispatch: {}
 
 jobs:
