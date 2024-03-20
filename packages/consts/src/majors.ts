@@ -1,4 +1,4 @@
-export const majors = [
+export const MAJORS = [
   "Aeronautics",
   "Agricultural Business & Technology",
   "Agriculture",
