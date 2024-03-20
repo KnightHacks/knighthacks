@@ -4,4 +4,3 @@ export const APPLICATION_STATUSES = [
   "waitlisted",
   "checkedin",
 ] as const;
- 
