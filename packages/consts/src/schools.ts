@@ -1,4 +1,4 @@
-export const schools = [
+export const SCHOOLS = [
   "21st Century Cyber Charter School",
   "ABES Engineering College",
   "ACT Academy Cyber Charter School",
