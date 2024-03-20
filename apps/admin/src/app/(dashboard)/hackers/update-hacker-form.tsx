@@ -93,7 +93,7 @@ export function UpdateHackerForm({
         <HackathonSelect form={form} />
         <UserSelect form={form} />
         <StatusSelect form={form} />
-        <Button type="submit">Add User</Button>
+        <Button type="submit">Update Hacker</Button>
       </form>
     </Form>
   );
