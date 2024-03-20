@@ -427,7 +427,7 @@ function MajorsComboBox({
   const filteredMajors = useMemo(() => {
     return MAJORS.filter((major) =>
       major.toLowerCase().includes(search.toLowerCase()),
-    ).slice(0, 10);
+    ).slice(0, 5);
   }, [search]);
 
   return (
@@ -474,7 +474,7 @@ function SchoolsCombobox({
   const filteredSchools = useMemo(() => {
     return SCHOOLS.filter((school) =>
       school.toLowerCase().includes(search.toLowerCase()),
-    ).slice(0, 10);
+    ).slice(0, 5);
   }, [search]);
 
   return (
