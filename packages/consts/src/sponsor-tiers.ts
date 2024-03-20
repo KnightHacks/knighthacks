@@ -1,1 +1,1 @@
-export const sponsorTiers = ["gold", "silver", "bronze", "other"] as const;
+export const SPONSOR_TIERS = ["gold", "silver", "bronze", "other"] as const;

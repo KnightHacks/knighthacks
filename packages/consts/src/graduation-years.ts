@@ -1,4 +1,4 @@
-export const gradYears = [
+export const GRADUATION_YEARS = [
   "2024",
   "2025",
   "2026",
