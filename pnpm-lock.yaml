@@ -32,9 +32,15 @@ importers:
       '@clerk/themes':
         specifier: ^1.7.9
         version: 1.7.9(react@18.2.0)
+      '@knighthacks/consts':
+        specifier: workspace:*
+        version: link:../../packages/consts
       '@knighthacks/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@knighthacks/validators':
+        specifier: workspace:*
+        version: link:../../packages/validators
       '@tanstack/react-query':
         specifier: ^4.3.9
         version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
