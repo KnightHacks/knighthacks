@@ -4,7 +4,12 @@
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "paths": {
       "~/*": ["./src/*"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["."]
+  "include": [".", ".next/types/**/*.ts"]
 }
