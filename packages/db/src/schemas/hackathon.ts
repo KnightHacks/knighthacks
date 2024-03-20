@@ -1,14 +1,13 @@
 import { relations } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { z } from "zod";
 
 import {
-  gradYears,
-  majors,
-  schools,
-  shirtSizes,
-  sponsorTiers,
+  APPLICATION_STATUSES,
+  GRADUATION_YEARS,
+  MAJORS,
+  SCHOOLS,
+  SHIRT_SIZES,
+  SPONSOR_TIERS,
 } from "@knighthacks/consts";
 
 export const users = sqliteTable("users", {
@@ -28,20 +27,22 @@ export const usersRelations = relations(users, ({ many, one }) => {
 
 export const userProfiles = sqliteTable("user_profiles", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  userId: text("user_id").references(() => users.id, {
-    onDelete: "cascade", // If the user is deleted, delete the metadata
-    onUpdate: "cascade", // If the user is updated, update the metadata
-  }).notNull(),
+  userId: text("user_id")
+    .references(() => users.id, {
+      onDelete: "cascade", // If the user is deleted, delete the metadata
+      onUpdate: "cascade", // If the user is updated, update the metadata
+    })
+    .notNull(),
   isMember: integer("is_member", { mode: "boolean" }).default(false), // Whether or not they are a dues paying member
   phone: text("phone").notNull().unique(),
   age: integer("age").notNull(),
   shirtSize: text("shirt_size", {
-    enum: shirtSizes,
+    enum: SHIRT_SIZES,
   }).notNull(),
-  major: text("major", { enum: majors }).notNull(),
-  school: text("school", { enum: schools }).notNull(),
+  major: text("major", { enum: MAJORS }).notNull(),
+  school: text("school", { enum: SCHOOLS }).notNull(),
   gradYear: text("grad_year", {
-    enum: gradYears,
+    enum: GRADUATION_YEARS,
   }).notNull(),
   address1: text("address1").notNull(),
   address2: text("address2"),
@@ -79,7 +80,7 @@ export const hackers = sqliteTable("hackers", {
     })
     .notNull(),
   status: text("status", {
-    enum: ["applied", "accepted", "waitlisted", "checkedin"],
+    enum: APPLICATION_STATUSES,
   })
     .default("applied")
     .notNull(),
@@ -121,7 +122,7 @@ export const sponsors = sqliteTable("sponsors", {
   name: text("name").notNull(),
   logo: text("logo").notNull(),
   website: text("website").notNull(),
-  tier: text("tier", { enum: sponsorTiers }).notNull(),
+  tier: text("tier", { enum: SPONSOR_TIERS }).notNull(),
   hackathonId: integer("hackathon_id").references(() => hackathons.id, {
     onDelete: "cascade", // If the hackathon is deleted, delete the hacker
     onUpdate: "cascade", // If the hackathon is updated, update the hacker
@@ -136,100 +137,3 @@ export const sponsorsRelations = relations(sponsors, ({ one }) => {
     }),
   };
 });
-
-/*
- * The following are the schemas that will be used for the API
- * These are generated from the above schemas
- */
-
-export const insertSponsorSchema = createInsertSchema(sponsors);
-export const selectSponsorSchema = createSelectSchema(sponsors);
-
-export const insertHackathonSchema = createInsertSchema(hackathons);
-export const selectHackathonSchema = createSelectSchema(hackathons);
-
-export const insertUserSchema = createInsertSchema(users);
-export const selectUserSchema = createSelectSchema(users);
-
-export const insertUserProfileSchema = createInsertSchema(userProfiles);
-export const insertUserProfileFormSchema = createInsertSchema(userProfiles, {
-  phone: (schema) =>
-    schema.phone
-      .min(1, {
-        message: "Phone number is required",
-      })
-      .regex(/^\d{10}$/, {
-        message: "Phone number must be 10 digits",
-      }),
-  age: z.coerce.number().min(18, {
-    message: "You must be at least 18 years old",
-  }),
-  shirtSize: z.enum(shirtSizes, {
-    errorMap: () => ({ message: "Invalid shirt size" }),
-  }),
-  major: z.enum(majors, {
-    errorMap: () => ({ message: "Invalid major" }),
-  }),
-  school: z.enum(schools, {
-    errorMap: () => ({ message: "Invalid school" }),
-  }),
-  gradYear: z.enum(gradYears, {
-    errorMap: () => ({ message: "Invalid graduation year" }),
-  }),
-  address1: (schema) =>
-    schema.address1.min(1, {
-      message: "Address is required",
-    }),
-  city: (schema) =>
-    schema.city.min(1, {
-      message: "City is required",
-    }),
-  state: (schema) =>
-    schema.state.min(1, {
-      message: "State is required",
-    }),
-  zip: (schema) =>
-    schema.zip.min(1, {
-      message: "Zip code is required",
-    }),
-  country: (schema) =>
-    schema.country.min(1, {
-      message: "Country is required",
-    }),
-  github: (schema) =>
-    schema.github
-      .url({
-        message: "Invalid GitHub link",
-      })
-      .optional()
-      .or(z.literal("")),
-  personalWebsite: (schema) =>
-    schema.personalWebsite
-      .url({
-        message: "Invalid personal website link",
-      })
-      .optional()
-      .or(z.literal("")),
-  linkedin: (schema) =>
-    schema.linkedin
-      .url({
-        message: "Invalid LinkedIn link",
-      })
-      .optional()
-      .or(z.literal("")),
-  resume: z.instanceof(File),
-});
-export const selectUserMetadataSchema = createSelectSchema(userProfiles);
-
-export const insertHackerSchema = createInsertSchema(hackers);
-export const insertHackerFormSchema = createInsertSchema(hackers, {
-  whyAttend: (schema) =>
-    schema.whyAttend.min(1, {
-      message: "This field is required",
-    }),
-  whatLearn: (schema) =>
-    schema.whatLearn.min(1, {
-      message: "This field is required",
-    }),
-});
-export const selectHackerSchema = createSelectSchema(hackers);
