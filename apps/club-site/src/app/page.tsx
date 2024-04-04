@@ -1,10 +1,13 @@
-import { Hello } from "~/_components/hello";
+import { currentUser } from "@clerk/nextjs";
 
-export default function Home() {
+import { SignOut } from "./_components/sign-out";
+
+export default async function Home() {
+  const user = await currentUser();
   return (
     <div>
-      <div>This is the home page!</div>
-      <Hello />
+      <h1>This is the home page</h1>
+      {user && <SignOut />}
     </div>
   );
 }
