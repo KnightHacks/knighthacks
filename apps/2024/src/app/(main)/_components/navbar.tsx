@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs";
 
 import { Button } from "@knighthacks/ui/button";
 
+import { MobileSheet } from "./navbar-sheet";
 import { SignOutButton } from "./sign-out-button";
 
 export function Navbar() {
@@ -11,18 +12,13 @@ export function Navbar() {
   return (
     <nav className="fixed flex h-16 w-full items-center justify-between px-8">
       <div>
-        <Link
-          href="/#hero"
-          className="text-xl font-bold"
-          passHref
-          legacyBehavior
-        >
+        <Link href="/#hero" passHref legacyBehavior>
           <Button variant="ghost" className="text-xl font-bold">
             KnightHacks
           </Button>
         </Link>
       </div>
-      <ul className="flex items-center">
+      <ul className="hidden items-center md:flex">
         <li>
           <Link href="/#about" passHref legacyBehavior>
             <Button variant="ghost">About</Button>
@@ -38,8 +34,13 @@ export function Navbar() {
             <Button variant="ghost">Sponsors</Button>
           </Link>
         </li>
+        <li>
+          <Link href="/#contact" passHref legacyBehavior>
+            <Button variant="ghost">Contact</Button>
+          </Link>
+        </li>
       </ul>
-      <div>
+      <div className="hidden md:block">
         {userId ? (
           <SignOutButton />
         ) : (
@@ -48,6 +49,7 @@ export function Navbar() {
           </Link>
         )}
       </div>
+      <MobileSheet />
     </nav>
   );
 }
