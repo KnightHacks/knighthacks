@@ -65,7 +65,7 @@ export function Navbar({ userId }: { userId: string | null }) {
           </Link>
         )}
       </div>
-      <MobileSheet />
+      <MobileSheet userId={userId} />
     </motion.nav>
   );
 }

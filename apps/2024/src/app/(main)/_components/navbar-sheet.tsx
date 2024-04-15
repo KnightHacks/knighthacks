@@ -6,7 +6,9 @@ import Link from "next/link";
 import { Button } from "@knighthacks/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@knighthacks/ui/sheet";
 
-export function MobileSheet() {
+import { SignOutButton } from "./sign-out-button";
+
+export function MobileSheet({ userId }: { userId: string | null }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -25,7 +27,7 @@ export function MobileSheet() {
               KnightHacks
             </Button>
           </Link>
-          <ul>
+          <ul className="mb-4˝">
             <li>
               <Link href="/#about" passHref legacyBehavior>
                 <Button onClick={() => setOpen(false)} variant="ghost">
@@ -55,6 +57,14 @@ export function MobileSheet() {
               </Link>
             </li>
           </ul>
+
+          {userId ? (
+            <SignOutButton />
+          ) : (
+            <Link href="/login" passHref>
+              <Button onClick={() => setOpen(false)}>Login</Button>
+            </Link>
+          )}
         </SheetContent>
       </Sheet>
     </div>
