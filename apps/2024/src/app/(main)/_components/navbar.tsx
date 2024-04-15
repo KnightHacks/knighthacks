@@ -1,16 +1,32 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { auth } from "@clerk/nextjs";
+import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 
 import { Button } from "@knighthacks/ui/button";
 
 import { MobileSheet } from "./navbar-sheet";
 import { SignOutButton } from "./sign-out-button";
 
-export function Navbar() {
-  const { userId } = auth();
+export function Navbar({ userId }: { userId: string | null }) {
+  const { scrollY } = useScroll();
+  const [hidden, setHidden] = useState(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious();
+    if (previous && latest > previous && latest > 100) {
+      setHidden(true);
+    } else {
+      setHidden(false); 
+    }
+  });
 
   return (
-    <nav className="fixed flex h-16 w-full items-center justify-between px-8">
+    <motion.nav
+      animate={{ y: hidden ? "-100%" : 0 }}
+      className="fixed flex h-16 w-full items-center justify-between bg-background px-8 shadow"
+    >
       <div>
         <Link href="/#hero" passHref legacyBehavior>
           <Button variant="ghost" className="text-xl font-bold">
@@ -50,6 +66,6 @@ export function Navbar() {
         )}
       </div>
       <MobileSheet />
-    </nav>
+    </motion.nav>
   );
 }
