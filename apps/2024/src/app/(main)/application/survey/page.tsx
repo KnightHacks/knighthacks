@@ -7,6 +7,8 @@ import { Textarea } from "@knighthacks/ui/textarea";
 
 import { trpc } from "~/trpc";
 
+export const runtime = "edge";
+
 export default function HackathonRegister() {
   const [whyAttend, setWhyAttend] = useState("");
   const [whatLearn, setWhatLearn] = useState("");
