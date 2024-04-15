@@ -18,7 +18,7 @@ export function Navbar({ userId }: { userId: string | null }) {
     if (previous && latest > previous && latest > 100) {
       setHidden(true);
     } else {
-      setHidden(false); 
+      setHidden(false);
     }
   });
 
