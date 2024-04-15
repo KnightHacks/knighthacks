@@ -27,7 +27,7 @@ export function MobileSheet({ userId }: { userId: string | null }) {
               KnightHacks
             </Button>
           </Link>
-          <ul className="mb-4˝">
+          <ul className="mb-4">
             <li>
               <Link href="/#about" passHref legacyBehavior>
                 <Button onClick={() => setOpen(false)} variant="ghost">
