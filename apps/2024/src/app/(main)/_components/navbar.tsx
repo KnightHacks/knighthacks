@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 
+import { cn } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";
 
 import { MobileSheet } from "./navbar-sheet";
@@ -15,6 +16,7 @@ export function Navbar({ userId }: { userId: string | null }) {
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious();
+
     if (previous && latest > previous && latest > 100) {
       setHidden(true);
     } else {
@@ -25,7 +27,10 @@ export function Navbar({ userId }: { userId: string | null }) {
   return (
     <motion.nav
       animate={{ y: hidden ? "-100%" : 0 }}
-      className="fixed flex h-16 w-full items-center justify-between bg-background px-8 shadow"
+      transition={{ type: "tween", duration: 0.2 }}
+      className={cn(
+        "fixed z-50 flex h-16 w-full items-center justify-between bg-background px-8",
+      )}
     >
       <div>
         <Link href="/#hero" passHref legacyBehavior>
