@@ -9,7 +9,7 @@ import {
   SCHOOLS,
   SHIRT_SIZES,
 } from "@knighthacks/consts";
-import { CheckIcon, cn, DoubleArrowUpIcon } from "@knighthacks/ui";
+import { CheckIcon, ChevronDownIcon, cn } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";
 import {
   Command,
@@ -42,13 +42,13 @@ import {
   SelectValue,
 } from "@knighthacks/ui/select";
 import { toast } from "@knighthacks/ui/toast";
-import { AddUserProfileFormSchema } from "@knighthacks/validators";
+import { CreateUserProfileFormSchema } from "@knighthacks/validators";
 
 import { trpc } from "~/trpc";
 
 export function ProfileForm({ userId }: { userId: string }) {
   const form = useForm({
-    schema: AddUserProfileFormSchema,
+    schema: CreateUserProfileFormSchema,
     defaultValues: {
       userId,
       phone: "",
@@ -71,7 +71,7 @@ export function ProfileForm({ userId }: { userId: string }) {
   const { getToken } = useAuth();
   const utils = trpc.useUtils();
 
-  const addProfile = trpc.user.createProfile.useMutation({
+  const createProfile = trpc.user.createProfile.useMutation({
     onSuccess: async () => {
       await utils.user.current.invalidate();
       toast("Success!", {
@@ -88,10 +88,13 @@ export function ProfileForm({ userId }: { userId: string }) {
   console.log(form.formState.errors);
 
   return (
-    <>
-      <h1 className="mb-2 text-lg font-semibold">Create Profile</h1>
+    <div className="mx-auto max-w-screen-sm px-8 pb-8 pt-20">
+      <h1 className="mb-2 text-center text-2xl font-bold">
+        Create Your KnightHacks Profile
+      </h1>
       <Form {...form}>
         <form
+          className="space-y-4"
           onSubmit={form.handleSubmit(async (data) => {
             const token = await getToken();
 
@@ -107,12 +110,11 @@ export function ProfileForm({ userId }: { userId: string }) {
               }
             }
 
-            addProfile.mutate({
+            createProfile.mutate({
               ...data,
               resume: resumeKey,
             });
           })}
-          className="mx-auto flex flex-1 flex-col justify-center space-y-6"
         >
           <FormField
             control={form.control}
@@ -180,14 +182,14 @@ export function ProfileForm({ userId }: { userId: string }) {
                         variant="outline"
                         role="combobox"
                         className={cn(
-                          "justify-between",
+                          "justify-between px-3",
                           !field.value && "text-muted-foreground",
                         )}
                       >
                         {field.value
                           ? MAJORS.find((major) => major === field.value)
                           : "Select your major"}
-                        <DoubleArrowUpIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -212,14 +214,14 @@ export function ProfileForm({ userId }: { userId: string }) {
                         variant="outline"
                         role="combobox"
                         className={cn(
-                          "justify-between",
+                          "justify-between px-3",
                           !field.value && "text-muted-foreground",
                         )}
                       >
                         {field.value
                           ? SCHOOLS.find((school) => school === field.value)
                           : "Select your school"}
-                        <DoubleArrowUpIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        <ChevronDownIcon className="h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -409,10 +411,10 @@ export function ProfileForm({ userId }: { userId: string }) {
             )}
           />
 
-          <Button type="submit">Create User Profile</Button>
+          <Button type="submit" className="w-full">Create User Profile</Button>
         </form>
       </Form>
-    </>
+    </div>
   );
 }
 
@@ -421,7 +423,7 @@ function MajorsComboBox({
   form,
 }: {
   value: (typeof MAJORS)[number];
-  form: ReturnType<typeof useForm<typeof AddUserProfileFormSchema>>;
+  form: ReturnType<typeof useForm<typeof CreateUserProfileFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
   const filteredMajors = useMemo(() => {
@@ -468,7 +470,7 @@ function SchoolsCombobox({
   form,
 }: {
   value: (typeof SCHOOLS)[number];
-  form: ReturnType<typeof useForm<typeof AddUserProfileFormSchema>>;
+  form: ReturnType<typeof useForm<typeof CreateUserProfileFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
   const filteredSchools = useMemo(() => {
