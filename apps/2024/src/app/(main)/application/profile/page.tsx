@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "~/utils";
 import { ProfileForm } from "./profile-form";
 
+export const runtime = "edge";
+
 export default async function Profile() {
   const user = await getCurrentUser();
 
