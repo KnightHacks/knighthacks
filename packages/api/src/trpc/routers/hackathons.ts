@@ -6,10 +6,10 @@ import {
   UpdateHackathonSchema,
 } from "@knighthacks/validators";
 
-import { router } from "../init";
+import { createTRPCRouter } from "../init";
 import { adminProcedure, publicProcedure } from "../procedures";
 
-export const hackathonRouter = router({
+export const hackathonRouter = createTRPCRouter({
   current: publicProcedure.query(async ({ ctx }) => {
     // Get hackathon with the closest start date
     const hackathon = await ctx.db.query.hackathons.findFirst({

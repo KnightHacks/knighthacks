@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { asc, eq, hackathons, hackers } from "@knighthacks/db";
@@ -6,26 +7,27 @@ import {
   UpdateHackerSchema,
 } from "@knighthacks/validators";
 
-import { router } from "../init";
+import { createTRPCRouter } from "../init";
 import { adminProcedure, authenticatedProcedure } from "../procedures";
 
-export const hackerRouter = router({
+export const hackerRouter = createTRPCRouter({
   register: authenticatedProcedure
     .input(CreateHackerSchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (tx) => {
-        const hackathon = await tx.query.hackathons.findFirst({
+        const currentHackathon = await tx.query.hackathons.findFirst({
           orderBy: [asc(hackathons.startDate)],
         });
 
-        if (!hackathon) {
-          tx.rollback();
-          return;
-        }
+        if (!currentHackathon)
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "No hackathon found",
+          });
 
         await tx.insert(hackers).values({
           ...input,
-          hackathonId: hackathon.id,
+          hackathonId: currentHackathon.id,
           userId: ctx.user.id,
         });
       });
