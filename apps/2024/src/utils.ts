@@ -1,7 +1,12 @@
 import { cache } from "react";
 import { auth } from "@clerk/nextjs";
 
-import { db, eq, users } from "@knighthacks/db";
+import { connect, eq, users } from "@knighthacks/db";
+
+export const db = connect(
+  process.env.DATABASE_URL!,
+  process.env.DATABASE_AUTH_TOKEN,
+);
 
 export const getCurrentUser = cache(async () => {
   const { sessionClaims } = auth();
@@ -20,3 +25,5 @@ export const getCurrentUser = cache(async () => {
 
   return user;
 });
+
+export const HACKATHON_ID = 1;
