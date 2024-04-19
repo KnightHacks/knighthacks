@@ -35,6 +35,9 @@ importers:
       '@knighthacks/consts':
         specifier: workspace:*
         version: link:../../packages/consts
+      '@knighthacks/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@knighthacks/ui':
         specifier: workspace:*
         version: link:../../packages/ui
