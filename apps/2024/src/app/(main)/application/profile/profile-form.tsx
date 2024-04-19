@@ -411,7 +411,9 @@ export function ProfileForm({ userId }: { userId: string }) {
             )}
           />
 
-          <Button type="submit" className="w-full">Create User Profile</Button>
+          <Button type="submit" className="w-full">
+            Create User Profile
+          </Button>
         </form>
       </Form>
     </div>
