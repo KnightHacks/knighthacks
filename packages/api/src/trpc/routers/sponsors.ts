@@ -6,10 +6,10 @@ import {
   UpdateSponsorSchema,
 } from "@knighthacks/validators";
 
-import { router } from "../init";
+import { createTRPCRouter } from "../init";
 import { adminProcedure } from "../procedures";
 
-export const sponsorRouter = router({
+export const sponsorRouter = createTRPCRouter({
   create: adminProcedure
     .input(CreateSponsorSchema)
     .mutation(async ({ ctx, input }) => {

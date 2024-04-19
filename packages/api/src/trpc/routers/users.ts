@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import { asc, eq, hackathons, userProfiles, users } from "@knighthacks/db";
+import { eq, userProfiles, users } from "@knighthacks/db";
 import {
   CreateUserProfileSchema,
   CreateUserSchema,
@@ -9,10 +9,10 @@ import {
   UpdateUserSchema,
 } from "@knighthacks/validators";
 
-import { router } from "../init";
+import { createTRPCRouter } from "../init";
 import { adminProcedure, authenticatedProcedure } from "../procedures";
 
-export const userRouter = router({
+export const userRouter = createTRPCRouter({
   all: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.users.findMany({
       with: { hackers: true, profile: true },
@@ -54,28 +54,20 @@ export const userRouter = router({
   current: authenticatedProcedure.query(async ({ ctx }) => {
     const user = await ctx.db.query.users.findFirst({
       where: eq(users.email, ctx.user.email),
-      with: { hackers: true, profile: true },
+      with: {
+        hackers: true,
+        profile: true,
+      },
     });
 
-    const currentHackathon = await ctx.db.query.hackathons.findFirst({
-      orderBy: [asc(hackathons.startDate)],
-    });
+    if (!user) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "User not found",
+      });
+    }
 
-    if (!user) return null;
-    if (!currentHackathon)
-      return {
-        ...user,
-        hasAppliedToCurrentHackathon: false,
-      };
-
-    const hasAppliedToCurrentHackathon = user.hackers.some(
-      (hacker) => hacker.hackathonId === currentHackathon.id,
-    );
-
-    return {
-      ...user,
-      hasAppliedToCurrentHackathon,
-    };
+    return user;
   }),
   delete: adminProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
     await ctx.db.transaction(async (db) => {

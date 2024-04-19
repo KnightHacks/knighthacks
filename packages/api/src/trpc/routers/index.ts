@@ -1,11 +1,11 @@
-import { router } from "../init";
+import { createTRPCRouter } from "../init";
 import { publicProcedure } from "../procedures";
 import { hackathonRouter } from "./hackathons";
 import { hackerRouter } from "./hackers";
 import { sponsorRouter } from "./sponsors";
 import { userRouter } from "./users";
 
-export const appRouter = router({
+export const appRouter = createTRPCRouter({
   hello: publicProcedure.query(() => {
     return "Hello from Hono!";
   }),
