@@ -1,20 +1,15 @@
 import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs";
 
+import { getCurrentUser } from "~/utils";
 import { ProfileForm } from "./profile-form";
 
 export const runtime = "edge";
 
-export default function Profile() {
-  const { userId } = auth();
+export default async function Profile() {
+  const user = await getCurrentUser();
 
-  if (!userId) {
-    redirect("/sign-in");
-  }
+  if (!user) redirect("/sign-in");
+  if (user.profile) redirect("/application/survey");
 
-  return (
-    <div className="mx-auto w-full max-w-3xl p-4">
-      <ProfileForm userId={userId} />
-    </div>
-  );
+  return <ProfileForm userId={user.id} />;
 }
