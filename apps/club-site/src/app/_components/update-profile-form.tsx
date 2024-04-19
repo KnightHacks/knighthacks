@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 
 import type { RouterOutput } from "@knighthacks/api";
-import type { AddUserProfileFormSchema } from "@knighthacks/validators";
 import {
   GRADUATION_YEARS,
   MAJORS,
@@ -448,7 +447,7 @@ function MajorsComboBox({
   form,
 }: {
   value: (typeof MAJORS)[number];
-  form: ReturnType<typeof useForm<typeof AddUserProfileFormSchema>>;
+  form: ReturnType<typeof useForm<typeof UpdateUserProfileFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
   const filteredMajors = useMemo(() => {
@@ -495,7 +494,7 @@ function SchoolsCombobox({
   form,
 }: {
   value: (typeof SCHOOLS)[number];
-  form: ReturnType<typeof useForm<typeof AddUserProfileFormSchema>>;
+  form: ReturnType<typeof useForm<typeof UpdateUserProfileFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
   const filteredSchools = useMemo(() => {
