@@ -109,7 +109,7 @@ export const CreateHackerSchema = z.object({
   whatLearn: z
     .string()
     .min(1, { message: "What do you want to learn is required" }),
-  status: z.enum(APPLICATION_STATUSES),
+  status: z.enum(APPLICATION_STATUSES).optional(),
 });
 
 export const UpdateHackerSchema = CreateHackerSchema.extend({
