@@ -40,13 +40,13 @@ import {
   SelectValue,
 } from "@knighthacks/ui/select";
 import { toast } from "@knighthacks/ui/toast";
-import { AddUserProfileFormSchema } from "@knighthacks/validators";
+import { CreateUserProfileFormSchema } from "@knighthacks/validators";
 
 import { api } from "~/trpc";
 
 export function CreateUserProfileForm({ userId }: { userId: string }) {
   const form = useForm({
-    schema: AddUserProfileFormSchema,
+    schema: CreateUserProfileFormSchema,
     defaultValues: {
       userId,
       phone: "",
@@ -419,7 +419,7 @@ function MajorsComboBox({
   form,
 }: {
   value: (typeof MAJORS)[number];
-  form: ReturnType<typeof useForm<typeof AddUserProfileFormSchema>>;
+  form: ReturnType<typeof useForm<typeof CreateUserProfileFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
   const filteredMajors = useMemo(() => {
@@ -466,7 +466,7 @@ function SchoolsCombobox({
   form,
 }: {
   value: (typeof SCHOOLS)[number];
-  form: ReturnType<typeof useForm<typeof AddUserProfileFormSchema>>;
+  form: ReturnType<typeof useForm<typeof CreateUserProfileFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
   const filteredSchools = useMemo(() => {
