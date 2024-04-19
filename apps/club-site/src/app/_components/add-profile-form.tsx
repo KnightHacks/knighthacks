@@ -466,7 +466,7 @@ function SchoolsCombobox({
   form,
 }: {
   value: (typeof SCHOOLS)[number];
-  form: ReturnType<typeof useForm<typeof CreateUserProfileFormSchemaG>>;
+  form: ReturnType<typeof useForm<typeof CreateUserProfileFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
   const filteredSchools = useMemo(() => {
