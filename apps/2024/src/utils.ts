@@ -1,14 +1,12 @@
 import { cache } from "react";
 import { auth } from "@clerk/nextjs";
 
-import { eq, users } from "@knighthacks/db";
-
-import { db } from "./db";
+import { db, eq, users } from "@knighthacks/db";
 
 export const getCurrentUser = cache(async () => {
   const { sessionClaims } = auth();
 
-  if (!sessionClaims) {
+  if (!sessionClaims?.email) {
     return null;
   }
 
