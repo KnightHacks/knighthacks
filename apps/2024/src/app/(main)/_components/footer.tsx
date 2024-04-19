@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="p-8">
+    <footer className="mt-auto p-8">
       <ul className="mb-4  flex justify-center gap-2">
         <li>
           <a
