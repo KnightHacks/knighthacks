@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 
 import {
@@ -71,12 +72,14 @@ export function ProfileForm({ userId }: { userId: string }) {
   const { getToken } = useAuth();
   const utils = trpc.useUtils();
 
+  const router = useRouter();
   const createProfile = trpc.user.createProfile.useMutation({
     onSuccess: async () => {
       await utils.user.current.invalidate();
       toast("Success!", {
         description: "Created user profile",
       });
+      router.refresh();
     },
     onError: (error) => {
       toast("Error!", {
@@ -85,10 +88,8 @@ export function ProfileForm({ userId }: { userId: string }) {
     },
   });
 
-  console.log(form.formState.errors);
-
   return (
-    <div className="mx-auto max-w-screen-sm px-8 pb-8 pt-20">
+    <div className="mx-auto w-full max-w-screen-sm px-8 pb-8 pt-20">
       <h1 className="mb-2 text-center text-2xl font-bold">
         Create Your KnightHacks Profile
       </h1>
