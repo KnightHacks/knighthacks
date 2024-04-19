@@ -11,27 +11,6 @@ import { createTRPCRouter } from "../init";
 import { adminProcedure, authenticatedProcedure } from "../procedures";
 
 export const hackerRouter = createTRPCRouter({
-  register: authenticatedProcedure
-    .input(CreateHackerSchema)
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.transaction(async (tx) => {
-        const currentHackathon = await tx.query.hackathons.findFirst({
-          orderBy: [asc(hackathons.startDate)],
-        });
-
-        if (!currentHackathon)
-          throw new TRPCError({
-            code: "NOT_FOUND",
-            message: "No hackathon found",
-          });
-
-        await tx.insert(hackers).values({
-          ...input,
-          hackathonId: currentHackathon.id,
-          userId: ctx.user.id,
-        });
-      });
-    }),
   all: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.hackers.findMany({
       with: {
@@ -79,9 +58,16 @@ export const hackerRouter = createTRPCRouter({
   delete: adminProcedure.input(z.number()).mutation(async ({ ctx, input }) => {
     await ctx.db.delete(hackers).where(eq(hackers.id, input));
   }),
-  create: adminProcedure
+  create: authenticatedProcedure
     .input(CreateHackerSchema)
     .mutation(async ({ ctx, input }) => {
+      if (input.userId !== ctx.user.id) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You can only apply to a hackathon for yourself",
+        });
+      }
+
       await ctx.db.insert(hackers).values(input);
     }),
 });
