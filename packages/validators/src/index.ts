@@ -21,7 +21,10 @@ export const UpdateUserSchema = CreateUserSchema.extend({
 
 export const CreateUserProfileSchema = z.object({
   userId: z.string(),
-  phone: z.string().min(1, { message: "Phone number is required" }),
+  phone: z
+    .string()
+    .min(1, { message: "Phone number is required" })
+    .refine((phone) => /^\d{10}$/.test(phone), "Invalid phone"),
   address1: z.string().min(1, { message: "Address is required" }),
   address2: z.string().optional().or(z.literal("")),
   country: z.string().min(1, { message: "Country is required" }),
@@ -53,7 +56,7 @@ export const CreateUserProfileSchema = z.object({
   resume: z.string().optional(),
 });
 
-export const AddUserProfileFormSchema = CreateUserProfileSchema.extend({
+export const CreateUserProfileFormSchema = CreateUserProfileSchema.extend({
   resume: z.instanceof(File).optional(),
 });
 
@@ -61,7 +64,7 @@ export const UpdateUserProfileSchema = CreateUserProfileSchema.extend({
   userId: z.string(),
 });
 
-export const UpdateUserProfileFormSchema = AddUserProfileFormSchema.extend({
+export const UpdateUserProfileFormSchema = CreateUserProfileFormSchema.extend({
   userId: z.string(),
 });
 
