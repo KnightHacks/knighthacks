@@ -1,8 +1,9 @@
 import { redirect } from "next/navigation";
-import { auth, SignUp as ClerkSignUp } from "@clerk/nextjs";
+import { SignUp as ClerkSignUp } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 
 export default function SignUp() {
-  const { userId }: { userId: string | null } = auth();
+  const { userId } = auth();
   if (userId) {
     redirect("/profile");
   }
