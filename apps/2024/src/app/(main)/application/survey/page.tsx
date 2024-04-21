@@ -3,8 +3,6 @@ import { redirect } from "next/navigation";
 import { getCurrentUser, HACKATHON_ID } from "~/utils";
 import { SurveyForm } from "./survey-form";
 
-export const runtime = "edge";
-
 export default async function Survey() {
   const user = await getCurrentUser();
 

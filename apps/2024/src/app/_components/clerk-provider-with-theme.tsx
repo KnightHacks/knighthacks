@@ -35,8 +35,8 @@ export function ClerkProviderWithTheme({
           footerActionText: "text-muted-foreground",
         },
       }}
-      afterSignInUrl={process.env.NEXT_PUBLIC_2024_AFTER_SIGN_IN_URL}
-      afterSignUpUrl={process.env.NEXT_PUBLIC_2024_AFTER_SIGN_UP_URL}
+      signUpFallbackRedirectUrl={process.env.NEXT_PUBLIC_2024_AFTER_SIGN_IN_URL}
+      signInFallbackRedirectUrl={process.env.NEXT_PUBLIC_2024_AFTER_SIGN_UP_URL}
       signUpUrl={process.env.NEXT_PUBLIC_2024_SIGN_UP_URL}
       signInUrl={process.env.NEXT_PUBLIC_2024_SIGN_IN_URL}
     >
