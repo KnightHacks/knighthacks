@@ -22,7 +22,8 @@ export default clerkMiddleware((auth, req) => {
   if (
     auth().userId &&
     !auth().sessionClaims?.email.endsWith("@knighthacks.org") &&
-    isProtectedRoute(req) && !isUnauthRoute(req)
+    isProtectedRoute(req) &&
+    !isUnauthRoute(req)
   ) {
     return NextResponse.redirect(new URL("/unauthorized", req.url));
   }
