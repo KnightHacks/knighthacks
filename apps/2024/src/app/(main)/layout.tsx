@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 
 import { Footer } from "./_components/footer";
 import { Navbar } from "./_components/navbar";
