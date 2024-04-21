@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@knighthacks/api": "workspace:*",
-    "@clerk/nextjs": "^4.29.7",
+    "@clerk/nextjs": "^5.0.1",
     "@clerk/themes": "^1.7.9",
     "@knighthacks/consts": "workspace:*",
     "@knighthacks/ui": "workspace:*",
