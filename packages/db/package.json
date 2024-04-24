@@ -18,6 +18,9 @@
   "license": "MIT",
   "dependencies": {
     "@knighthacks/consts": "workspace:*",
+    "@libsql/client": "^0.6.0",
+    "drizzle-kit": "^0.20.17",
+    "drizzle-orm": "^0.30.9",
     "turso": "^0.1.0",
     "zod": "^3.22.4"
   },
