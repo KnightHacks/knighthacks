@@ -25,6 +25,8 @@ const app = new Hono<HonoConfig>()
         // Admin tool production server
         "https://knighthacks-admin.pages.dev",
         "https://admin.knighthacks.org",
+        "https://2024.knighthacks.org",
+        "https://knighthacks.org",
       ],
     }),
   )
