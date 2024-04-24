@@ -100,7 +100,6 @@ export function ProfileForm() {
             if (data.resume && token) {
               try {
                 resumeKey = await uploadResume(data.resume, token);
-                console.log(resumeKey);
               } catch {
                 toast("Error!", {
                   description: "Failed to upload resume",
@@ -281,7 +280,7 @@ export function ProfileForm() {
                   <Input
                     placeholder="Address Line 2"
                     {...field}
-                    value={field.value ?? ""}
+                    value={field.value}
                   />
                 </FormControl>
                 <FormMessage />
@@ -347,11 +346,7 @@ export function ProfileForm() {
               <FormItem>
                 <FormLabel>GitHub</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="GitHub"
-                    {...field}
-                    value={field.value ?? ""}
-                  />
+                  <Input placeholder="GitHub" {...field} value={field.value} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -367,7 +362,7 @@ export function ProfileForm() {
                   <Input
                     placeholder="Personal Website"
                     {...field}
-                    value={field.value ?? ""}
+                    value={field.value}
                   />
                 </FormControl>
                 <FormMessage />
@@ -384,7 +379,7 @@ export function ProfileForm() {
                   <Input
                     placeholder="Personal Website"
                     {...field}
-                    value={field.value ?? ""}
+                    value={field.value}
                   />
                 </FormControl>
                 <FormMessage />
