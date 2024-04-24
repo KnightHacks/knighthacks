@@ -1,10 +1,11 @@
 import { redirect } from "next/navigation";
 
-import { getCurrentUser, HACKATHON_ID } from "~/utils";
+import { trpc } from "~/trpc/server";
+import { HACKATHON_ID } from "~/utils";
 import { SurveyForm } from "./survey-form";
 
 export default async function Survey() {
-  const user = await getCurrentUser();
+  const user = await trpc.user.current.query();
 
   if (!user) redirect("/sign-in");
   if (!user.profile) redirect("/application/profile");

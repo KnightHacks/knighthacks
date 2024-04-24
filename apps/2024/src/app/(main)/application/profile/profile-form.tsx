@@ -45,7 +45,7 @@ import {
 import { toast } from "@knighthacks/ui/toast";
 import { CreateUserProfileFormSchema } from "@knighthacks/validators";
 
-import { trpc } from "~/trpc";
+import { trpc } from "~/trpc/client";
 
 export function ProfileForm({ userId }: { userId: string }) {
   const form = useForm({

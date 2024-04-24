@@ -1,4 +1,3 @@
-import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { asc, eq, hackathons, hackers } from "@knighthacks/db";
@@ -58,16 +57,9 @@ export const hackerRouter = createTRPCRouter({
   delete: adminProcedure.input(z.number()).mutation(async ({ ctx, input }) => {
     await ctx.db.delete(hackers).where(eq(hackers.id, input));
   }),
-  create: authenticatedProcedure
+  create: adminProcedure
     .input(CreateHackerSchema)
     .mutation(async ({ ctx, input }) => {
-      if (input.userId !== ctx.user.id) {
-        throw new TRPCError({
-          code: "FORBIDDEN",
-          message: "You can only apply to a hackathon for yourself",
-        });
-      }
-
       await ctx.db.insert(hackers).values(input);
     }),
 });
