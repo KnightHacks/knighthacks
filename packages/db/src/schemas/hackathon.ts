@@ -1,10 +1,10 @@
 import { relations } from "drizzle-orm";
 import {
-  uniqueIndex,
   integer,
   sqliteTable,
   text,
   unique,
+  uniqueIndex,
 } from "drizzle-orm/sqlite-core";
 
 import {
@@ -120,13 +120,20 @@ export const hackersRelations = relations(hackers, ({ one }) => {
   };
 });
 
-export const hackathons = sqliteTable("hackathons", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  name: text("name").notNull(),
-  startDate: text("start_date").notNull(),
-  endDate: text("end_date").notNull(),
-  theme: text("theme"),
-});
+export const hackathons = sqliteTable(
+  "hackathons",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    name: text("name").notNull(),
+    startDate: text("start_date").notNull(),
+    endDate: text("end_date").notNull(),
+    theme: text("theme"),
+  },
+  (t) => ({
+    startDateIndex: uniqueIndex("start_date_index").on(t.startDate),
+    endDateIndex: uniqueIndex("end_date_index").on(t.endDate),
+  }),
+);
 
 export const hackathonsRelations = relations(hackathons, ({ many }) => {
   return {
