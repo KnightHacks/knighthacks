@@ -26,12 +26,10 @@ export function SurveyForm() {
       whatLearn: "",
     },
   });
-  const utils = trpc.useUtils();
 
   const router = useRouter();
   const registerHacker = trpc.hacker.apply.useMutation({
     onSuccess: async () => {
-      await utils.user.current.invalidate();
       toast("Success!", {
         description: "Created user profile",
       });

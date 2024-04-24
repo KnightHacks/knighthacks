@@ -70,12 +70,10 @@ export function ProfileForm({ userId }: { userId: string }) {
     },
   });
   const { getToken } = useAuth();
-  const utils = trpc.useUtils();
 
   const router = useRouter();
   const createProfile = trpc.user.adminCreateProfile.useMutation({
     onSuccess: async () => {
-      await utils.user.profile.invalidate();
       toast("Success!", {
         description: "Created user profile",
       });
