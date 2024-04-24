@@ -26,7 +26,9 @@ export const sponsorRouter = createTRPCRouter({
         .set(sponsor)
         .where(eq(sponsors.id, sponsorId));
     }),
-  adminDelete: adminProcedure.input(z.number()).mutation(async ({ ctx, input }) => {
-    await ctx.db.delete(sponsors).where(eq(sponsors.id, input));
-  }),
+  adminDelete: adminProcedure
+    .input(z.number())
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.delete(sponsors).where(eq(sponsors.id, input));
+    }),
 });

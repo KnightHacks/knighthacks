@@ -37,7 +37,11 @@ export default function Hackathons() {
 }
 
 export function HackathonsTable() {
-  const { data: hackathons, isPending, error } = api.hackathon.adminAll.useQuery();
+  const {
+    data: hackathons,
+    isPending,
+    error,
+  } = api.hackathon.adminAll.useQuery();
 
   if (isPending) return <div>Loading...</div>;
 

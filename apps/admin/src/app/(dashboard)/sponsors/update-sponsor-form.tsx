@@ -134,7 +134,11 @@ function HackathonSelect({
 }: {
   form: ReturnType<typeof useForm<typeof UpdateSponsorSchema>>;
 }) {
-  const { data: hackathons, isPending, isError } = api.hackathon.adminAll.useQuery();
+  const {
+    data: hackathons,
+    isPending,
+    isError,
+  } = api.hackathon.adminAll.useQuery();
 
   if (isPending) {
     return <div>Loading...</div>;
