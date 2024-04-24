@@ -16,7 +16,7 @@ import {
 } from "../procedures";
 
 export const hackerRouter = createTRPCRouter({
-  apply: profileProcedure
+  register: profileProcedure
     .input(ApplyToHackathonSchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (db) => {
