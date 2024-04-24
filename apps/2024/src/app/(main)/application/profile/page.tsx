@@ -7,7 +7,7 @@ import { ProfileForm } from "./profile-form";
 export const runtime = "edge";
 
 export default async function Profile() {
-  const profile = await trpc.user.profile.query();
+  const profile = await trpc.user.getProfile.query();
   if (profile) redirect("/application/survey");
 
   const user = await currentUser();

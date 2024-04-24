@@ -14,13 +14,13 @@ import {
 } from "@knighthacks/ui/form";
 import { Textarea } from "@knighthacks/ui/textarea";
 import { toast } from "@knighthacks/ui/toast";
-import { ApplyToHackathonSchema } from "@knighthacks/validators";
+import { HackerApplicationSchema } from "@knighthacks/validators";
 
 import { trpc } from "~/trpc/client";
 
 export function SurveyForm() {
   const form = useForm({
-    schema: ApplyToHackathonSchema,
+    schema: HackerApplicationSchema,
     defaultValues: {
       whyAttend: "",
       whatLearn: "",
@@ -28,7 +28,7 @@ export function SurveyForm() {
   });
 
   const router = useRouter();
-  const registerHacker = trpc.hacker.register.useMutation({
+  const registerHacker = trpc.hacker.application.useMutation({
     onSuccess: async () => {
       toast("Success!", {
         description: "Created user profile",
