@@ -2,7 +2,7 @@
 
 import { ThemeProvider } from "@knighthacks/ui/theme";
 
-import { TRPCProvider } from "~/trpc";
+import { TRPCProvider } from "~/trpc/client";
 import { ClerkProviderWithTheme } from "./clerk-provider-with-theme";
 
 export function Providers({ children }: { children: React.ReactNode }) {

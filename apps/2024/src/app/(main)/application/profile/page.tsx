@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 
-import { getCurrentUser } from "~/utils";
+import { trpc } from "~/trpc/server";
 import { ProfileForm } from "./profile-form";
 
 export default async function Profile() {
-  const user = await getCurrentUser();
+  const user = await trpc.user.current.query();
 
   if (!user) redirect("/sign-in");
   if (user.profile) redirect("/application/survey");
