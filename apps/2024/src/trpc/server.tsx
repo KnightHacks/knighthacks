@@ -10,9 +10,9 @@ import type { AppRouter } from "@knighthacks/api";
 const getToken = cache(() => auth().getToken());
 
 export const trpc = createTRPCClient<AppRouter>({
-  transformer: superjson,
   links: [
     unstable_httpBatchStreamLink({
+      transformer: superjson,
       url: `${process.env.NEXT_PUBLIC_API_URL}/trpc`,
       async headers() {
         const token = await getToken();
