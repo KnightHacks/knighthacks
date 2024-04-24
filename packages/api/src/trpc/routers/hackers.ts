@@ -11,7 +11,7 @@ import {
 import { createTRPCRouter } from "../init";
 import {
   adminProcedure,
-  applicationProcedure,
+  authenticatedProcedure,
   profileProcedure,
 } from "../procedures";
 
@@ -37,7 +37,7 @@ export const hackerRouter = createTRPCRouter({
         });
       });
     }),
-  application: applicationProcedure.query(async ({ ctx }) => {
+  application: authenticatedProcedure.query(async ({ ctx }) => {
     return ctx.db.query.hackers.findFirst({
       where: eq(hackers.userId, ctx.user.id),
       with: {

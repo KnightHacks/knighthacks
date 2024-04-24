@@ -10,10 +10,10 @@ import {
 } from "@knighthacks/validators";
 
 import { createTRPCRouter } from "../init";
-import { adminProcedure, profileProcedure } from "../procedures";
+import { adminProcedure, authenticatedProcedure } from "../procedures";
 
 export const userRouter = createTRPCRouter({
-  profile: profileProcedure.query(async ({ ctx }) => {
+  profile: authenticatedProcedure.query(async ({ ctx }) => {
     return ctx.db.query.userProfiles.findFirst({
       where: eq(userProfiles.userId, ctx.user.id),
     });
