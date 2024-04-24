@@ -68,6 +68,14 @@ export const UpdateUserProfileSchema = CreateUserProfileSchema.partial().extend(
   },
 );
 
+export const ProfileApplicationFormSchema = CreateUserProfileFormSchema.omit({
+  userId: true,
+});
+
+export const ProfileApplicationSchema = CreateUserProfileSchema.omit({
+  userId: true,
+});
+
 export const UpdateUserProfileFormSchema =
   CreateUserProfileFormSchema.partial().extend({
     userId: z.string(),
@@ -122,7 +130,7 @@ export const UpdateHackerSchema = CreateHackerSchema.partial().extend({
   hackerId: z.number(),
 });
 
-export const ApplyToHackathonSchema = CreateHackerSchema.omit({
+export const HackerApplicationSchema = CreateHackerSchema.omit({
   status: true,
   hackathonId: true,
   userId: true,

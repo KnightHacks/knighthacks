@@ -3,8 +3,8 @@ import { z } from "zod";
 
 import { asc, eq, hackathons, hackers } from "@knighthacks/db";
 import {
-  ApplyToHackathonSchema,
   CreateHackerSchema,
+  HackerApplicationSchema,
   UpdateHackerSchema,
 } from "@knighthacks/validators";
 
@@ -16,8 +16,8 @@ import {
 } from "../procedures";
 
 export const hackerRouter = createTRPCRouter({
-  register: profileProcedure
-    .input(ApplyToHackathonSchema)
+  application: profileProcedure
+    .input(HackerApplicationSchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (db) => {
         const currentHackathon = await db.query.hackathons.findFirst({
@@ -37,7 +37,7 @@ export const hackerRouter = createTRPCRouter({
         });
       });
     }),
-  application: authenticatedProcedure.query(async ({ ctx }) => {
+  getApplication: authenticatedProcedure.query(async ({ ctx }) => {
     return ctx.db.query.hackers.findFirst({
       where: eq(hackers.userId, ctx.user.id),
       with: {

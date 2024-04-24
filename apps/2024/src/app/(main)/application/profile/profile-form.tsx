@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 
+import type { CreateUserProfileFormSchema } from "@knighthacks/validators";
 import {
   GRADUATION_YEARS,
   MAJORS,
@@ -43,13 +44,13 @@ import {
   SelectValue,
 } from "@knighthacks/ui/select";
 import { toast } from "@knighthacks/ui/toast";
-import { CreateUserProfileFormSchema } from "@knighthacks/validators";
+import { ProfileApplicationFormSchema } from "@knighthacks/validators";
 
 import { trpc } from "~/trpc/client";
 
-export function ProfileForm(  ) {
+export function ProfileForm() {
   const form = useForm({
-    schema: CreateUserProfileFormSchema,
+    schema: ProfileApplicationFormSchema,
     defaultValues: {
       phone: "",
       age: 18,
@@ -71,7 +72,7 @@ export function ProfileForm(  ) {
   const { getToken } = useAuth();
 
   const router = useRouter();
-  const createProfile = trpc.user.adminCreateProfile.useMutation({
+  const createProfile = trpc.user.profileApplication.useMutation({
     onSuccess: async () => {
       toast("Success!", {
         description: "Created user profile",
@@ -423,7 +424,7 @@ function MajorsComboBox({
   form,
 }: {
   value: (typeof MAJORS)[number];
-  form: ReturnType<typeof useForm<typeof CreateUserProfileFormSchema>>;
+  form: ReturnType<typeof useForm<typeof ProfileApplicationFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
   const filteredMajors = useMemo(() => {
@@ -470,7 +471,7 @@ function SchoolsCombobox({
   form,
 }: {
   value: (typeof SCHOOLS)[number];
-  form: ReturnType<typeof useForm<typeof CreateUserProfileFormSchema>>;
+  form: ReturnType<typeof useForm<typeof ProfileApplicationFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
   const filteredSchools = useMemo(() => {

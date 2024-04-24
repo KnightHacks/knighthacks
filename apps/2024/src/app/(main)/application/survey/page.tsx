@@ -6,7 +6,7 @@ import { SurveyForm } from "./survey-form";
 export const runtime = "edge";
 
 export default async function Survey() {
-  const application = await trpc.hacker.application.query();
+  const application = await trpc.hacker.getApplication.query();
   if (application) redirect("/dashboard");
   return <SurveyForm />;
 }

@@ -5,6 +5,7 @@ import { eq, userProfiles, users } from "@knighthacks/db";
 import {
   CreateUserProfileSchema,
   CreateUserSchema,
+  ProfileApplicationSchema,
   UpdateUserProfileSchema,
   UpdateUserSchema,
 } from "@knighthacks/validators";
@@ -13,7 +14,15 @@ import { createTRPCRouter } from "../init";
 import { adminProcedure, authenticatedProcedure } from "../procedures";
 
 export const userRouter = createTRPCRouter({
-  profile: authenticatedProcedure.query(async ({ ctx }) => {
+  profileApplication: authenticatedProcedure
+    .input(ProfileApplicationSchema)
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.insert(userProfiles).values({
+        ...input,
+        userId: ctx.user.id,
+      });
+    }),
+  getProfile: authenticatedProcedure.query(async ({ ctx }) => {
     return ctx.db.query.userProfiles.findFirst({
       where: eq(userProfiles.userId, ctx.user.id),
     });
