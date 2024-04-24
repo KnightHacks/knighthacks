@@ -36,9 +36,9 @@ export default function Sponsors() {
 }
 
 export function SponsorTable() {
-  const { data: sponsors, isLoading, error } = api.sponsor.all.useQuery();
+  const { data: sponsors, isPending, error } = api.sponsor.all.useQuery();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isPending) return <div>Loading...</div>;
 
   if (error) return <div>Error: {error.message}</div>;
 

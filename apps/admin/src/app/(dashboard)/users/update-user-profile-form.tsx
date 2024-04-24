@@ -191,7 +191,7 @@ export function UpdateProfileForm({
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="p-0">
-                    <MajorsComboBox value={field.value} form={form} />
+                    <MajorsComboBox value={field.value!} form={form} />
                   </PopoverContent>
                 </Popover>
                 <FormMessage />
@@ -223,7 +223,7 @@ export function UpdateProfileForm({
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="p-0">
-                    <SchoolsCombobox value={field.value} form={form} />
+                    <SchoolsCombobox value={field.value!} form={form} />
                   </PopoverContent>
                 </Popover>
                 <FormMessage />
@@ -280,7 +280,7 @@ export function UpdateProfileForm({
                   <Input
                     placeholder="Address Line 2"
                     {...field}
-                    value={field.value ?? ""}
+                    value={field.value}
                   />
                 </FormControl>
                 <FormMessage />
@@ -346,11 +346,7 @@ export function UpdateProfileForm({
               <FormItem>
                 <FormLabel>GitHub</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="GitHub"
-                    {...field}
-                    value={field.value ?? ""}
-                  />
+                  <Input placeholder="GitHub" {...field} value={field.value} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -366,7 +362,7 @@ export function UpdateProfileForm({
                   <Input
                     placeholder="Personal Website"
                     {...field}
-                    value={field.value ?? ""}
+                    value={field.value}
                   />
                 </FormControl>
                 <FormMessage />
@@ -383,7 +379,7 @@ export function UpdateProfileForm({
                   <Input
                     placeholder="Personal Website"
                     {...field}
-                    value={field.value ?? ""}
+                    value={field.value}
                   />
                 </FormControl>
                 <FormMessage />
@@ -446,7 +442,7 @@ function MajorsComboBox({
   value,
   form,
 }: {
-  value: (typeof MAJORS)[number];
+  value: (typeof MAJORS)[number] | null;
   form: ReturnType<typeof useForm<typeof UpdateUserProfileFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
@@ -493,7 +489,7 @@ function SchoolsCombobox({
   value,
   form,
 }: {
-  value: (typeof SCHOOLS)[number];
+  value: (typeof SCHOOLS)[number] | null;
   form: ReturnType<typeof useForm<typeof UpdateUserProfileFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
@@ -539,7 +535,7 @@ function SchoolsCombobox({
 export async function uploadResume(resume: File, token: string) {
   const formData = new FormData();
   formData.append("resume", resume);
-  console.log(process.env.NEXT_PUBLIC_API_URL);
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/resume/upload/${resume.name}`,
     {

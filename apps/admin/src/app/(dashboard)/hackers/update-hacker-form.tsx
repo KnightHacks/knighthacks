@@ -1,4 +1,5 @@
 import type { RouterOutput } from "@knighthacks/api";
+import { APPLICATION_STATUSES } from "@knighthacks/consts";
 import { Button } from "@knighthacks/ui/button";
 import {
   Form,
@@ -104,9 +105,9 @@ function HackathonSelect({
 }: {
   form: ReturnType<typeof useForm<typeof CreateHackerSchema>>;
 }) {
-  const { data: hackathons, isLoading, isError } = api.hackathon.all.useQuery();
+  const { data: hackathons, isPending, isError } = api.hackathon.all.useQuery();
 
-  if (isLoading) {
+  if (isPending) {
     return <div>Loading...</div>;
   }
 
@@ -151,9 +152,9 @@ function UserSelect({
 }: {
   form: ReturnType<typeof useForm<typeof CreateHackerSchema>>;
 }) {
-  const { data: users, isLoading, isError } = api.user.all.useQuery();
+  const { data: users, isPending, isError } = api.user.all.useQuery();
 
-  if (isLoading) {
+  if (isPending) {
     return <div>Loading...</div>;
   }
 
@@ -208,13 +209,11 @@ function StatusSelect({
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {["applied", "accepted", "waitlisted", "checkedin"].map(
-                (status) => (
-                  <SelectItem key={status} value={status}>
-                    {status}
-                  </SelectItem>
-                ),
-              )}
+              {APPLICATION_STATUSES.map((status) => (
+                <SelectItem key={status} value={status}>
+                  {status}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
           <FormMessage />

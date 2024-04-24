@@ -36,9 +36,9 @@ export default function Users() {
 }
 
 export function UsersTable() {
-  const { data: users, isLoading, error } = api.user.all.useQuery();
+  const { data: users, isPending, error } = api.user.all.useQuery();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isPending) return <div>Loading...</div>;
 
   if (error) return <div>Error: {error.message}</div>;
 

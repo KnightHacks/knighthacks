@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 
-import { eq, users } from "@knighthacks/db";
+import { and, asc, eq, hackathons, hackers, users } from "@knighthacks/db";
 
 import { middleware } from "./init";
 
@@ -14,17 +14,16 @@ export const isAuthenticated = middleware((opts) => {
   return opts.next({
     ctx: {
       ...opts.ctx,
-      user,
+      user: {
+        ...user,
+        isAdmin: user.email.endsWith("@knighthacks.org"),
+      },
     },
   });
 });
 
 export const isAdmin = isAuthenticated.unstable_pipe((opts) => {
-  const user = opts.ctx.user;
-  const email = user.email;
-
-  // If email doesn't end with @knighthacks.org, then user is not an admin
-  if (!email.endsWith("@knighthacks.org")) {
+  if (!opts.ctx.user.isAdmin) {
     throw new TRPCError({ code: "UNAUTHORIZED", message: "Not an admin" });
   }
 
@@ -42,9 +41,49 @@ export const hasProfile = isAuthenticated.unstable_pipe(async (opts) => {
   if (!user?.profile) {
     throw new TRPCError({
       code: "UNAUTHORIZED",
-      message: "No KnightHack profile",
+      message: "No KnightHacks profile",
     });
   }
 
-  return opts.next(opts);
+  return opts.next({
+    ctx: {
+      ...opts.ctx,
+      user: {
+        ...opts.ctx.user,
+        profile: user?.profile,
+      },
+    },
+  });
+});
+
+export const hasApplied = hasProfile.unstable_pipe(async (opts) => {
+  const user = opts.ctx.user;
+  const hackathon = await opts.ctx.db.query.hackathons.findFirst({
+    orderBy: asc(hackathons.startDate),
+  });
+
+  if (!hackathon) {
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: "No hackathons found",
+    });
+  }
+
+  const hacker = await opts.ctx.db.query.hackers.findFirst({
+    where: and(
+      eq(hackers.userId, user.id),
+      eq(hackers.hackathonId, hackathon.id),
+    ),
+  });
+
+  return opts.next({
+    ctx: {
+      ...opts.ctx,
+      user: {
+        ...user,
+        hacker,
+      },
+      currentHackathon: hackathon,
+    },
+  });
 });
