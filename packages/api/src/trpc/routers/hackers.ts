@@ -9,6 +9,7 @@ import {
 
 import { createTRPCRouter } from "../init";
 import { adminProcedure, applicationProcedure } from "../procedures";
+import { TRPCError } from "@trpc/server";
 
 export const hackerRouter = createTRPCRouter({
   apply: applicationProcedure
