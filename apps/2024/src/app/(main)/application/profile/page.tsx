@@ -13,5 +13,5 @@ export default async function Profile() {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
 
-  return <ProfileForm userId={user.id} />;
+  return <ProfileForm />;
 }
