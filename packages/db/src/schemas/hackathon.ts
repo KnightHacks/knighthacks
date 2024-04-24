@@ -1,5 +1,11 @@
 import { relations } from "drizzle-orm";
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import {
+  uniqueIndex,
+  integer,
+  sqliteTable,
+  text,
+  unique,
+} from "drizzle-orm/sqlite-core";
 
 import {
   APPLICATION_STATUSES,
@@ -10,12 +16,18 @@ import {
   SPONSOR_TIERS,
 } from "@knighthacks/consts";
 
-export const users = sqliteTable("users", {
-  id: text("id").primaryKey(), // This will be generated from Clerk
-  email: text("email").notNull().unique(),
-  firstName: text("first_name").notNull(),
-  lastName: text("last_name").notNull(),
-});
+export const users = sqliteTable(
+  "users",
+  {
+    id: text("id").primaryKey(), // This will be generated from Clerk
+    email: text("email").notNull().unique(),
+    firstName: text("first_name").notNull(),
+    lastName: text("last_name").notNull(),
+  },
+  (t) => ({
+    emailIndex: uniqueIndex("email_index").on(t.email),
+  }),
+);
 
 // A user can make multiple hacker applications and have one metadata entry
 export const usersRelations = relations(users, ({ many, one }) => {
@@ -65,28 +77,34 @@ export const userProfileRelations = relations(userProfiles, ({ one }) => {
   };
 });
 
-export const hackers = sqliteTable("hackers", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  userId: text("user_id")
-    .references(() => users.id, {
-      onDelete: "cascade", // If the user is deleted, delete the hacker
-      onUpdate: "cascade", // If the user is updated, update the hacker
+export const hackers = sqliteTable(
+  "hackers",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    userId: text("user_id")
+      .references(() => users.id, {
+        onDelete: "cascade", // If the user is deleted, delete the hacker
+        onUpdate: "cascade", // If the user is updated, update the hacker
+      })
+      .notNull(),
+    hackathonId: integer("hackathon_id")
+      .references(() => hackathons.id, {
+        onDelete: "cascade", // If the hackathon is deleted, delete the hacker
+        onUpdate: "cascade", // If the hackathon is updated, update the hacker
+      })
+      .notNull(),
+    status: text("status", {
+      enum: APPLICATION_STATUSES,
     })
-    .notNull(),
-  hackathonId: integer("hackathon_id")
-    .references(() => hackathons.id, {
-      onDelete: "cascade", // If the hackathon is deleted, delete the hacker
-      onUpdate: "cascade", // If the hackathon is updated, update the hacker
-    })
-    .notNull(),
-  status: text("status", {
-    enum: APPLICATION_STATUSES,
-  })
-    .default("applied")
-    .notNull(),
-  whyAttend: text("why_attend").notNull(),
-  whatLearn: text("what_learn").notNull(),
-});
+      .default("applied")
+      .notNull(),
+    whyAttend: text("why_attend").notNull(),
+    whatLearn: text("what_learn").notNull(),
+  },
+  (t) => ({
+    unq: unique().on(t.userId, t.hackathonId),
+  }),
+);
 
 // Hackers can only have one user
 export const hackersRelations = relations(hackers, ({ one }) => {
