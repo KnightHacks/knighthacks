@@ -24,18 +24,18 @@ export const hackathonRouter = createTRPCRouter({
 
     return hackathon;
   }),
-  create: adminProcedure
+  adminCreate: adminProcedure
     .input(CreateHackathonSchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.insert(hackathons).values(input);
     }),
-  all: adminProcedure.query(async ({ ctx }) => {
+  adminAll: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.hackathons.findMany();
   }),
-  delete: adminProcedure.input(z.number()).mutation(async ({ ctx, input }) => {
+  adminDelete: adminProcedure.input(z.number()).mutation(async ({ ctx, input }) => {
     await ctx.db.delete(hackathons).where(eq(hackathons.id, input));
   }),
-  update: adminProcedure
+  adminUpdate: adminProcedure
     .input(UpdateHackathonSchema)
     .mutation(async ({ ctx, input: { hackathonId, ...hackathon } }) => {
       await ctx.db

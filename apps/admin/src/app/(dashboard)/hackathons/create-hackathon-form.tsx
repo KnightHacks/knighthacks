@@ -25,9 +25,9 @@ import { api } from "~/trpc";
 
 export function CreateHackathonForm() {
   const utils = api.useUtils();
-  const createHackathon = api.hackathon.create.useMutation({
+  const createHackathon = api.hackathon.adminCreate.useMutation({
     onSuccess: async () => {
-      await utils.hackathon.all.invalidate();
+      await utils.hackathon.adminAll.invalidate();
       toast("Success!", {
         description: "Created hackathon",
       });

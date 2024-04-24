@@ -10,59 +10,41 @@ import {
 } from "@knighthacks/validators";
 
 import { createTRPCRouter } from "../init";
-import { adminProcedure, authenticatedProcedure } from "../procedures";
+import { adminProcedure, profileProcedure } from "../procedures";
 
 export const userRouter = createTRPCRouter({
-  all: adminProcedure.query(async ({ ctx }) => {
+  profile: profileProcedure.query(async ({ ctx }) => {
+    return ctx.db.query.userProfiles.findFirst({
+      where: eq(userProfiles.userId, ctx.user.id),
+    });
+  }),
+  adminAll: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.users.findMany({
       with: { hackers: true, profile: true },
     });
   }),
-  createProfile: authenticatedProcedure
+  adminCreateProfile: adminProcedure
     .input(CreateUserProfileSchema)
     .mutation(({ ctx, input }) => {
-      if (ctx.user.id !== input.userId && !ctx.user.isAdmin) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Not authorized to add a profile for another user",
-        });
-      }
-
       return ctx.db.insert(userProfiles).values(input);
     }),
-  updateProfile: authenticatedProcedure
+  adminUpdateProfile: adminProcedure
     .input(UpdateUserProfileSchema)
     .mutation(({ ctx, input: { userId, ...userProfile } }) => {
-      if (ctx.user.id !== userId && !ctx.user.isAdmin) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Not authorized to update the profile of another user",
-        });
-      }
-
       return ctx.db
         .update(userProfiles)
         .set(userProfile)
         .where(eq(userProfiles.userId, userId));
     }),
-  current: authenticatedProcedure.query(async ({ ctx }) => {
-    const user = await ctx.db.query.users.findFirst({
-      where: eq(users.email, ctx.user.email),
-      with: {
-        hackers: true,
-        profile: true,
-      },
-    });
-
-    return user;
-  }),
-  delete: adminProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
-    await ctx.db.transaction(async (db) => {
-      await ctx.clerk.users.deleteUser(input);
-      await db.delete(users).where(eq(users.id, input));
-    });
-  }),
-  create: adminProcedure
+  adminDelete: adminProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.transaction(async (db) => {
+        await ctx.clerk.users.deleteUser(input);
+        await db.delete(users).where(eq(users.id, input));
+      });
+    }),
+  adminCreate: adminProcedure
     .input(CreateUserSchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (db) => {
@@ -87,7 +69,7 @@ export const userRouter = createTRPCRouter({
         await db.insert(users).values({ ...input, id: user.id });
       });
     }),
-  update: adminProcedure
+  adminUpdate: adminProcedure
     .input(UpdateUserSchema)
     .mutation(async ({ ctx, input: { userId, ...user } }) => {
       await ctx.db.transaction(async (db) => {

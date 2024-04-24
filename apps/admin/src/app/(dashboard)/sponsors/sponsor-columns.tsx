@@ -19,7 +19,7 @@ import { api } from "~/trpc";
 import { UpdateSponsorForm } from "./update-sponsor-form";
 
 export const sponsorColumns: ColumnDef<
-  RouterOutput["sponsor"]["all"][number]
+  RouterOutput["sponsor"]["adminAll"][number]
 >[] = [
   {
     accessorKey: "id",
@@ -124,7 +124,7 @@ export const sponsorColumns: ColumnDef<
 function Actions({
   row,
 }: {
-  row: Row<RouterOutput["sponsor"]["all"][number]>;
+  row: Row<RouterOutput["sponsor"]["adminAll"][number]>;
 }) {
   const sponsor = row.original;
   const utils = api.useUtils();
@@ -132,9 +132,9 @@ function Actions({
   const [updateSponsorFormSheetOpen, setUpdateSponsorFormSheetOpen] =
     useState(false);
 
-  const { mutate } = api.sponsor.delete.useMutation({
+  const { mutate } = api.sponsor.adminDelete.useMutation({
     onSuccess: async () => {
-      await utils.sponsor.all.invalidate();
+      await utils.sponsor.adminAll.invalidate();
       toast("Success!", {
         description: "User deleted",
       });

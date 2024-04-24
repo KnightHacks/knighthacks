@@ -23,9 +23,9 @@ import { api } from "~/trpc";
 
 export function CreateHackerForm() {
   const utils = api.useUtils();
-  const createHacker = api.hacker.create.useMutation({
+  const createHacker = api.hacker.adminCreate.useMutation({
     onSuccess: async () => {
-      await utils.hacker.all.invalidate();
+      await utils.hacker.adminAll.invalidate();
       toast("Success!", {
         description: "User added",
       });
@@ -96,7 +96,11 @@ function HackathonSelect({
 }: {
   form: ReturnType<typeof useForm<typeof CreateHackerSchema>>;
 }) {
-  const { data: hackathons, isPending, isError } = api.hackathon.all.useQuery();
+  const {
+    data: hackathons,
+    isPending,
+    isError,
+  } = api.hackathon.adminAll.useQuery();
 
   if (isPending) {
     return <div>Loading...</div>;
@@ -143,7 +147,7 @@ function UserSelect({
 }: {
   form: ReturnType<typeof useForm<typeof CreateHackerSchema>>;
 }) {
-  const { data: users, isPending, isError } = api.user.all.useQuery();
+  const { data: users, isPending, isError } = api.user.adminAll.useQuery();
 
   if (isPending) {
     return <div>Loading...</div>;

@@ -48,7 +48,7 @@ import { api } from "~/trpc";
 export function UpdateProfileForm({
   userProfile,
 }: {
-  userProfile: NonNullable<RouterOutput["user"]["all"][number]["profile"]>;
+  userProfile: NonNullable<RouterOutput["user"]["adminAll"][number]["profile"]>;
 }) {
   const form = useForm({
     schema: UpdateUserProfileFormSchema,
@@ -74,11 +74,9 @@ export function UpdateProfileForm({
   const { getToken } = useAuth();
   const utils = api.useUtils();
 
-  const updateProfile = api.user.updateProfile.useMutation({
+  const updateProfile = api.user.adminUpdateProfile.useMutation({
     onSuccess: async () => {
-      console.log(process.env.NEXT_PUBLIC_API_URL);
-      await utils.user.current.invalidate();
-      await utils.user.all.invalidate();
+      await utils.user.adminAll.invalidate();
       toast("Success!", {
         description: "Updated user profile",
       });

@@ -17,101 +17,105 @@ import { toast } from "@knighthacks/ui/toast";
 import { api } from "~/trpc";
 import { UpdateHackerForm } from "./update-hacker-form";
 
-export const hackerColumns: ColumnDef<RouterOutput["hacker"]["all"][number]>[] =
-  [
-    {
-      accessorKey: "id",
-      header: "ID",
+export const hackerColumns: ColumnDef<
+  RouterOutput["hacker"]["adminAll"][number]
+>[] = [
+  {
+    accessorKey: "id",
+    header: "ID",
+  },
+  {
+    accessorKey: "user",
+    accessorFn: (hacker) => `${hacker.user.firstName} ${hacker.user.lastName}`,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Hacker
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
     },
-    {
-      accessorKey: "user",
-      accessorFn: (hacker) =>
-        `${hacker.user.firstName} ${hacker.user.lastName}`,
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Hacker
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
+  },
+  {
+    accessorKey: "hackathon",
+    accessorFn: (hacker) => hacker.hackathon?.name,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Hackathon
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
     },
-    {
-      accessorKey: "hackathon",
-      accessorFn: (hacker) => hacker.hackathon?.name,
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Hackathon
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
+  },
+  {
+    accessorKey: "status",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Status
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
     },
-    {
-      accessorKey: "status",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Status
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
+  },
+  {
+    accessorKey: "whyAttend",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Why are they attending?
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
     },
-    {
-      accessorKey: "whyAttend",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Why are they attending?
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
+  },
+  {
+    accessorKey: "whatLearn",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          What do they want to learn?
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
     },
-    {
-      accessorKey: "whatLearn",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            What do they want to learn?
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-    },
-    {
-      id: "actions",
-      cell: Actions,
-    },
-  ];
+  },
+  {
+    id: "actions",
+    cell: Actions,
+  },
+];
 
-function Actions({ row }: { row: Row<RouterOutput["hacker"]["all"][number]> }) {
+function Actions({
+  row,
+}: {
+  row: Row<RouterOutput["hacker"]["adminAll"][number]>;
+}) {
   const hacker = row.original;
 
   const [updateHackerFormSheetOpen, setUpdateHackerFormSheetOpen] =
     useState(false);
 
   const utils = api.useUtils();
-  const { mutate } = api.hacker.delete.useMutation({
+  const { mutate } = api.hacker.adminDelete.useMutation({
     onSuccess: async () => {
-      await utils.hacker.all.invalidate();
+      await utils.hacker.adminAll.invalidate();
       toast("Success!", {
         description: "User deleted",
       });

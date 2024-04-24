@@ -1,6 +1,13 @@
 import { TRPCError } from "@trpc/server";
 
-import { and, asc, eq, hackathons, hackers, users } from "@knighthacks/db";
+import {
+  and,
+  asc,
+  eq,
+  hackathons,
+  hackers,
+  userProfiles,
+} from "@knighthacks/db";
 
 import { middleware } from "./init";
 
@@ -31,17 +38,14 @@ export const isAdmin = isAuthenticated.unstable_pipe((opts) => {
 });
 
 export const hasProfile = isAuthenticated.unstable_pipe(async (opts) => {
-  const user = await opts.ctx.db.query.users.findFirst({
-    where: eq(users.email, opts.ctx.user.email),
-    with: {
-      profile: true,
-    },
+  const profile = await opts.ctx.db.query.userProfiles.findFirst({
+    where: eq(userProfiles.userId, opts.ctx.user.id),
   });
 
-  if (!user?.profile) {
+  if (!profile) {
     throw new TRPCError({
-      code: "UNAUTHORIZED",
-      message: "No KnightHacks profile",
+      code: "NOT_FOUND",
+      message: "No profile found",
     });
   }
 
@@ -50,7 +54,7 @@ export const hasProfile = isAuthenticated.unstable_pipe(async (opts) => {
       ...opts.ctx,
       user: {
         ...opts.ctx.user,
-        profile: user?.profile,
+        profile,
       },
     },
   });
@@ -75,6 +79,13 @@ export const hasApplied = hasProfile.unstable_pipe(async (opts) => {
       eq(hackers.hackathonId, hackathon.id),
     ),
   });
+
+  if (!hacker) {
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: "No application found",
+    });
+  }
 
   return opts.next({
     ctx: {
