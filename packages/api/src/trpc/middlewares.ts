@@ -31,13 +31,19 @@ export const isAdmin = isAuthenticated.unstable_pipe((opts) => {
   return opts.next(opts);
 });
 
-export const hasAccount = isAuthenticated.unstable_pipe(async (opts) => {
+export const hasProfile = isAuthenticated.unstable_pipe(async (opts) => {
   const user = await opts.ctx.db.query.users.findFirst({
     where: eq(users.email, opts.ctx.user.email),
+    with: {
+      profile: true,
+    },
   });
 
-  if (!user) {
-    throw new TRPCError({ code: "UNAUTHORIZED", message: "Not authenticated" });
+  if (!user?.profile) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "No KnightHack profile",
+    });
   }
 
   return opts.next(opts);

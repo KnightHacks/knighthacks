@@ -1,5 +1,5 @@
 import { t } from "./init";
-import { isAdmin, isAuthenticated } from "./middlewares";
+import { hasProfile, isAdmin, isAuthenticated } from "./middlewares";
 
 // Public procedures don't require a token
 export const publicProcedure = t.procedure;
@@ -9,3 +9,6 @@ export const adminProcedure = publicProcedure.use(isAdmin);
 
 // Authenticated procedures require a valid token
 export const authenticatedProcedure = publicProcedure.use(isAuthenticated);
+
+// Profile procedures require a user with a profile
+export const profileProcedure = authenticatedProcedure.use(hasProfile);
