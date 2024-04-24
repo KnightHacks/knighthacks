@@ -19,7 +19,7 @@ import { api } from "~/trpc";
 import { UpdateHackathonForm } from "./update-hackathon-form";
 
 export const hackathonColumns: ColumnDef<
-  RouterOutput["hackathon"]["all"][number]
+  RouterOutput["hackathon"]["adminAll"][number]
 >[] = [
   {
     accessorKey: "id",
@@ -90,7 +90,7 @@ export const hackathonColumns: ColumnDef<
 function Actions({
   row,
 }: {
-  row: Row<RouterOutput["hackathon"]["all"][number]>;
+  row: Row<RouterOutput["hackathon"]["adminAll"][number]>;
 }) {
   const hackathon = row.original;
 
@@ -98,9 +98,9 @@ function Actions({
     useState(false);
 
   const utils = api.useUtils();
-  const { mutate } = api.hackathon.delete.useMutation({
+  const { mutate } = api.hackathon.adminDelete.useMutation({
     onSuccess: async () => {
-      await utils.hackathon.all.invalidate();
+      await utils.hackathon.adminAll.invalidate();
       toast("Success!", {
         description: "Hackathon deleted",
       });

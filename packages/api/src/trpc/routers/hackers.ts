@@ -1,6 +1,7 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import { eq, hackers } from "@knighthacks/db";
+import { asc, eq, hackathons, hackers } from "@knighthacks/db";
 import {
   ApplyToHackathonSchema,
   CreateHackerSchema,
@@ -8,32 +9,35 @@ import {
 } from "@knighthacks/validators";
 
 import { createTRPCRouter } from "../init";
-import { adminProcedure, applicationProcedure } from "../procedures";
-import { TRPCError } from "@trpc/server";
+import {
+  adminProcedure,
+  applicationProcedure,
+  profileProcedure,
+} from "../procedures";
 
 export const hackerRouter = createTRPCRouter({
-  apply: applicationProcedure
+  apply: profileProcedure
     .input(ApplyToHackathonSchema)
     .mutation(async ({ ctx, input }) => {
-      if (ctx.user.hacker)
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "You have already applied",
+      await ctx.db.transaction(async (db) => {
+        const currentHackathon = await db.query.hackathons.findFirst({
+          orderBy: asc(hackathons.startDate),
         });
 
-      await ctx.db.insert(hackers).values({
-        ...input,
-        hackathonId: ctx.currentHackathon.id,
-        userId: ctx.user.id,
+        if (!currentHackathon)
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "No hackathons found",
+          });
+
+        await db.insert(hackers).values({
+          ...input,
+          userId: ctx.user.id,
+          hackathonId: currentHackathon.id,
+        });
       });
     }),
-  getApplication: applicationProcedure.query(async ({ ctx }) => {
-    if (!ctx.user.hacker)
-      throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "No application found",
-      });
-
+  application: applicationProcedure.query(async ({ ctx }) => {
     return ctx.db.query.hackers.findFirst({
       where: eq(hackers.userId, ctx.user.id),
       with: {
@@ -45,7 +49,7 @@ export const hackerRouter = createTRPCRouter({
       },
     });
   }),
-  all: adminProcedure.query(async ({ ctx }) => {
+  adminAll: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.hackers.findMany({
       with: {
         hackathon: true,
@@ -53,24 +57,17 @@ export const hackerRouter = createTRPCRouter({
       },
     });
   }),
-  allHackers: adminProcedure.query(async ({ ctx }) => {
-    return ctx.db.query.hackers.findMany({
-      where: eq(hackers.userId, ctx.user.id),
-      with: {
-        hackathon: true,
-      },
-    });
-  }),
-
-  update: adminProcedure
+  adminUpdate: adminProcedure
     .input(UpdateHackerSchema)
     .mutation(async ({ ctx, input: { hackerId, ...hacker } }) => {
       await ctx.db.update(hackers).set(hacker).where(eq(hackers.id, hackerId));
     }),
-  delete: adminProcedure.input(z.number()).mutation(async ({ ctx, input }) => {
-    await ctx.db.delete(hackers).where(eq(hackers.id, input));
-  }),
-  create: adminProcedure
+  adminDelete: adminProcedure
+    .input(z.number())
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.delete(hackers).where(eq(hackers.id, input));
+    }),
+  adminCreate: adminProcedure
     .input(CreateHackerSchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.insert(hackers).values(input);

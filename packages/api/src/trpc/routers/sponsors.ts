@@ -10,15 +10,15 @@ import { createTRPCRouter } from "../init";
 import { adminProcedure } from "../procedures";
 
 export const sponsorRouter = createTRPCRouter({
-  create: adminProcedure
+  adminCreate: adminProcedure
     .input(CreateSponsorSchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.insert(sponsors).values(input);
     }),
-  all: adminProcedure.query(async ({ ctx }) => {
+  adminAll: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.sponsors.findMany();
   }),
-  update: adminProcedure
+  adminUpdate: adminProcedure
     .input(UpdateSponsorSchema)
     .mutation(async ({ ctx, input: { sponsorId, ...sponsor } }) => {
       await ctx.db
@@ -26,7 +26,7 @@ export const sponsorRouter = createTRPCRouter({
         .set(sponsor)
         .where(eq(sponsors.id, sponsorId));
     }),
-  delete: adminProcedure.input(z.number()).mutation(async ({ ctx, input }) => {
+  adminDelete: adminProcedure.input(z.number()).mutation(async ({ ctx, input }) => {
     await ctx.db.delete(sponsors).where(eq(sponsors.id, input));
   }),
 });

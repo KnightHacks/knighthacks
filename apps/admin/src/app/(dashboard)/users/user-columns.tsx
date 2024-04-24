@@ -20,7 +20,7 @@ import { CreateUserProfileForm } from "./create-user-profile-form";
 import { UpdateUserForm } from "./update-user-form";
 import { UpdateProfileForm } from "./update-user-profile-form";
 
-export const userColumns: ColumnDef<RouterOutput["user"]["all"][number]>[] = [
+export const userColumns: ColumnDef<RouterOutput["user"]["adminAll"][number]>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -73,7 +73,7 @@ export const userColumns: ColumnDef<RouterOutput["user"]["all"][number]>[] = [
   },
 ];
 
-function Actions({ row }: { row: Row<RouterOutput["user"]["all"][number]> }) {
+function Actions({ row }: { row: Row<RouterOutput["user"]["adminAll"][number]> }) {
   const user = row.original;
 
   const [updateUserFormSheetOpen, setUpdateUserFormSheetOpen] = useState(false);
@@ -81,9 +81,9 @@ function Actions({ row }: { row: Row<RouterOutput["user"]["all"][number]> }) {
     useState(false);
 
   const utils = api.useUtils();
-  const deleteUser = api.user.delete.useMutation({
+  const deleteUser = api.user.adminDelete.useMutation({
     onSuccess: async () => {
-      await utils.user.all.invalidate();
+      await utils.user.adminAll.invalidate();
       toast("Success!", {
         description: "User deleted",
       });

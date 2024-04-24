@@ -27,12 +27,12 @@ import { api } from "~/trpc";
 export function UpdateHackathonForm({
   hackathon,
 }: {
-  hackathon: NonNullable<RouterOutput["hackathon"]["all"][number]>;
+  hackathon: NonNullable<RouterOutput["hackathon"]["adminAll"][number]>;
 }) {
   const utils = api.useUtils();
-  const updateHackathon = api.hackathon.update.useMutation({
+  const updateHackathon = api.hackathon.adminUpdate.useMutation({
     onSuccess: async () => {
-      await utils.hackathon.all.invalidate();
+      await utils.hackathon.adminAll.invalidate();
       toast("Success!", {
         description: "Updated hackathon",
       });
@@ -65,8 +65,8 @@ export function UpdateHackathonForm({
             hackathonId: data.hackathonId,
             name: data.name,
             theme: data.theme,
-            startDate: data.date.from?.toISOString().split("T")[0] ?? "",
-            endDate: data.date.to?.toISOString().split("T")[0] ?? "",
+            startDate: data.date?.from?.toISOString().split("T")[0] ?? "",
+            endDate: data.date?.to?.toISOString().split("T")[0] ?? "",
           });
         })}
         className="flex flex-col justify-center space-y-6"
@@ -102,7 +102,7 @@ export function UpdateHackathonForm({
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {field?.value.from ? (
+                      {field?.value?.from ? (
                         field?.value.to ? (
                           <>
                             {format(field.value.from, "LLL dd, y")} -{" "}
@@ -121,7 +121,10 @@ export function UpdateHackathonForm({
                       initialFocus
                       mode="range"
                       defaultMonth={field.value?.from}
-                      selected={{ from: field.value.from, to: field.value.to }}
+                      selected={{
+                        from: field.value?.from,
+                        to: field.value?.to,
+                      }}
                       onSelect={field.onChange}
                       numberOfMonths={1}
                     />

@@ -26,9 +26,9 @@ import { api } from "~/trpc";
 export function CreateSponsorForm() {
   const utils = api.useUtils();
 
-  const createSponsor = api.sponsor.create.useMutation({
+  const createSponsor = api.sponsor.adminCreate.useMutation({
     onSuccess: async () => {
-      await utils.sponsor.all.invalidate();
+      await utils.sponsor.adminAll.invalidate();
       toast("Success!", {
         description: "Sponsor added",
       });
@@ -128,7 +128,11 @@ function HackathonSelect({
 }: {
   form: ReturnType<typeof useForm<typeof CreateSponsorSchema>>;
 }) {
-  const { data: hackathons, isPending, isError } = api.hackathon.all.useQuery();
+  const {
+    data: hackathons,
+    isPending,
+    isError,
+  } = api.hackathon.adminAll.useQuery();
 
   if (isPending) {
     return <div>Loading...</div>;

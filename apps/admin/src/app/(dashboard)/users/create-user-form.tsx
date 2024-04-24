@@ -16,9 +16,9 @@ import { api } from "~/trpc";
 
 export function CreateUserForm() {
   const utils = api.useUtils();
-  const createUser = api.user.create.useMutation({
+  const createUser = api.user.adminCreate.useMutation({
     onSuccess: async () => {
-      await utils.user.all.invalidate();
+      await utils.user.adminAll.invalidate();
       toast("Success!", {
         description: "Created user",
       });

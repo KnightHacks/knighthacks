@@ -37,11 +37,11 @@ export default function Hackathons() {
 }
 
 export function HackathonsTable() {
-  const { data: users, isLoading, error } = api.hackathon.all.useQuery();
+  const { data: hackathons, isPending, error } = api.hackathon.adminAll.useQuery();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isPending) return <div>Loading...</div>;
 
   if (error) return <div>Error: {error.message}</div>;
 
-  return <DataTable columns={hackathonColumns} data={users} />;
+  return <DataTable columns={hackathonColumns} data={hackathons} />;
 }

@@ -37,11 +37,11 @@ export default function Hackers() {
 }
 
 export function HackathonsTable() {
-  const { data: users, isLoading, error } = api.hacker.all.useQuery();
+  const { data: hackers, isPending, error } = api.hacker.adminAll.useQuery();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isPending) return <div>Loading...</div>;
 
   if (error) return <div>Error: {error.message}</div>;
 
-  return <DataTable columns={hackerColumns} data={users} />;
+  return <DataTable columns={hackerColumns} data={hackers} />;
 }

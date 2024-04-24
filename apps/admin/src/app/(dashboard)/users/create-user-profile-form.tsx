@@ -69,9 +69,9 @@ export function CreateUserProfileForm({ userId }: { userId: string }) {
   const { getToken } = useAuth();
   const utils = api.useUtils();
 
-  const addProfile = api.user.createProfile.useMutation({
+  const addProfile = api.user.adminCreateProfile.useMutation({
     onSuccess: async () => {
-      await utils.user.current.invalidate();
+      await utils.user.adminAll.invalidate();
       toast("Success!", {
         description: "Created user profile",
       });

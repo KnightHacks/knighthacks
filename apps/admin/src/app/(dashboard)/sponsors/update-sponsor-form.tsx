@@ -27,13 +27,13 @@ import { api } from "~/trpc";
 export function UpdateSponsorForm({
   sponsor,
 }: {
-  sponsor: RouterOutput["sponsor"]["all"][number];
+  sponsor: RouterOutput["sponsor"]["adminAll"][number];
 }) {
   const utils = api.useUtils();
 
-  const updateSponsor = api.sponsor.update.useMutation({
+  const updateSponsor = api.sponsor.adminUpdate.useMutation({
     onSuccess: async () => {
-      await utils.sponsor.all.invalidate();
+      await utils.sponsor.adminAll.invalidate();
       toast("Success!", {
         description: "Sponsor added",
       });
@@ -134,7 +134,7 @@ function HackathonSelect({
 }: {
   form: ReturnType<typeof useForm<typeof UpdateSponsorSchema>>;
 }) {
-  const { data: hackathons, isPending, isError } = api.hackathon.all.useQuery();
+  const { data: hackathons, isPending, isError } = api.hackathon.adminAll.useQuery();
 
   if (isPending) {
     return <div>Loading...</div>;

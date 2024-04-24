@@ -18,7 +18,7 @@ import { api } from "~/trpc";
 export function UpdateUserForm({
   user,
 }: {
-  user: NonNullable<RouterOutput["user"]["all"][number]>;
+  user: NonNullable<RouterOutput["user"]["adminAll"][number]>;
 }) {
   const utils = api.useUtils();
 
@@ -31,9 +31,9 @@ export function UpdateUserForm({
     },
   });
 
-  const updateUser = api.user.update.useMutation({
+  const updateUser = api.user.adminUpdate.useMutation({
     onSuccess: async () => {
-      await utils.user.all.invalidate();
+      await utils.user.adminAll.invalidate();
       toast("Success!", {
         description: "Updated user",
       });
