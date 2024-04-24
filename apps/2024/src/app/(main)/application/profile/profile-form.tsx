@@ -47,11 +47,10 @@ import { CreateUserProfileFormSchema } from "@knighthacks/validators";
 
 import { trpc } from "~/trpc/client";
 
-export function ProfileForm({ userId }: { userId: string }) {
+export function ProfileForm(  ) {
   const form = useForm({
     schema: CreateUserProfileFormSchema,
     defaultValues: {
-      userId,
       phone: "",
       age: 18,
       shirtSize: "SM",
