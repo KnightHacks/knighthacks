@@ -31,7 +31,7 @@ export function UpdateSponsorForm({
 }) {
   const utils = api.useUtils();
 
-  const updateSponsor = api.sponsor.create.useMutation({
+  const updateSponsor = api.sponsor.update.useMutation({
     onSuccess: async () => {
       await utils.sponsor.all.invalidate();
       toast("Success!", {
@@ -134,9 +134,9 @@ function HackathonSelect({
 }: {
   form: ReturnType<typeof useForm<typeof UpdateSponsorSchema>>;
 }) {
-  const { data: hackathons, isLoading, isError } = api.hackathon.all.useQuery();
+  const { data: hackathons, isPending, isError } = api.hackathon.all.useQuery();
 
-  if (isLoading) {
+  if (isPending) {
     return <div>Loading...</div>;
   }
 

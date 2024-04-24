@@ -96,9 +96,9 @@ function HackathonSelect({
 }: {
   form: ReturnType<typeof useForm<typeof CreateHackerSchema>>;
 }) {
-  const { data: hackathons, isLoading, isError } = api.hackathon.all.useQuery();
+  const { data: hackathons, isPending, isError } = api.hackathon.all.useQuery();
 
-  if (isLoading) {
+  if (isPending) {
     return <div>Loading...</div>;
   }
 
@@ -143,9 +143,9 @@ function UserSelect({
 }: {
   form: ReturnType<typeof useForm<typeof CreateHackerSchema>>;
 }) {
-  const { data: users, isLoading, isError } = api.user.all.useQuery();
+  const { data: users, isPending, isError } = api.user.all.useQuery();
 
-  if (isLoading) {
+  if (isPending) {
     return <div>Loading...</div>;
   }
 

@@ -1,15 +1,49 @@
 import { z } from "zod";
 
-import { asc, eq, hackathons, hackers } from "@knighthacks/db";
+import { eq, hackers } from "@knighthacks/db";
 import {
+  ApplyToHackathonSchema,
   CreateHackerSchema,
   UpdateHackerSchema,
 } from "@knighthacks/validators";
 
 import { createTRPCRouter } from "../init";
-import { adminProcedure, authenticatedProcedure } from "../procedures";
+import { adminProcedure, applicationProcedure } from "../procedures";
 
 export const hackerRouter = createTRPCRouter({
+  apply: applicationProcedure
+    .input(ApplyToHackathonSchema)
+    .mutation(async ({ ctx, input }) => {
+      if (ctx.user.hacker)
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "You have already applied",
+        });
+
+      await ctx.db.insert(hackers).values({
+        ...input,
+        hackathonId: ctx.currentHackathon.id,
+        userId: ctx.user.id,
+      });
+    }),
+  getApplication: applicationProcedure.query(async ({ ctx }) => {
+    if (!ctx.user.hacker)
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "No application found",
+      });
+
+    return ctx.db.query.hackers.findFirst({
+      where: eq(hackers.userId, ctx.user.id),
+      with: {
+        user: {
+          with: {
+            profile: true,
+          },
+        },
+      },
+    });
+  }),
   all: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.hackers.findMany({
       with: {
@@ -18,7 +52,7 @@ export const hackerRouter = createTRPCRouter({
       },
     });
   }),
-  allHackathons: authenticatedProcedure.query(async ({ ctx }) => {
+  allHackers: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.hackers.findMany({
       where: eq(hackers.userId, ctx.user.id),
       with: {
@@ -26,29 +60,7 @@ export const hackerRouter = createTRPCRouter({
       },
     });
   }),
-  status: authenticatedProcedure.query(async ({ ctx }) => {
-    return await ctx.db.transaction(async (tx) => {
-      const hackathon = await tx.query.hackathons.findFirst({
-        orderBy: [asc(hackathons.startDate)],
-      });
 
-      if (!hackathon) {
-        tx.rollback();
-        return;
-      }
-
-      const hacker = await tx.query.hackers.findFirst({
-        where: eq(hackers.userId, ctx.user.id),
-      });
-
-      if (!hacker) {
-        tx.rollback();
-        return;
-      }
-
-      return hacker.status;
-    });
-  }),
   update: adminProcedure
     .input(UpdateHackerSchema)
     .mutation(async ({ ctx, input: { hackerId, ...hacker } }) => {

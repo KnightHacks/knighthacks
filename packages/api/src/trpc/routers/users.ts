@@ -21,13 +21,10 @@ export const userRouter = createTRPCRouter({
   createProfile: authenticatedProcedure
     .input(CreateUserProfileSchema)
     .mutation(({ ctx, input }) => {
-      if (
-        ctx.user.id !== input.userId &&
-        !ctx.user.email.endsWith("@knighthacks.org")
-      ) {
+      if (ctx.user.id !== input.userId && !ctx.user.isAdmin) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
-          message: "Not authorized to add profile for other user",
+          message: "Not authorized to add a profile for another user",
         });
       }
 
@@ -36,13 +33,10 @@ export const userRouter = createTRPCRouter({
   updateProfile: authenticatedProcedure
     .input(UpdateUserProfileSchema)
     .mutation(({ ctx, input: { userId, ...userProfile } }) => {
-      if (
-        ctx.user.id !== userId &&
-        !ctx.user.email.endsWith("@knighthacks.org")
-      ) {
+      if (ctx.user.id !== userId && !ctx.user.isAdmin) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
-          message: "Not authorized to add profile for other user",
+          message: "Not authorized to update the profile of another user",
         });
       }
 
@@ -59,13 +53,6 @@ export const userRouter = createTRPCRouter({
         profile: true,
       },
     });
-
-    if (!user) {
-      throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "User not found",
-      });
-    }
 
     return user;
   }),
@@ -108,10 +95,4 @@ export const userRouter = createTRPCRouter({
         await db.update(users).set(user).where(eq(users.id, userId));
       });
     }),
-  byId: adminProcedure.input(z.string()).query(async ({ ctx, input }) => {
-    return ctx.db.query.users.findFirst({
-      where: eq(users.id, input),
-      with: { hackers: true, profile: true },
-    });
-  }),
 });

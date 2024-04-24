@@ -15,9 +15,11 @@ export const CreateUserSchema = z.object({
   lastName: z.string().min(1, { message: "Last name is required" }),
 });
 
-export const UpdateUserSchema = CreateUserSchema.extend({
-  userId: z.string(),
-}).omit({ email: true });
+export const UpdateUserSchema = CreateUserSchema.partial()
+  .extend({
+    userId: z.string(),
+  })
+  .omit({ email: true });
 
 export const CreateUserProfileSchema = z.object({
   userId: z.string(),
@@ -60,13 +62,16 @@ export const CreateUserProfileFormSchema = CreateUserProfileSchema.extend({
   resume: z.instanceof(File).optional(),
 });
 
-export const UpdateUserProfileSchema = CreateUserProfileSchema.extend({
-  userId: z.string(),
-});
+export const UpdateUserProfileSchema = CreateUserProfileSchema.partial().extend(
+  {
+    userId: z.string(),
+  },
+);
 
-export const UpdateUserProfileFormSchema = CreateUserProfileFormSchema.extend({
-  userId: z.string(),
-});
+export const UpdateUserProfileFormSchema =
+  CreateUserProfileFormSchema.partial().extend({
+    userId: z.string(),
+  });
 
 export const CreateHackathonSchema = z.object({
   name: z.string().min(1, { message: "Hackathon name is required" }),
@@ -92,13 +97,14 @@ export const CreateHackathonFormSchema = CreateHackathonSchema.omit({
     .refine((date) => !!date.to, "Start and end date is required"),
 });
 
-export const UpdateHackathonSchema = CreateHackathonSchema.extend({
+export const UpdateHackathonSchema = CreateHackathonSchema.partial().extend({
   hackathonId: z.number(),
 });
 
-export const UpdateHackathonFormSchema = CreateHackathonFormSchema.extend({
-  hackathonId: z.number(),
-});
+export const UpdateHackathonFormSchema =
+  CreateHackathonFormSchema.partial().extend({
+    hackathonId: z.number(),
+  });
 
 export const CreateHackerSchema = z.object({
   hackathonId: z.number(),
@@ -112,8 +118,14 @@ export const CreateHackerSchema = z.object({
   status: z.enum(APPLICATION_STATUSES).optional(),
 });
 
-export const UpdateHackerSchema = CreateHackerSchema.extend({
+export const UpdateHackerSchema = CreateHackerSchema.partial().extend({
   hackerId: z.number(),
+});
+
+export const ApplyToHackathonSchema = CreateHackerSchema.omit({
+  status: true,
+  hackathonId: true,
+  userId: true,
 });
 
 export const CreateSponsorSchema = z.object({
@@ -124,7 +136,7 @@ export const CreateSponsorSchema = z.object({
   hackathonId: z.number(),
 });
 
-export const UpdateSponsorSchema = CreateSponsorSchema.extend({
+export const UpdateSponsorSchema = CreateSponsorSchema.partial().extend({
   sponsorId: z.number(),
 });
 
