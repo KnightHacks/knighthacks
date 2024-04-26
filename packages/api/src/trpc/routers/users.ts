@@ -14,29 +14,34 @@ import { createTRPCRouter } from "../init";
 import { adminProcedure, authenticatedProcedure } from "../procedures";
 
 export const userRouter = createTRPCRouter({
-  profileApplication: authenticatedProcedure
-    .input(ProfileApplicationSchema)
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.insert(userProfiles).values({
-        ...input,
-        userId: ctx.user.id,
-      });
-    }),
   getProfile: authenticatedProcedure.query(async ({ ctx }) => {
     return ctx.db.query.userProfiles.findFirst({
       where: eq(userProfiles.userId, ctx.user.id),
     });
   }),
-  adminAll: adminProcedure.query(async ({ ctx }) => {
-    return ctx.db.query.users.findMany({
-      with: { hackers: true, profile: true },
-    });
-  }),
+  profileApplication: authenticatedProcedure
+    .input(ProfileApplicationSchema)
+    .mutation(async ({ ctx, input }) => {
+      console.log({
+        ...input,
+        userId: ctx.user.id,
+      })
+      await ctx.db.insert(userProfiles).values({
+        ...input,
+        userId: ctx.user.id,
+      });
+    }),
   adminCreateProfile: adminProcedure
     .input(CreateUserProfileSchema)
     .mutation(({ ctx, input }) => {
       return ctx.db.insert(userProfiles).values(input);
     }),
+  adminAll: adminProcedure.query(async ({ ctx }) => {
+    return ctx.db.query.users.findMany({
+      with: { hackers: true, profile: true },
+    });
+  }),
+
   adminUpdateProfile: adminProcedure
     .input(UpdateUserProfileSchema)
     .mutation(({ ctx, input: { userId, ...userProfile } }) => {
