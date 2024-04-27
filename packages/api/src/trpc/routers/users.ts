@@ -25,7 +25,7 @@ export const userRouter = createTRPCRouter({
       console.log({
         ...input,
         userId: ctx.user.id,
-      })
+      });
       await ctx.db.insert(userProfiles).values({
         ...input,
         userId: ctx.user.id,
