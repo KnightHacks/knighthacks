@@ -5,8 +5,8 @@ import { useState } from "react";
 import { Button } from "@knighthacks/ui/button";
 import { Sheet, SheetContent } from "@knighthacks/ui/sheet";
 
-import { DataTable } from "../_components/data-table";
 import { api } from "~/trpc";
+import { DataTable } from "../_components/data-table";
 import { CreateHackerForm } from "./create-hacker-form";
 import { hackerColumns } from "./hacker-columns";
 
