@@ -1,7 +1,8 @@
 "use client";
 
 import { useAuth } from "@clerk/nextjs";
-import { Button } from "react-day-picker";
+
+import { Button } from "@knighthacks/ui/button";
 
 export function SignOutButton() {
   const { signOut } = useAuth();
