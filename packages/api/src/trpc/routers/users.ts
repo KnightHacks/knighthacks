@@ -22,10 +22,6 @@ export const userRouter = createTRPCRouter({
   profileApplication: authenticatedProcedure
     .input(ProfileApplicationSchema)
     .mutation(async ({ ctx, input }) => {
-      console.log({
-        ...input,
-        userId: ctx.user.id,
-      });
       await ctx.db.insert(userProfiles).values({
         ...input,
         userId: ctx.user.id,
