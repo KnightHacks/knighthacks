@@ -6,6 +6,7 @@ import type { Context, Input } from "hono";
 import type { connect } from "@knighthacks/db";
 
 export type Bindings = {
+  ENV: string;
   DATABASE_URL: string;
   DATABASE_AUTH_TOKEN: string;
   CLERK_SECRET_KEY: string;
