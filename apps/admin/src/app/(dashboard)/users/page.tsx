@@ -10,6 +10,8 @@ import { DataTable } from "../_components/data-table";
 import { CreateUserForm } from "./create-user-form";
 import { userColumns } from "./user-columns";
 
+export const runtime = "edge";
+
 export default function Users() {
   const [createUserFormSheetOpen, setCreateUserFormSheetOpen] = useState(false);
 

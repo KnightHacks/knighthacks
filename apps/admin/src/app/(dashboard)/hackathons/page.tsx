@@ -10,6 +10,8 @@ import { DataTable } from "../_components/data-table";
 import { CreateHackathonForm } from "./create-hackathon-form";
 import { hackathonColumns } from "./hackathon-columns";
 
+export const runtime = "edge";
+
 export default function Hackathons() {
   const [createHackathonFormSheetOpen, setCreateHackathonFormSheetOpen] =
     useState(false);
