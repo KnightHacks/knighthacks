@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "@knighthacks/ui/button";
 import { Sheet, SheetContent } from "@knighthacks/ui/sheet";
 
-import { DataTable } from "~/app/_components/data-table";
+import { DataTable } from "../_components/data-table";
 import { api } from "~/trpc";
 import { CreateSponsorForm } from "./create-sponsor-form";
 import { sponsorColumns } from "./sponsor-columns";

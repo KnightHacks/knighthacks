@@ -1,13 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 
-import { Providers } from "./_components/providers";
-
 import "./globals.css";
 
+import React from "react";
+import { ClerkProvider } from "@clerk/nextjs";
+
 import { cn } from "@knighthacks/ui";
-import { ThemeToggle } from "@knighthacks/ui/theme";
+import { ThemeProvider, ThemeToggle } from "@knighthacks/ui/theme";
 import { Toaster } from "@knighthacks/ui/toast";
+
+import { TRPCProvider } from "~/trpc/client";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,13 +50,22 @@ export default function RootLayout({
           inter.className,
         )}
       >
-        <Providers>
-          {children}
-          <div className="fixed bottom-4 right-4">
-            <ThemeToggle />
-          </div>
-          <Toaster />
-        </Providers>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          disableTransitionOnChange
+          enableSystem
+        >
+          <ClerkProvider>
+            <TRPCProvider>
+              {children}
+              <div className="fixed bottom-4 right-4">
+                <ThemeToggle />
+              </div>
+              <Toaster />
+            </TRPCProvider>
+          </ClerkProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
