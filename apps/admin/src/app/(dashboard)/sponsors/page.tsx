@@ -10,6 +10,8 @@ import { DataTable } from "../_components/data-table";
 import { CreateSponsorForm } from "./create-sponsor-form";
 import { sponsorColumns } from "./sponsor-columns";
 
+export const runtime = "edge";
+
 export default function Sponsors() {
   const [addSponsorFormSheetOpen, setAddSponsorFormSheetOpen] = useState(false);
 
