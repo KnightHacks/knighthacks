@@ -17,7 +17,7 @@ const app = new Hono<HonoConfig>()
   })
   .use("*", (c, next) => {
     const origin =
-      c.env.ENV === "development"
+      c.env.ENV === "dev"
         ? "*"
         : [
             "https://admin.knighthacks.org",
