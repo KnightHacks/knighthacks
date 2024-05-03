@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import {
   APPLICATION_STATUSES,
+  COUNTRIES,
   MAJORS,
   SCHOOLS,
   SHIRT_SIZES,
@@ -28,7 +29,7 @@ export const CreateUserProfileSchema = z.object({
     .refine((phone) => /^\d{10}$/.test(phone), "Invalid phone"),
   address1: z.string().min(1, { message: "Address is required" }),
   address2: z.string().optional().or(z.literal("")),
-  country: z.string().min(1, { message: "Country is required" }),
+  country: z.enum(COUNTRIES),
   github: z
     .string()
     .url({ message: "Invalid GitHub link" })
