@@ -56,7 +56,13 @@ export default function RootLayout({
           disableTransitionOnChange
           enableSystem
         >
-          <ClerkProvider>
+          <ClerkProvider
+            appearance={{
+              variables: {
+                colorPrimary: "#2563eb",
+              },
+            }}
+          >
             <TRPCProvider>
               {children}
               <Toaster />
