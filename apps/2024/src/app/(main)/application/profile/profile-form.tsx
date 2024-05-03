@@ -381,7 +381,7 @@ export function ProfileForm() {
                 <FormLabel>LinkedIn</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Personal Website"
+                    placeholder="LinkedIn"
                     {...field}
                     value={field.value}
                   />
