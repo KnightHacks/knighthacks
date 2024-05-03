@@ -4,7 +4,13 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 
-import { COUNTRIES, MAJORS, SCHOOLS, SHIRT_SIZES } from "@knighthacks/consts";
+import {
+  COUNTRIES,
+  MAJORS,
+  SCHOOLS,
+  SHIRT_SIZES,
+  US_STATES,
+} from "@knighthacks/consts";
 import { CheckIcon, ChevronDownIcon, cn } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";
 import {
@@ -63,6 +69,13 @@ export function ProfileForm() {
       linkedin: "",
     },
   });
+
+  if (form.watch("country") === "United States") {
+    form.setValue("state", "Florida");
+  } else {
+    form.setValue("state", "");
+  }
+
   const { getToken } = useAuth();
 
   const router = useRouter();
@@ -289,19 +302,56 @@ export function ProfileForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="state"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>State</FormLabel>
-                <FormControl>
-                  <Input placeholder="State" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
+          {form.watch("country") === "United States" ? (
+            <FormField
+              control={form.control}
+              name="state"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>State</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "justify-between px-3",
+                            !field.value && "text-muted-foreground",
+                          )}
+                        >
+                          {field.value
+                            ? US_STATES.find((state) => state === field.value)
+                            : "Select the state you reside in"}
+                          <ChevronDownIcon className="h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0">
+                      <USStatesCombobox value={field.value} form={form} />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ) : (
+            <FormField
+              control={form.control}
+              name="state"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>State or Province</FormLabel>
+                  <FormControl>
+                    <Input placeholder="State or province" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+
           <FormField
             control={form.control}
             name="city"
@@ -550,7 +600,7 @@ function CountriesCombobox({
         onValueChange={setSearch}
         placeholder="Search countries..."
       />
-      <CommandEmpty>No school found.</CommandEmpty>
+      <CommandEmpty>No country found.</CommandEmpty>
       <ScrollArea>
         <CommandGroup>
           {filteredCountries.map((country) => (
@@ -568,6 +618,53 @@ function CountriesCombobox({
                 )}
               />
               {country}
+            </CommandItem>
+          ))}
+        </CommandGroup>
+      </ScrollArea>
+    </Command>
+  );
+}
+
+function USStatesCombobox({
+  value,
+  form,
+}: {
+  value: (typeof US_STATES)[number];
+  form: ReturnType<typeof useForm<typeof ProfileApplicationFormSchema>>;
+}) {
+  const [search, setSearch] = useState("");
+  const filteredStates = useMemo(() => {
+    return US_STATES.filter((state) =>
+      state.toLowerCase().includes(search.toLowerCase()),
+    ).slice(0, 5);
+  }, [search]);
+
+  return (
+    <Command>
+      <CommandInput
+        value={search}
+        onValueChange={setSearch}
+        placeholder="Search states..."
+      />
+      <CommandEmpty>No state found.</CommandEmpty>
+      <ScrollArea>
+        <CommandGroup>
+          {filteredStates.map((state) => (
+            <CommandItem
+              value={state}
+              key={state}
+              onSelect={() => {
+                form.setValue("state", state);
+              }}
+            >
+              <CheckIcon
+                className={cn(
+                  "mr-2 h-4 w-4",
+                  state === value ? "opacity-100" : "opacity-0",
+                )}
+              />
+              {state}
             </CommandItem>
           ))}
         </CommandGroup>
