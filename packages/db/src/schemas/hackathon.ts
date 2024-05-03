@@ -9,7 +9,6 @@ import {
 
 import {
   APPLICATION_STATUSES,
-  GRADUATION_YEARS,
   MAJORS,
   SCHOOLS,
   SHIRT_SIZES,
@@ -53,9 +52,7 @@ export const userProfiles = sqliteTable("user_profiles", {
   }).notNull(),
   major: text("major", { enum: MAJORS }).notNull(),
   school: text("school", { enum: SCHOOLS }).notNull(),
-  gradYear: text("grad_year", {
-    enum: GRADUATION_YEARS,
-  }).notNull(),
+  gradYear: text("grad_year").notNull(),
   address1: text("address1").notNull(),
   address2: text("address2"),
   city: text("city").notNull(),

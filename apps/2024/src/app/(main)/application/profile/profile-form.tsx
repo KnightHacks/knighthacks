@@ -4,12 +4,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 
-import {
-  GRADUATION_YEARS,
-  MAJORS,
-  SCHOOLS,
-  SHIRT_SIZES,
-} from "@knighthacks/consts";
+import { MAJORS, SCHOOLS, SHIRT_SIZES } from "@knighthacks/consts";
 import { CheckIcon, ChevronDownIcon, cn } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";
 import {
@@ -247,9 +242,12 @@ export function ProfileForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {GRADUATION_YEARS.map((gradYear) => (
-                      <SelectItem key={gradYear} value={gradYear}>
-                        {gradYear}
+                    {Array.from(
+                      { length: 5 },
+                      (_, i) => new Date().getFullYear() + i,
+                    ).map((year) => (
+                      <SelectItem key={year} value={String(year)}>
+                        {year}
                       </SelectItem>
                     ))}
                   </SelectContent>

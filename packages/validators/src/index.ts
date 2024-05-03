@@ -2,7 +2,6 @@ import { z } from "zod";
 
 import {
   APPLICATION_STATUSES,
-  GRADUATION_YEARS,
   MAJORS,
   SCHOOLS,
   SHIRT_SIZES,
@@ -53,7 +52,7 @@ export const CreateUserProfileSchema = z.object({
     .min(18, { message: "You must be at least 18 years old" }),
   major: z.enum(MAJORS),
   school: z.enum(SCHOOLS),
-  gradYear: z.enum(GRADUATION_YEARS),
+  gradYear: z.string().min(4, { message: "Graduation year is required" }),
   shirtSize: z.enum(SHIRT_SIZES),
   resume: z.string().optional(),
 });
