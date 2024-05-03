@@ -1,12 +1,7 @@
 import { useMemo, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 
-import {
-  GRADUATION_YEARS,
-  MAJORS,
-  SCHOOLS,
-  SHIRT_SIZES,
-} from "@knighthacks/consts";
+import { MAJORS, SCHOOLS, SHIRT_SIZES } from "@knighthacks/consts";
 import { CheckIcon, cn, DoubleArrowUpIcon } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";
 import {
@@ -54,7 +49,7 @@ export function CreateUserProfileForm({ userId }: { userId: string }) {
       shirtSize: "SM",
       major: "Computer Science",
       school: "The University of Central Florida",
-      gradYear: "2025",
+      gradYear: (new Date().getFullYear() + 4).toString(),
       address1: "",
       address2: "",
       city: "",
@@ -245,9 +240,12 @@ export function CreateUserProfileForm({ userId }: { userId: string }) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {GRADUATION_YEARS.map((gradYear) => (
-                      <SelectItem key={gradYear} value={gradYear}>
-                        {gradYear}
+                    {Array.from(
+                      { length: 5 },
+                      (_, i) => new Date().getFullYear() + i,
+                    ).map((year) => (
+                      <SelectItem key={year} value={String(year)}>
+                        {year}
                       </SelectItem>
                     ))}
                   </SelectContent>
