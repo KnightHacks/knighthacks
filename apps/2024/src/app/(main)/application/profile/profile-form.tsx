@@ -87,8 +87,8 @@ export function ProfileForm() {
 
   return (
     <div className="mx-auto w-full max-w-screen-sm px-8 pb-8 pt-20">
-      <h1 className="mb-2 text-center text-2xl font-bold">
-        Create Your KnightHacks Profile
+      <h1 className="mb-4 text-center text-2xl font-bold">
+        Create Your Profile!
       </h1>
       <Form {...form}>
         <form
@@ -113,6 +113,7 @@ export function ProfileForm() {
             });
           })}
         >
+          <h2 className="text-xl font-semibold">About You</h2>
           <FormField
             control={form.control}
             name="phone"
@@ -257,6 +258,7 @@ export function ProfileForm() {
               </FormItem>
             )}
           />
+          <h2 className="text-xl font-semibold">Shipping Information</h2>
           <FormField
             control={form.control}
             name="address1"
@@ -339,6 +341,8 @@ export function ProfileForm() {
               </FormItem>
             )}
           />
+
+          <h2 className="text-xl font-semibold">Miscellaneous</h2>
           <FormField
             control={form.control}
             name="github"
