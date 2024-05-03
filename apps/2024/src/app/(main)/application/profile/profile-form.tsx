@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 
-import { MAJORS, SCHOOLS, SHIRT_SIZES } from "@knighthacks/consts";
+import { COUNTRIES, MAJORS, SCHOOLS, SHIRT_SIZES } from "@knighthacks/consts";
 import { CheckIcon, ChevronDownIcon, cn } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";
 import {
@@ -51,13 +51,13 @@ export function ProfileForm() {
       shirtSize: "SM",
       major: "Computer Science",
       school: "The University of Central Florida",
-      gradYear: "2025",
+      gradYear: (new Date().getFullYear() + 4).toString(),
       address1: "",
       address2: "",
       city: "",
       state: "",
       zip: "",
-      country: "",
+      country: "United States",
       github: "",
       personalWebsite: "",
       linkedin: "",
@@ -259,6 +259,78 @@ export function ProfileForm() {
           <h2 className="text-xl font-semibold">Shipping Information</h2>
           <FormField
             control={form.control}
+            name="country"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Country</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className={cn(
+                          "justify-between px-3",
+                          !field.value && "text-muted-foreground",
+                        )}
+                      >
+                        {field.value
+                          ? COUNTRIES.find((country) => country === field.value)
+                          : "Select your country"}
+                        <ChevronDownIcon className="h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="p-0">
+                    <CountriesCombobox value={field.value} form={form} />
+                  </PopoverContent>
+                </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="state"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>State</FormLabel>
+                <FormControl>
+                  <Input placeholder="State" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>City</FormLabel>
+                <FormControl>
+                  <Input placeholder="City" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="zip"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Zip Code</FormLabel>
+                <FormControl>
+                  <Input placeholder="Zip Code" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="address1"
             render={({ field }) => (
               <FormItem>
@@ -287,60 +359,8 @@ export function ProfileForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="city"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>City</FormLabel>
-                <FormControl>
-                  <Input placeholder="City" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="state"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>State</FormLabel>
-                <FormControl>
-                  <Input placeholder="State" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="zip"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Zip Code</FormLabel>
-                <FormControl>
-                  <Input placeholder="Zip Code" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="country"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Country</FormLabel>
-                <FormControl>
-                  <Input placeholder="Country" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
 
-          <h2 className="text-xl font-semibold">Miscellaneous</h2>
+          <h2 className="text-xl font-semibold">For Our Sponsors</h2>
           <FormField
             control={form.control}
             name="github"
@@ -501,6 +521,53 @@ function SchoolsCombobox({
                 )}
               />
               {school}
+            </CommandItem>
+          ))}
+        </CommandGroup>
+      </ScrollArea>
+    </Command>
+  );
+}
+
+function CountriesCombobox({
+  value,
+  form,
+}: {
+  value: (typeof COUNTRIES)[number];
+  form: ReturnType<typeof useForm<typeof ProfileApplicationFormSchema>>;
+}) {
+  const [search, setSearch] = useState("");
+  const filteredCountries = useMemo(() => {
+    return COUNTRIES.filter((country) =>
+      country.toLowerCase().includes(search.toLowerCase()),
+    ).slice(0, 5);
+  }, [search]);
+
+  return (
+    <Command>
+      <CommandInput
+        value={search}
+        onValueChange={setSearch}
+        placeholder="Search countries..."
+      />
+      <CommandEmpty>No school found.</CommandEmpty>
+      <ScrollArea>
+        <CommandGroup>
+          {filteredCountries.map((country) => (
+            <CommandItem
+              value={country}
+              key={country}
+              onSelect={() => {
+                form.setValue("country", country);
+              }}
+            >
+              <CheckIcon
+                className={cn(
+                  "mr-2 h-4 w-4",
+                  country === value ? "opacity-100" : "opacity-0",
+                )}
+              />
+              {country}
             </CommandItem>
           ))}
         </CommandGroup>

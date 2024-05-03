@@ -8,6 +8,7 @@ import {
 } from "drizzle-orm/sqlite-core";
 
 import {
+  COUNTRIES,
   APPLICATION_STATUSES,
   MAJORS,
   SCHOOLS,
@@ -58,7 +59,9 @@ export const userProfiles = sqliteTable("user_profiles", {
   city: text("city").notNull(),
   state: text("state").notNull(),
   zip: text("zip").notNull(),
-  country: text("country").notNull(),
+  country: text("country", {
+    enum: COUNTRIES,
+  }).notNull(),
   github: text("github"),
   personalWebsite: text("personal_website"),
   linkedin: text("linkedin"),
