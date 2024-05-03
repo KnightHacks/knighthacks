@@ -61,7 +61,7 @@ export function ProfileForm() {
       address1: "",
       address2: "",
       city: "",
-      state: "",
+      state: "Florida",
       zip: "",
       country: "United States",
       github: "",
@@ -69,12 +69,6 @@ export function ProfileForm() {
       linkedin: "",
     },
   });
-
-  if (form.watch("country") === "United States") {
-    form.setValue("state", "Florida");
-  } else {
-    form.setValue("state", "");
-  }
 
   const { getToken } = useAuth();
 
@@ -611,6 +605,8 @@ function CountriesCombobox({
               value={country}
               key={country}
               onSelect={() => {
+                if (country !== "United States") form.setValue("state", "");
+                else form.setValue("state", "Florida");
                 form.setValue("country", country);
               }}
             >
