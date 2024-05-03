@@ -7,7 +7,7 @@ import React from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import { cn } from "@knighthacks/ui";
-import { ThemeProvider, ThemeToggle } from "@knighthacks/ui/theme";
+import { ThemeProvider } from "@knighthacks/ui/theme";
 import { Toaster } from "@knighthacks/ui/toast";
 
 import { TRPCProvider } from "~/trpc/client";
@@ -52,16 +52,13 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           disableTransitionOnChange
           enableSystem
         >
           <ClerkProvider>
             <TRPCProvider>
               {children}
-              <div className="fixed bottom-4 right-4">
-                <ThemeToggle />
-              </div>
               <Toaster />
             </TRPCProvider>
           </ClerkProvider>
