@@ -329,7 +329,10 @@ export function ProfileForm() {
                       </FormControl>
                     </PopoverTrigger>
                     <PopoverContent className="p-0">
-                      <USStatesCombobox value={field.value} form={form} />
+                      <USStatesCombobox
+                        value={field.value as (typeof US_STATES)[number]}
+                        form={form}
+                      />
                     </PopoverContent>
                   </Popover>
                   <FormMessage />
