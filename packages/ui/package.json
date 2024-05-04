@@ -22,7 +22,8 @@
     "./command": "./src/command.tsx",
     "./scroll-area": "./src/scroll-area.tsx",
     "./popover": "./src/popover.tsx",
-    "./calendar": "./src/calendar.tsx"
+    "./calendar": "./src/calendar.tsx",
+    "./checkbox": "./src/checkbox.tsx",
   },
   "license": "MIT",
   "scripts": {
