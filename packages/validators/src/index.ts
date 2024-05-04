@@ -143,6 +143,8 @@ export const CreateHackerSchema = z.object({
   userId: z.string(),
   survey1: z.string().min(1, { message: "This question is required" }),
   survey2: z.string().min(1, { message: "This question is required" }),
+  isFirstTime: z.boolean(),
+  isPlinktern: z.boolean(),
   status: z.enum(APPLICATION_STATUSES).optional(),
 });
 
