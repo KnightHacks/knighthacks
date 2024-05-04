@@ -6,6 +6,8 @@ import { useAuth } from "@clerk/nextjs";
 
 import {
   COUNTRIES,
+  ETHNICITIES,
+  GENDERS,
   MAJORS,
   SCHOOLS,
   SHIRT_SIZES,
@@ -53,7 +55,7 @@ export function ProfileForm() {
     schema: ProfileApplicationFormSchema,
     defaultValues: {
       phone: "",
-      age: 18,
+      age: "18",
       shirtSize: "SM",
       major: "Computer Science",
       school: "The University of Central Florida",
@@ -67,6 +69,9 @@ export function ProfileForm() {
       github: "",
       personalWebsite: "",
       linkedin: "",
+      ethnicity: "White",
+      gender: "Man",
+      discord: "",
     },
   });
 
@@ -94,6 +99,7 @@ export function ProfileForm() {
       </h1>
       <Form {...form}>
         <form
+          noValidate
           className="space-y-4"
           onSubmit={form.handleSubmit(async (data) => {
             const token = await getToken();
@@ -112,10 +118,24 @@ export function ProfileForm() {
             createProfile.mutate({
               ...data,
               resume: resumeKey,
+              age: Number(data.age),
             });
           })}
         >
           <h2 className="text-xl font-semibold">About You</h2>
+          <FormField
+            control={form.control}
+            name="discord"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Discord</FormLabel>
+                <FormControl>
+                  <Input placeholder="Discord" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="phone"
@@ -131,12 +151,74 @@ export function ProfileForm() {
           />
           <FormField
             control={form.control}
+            name="gender"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Gender</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your gender" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {GENDERS.map((gender) => (
+                      <SelectItem key={gender} value={gender}>
+                        {gender}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="ethnicity"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Ethnicity</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your ethnicity" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {ETHNICITIES.map((ethnicity) => (
+                      <SelectItem key={ethnicity} value={ethnicity}>
+                        {ethnicity}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="age"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Age</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="Age" {...field} />
+                  <Input
+                    placeholder="Age"
+                    min={18}
+                    max={100}
+                    className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                    {...field}
+                    onChange={(e) => field.onChange(String(e.target.value))}
+                    value={field.value}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

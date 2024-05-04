@@ -5,3 +5,5 @@ export * from "./sponsor-tiers";
 export * from "./application-statuses";
 export * from "./countries";
 export * from "./states";
+export * from "./genders";
+export * from "./ethnicities";

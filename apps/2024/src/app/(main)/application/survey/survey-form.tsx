@@ -22,8 +22,8 @@ export function SurveyForm() {
   const form = useForm({
     schema: HackerApplicationSchema,
     defaultValues: {
-      whyAttend: "",
-      whatLearn: "",
+      survey1: "",
+      survey2: "",
     },
   });
 
@@ -44,7 +44,7 @@ export function SurveyForm() {
 
   return (
     <div className="mx-auto w-full max-w-screen-sm px-8 pb-8 pt-20">
-      <h1 className="mb-2 text-center text-2xl font-bold">
+      <h1 className="mb-4 text-center text-2xl font-bold">
         KnightHacks 2024 Application
       </h1>
       <Form {...form}>
@@ -56,10 +56,13 @@ export function SurveyForm() {
         >
           <FormField
             control={form.control}
-            name="whyAttend"
+            name="survey1"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Why do you want to attend KnightHacks?</FormLabel>
+                <FormLabel>
+                  What motivates you to take part in this hackathon, and what do
+                  you hope to achieve?
+                </FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Why do you want to attend KnightHacks?"
@@ -73,10 +76,13 @@ export function SurveyForm() {
           />
           <FormField
             control={form.control}
-            name="whatLearn"
+            name="survey2"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>What do you hope to learn at KnightHacks?</FormLabel>
+                <FormLabel>
+                  If you choose to be any animal in the world, what would that
+                  animal be and why?
+                </FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="What do you hope to learn at KnightHacks?"
