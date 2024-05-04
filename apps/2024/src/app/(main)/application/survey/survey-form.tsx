@@ -1,11 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@knighthacks/ui/button";
+import { Checkbox } from "@knighthacks/ui/checkbox";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -54,6 +57,54 @@ export function SurveyForm() {
             registerHacker.mutate(data);
           })}
         >
+          <FormField
+            control={form.control}
+            name="isFirstTime"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>
+                    This is my first time attending a hackathon
+                  </FormLabel>
+                </div>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="isPlinktern"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>
+                    I am interested in participating in Hack@UCF&apos;s Horse
+                    Plinko event
+                  </FormLabel>
+                  <FormDescription>
+                    You can learn more about Horse Plinko{" "}
+                    <Link
+                      className="font-bold underline underline-offset-4"
+                      href="/#plinkno"
+                    >
+                      here
+                    </Link>
+                  </FormDescription>
+                </div>
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="survey1"
