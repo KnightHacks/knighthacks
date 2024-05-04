@@ -8,8 +8,8 @@ import {
 } from "drizzle-orm/sqlite-core";
 
 import {
-  COUNTRIES,
   APPLICATION_STATUSES,
+  COUNTRIES,
   MAJORS,
   SCHOOLS,
   SHIRT_SIZES,
@@ -51,6 +51,9 @@ export const userProfiles = sqliteTable("user_profiles", {
   shirtSize: text("shirt_size", {
     enum: SHIRT_SIZES,
   }).notNull(),
+  gender: text("gender").notNull(),
+  ethnicity: text("ethnicity").notNull(),
+  discord: text("discord").notNull(),
   major: text("major", { enum: MAJORS }).notNull(),
   school: text("school", { enum: SCHOOLS }).notNull(),
   gradYear: text("grad_year").notNull(),
@@ -96,10 +99,10 @@ export const hackers = sqliteTable(
     status: text("status", {
       enum: APPLICATION_STATUSES,
     })
-      .default("applied")
+      .default("pending")
       .notNull(),
-    whyAttend: text("why_attend").notNull(),
-    whatLearn: text("what_learn").notNull(),
+    survey1: text("survey_1").notNull(),
+    survey2: text("survey_2").notNull(),
   },
   (t) => ({
     unq: unique().on(t.userId, t.hackathonId),

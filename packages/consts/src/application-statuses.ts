@@ -1,5 +1,5 @@
 export const APPLICATION_STATUSES = [
-  "applied",
+  "pending",
   "accepted",
   "waitlisted",
   "checkedin",
