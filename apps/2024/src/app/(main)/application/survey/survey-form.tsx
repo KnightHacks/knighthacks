@@ -57,6 +57,7 @@ export function SurveyForm() {
             registerHacker.mutate(data);
           })}
         >
+          <h2 className="text-xl font-semibold">Event Questions</h2>
           <FormField
             control={form.control}
             name="isFirstTime"
@@ -70,7 +71,7 @@ export function SurveyForm() {
                 </FormControl>
                 <div className="space-y-1 leading-none">
                   <FormLabel>
-                    This is my first time attending a hackathon
+                    This is my first time participating in a hackathon
                   </FormLabel>
                 </div>
               </FormItem>
@@ -105,6 +106,7 @@ export function SurveyForm() {
               </FormItem>
             )}
           />
+          <h2 className="text-xl font-semibold">Short Response Questions</h2>
           <FormField
             control={form.control}
             name="survey1"
