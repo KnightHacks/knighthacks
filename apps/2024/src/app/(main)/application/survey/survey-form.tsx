@@ -27,6 +27,8 @@ export function SurveyForm() {
     defaultValues: {
       survey1: "",
       survey2: "",
+      isFirstTime: false,
+      isPlinktern: false,
     },
   });
 
