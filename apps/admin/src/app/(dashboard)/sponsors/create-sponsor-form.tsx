@@ -1,6 +1,5 @@
-import { Button } from "react-day-picker";
-
 import { SPONSOR_TIERS } from "@knighthacks/consts";
+import { Button } from "@knighthacks/ui/button";
 import {
   Form,
   FormControl,
