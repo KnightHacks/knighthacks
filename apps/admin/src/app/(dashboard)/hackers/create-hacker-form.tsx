@@ -35,8 +35,8 @@ export function CreateHackerForm() {
   const form = useForm({
     schema: CreateHackerSchema,
     defaultValues: {
-      whatLearn: "",
-      whyAttend: "",
+      survey1: "",
+      survey2: "",
     },
   });
 
@@ -50,7 +50,7 @@ export function CreateHackerForm() {
       >
         <FormField
           control={form.control}
-          name="whyAttend"
+          name="survey1"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Why do you want to attend Knight Hacks?</FormLabel>
@@ -67,7 +67,7 @@ export function CreateHackerForm() {
         />
         <FormField
           control={form.control}
-          name="whatLearn"
+          name="survey2"
           render={({ field }) => (
             <FormItem>
               <FormLabel>What do you want to learn at Knight Hacks?</FormLabel>
