@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "wrangler dev --port 8081",
     "deploy": "wrangler deploy --minify",
-    "register": "tsx src/register.ts",
+    "register": "tsx src/register.ts"
   },
   "dependencies": {
     "@knighthacks/db": "workspace:*",
