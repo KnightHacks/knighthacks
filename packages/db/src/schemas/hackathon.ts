@@ -79,6 +79,7 @@ export const userProfileRelations = relations(userProfiles, ({ one }) => {
     user: one(users, {
       fields: [userProfiles.userId],
       references: [users.id],
+      relationName: "profile",
     }),
   };
 });

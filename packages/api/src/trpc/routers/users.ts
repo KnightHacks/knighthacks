@@ -25,6 +25,7 @@ export const userRouter = createTRPCRouter({
       await ctx.db.insert(userProfiles).values({
         ...input,
         userId: ctx.user.id,
+        gender: input.gender,
       });
     }),
   adminCreateProfile: adminProcedure
