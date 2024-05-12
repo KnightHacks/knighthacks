@@ -33,7 +33,10 @@ export const users = sqliteTable(
 export const usersRelations = relations(users, ({ many, one }) => {
   return {
     hackers: many(hackers),
-    profile: one(userProfiles),
+    profile: one(userProfiles, {
+      fields: [users.id],
+      references: [userProfiles.userId],
+    }),
   };
 });
 
