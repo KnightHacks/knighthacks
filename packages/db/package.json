@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "with-env": "dotenv -e ../../.env --",
-    "push": "pnpm with-env drizzle-kit push:sqlite",
+    "push": "pnpm with-env drizzle-kit push",
     "studio": "pnpm with-env drizzle-kit studio",
-    "generate": "pnpm with-env drizzle-kit generate:sqlite",
+    "generate": "pnpm with-env drizzle-kit generate",
     "dev": "turso dev --db-file db.sqlite -p 8081",
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
