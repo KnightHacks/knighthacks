@@ -6,8 +6,6 @@
     "dev": "wrangler dev --port 8081",
     "deploy": "wrangler deploy --minify",
     "register": "tsx src/register.ts",
-    "format": "prettier --check . --ignore-path ../../.gitignore",
-    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@knighthacks/db": "workspace:*",
