@@ -55,9 +55,12 @@ export function CreateUserProfileForm({ userId }: { userId: string }) {
       city: "",
       state: "",
       zip: "",
-      country: "",
+      country: "United States",
       github: "",
       personalWebsite: "",
+      discord: "",
+      ethnicity: "",
+      gender: "",
       linkedin: "",
     },
   });
