@@ -42,7 +42,7 @@ export function UpdateHackerForm({
     schema: CreateHackerSchema,
     defaultValues: {
       survey1: hacker.survey1,
-      survey2: hacker.survey2
+      survey2: hacker.survey2,
     },
   });
 
