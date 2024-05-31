@@ -19,7 +19,7 @@ import { api } from "~/trpc";
 import { UpdateSponsorForm } from "./update-sponsor-form";
 
 export const sponsorColumns: ColumnDef<
-  RouterOutput["sponsor"]["adminAll"][number]
+  RouterOutput["sponsor"]["userAll"][number]
 >[] = [
   {
     accessorKey: "id",
@@ -124,7 +124,7 @@ export const sponsorColumns: ColumnDef<
 function Actions({
   row,
 }: {
-  row: Row<RouterOutput["sponsor"]["adminAll"][number]>;
+  row: Row<RouterOutput["sponsor"]["userAll"][number]>;
 }) {
   const sponsor = row.original;
   const utils = api.useUtils();
@@ -134,7 +134,7 @@ function Actions({
 
   const { mutate } = api.sponsor.adminDelete.useMutation({
     onSuccess: async () => {
-      await utils.sponsor.adminAll.invalidate();
+      await utils.sponsor.userAll.invalidate();
       toast("Success!", {
         description: "User deleted",
       });

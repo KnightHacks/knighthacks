@@ -38,7 +38,7 @@ export default function Sponsors() {
 }
 
 export function SponsorTable() {
-  const { data: sponsors, isPending, error } = api.sponsor.adminAll.useQuery();
+  const { data: sponsors, isPending, error } = api.sponsor.userAll.useQuery();
 
   if (isPending) return <div>Loading...</div>;
 

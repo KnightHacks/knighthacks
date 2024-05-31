@@ -27,13 +27,13 @@ import { api } from "~/trpc";
 export function UpdateSponsorForm({
   sponsor,
 }: {
-  sponsor: RouterOutput["sponsor"]["adminAll"][number];
+  sponsor: RouterOutput["sponsor"]["userAll"][number];
 }) {
   const utils = api.useUtils();
 
   const updateSponsor = api.sponsor.adminUpdate.useMutation({
     onSuccess: async () => {
-      await utils.sponsor.adminAll.invalidate();
+      await utils.sponsor.userAll.invalidate();
       toast("Success!", {
         description: "Sponsor added",
       });
