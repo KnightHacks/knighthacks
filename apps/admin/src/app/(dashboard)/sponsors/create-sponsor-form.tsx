@@ -27,7 +27,7 @@ export function CreateSponsorForm() {
 
   const createSponsor = api.sponsor.adminCreate.useMutation({
     onSuccess: async () => {
-      await utils.sponsor.adminAll.invalidate();
+      await utils.sponsor.userAll.invalidate();
       toast("Success!", {
         description: "Sponsor added",
       });
