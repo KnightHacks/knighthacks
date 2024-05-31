@@ -7,7 +7,7 @@ import {
 } from "@knighthacks/validators";
 
 import { createTRPCRouter } from "../init";
-import { adminProcedure } from "../procedures";
+import { adminProcedure, publicProcedure } from "../procedures";
 
 export const sponsorRouter = createTRPCRouter({
   adminCreate: adminProcedure
@@ -15,7 +15,7 @@ export const sponsorRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       await ctx.db.insert(sponsors).values(input);
     }),
-  adminAll: adminProcedure.query(async ({ ctx }) => {
+  userAll: publicProcedure.query(async ({ ctx }) => {
     return ctx.db.query.sponsors.findMany();
   }),
   adminUpdate: adminProcedure
