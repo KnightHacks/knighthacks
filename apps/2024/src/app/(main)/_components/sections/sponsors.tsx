@@ -27,7 +27,7 @@ export async function Sponsors() {
         <h1 className="font-k2d w-[405px]text-center h-[125px] text-center text-[96px] font-bold leading-[125px] text-[#FFD166]">
           Sponsors
         </h1>
-        <div className="grid h-auto max-w-full auto-rows-[275px] grid-cols-1 gap-4 overflow-hidden sm:grid-cols-2 md:grid-cols-4">
+        <div className="grid h-auto max-w-full auto-rows-auto grid-cols-1 gap-4 overflow-hidden sm:grid-cols-2 md:auto-rows-[275px] md:grid-cols-4">
           {sponsors.map((sponsor, index) => {
             const { bubbleSize, imageSize, cellSize } = getSizes(sponsor);
             const delay = Math.random() * 2;
