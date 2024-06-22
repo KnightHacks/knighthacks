@@ -7,7 +7,6 @@ import { connect } from "@knighthacks/db";
 
 import type { HonoConfig } from "./config";
 import { resume } from "./routes/resume";
-import { webhook } from "./routes/webhook";
 import { createTRPCContextFromHonoContext } from "./trpc/context";
 import { appRouter } from "./trpc/routers";
 
@@ -49,7 +48,6 @@ const app = new Hono<HonoConfig>()
       createContext: createTRPCContextFromHonoContext(c),
     })(c, next);
   })
-  .route("/resume", resume)
-  .route("/webhook", webhook);
+  .route("/resume", resume);
 
 export { app };
