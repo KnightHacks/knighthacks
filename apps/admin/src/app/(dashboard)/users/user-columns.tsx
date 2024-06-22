@@ -109,7 +109,7 @@ function Actions({
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
             onClick={async () => {
-              await navigator.clipboard.writeText(user.id);
+              await navigator.clipboard.writeText(user.id.toString());
               toast("Success!", {
                 description: "User ID copied",
               });
