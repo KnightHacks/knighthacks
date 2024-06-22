@@ -42,7 +42,7 @@ export const usersRelations = relations(users, ({ many, one }) => {
 
 export const userProfiles = sqliteTable("user_profiles", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  userId: text("user_id")
+  userId: integer("user_id")
     .references(() => users.id, {
       onDelete: "cascade", // If the user is deleted, delete the metadata
       onUpdate: "cascade", // If the user is updated, update the metadata
@@ -88,7 +88,7 @@ export const hackers = sqliteTable(
   "hackers",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    userId: text("user_id")
+    userId: integer("user_id")
       .references(() => users.id, {
         onDelete: "cascade", // If the user is deleted, delete the hacker
         onUpdate: "cascade", // If the user is updated, update the hacker
