@@ -22,7 +22,7 @@ export const UpdateUserSchema = CreateUserSchema.partial()
   .omit({ email: true });
 
 export const CreateUserProfileSchema = z.object({
-  userId: z.string(),
+  userId: z.number(),
   phone: z
     .string()
     .min(1, { message: "Phone number is required" })
@@ -73,7 +73,7 @@ export const CreateUserProfileFormSchema = CreateUserProfileSchema.extend({
 
 export const UpdateUserProfileSchema = CreateUserProfileSchema.partial().extend(
   {
-    userId: z.string(),
+    userId: z.number(),
   },
 );
 
@@ -102,7 +102,7 @@ export const ProfileApplicationSchema = CreateUserProfileSchema.omit({
 
 export const UpdateUserProfileFormSchema =
   CreateUserProfileFormSchema.partial().extend({
-    userId: z.string(),
+    userId: z.number(),
   });
 
 export const CreateHackathonSchema = z.object({
@@ -140,7 +140,7 @@ export const UpdateHackathonFormSchema =
 
 export const CreateHackerSchema = z.object({
   hackathonId: z.number(),
-  userId: z.string(),
+  userId: z.number(),
   survey1: z.string().min(1, { message: "This question is required" }),
   survey2: z.string().min(1, { message: "This question is required" }),
   isFirstTime: z.boolean(),
