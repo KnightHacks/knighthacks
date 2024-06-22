@@ -15,11 +15,9 @@ export const CreateUserSchema = z.object({
   lastName: z.string().min(1, { message: "Rquired" }),
 });
 
-export const UpdateUserSchema = CreateUserSchema.partial()
-  .extend({
-    userId: z.number(),
-  })
-  .omit({ email: true });
+export const UpdateUserSchema = CreateUserSchema.partial().extend({
+  userId: z.number(),
+});
 
 export const CreateUserProfileSchema = z
   .object({

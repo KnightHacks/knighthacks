@@ -28,6 +28,7 @@ export function UpdateUserForm({
       userId: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
+      email: user.email,
     },
   });
 
@@ -74,6 +75,19 @@ export function UpdateUserForm({
               <FormLabel>Last Name</FormLabel>
               <FormControl>
                 <Input placeholder="Last Name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

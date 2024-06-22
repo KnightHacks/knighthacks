@@ -39,7 +39,7 @@ import { CreateUserProfileFormSchema } from "@knighthacks/validators";
 
 import { api } from "~/trpc";
 
-export function CreateUserProfileForm({ userId }: { userId: string }) {
+export function CreateUserProfileForm({ userId }: { userId: number }) {
   const form = useForm({
     schema: CreateUserProfileFormSchema,
     defaultValues: {
