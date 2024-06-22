@@ -17,7 +17,7 @@ export const CreateUserSchema = z.object({
 
 export const UpdateUserSchema = CreateUserSchema.partial()
   .extend({
-    userId: z.string(),
+    userId: z.number(),
   })
   .omit({ email: true });
 
