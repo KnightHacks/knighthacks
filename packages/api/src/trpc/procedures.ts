@@ -18,5 +18,5 @@ export const authenticatedProcedure = publicProcedure.use(isAuthenticated);
 // Profile procedures require a user with a profile
 export const profileProcedure = authenticatedProcedure.use(hasProfile);
 
-// Hacker procedures require a user to have applied to the current hackathon
+// Application procedures require a user with a profile and an application
 export const applicationProcedure = profileProcedure.use(hasApplied);

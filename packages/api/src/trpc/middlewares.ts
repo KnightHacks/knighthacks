@@ -1,36 +1,25 @@
 import { TRPCError } from "@trpc/server";
 
-import {
-  and,
-  asc,
-  eq,
-  hackathons,
-  hackers,
-  userProfiles,
-} from "@knighthacks/db";
-
 import { middleware } from "./init";
 
 export const isAuthenticated = middleware((opts) => {
-  const user = opts.ctx.user;
+  const clerkUser = opts.ctx.clerkUser;
 
-  if (!user) {
+  if (!clerkUser) {
     throw new TRPCError({ code: "UNAUTHORIZED", message: "Not authenticated" });
   }
 
   return opts.next({
     ctx: {
       ...opts.ctx,
-      user: {
-        ...user,
-        isAdmin: user.email.endsWith("@knighthacks.org"),
-      },
+      isAdmin: clerkUser.email.endsWith("@knighthacks.org"),
+      clerkUser,
     },
   });
 });
 
 export const isAdmin = isAuthenticated.unstable_pipe((opts) => {
-  if (!opts.ctx.user.isAdmin) {
+  if (!opts.ctx.isAdmin) {
     throw new TRPCError({ code: "UNAUTHORIZED", message: "Not an admin" });
   }
 
@@ -38,24 +27,25 @@ export const isAdmin = isAuthenticated.unstable_pipe((opts) => {
 });
 
 export const hasProfile = isAuthenticated.unstable_pipe(async (opts) => {
-  const profile = await opts.ctx.db.query.userProfiles.findFirst({
-    where: eq(userProfiles.userId, opts.ctx.user.id),
+  const user = await opts.ctx.db.query.users.findFirst({
+    where: (users, { eq }) => eq(users.email, opts.ctx.clerkUser.email),
+    with: {
+      profile: true,
+      hackers: true,
+    },
   });
 
-  if (!profile) {
+  if (!user?.profile) {
     throw new TRPCError({
-      code: "NOT_FOUND",
-      message: "No profile found",
+      code: "INTERNAL_SERVER_ERROR",
+      message: "User profile not found",
     });
   }
 
   return opts.next({
     ctx: {
       ...opts.ctx,
-      user: {
-        ...opts.ctx.user,
-        profile,
-      },
+      user,
     },
   });
 });
@@ -63,7 +53,7 @@ export const hasProfile = isAuthenticated.unstable_pipe(async (opts) => {
 export const hasApplied = hasProfile.unstable_pipe(async (opts) => {
   const user = opts.ctx.user;
   const hackathon = await opts.ctx.db.query.hackathons.findFirst({
-    orderBy: asc(hackathons.startDate),
+    orderBy: (hackathons, { asc }) => asc(hackathons.startDate),
   });
 
   if (!hackathon) {
@@ -73,14 +63,11 @@ export const hasApplied = hasProfile.unstable_pipe(async (opts) => {
     });
   }
 
-  const hacker = await opts.ctx.db.query.hackers.findFirst({
-    where: and(
-      eq(hackers.userId, user.id),
-      eq(hackers.hackathonId, hackathon.id),
-    ),
-  });
+  const application = user.hackers.find(
+    (hacker) => hacker.hackathonId === hackathon.id,
+  );
 
-  if (!hacker) {
+  if (!application) {
     throw new TRPCError({
       code: "NOT_FOUND",
       message: "No application found",
@@ -92,7 +79,7 @@ export const hasApplied = hasProfile.unstable_pipe(async (opts) => {
       ...opts.ctx,
       user: {
         ...user,
-        hacker,
+        application,
       },
       currentHackathon: hackathon,
     },
