@@ -9,11 +9,7 @@ import {
 } from "@knighthacks/validators";
 
 import { createTRPCRouter } from "../init";
-import {
-  adminProcedure,
-  applicationProcedure,
-  profileProcedure,
-} from "../procedures";
+import { adminProcedure, profileProcedure } from "../procedures";
 
 export const hackerRouter = createTRPCRouter({
   application: profileProcedure
@@ -37,7 +33,7 @@ export const hackerRouter = createTRPCRouter({
         });
       });
     }),
-  getApplication: applicationProcedure.query(async ({ ctx }) => {
+  getApplication: profileProcedure.query(async ({ ctx }) => {
     return ctx.db.query.hackers.findFirst({
       where: eq(hackers.userId, ctx.user.id),
       with: {
