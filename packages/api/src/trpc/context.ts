@@ -24,6 +24,7 @@ export function createTRPCContextFromHonoContext(c: HonoContext) {
       db,
       clerk,
       user,
+      clerkUser: auth?.sessionClaims,
       env: c.env,
     };
   };
