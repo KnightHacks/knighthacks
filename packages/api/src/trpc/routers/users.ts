@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { eq, userProfiles, users } from "@knighthacks/db";
@@ -14,6 +15,7 @@ import { adminProcedure, authenticatedProcedure } from "../procedures";
 
 export const userRouter = createTRPCRouter({
   getProfile: authenticatedProcedure.query(async ({ ctx }) => {
+    if (!ctx.user) return null;
     return ctx.db.query.userProfiles.findFirst({
       where: eq(userProfiles.userId, ctx.user.id),
     });
@@ -21,10 +23,32 @@ export const userRouter = createTRPCRouter({
   profileApplication: authenticatedProcedure
     .input(ProfileApplicationSchema)
     .mutation(async ({ ctx, input }) => {
-      await ctx.db.insert(userProfiles).values({
-        ...input,
-        userId: ctx.user.id,
-        gender: input.gender,
+      await ctx.db.transaction(async (db) => {
+        const userId = (
+          await db
+            .insert(users)
+            .values({
+              email: input.email,
+              firstName: input.firstName,
+              lastName: input.lastName,
+            })
+            .returning({
+              id: users.id,
+            })
+        )[0]?.id;
+
+        if (!userId) {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to create user",
+          });
+        }
+
+        await db.insert(userProfiles).values({
+          ...input,
+          userId,
+          gender: input.gender,
+        });
       });
     }),
   adminCreateProfile: adminProcedure
