@@ -54,6 +54,9 @@ export function ProfileForm() {
   const form = useForm({
     schema: ProfileApplicationFormSchema,
     defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
       phone: "",
       age: "18",
       shirtSize: "SM",
@@ -69,8 +72,6 @@ export function ProfileForm() {
       github: "",
       personalWebsite: "",
       linkedin: "",
-      ethnicity: "White",
-      gender: "Man",
       discord: "",
     },
   });
@@ -100,7 +101,7 @@ export function ProfileForm() {
       <Form {...form}>
         <form
           noValidate
-          className="space-y-4"
+          className="min-w-0 space-y-4"
           onSubmit={form.handleSubmit(async (data) => {
             const token = await getToken();
 
@@ -123,269 +124,180 @@ export function ProfileForm() {
           })}
         >
           <h2 className="text-xl font-semibold">About You</h2>
-          <FormField
-            control={form.control}
-            name="discord"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Discord</FormLabel>
-                <FormControl>
-                  <Input placeholder="Discord" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone</FormLabel>
-                <FormControl>
-                  <Input placeholder="Phone" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="gender"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Gender</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your gender" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {GENDERS.map((gender) => (
-                      <SelectItem key={gender} value={gender}>
-                        {gender}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="ethnicity"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Ethnicity</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your ethnicity" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {ETHNICITIES.map((ethnicity) => (
-                      <SelectItem key={ethnicity} value={ethnicity}>
-                        {ethnicity}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="age"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Age</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Age"
-                    min={18}
-                    max={100}
-                    className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                    {...field}
-                    onChange={(e) => field.onChange(String(e.target.value))}
-                    value={field.value}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="shirtSize"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Shirt Size</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your shirt size" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {SHIRT_SIZES.map((size) => (
-                      <SelectItem key={size} value={size}>
-                        {size}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="major"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>Major</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant="outline"
-                        role="combobox"
-                        className={cn(
-                          "justify-between px-3",
-                          !field.value && "text-muted-foreground",
-                        )}
-                      >
-                        {field.value
-                          ? MAJORS.find((major) => major === field.value)
-                          : "Select your major"}
-                        <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="p-0">
-                    <MajorsComboBox value={field.value} form={form} />
-                  </PopoverContent>
-                </Popover>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="school"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>School</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant="outline"
-                        role="combobox"
-                        className={cn(
-                          "justify-between px-3",
-                          !field.value && "text-muted-foreground",
-                        )}
-                      >
-                        {field.value
-                          ? SCHOOLS.find((school) => school === field.value)
-                          : "Select your school"}
-                        <ChevronDownIcon className="h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="p-0">
-                    <SchoolsCombobox value={field.value} form={form} />
-                  </PopoverContent>
-                </Popover>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="gradYear"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Graduation Year</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your graduation year" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {Array.from(
-                      { length: 5 },
-                      (_, i) => new Date().getFullYear() + i,
-                    ).map((year) => (
-                      <SelectItem key={year} value={String(year)}>
-                        {year}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <h2 className="text-xl font-semibold">Shipping Information</h2>
-          <FormField
-            control={form.control}
-            name="country"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>Country</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant="outline"
-                        role="combobox"
-                        className={cn(
-                          "justify-between px-3",
-                          !field.value && "text-muted-foreground",
-                        )}
-                      >
-                        {field.value
-                          ? COUNTRIES.find((country) => country === field.value)
-                          : "Select your country"}
-                        <ChevronDownIcon className="h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="p-0">
-                    <CountriesCombobox value={field.value} form={form} />
-                  </PopoverContent>
-                </Popover>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {form.watch("country") === "United States" ? (
+          <div className="flex flex-col gap-4 sm:flex-row">
             <FormField
               control={form.control}
-              name="state"
+              name="firstName"
               render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>State</FormLabel>
+                <FormItem className="flex-1">
+                  <FormLabel>First Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="First Name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Last Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Last Name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="age"
+              render={({ field }) => (
+                <FormItem className="sm:max-w-[54px]">
+                  <FormLabel>Age</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Age"
+                      min={18}
+                      max={100}
+                      className="[appearance:textfield]  [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                      {...field}
+                      onChange={(e) => field.onChange(String(e.target.value))}
+                      value={field.value}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="shirtSize"
+              render={({ field }) => (
+                <FormItem className="sm:w-[80px]">
+                  <FormLabel>Shirt Size</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your shirt size" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {SHIRT_SIZES.map((size) => (
+                        <SelectItem key={size} value={size}>
+                          {size}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="discord"
+              render={({ field }) => (
+                <FormItem className="sm:max-w-[150px]">
+                  <FormLabel>Discord</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Discord" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem className="sm:max-w-[114px]">
+                  <FormLabel>Phone</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Phone" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <FormField
+              control={form.control}
+              name="ethnicity"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Ethnicity</FormLabel>
+                  <Select onValueChange={field.onChange}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your ethnicity" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {ETHNICITIES.map((ethnicity) => (
+                        <SelectItem key={ethnicity} value={ethnicity}>
+                          {ethnicity}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Gender</FormLabel>
+                  <Select onValueChange={field.onChange}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your gender" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {GENDERS.map((gender) => (
+                        <SelectItem key={gender} value={gender}>
+                          {gender}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <FormField
+              control={form.control}
+              name="school"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>School</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -393,101 +305,240 @@ export function ProfileForm() {
                           variant="outline"
                           role="combobox"
                           className={cn(
-                            "justify-between px-3",
+                            "flex w-full justify-between truncate px-3 ",
                             !field.value && "text-muted-foreground",
                           )}
                         >
-                          {field.value
-                            ? US_STATES.find((state) => state === field.value)
-                            : "Select the state you reside in"}
-                          <ChevronDownIcon className="h-4 w-4 shrink-0 opacity-50" />
+                          <span className="truncate">
+                            {field.value
+                              ? SCHOOLS.find((school) => school === field.value)
+                              : "Select your school"}
+                          </span>
+                          <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
                     <PopoverContent className="p-0">
-                      <USStatesCombobox
-                        value={field.value as (typeof US_STATES)[number]}
-                        form={form}
-                      />
+                      <SchoolsCombobox value={field.value} form={form} />
                     </PopoverContent>
                   </Popover>
                   <FormMessage />
                 </FormItem>
               )}
             />
-          ) : (
             <FormField
               control={form.control}
-              name="state"
+              name="major"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>State or Province</FormLabel>
+                <FormItem className="min-w-0">
+                  <FormLabel>Major</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "flex w-full justify-between px-3 ",
+                            !field.value && "text-muted-foreground",
+                          )}
+                        >
+                          <span className="truncate">
+                            {field.value
+                              ? MAJORS.find((major) => major === field.value)
+                              : "Select your major"}
+                          </span>
+                          <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0">
+                      <MajorsComboBox value={field.value} form={form} />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="gradYear"
+              render={({ field }) => (
+                <FormItem className="sm:max-w-[90px]">
+                  <FormLabel>Grad Year</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your graduation year" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {Array.from(
+                        { length: 5 },
+                        (_, i) => new Date().getFullYear() + i,
+                      ).map((year) => (
+                        <SelectItem key={year} value={String(year)}>
+                          {year}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <h2 className="text-xl font-semibold">Shipping Information</h2>
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <FormField
+              control={form.control}
+              name="country"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Country</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "flex w-full justify-between px-3",
+                            !field.value && "text-muted-foreground",
+                          )}
+                        >
+                          {field.value
+                            ? COUNTRIES.find(
+                                (country) => country === field.value,
+                              )
+                            : "Select your country"}
+                          <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0">
+                      <CountriesCombobox value={field.value} form={form} />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {form.watch("country") === "United States" ? (
+              <FormField
+                control={form.control}
+                name="state"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>State</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "flex w-full justify-between px-3",
+                              !field.value && "text-muted-foreground",
+                            )}
+                          >
+                            {field.value
+                              ? US_STATES.find((state) => state === field.value)
+                              : "Select the state you reside in"}
+                            <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="p-0">
+                        <USStatesCombobox
+                          value={field.value as (typeof US_STATES)[number]}
+                          form={form}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ) : (
+              <FormField
+                control={form.control}
+                name="state"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>State or Province</FormLabel>
+                    <FormControl>
+                      <Input placeholder="State or province" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+            <FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem className="sm:max-w-[125px]">
+                  <FormLabel>City</FormLabel>
                   <FormControl>
-                    <Input placeholder="State or province" {...field} />
+                    <Input placeholder="City" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-          )}
 
-          <FormField
-            control={form.control}
-            name="city"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>City</FormLabel>
-                <FormControl>
-                  <Input placeholder="City" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="zip"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Zip Code</FormLabel>
-                <FormControl>
-                  <Input placeholder="Zip Code" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="address1"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Address Line 1</FormLabel>
-                <FormControl>
-                  <Input placeholder="Address Line 1" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="address2"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Address Line 2</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Address Line 2"
-                    {...field}
-                    value={field.value}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="zip"
+              render={({ field }) => (
+                <FormItem className="sm:max-w-[86px]">
+                  <FormLabel>Zip Code</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Zip Code" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <FormField
+              control={form.control}
+              name="address1"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Address Line 1</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Address Line 1" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="address2"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Address Line 2</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Address Line 2"
+                      {...field}
+                      value={field.value}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <h2 className="text-xl font-semibold">For Our Sponsors</h2>
           <FormField
@@ -583,7 +634,7 @@ function MajorsComboBox({
       <CommandInput
         value={search}
         onValueChange={setSearch}
-        placeholder="Search majors..."
+        placeholder="Search for more majors..."
       />
       <CommandEmpty>No major found.</CommandEmpty>
       <ScrollArea>
@@ -630,7 +681,7 @@ function SchoolsCombobox({
       <CommandInput
         value={search}
         onValueChange={setSearch}
-        placeholder="Search schools..."
+        placeholder="Search for more schools..."
       />
       <CommandEmpty>No school found.</CommandEmpty>
       <ScrollArea>
@@ -677,7 +728,7 @@ function CountriesCombobox({
       <CommandInput
         value={search}
         onValueChange={setSearch}
-        placeholder="Search countries..."
+        placeholder="Search for more countries..."
       />
       <CommandEmpty>No country found.</CommandEmpty>
       <ScrollArea>
@@ -726,7 +777,7 @@ function USStatesCombobox({
       <CommandInput
         value={search}
         onValueChange={setSearch}
-        placeholder="Search states..."
+        placeholder="Search for more states..."
       />
       <CommandEmpty>No state found.</CommandEmpty>
       <ScrollArea>
