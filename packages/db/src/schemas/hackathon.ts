@@ -19,7 +19,7 @@ import {
 export const users = sqliteTable(
   "users",
   {
-    id: text("id").primaryKey(), // This will be generated from Clerk
+    id: integer("id").primaryKey({ autoIncrement: true }),
     email: text("email").notNull().unique(),
     firstName: text("first_name").notNull(),
     lastName: text("last_name").notNull(),
