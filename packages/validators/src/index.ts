@@ -10,9 +10,9 @@ import {
 } from "@knighthacks/consts";
 
 export const CreateUserSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  firstName: z.string().min(1, { message: "First name is required" }),
-  lastName: z.string().min(1, { message: "Last name is required" }),
+  email: z.string().min(1, { message: "Required" }).email("Invalid email"),
+  firstName: z.string().min(1, { message: "Required" }),
+  lastName: z.string().min(1, { message: "Rquired" }),
 });
 
 export const UpdateUserSchema = CreateUserSchema.partial()
@@ -21,51 +21,53 @@ export const UpdateUserSchema = CreateUserSchema.partial()
   })
   .omit({ email: true });
 
-export const CreateUserProfileSchema = z.object({
-  userId: z.number(),
-  phone: z
-    .string()
-    .min(1, { message: "Phone number is required" })
-    .regex(/^\d{10}$/, "Invalid phone"),
-  address1: z.string().min(1, { message: "Address is required" }),
-  address2: z.string().optional().or(z.literal("")),
-  country: z.enum(COUNTRIES),
-  github: z
-    .string()
-    .url({ message: "Invalid GitHub link" })
-    .optional()
-    .or(z.literal("")),
-  personalWebsite: z
-    .string()
-    .url({ message: "Invalid personal website link" })
-    .optional()
-    .or(z.literal("")),
-  linkedin: z
-    .string()
-    .url({ message: "Invalid LinkedIn link" })
-    .optional()
-    .or(z.literal("")),
-  city: z.string().min(1, { message: "City is required" }),
-  state: z.string().min(1, { message: "State is required" }),
-  zip: z
-    .string()
-    .min(1, { message: "Zip code is required" })
-    .regex(/^\d{5}$/, { message: "Invalid zip code" }),
-  age: z.coerce
-    .number()
-    .min(18, {
-      message: "You must be at least 18 years old to participate",
-    })
-    .max(100, { message: "Erm, what the sigma?" }),
-  major: z.enum(MAJORS),
-  school: z.enum(SCHOOLS),
-  gradYear: z.string().min(4, { message: "Graduation year is required" }),
-  shirtSize: z.enum(SHIRT_SIZES),
-  resume: z.string().optional(),
-  gender: z.string().min(1, { message: "Gender is required" }),
-  ethnicity: z.string().min(1, { message: "Ethnicity is required" }),
-  discord: z.string().min(1, { message: "Discord username is required" }),
-});
+export const CreateUserProfileSchema = z
+  .object({
+    userId: z.number(),
+    phone: z
+      .string()
+      .min(1, { message: "Required" })
+      .regex(/^\d{10}$/, "Invalid phone"),
+    address1: z.string().min(1, { message: "Required" }),
+    address2: z.string().optional().or(z.literal("")),
+    country: z.enum(COUNTRIES),
+    github: z
+      .string()
+      .url({ message: "Invalid GitHub link" })
+      .optional()
+      .or(z.literal("")),
+    personalWebsite: z
+      .string()
+      .url({ message: "Invalid personal website link" })
+      .optional()
+      .or(z.literal("")),
+    linkedin: z
+      .string()
+      .url({ message: "Invalid LinkedIn link" })
+      .optional()
+      .or(z.literal("")),
+    city: z.string().min(1, { message: "Required" }),
+    state: z.string().min(1, { message: "Required" }),
+    zip: z
+      .string()
+      .min(1, { message: "Required" })
+      .regex(/^\d{5}$/, { message: "Invalid zip code" }),
+    age: z.coerce
+      .number()
+      .min(18, {
+        message: "You must be at least 18 years",
+      })
+      .max(100, { message: "Erm, what the sigma?" }),
+    major: z.enum(MAJORS),
+    school: z.enum(SCHOOLS),
+    gradYear: z.string().min(4, { message: "Required" }),
+    shirtSize: z.enum(SHIRT_SIZES),
+    resume: z.string().optional(),
+    gender: z.string().min(1, { message: "Required" }),
+    ethnicity: z.string().min(1, { message: "Required" }),
+    discord: z.string().min(1, { message: "Required" }),
+  })
+  .merge(CreateUserSchema);
 
 export const CreateUserProfileFormSchema = CreateUserProfileSchema.extend({
   resume: z.instanceof(File).optional(),
@@ -82,14 +84,14 @@ export const ProfileApplicationFormSchema = CreateUserProfileFormSchema.omit({
 }).extend({
   age: z
     .string()
-    .min(1, { message: "Age is required" })
+    .min(1, { message: "Required" })
     // Try to parse the string into an integer
     .refine((value) => !isNaN(parseInt(value, 10)), {
-      message: "Age must be a number",
+      message: "Must be a number",
     })
     .transform((value) => parseInt(value, 10))
     .refine((age) => age >= 18, {
-      message: "You must be at least 18 years old to participate",
+      message: "You must be at least 18 years old",
     })
     .refine((age) => age <= 100, {
       message: "Erm, what the sigma?",
