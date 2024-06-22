@@ -5,7 +5,7 @@ import { getAuth } from "@hono/clerk-auth";
 import type { HonoContext } from "../config";
 
 export function createTRPCContextFromHonoContext(c: HonoContext) {
-  return (opts: FetchCreateContextFnOptions) => {
+  return async (opts: FetchCreateContextFnOptions) => {
     /*
      * Here we spawn a new database connection for each request.
      * This is because we can't share a connection between requests in a Cloudflare Worker.
@@ -13,12 +13,17 @@ export function createTRPCContextFromHonoContext(c: HonoContext) {
     const db = c.get("db");
     const auth = getAuth(c);
     const clerk = c.get("clerk");
+    const user = auth?.sessionClaims
+      ? await db.query.users.findFirst({
+          where: (users, { eq }) => eq(users.email, auth.sessionClaims.email),
+        })
+      : undefined;
 
     return {
       ...opts,
       db,
       clerk,
-      user: auth?.sessionClaims,
+      user,
       env: c.env,
     };
   };
