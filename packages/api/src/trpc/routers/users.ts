@@ -1,4 +1,3 @@
-import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { eq, userProfiles, users } from "@knighthacks/db";
@@ -48,44 +47,18 @@ export const userRouter = createTRPCRouter({
         .where(eq(userProfiles.userId, userId));
     }),
   adminDelete: adminProcedure
-    .input(z.string())
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.transaction(async (db) => {
-        await ctx.clerk.users.deleteUser(input);
-        await db.delete(users).where(eq(users.id, input));
-      });
+    .input(z.number())
+    .mutation(async ({ input, ctx }) => {
+      await ctx.db.delete(users).where(eq(users.id, input));
     }),
   adminCreate: adminProcedure
     .input(CreateUserSchema)
     .mutation(async ({ ctx, input }) => {
-      await ctx.db.transaction(async (db) => {
-        // Check if email is already in use
-        const existingUser = await ctx.db.query.users.findFirst({
-          where: eq(users.email, input.email),
-        });
-
-        if (existingUser) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: "Email is already in use",
-          });
-        }
-
-        const user = await ctx.clerk.users.createUser({
-          firstName: input.firstName,
-          lastName: input.lastName,
-          emailAddress: [input.email],
-        });
-
-        await db.insert(users).values({ ...input, id: user.id });
-      });
+      await ctx.db.insert(users).values(input);
     }),
   adminUpdate: adminProcedure
     .input(UpdateUserSchema)
     .mutation(async ({ ctx, input: { userId, ...user } }) => {
-      await ctx.db.transaction(async (db) => {
-        await ctx.clerk.users.updateUser(userId, user);
-        await db.update(users).set(user).where(eq(users.id, userId));
-      });
+      await ctx.db.update(users).set(user).where(eq(users.id, userId));
     }),
 });
