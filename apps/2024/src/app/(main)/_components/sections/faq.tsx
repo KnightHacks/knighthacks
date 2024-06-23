@@ -45,28 +45,32 @@ export function FAQ() {
       </h1>
       <div className="p-5">
         {Object.entries(FAQs).map(([key, value]) => (
-          <div
-            key={key}
-            className="flex w-[250px] flex-col items-start rounded-[20px] bg-[#7CCCFF] p-5 sm:w-[500px] md:w-[1000px]"
-          >
-            <div className="flex flex-row items-center">
-              <button
-                onClick={() => handleToggle(key)}
-                className="focus:outline-none"
-              >
-                <Image
-                  width={50}
-                  height={50}
-                  src="/arrow.svg"
-                  alt="arrow"
-                  className={`transition-transform duration-100 ${dropStates[key] ? "rotate-90" : ""}`}
-                />
-              </button>
-              <p className="font-k2d text-lg font-semibold sm:text-xl md:text-2xl">
-                {key}
-              </p>
+          <div key={key}>
+            <div
+              key={key}
+              className="flex w-[250px] flex-col items-start rounded-[20px] bg-[#7CCCFF] p-5 sm:w-[500px] md:w-[1000px]"
+            >
+              <div className="flex flex-row items-center">
+                <button
+                  onClick={() => handleToggle(key)}
+                  className="focus:outline-none"
+                >
+                  <Image
+                    width={50}
+                    height={50}
+                    src="/arrow.svg"
+                    alt="arrow"
+                    className={`transition-transform duration-100 ${dropStates[key] ? "rotate-90" : ""}`}
+                  />
+                </button>
+                <p className="font-k2d text-lg font-semibold sm:text-xl md:text-2xl">
+                  {key}
+                </p>
+              </div>
+              <p>{dropStates[key] ? value : ""}</p>
+              <p className="p-2"></p>
             </div>
-            <p>{dropStates[key] ? value : ""}</p>
+            <p className="p-1"></p>
           </div>
         ))}
       </div>
