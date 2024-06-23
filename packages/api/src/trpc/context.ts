@@ -1,4 +1,3 @@
-import type { inferAsyncReturnType } from "@trpc/server";
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { getAuth } from "@hono/clerk-auth";
 

@@ -47,6 +47,7 @@ import {
 import { toast } from "@knighthacks/ui/toast";
 import { ProfileApplicationFormSchema } from "@knighthacks/validators";
 
+import { env } from "~/env";
 import { trpc } from "~/trpc/client";
 
 export function ProfileForm() {
@@ -79,7 +80,7 @@ export function ProfileForm() {
 
   const router = useRouter();
   const createProfile = trpc.user.profileApplication.useMutation({
-    onSuccess: async () => {
+    onSuccess: () => {
       toast("Success!", {
         description: "Created user profile",
       });
@@ -305,13 +306,10 @@ export function ProfileForm() {
                           role="combobox"
                           className={cn(
                             "flex w-full justify-between truncate px-3 ",
-                            !field.value && "text-muted-foreground",
                           )}
                         >
                           <span className="truncate">
-                            {field.value
-                              ? SCHOOLS.find((school) => school === field.value)
-                              : "Select your school"}
+                            {SCHOOLS.find((school) => school === field.value)}
                           </span>
                           <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
@@ -337,15 +335,10 @@ export function ProfileForm() {
                         <Button
                           variant="outline"
                           role="combobox"
-                          className={cn(
-                            "flex w-full justify-between px-3 ",
-                            !field.value && "text-muted-foreground",
-                          )}
+                          className={cn("flex w-full justify-between px-3 ")}
                         >
                           <span className="truncate">
-                            {field.value
-                              ? MAJORS.find((major) => major === field.value)
-                              : "Select your major"}
+                            {MAJORS.find((major) => major === field.value)}
                           </span>
                           <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
@@ -405,16 +398,9 @@ export function ProfileForm() {
                         <Button
                           variant="outline"
                           role="combobox"
-                          className={cn(
-                            "flex w-full justify-between px-3",
-                            !field.value && "text-muted-foreground",
-                          )}
+                          className={cn("flex w-full justify-between px-3")}
                         >
-                          {field.value
-                            ? COUNTRIES.find(
-                                (country) => country === field.value,
-                              )
-                            : "Select your country"}
+                          {COUNTRIES.find((country) => country === field.value)}
                           <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
@@ -808,7 +794,7 @@ async function uploadResume(resume: File, token: string) {
   const formData = new FormData();
   formData.append("resume", resume);
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/resume/upload/${resume.name}`,
+    `${env.NEXT_PUBLIC_API_URL}/resume/upload/${resume.name}`,
     {
       method: "PUT",
       body: formData,

@@ -53,7 +53,7 @@ export function UpdateSponsorForm({
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(async (data) => {
+        onSubmit={form.handleSubmit((data) => {
           updateSponsor.mutate(data);
         })}
         className="flex flex-col justify-center space-y-6"

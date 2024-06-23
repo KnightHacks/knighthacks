@@ -55,7 +55,7 @@ export function CreateHackathonForm() {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(async (data) => {
+        onSubmit={form.handleSubmit((data) => {
           createHackathon.mutate({
             ...data,
             startDate: data.date.from?.toISOString().split("T")[0] ?? "",
@@ -91,12 +91,11 @@ export function CreateHackathonForm() {
                       variant={"outline"}
                       className={cn(
                         "w-full justify-start text-left font-normal",
-                        !field.value && "text-muted-foreground",
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {field?.value.from ? (
-                        field?.value.to ? (
+                      {field.value.from ? (
+                        field.value.to ? (
                           <>
                             {format(field.value.from, "LLL dd, y")} -{" "}
                             {format(field.value.to, "LLL dd, y")}
@@ -113,7 +112,7 @@ export function CreateHackathonForm() {
                     <Calendar
                       initialFocus
                       mode="range"
-                      defaultMonth={field.value?.from}
+                      defaultMonth={field.value.from}
                       selected={{ from: field.value.from, to: field.value.to }}
                       onSelect={field.onChange}
                       numberOfMonths={1}

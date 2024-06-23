@@ -12,7 +12,6 @@ export const resume = new Hono<HonoConfig>()
     const body = await c.req.arrayBuffer();
 
     if (!key) return c.text("No key provided", 400);
-    if (!body) return c.text("No body provided", 400);
     if (!key.endsWith(".pdf")) return c.text("Invalid file type", 400);
 
     // Format a timestamp for the filename
@@ -39,7 +38,7 @@ export const resume = new Hono<HonoConfig>()
 
     // Get user from session
     const user = await db.query.users.findFirst({
-      where: eq(users.email, auth.sessionClaims?.email),
+      where: eq(users.email, auth.sessionClaims.email),
       with: {
         profile: true,
       },
@@ -49,7 +48,7 @@ export const resume = new Hono<HonoConfig>()
 
     // Check if the user's resume matches the key and if they're an admin
     if (
-      key !== user.profile?.resume &&
+      key !== user.profile.resume &&
       !user.email.endsWith("@knighthacks.org")
     ) {
       return c.text("Unauthorized", 401);

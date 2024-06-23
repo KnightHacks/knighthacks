@@ -46,4 +46,3 @@ export const hackathonRouter = createTRPCRouter({
         .where(eq(hackathons.id, hackathonID));
     }),
 });
-z;

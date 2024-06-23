@@ -33,7 +33,7 @@ export function SurveyForm() {
 
   const router = useRouter();
   const registerHacker = trpc.hacker.application.useMutation({
-    onSuccess: async () => {
+    onSuccess: () => {
       toast("Success!", {
         description: "Created user profile",
       });
@@ -54,7 +54,7 @@ export function SurveyForm() {
       <Form {...form}>
         <form
           className="space-y-4"
-          onSubmit={form.handleSubmit(async (data) => {
+          onSubmit={form.handleSubmit((data) => {
             registerHacker.mutate(data);
           })}
         >

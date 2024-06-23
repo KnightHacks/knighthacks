@@ -7,13 +7,14 @@ import { cn } from "@knighthacks/ui";
 import { ThemeToggle } from "@knighthacks/ui/theme";
 import { Toaster } from "@knighthacks/ui/toast";
 
+import { env } from "~/env";
 import { Providers } from "./_components/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NODE_ENV === "production"
+    env.NODE_ENV === "production"
       ? "https://club.knighthacks.org"
       : "http://localhost:3000",
   ),

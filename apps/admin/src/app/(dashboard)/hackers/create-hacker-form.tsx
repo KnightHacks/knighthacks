@@ -43,7 +43,7 @@ export function CreateHackerForm() {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(async (data) => {
+        onSubmit={form.handleSubmit((data) => {
           createHacker.mutate(data);
         })}
         className="flex flex-col justify-center space-y-6"

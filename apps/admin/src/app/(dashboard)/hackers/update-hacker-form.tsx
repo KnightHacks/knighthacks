@@ -49,7 +49,7 @@ export function UpdateHackerForm({
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(async (data) => {
+        onSubmit={form.handleSubmit((data) => {
           createHacker.mutate({
             hackerID: hacker.id,
             ...data,

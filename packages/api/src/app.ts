@@ -4,7 +4,7 @@ import { buildDatabaseClient } from "@knighthacks/db";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 
-import type { HonoConfig } from "./config";
+import type { HonoConfig, HonoContext } from "./config";
 import { resume } from "./routes/resume";
 import { createTRPCContextFromHonoContext } from "./trpc/context";
 import { appRouter } from "./trpc/routers";
@@ -16,7 +16,7 @@ const app = new Hono<HonoConfig>()
   .use(
     "*",
     cors({
-      origin(origin, c) {
+      origin(origin, c: HonoContext) {
         if (c.env.ENV === "development") {
           return origin;
         }

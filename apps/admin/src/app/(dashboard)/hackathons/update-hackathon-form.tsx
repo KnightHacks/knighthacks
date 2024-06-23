@@ -59,7 +59,7 @@ export function UpdateHackathonForm({
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(async (data) => {
+        onSubmit={form.handleSubmit((data) => {
           updateHackathon.mutate({
             hackathonID: data.hackathonID,
             name: data.name,
@@ -101,8 +101,8 @@ export function UpdateHackathonForm({
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {field?.value?.from ? (
-                        field?.value.to ? (
+                      {field.value?.from ? (
+                        field.value.to ? (
                           <>
                             {format(field.value.from, "LLL dd, y")} -{" "}
                             {format(field.value.to, "LLL dd, y")}
