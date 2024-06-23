@@ -38,7 +38,7 @@ export function FAQ() {
   return (
     <section
       id="faq"
-      className="flex h-screen flex-col items-center justify-center"
+      className="flex h-auto flex-col items-center justify-center sm:h-screen"
     >
       <h1 className="font-k2d text-center text-5xl font-semibold text-black">
         Frequently Asked Questions
@@ -47,7 +47,7 @@ export function FAQ() {
         {Object.entries(FAQs).map(([key, value]) => (
           <div
             key={key}
-            className="flex w-[1000px] flex-col items-start rounded-[20px] bg-[#7CCCFF] p-5"
+            className="flex w-[250px] flex-col items-start rounded-[20px] bg-[#7CCCFF] p-5 sm:w-[500px] md:w-[1000px]"
           >
             <div className="flex flex-row items-center">
               <button
@@ -62,7 +62,9 @@ export function FAQ() {
                   className={`transition-transform duration-100 ${dropStates[key] ? "rotate-90" : ""}`}
                 />
               </button>
-              <p className="font-k2d text-2xl font-semibold">{key}</p>
+              <p className="font-k2d text-lg font-semibold sm:text-xl md:text-2xl">
+                {key}
+              </p>
             </div>
             <p>{dropStates[key] ? value : ""}</p>
           </div>
