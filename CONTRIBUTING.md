@@ -23,12 +23,14 @@ This repository is structured as follows:
 ```
 apps
 ├── admin
-├── club-site
-├── hackathon-site
-└── socials-bot
+├── club
+└── 2024
 packages
 ├── api
-└── db
+├── db
+├── consts
+├── ui
+└── validators
 tooling
 ├── eslint
 ├── github
@@ -37,19 +39,21 @@ tooling
 └── typescript
 ```
 
-| Path                  | Description                        |
-| --------------------- | ---------------------------------- |
-| `apps/admin`          | React admin dashboard              |
-| `apps/club-site`      | Knight Hacks club website          |
-| `apps/hackathon-site` | Fall 2024 hackathon website        |
-| `apps/socials-bot`    | Discord bot for social events      |
-| `packages/api`        | Knight Hacks API                   |
-| `packages/db`         | Database schema and config         |
-| `tooling/eslint`      | Eslint configuration files         |
-| `tooling/github`      | GitHub Actions scripts             |
-| `tooling/prettier`    | Prettier configuration files       |
-| `tooling/tailwind`    | Shared Tailwind configuration file |
-| `tooling/typescript`  | TypeScript configuration files     |
+| Path                 | Description                        |
+| -------------------- | ---------------------------------- |
+| `apps/admin`         | React admin dashboard              |
+| `apps/club`          | Knight Hacks club website          |
+| `apps/2024`          | Fall 2024 hackathon website        |
+| `packages/api`       | Knight Hacks API                   |
+| `packages/db`        | Database schema and configuration  |
+| `packages/consts`    | Constant values                    |
+| `packages/ui`        | Knight Hacks' design system        |
+| `packages/validators`| ZOD schema validators              |
+| `tooling/eslint`     | Eslint configuration files         |
+| `tooling/github`     | GitHub Actions scripts             |
+| `tooling/prettier`   | Prettier configuration files       |
+| `tooling/tailwind`   | Shared Tailwind configuration file |
+| `tooling/typescript` | TypeScript configuration files     |
 
 ## Development
 
