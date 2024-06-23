@@ -38,7 +38,7 @@ export function FAQ() {
   return (
     <section
       id="faq"
-      className="flex h-auto flex-col items-center justify-center sm:h-screen"
+      className="flex h-auto flex-col items-center justify-center"
     >
       <h1 className="font-k2d text-center text-5xl font-semibold text-black">
         Frequently Asked Questions
