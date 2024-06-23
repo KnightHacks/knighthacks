@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { UserButton, useUser } from "@clerk/nextjs";
-
 import {
   NavigationMenu,
   NavigationMenuItem,

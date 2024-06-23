@@ -1,10 +1,10 @@
-import { z } from "zod";
-
-import { eq, sponsors } from "@knighthacks/db";
+import { eq } from "@knighthacks/db";
+import { sponsors } from "@knighthacks/db/schema";
 import {
   CreateSponsorSchema,
   UpdateSponsorSchema,
 } from "@knighthacks/validators";
+import { z } from "zod";
 
 import { createTRPCRouter } from "../init";
 import { adminProcedure, publicProcedure } from "../procedures";

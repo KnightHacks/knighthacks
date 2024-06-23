@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
-
 import { MAJORS, SCHOOLS, SHIRT_SIZES } from "@knighthacks/consts";
 import { CheckIcon, cn, DoubleArrowUpIcon } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";

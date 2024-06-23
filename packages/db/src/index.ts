@@ -1,9 +1,9 @@
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 
-import * as schema from "./schemas";
+import * as schema from "./schema";
 
-export function connect(url: string, authToken?: string) {
+export function buildDatabaseClient(url: string, authToken?: string) {
   const client = createClient({
     url,
     authToken,
@@ -12,5 +12,4 @@ export function connect(url: string, authToken?: string) {
   return drizzle(client, { schema });
 }
 
-export * from "drizzle-orm";
-export * from "./schemas";
+export * from "drizzle-orm/sql";

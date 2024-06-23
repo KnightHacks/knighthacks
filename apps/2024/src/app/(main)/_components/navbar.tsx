@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { motion, useMotionValueEvent, useScroll } from "framer-motion";
-
 import { cn } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";
+import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 
 import { MobileSheet } from "./navbar-sheet";
 import { SignOutButton } from "./sign-out-button";

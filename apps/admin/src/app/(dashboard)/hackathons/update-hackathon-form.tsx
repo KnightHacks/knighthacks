@@ -1,5 +1,3 @@
-import { format } from "date-fns";
-
 import type { RouterOutput } from "@knighthacks/api";
 import { CalendarIcon, cn } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";
@@ -21,6 +19,7 @@ import {
 } from "@knighthacks/ui/popover";
 import { toast } from "@knighthacks/ui/toast";
 import { UpdateHackathonFormSchema } from "@knighthacks/validators";
+import { format } from "date-fns";
 
 import { api } from "~/trpc";
 

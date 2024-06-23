@@ -1,7 +1,5 @@
-import { TRPCError } from "@trpc/server";
-import { z } from "zod";
-
-import { eq, userProfiles, users } from "@knighthacks/db";
+import { eq } from "@knighthacks/db";
+import { userProfiles, users } from "@knighthacks/db/schema";
 import {
   CreateUserProfileSchema,
   CreateUserSchema,
@@ -9,6 +7,8 @@ import {
   UpdateUserProfileSchema,
   UpdateUserSchema,
 } from "@knighthacks/validators";
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
 
 import { createTRPCRouter } from "../init";
 import { adminProcedure, authenticatedProcedure } from "../procedures";

@@ -8,23 +8,20 @@
   },
   "license": "MIT",
   "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "devDependencies": {
     "@knighthacks/eslint-config": "workspace:*",
     "@knighthacks/prettier-config": "workspace:*",
     "@knighthacks/tsconfig": "workspace:*",
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
-    "typescript": "^5.3.3"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@knighthacks/eslint-config/base"
-    ]
+    "eslint": "^9.4.0",
+    "prettier": "^3.3.1",
+    "typescript": "^5.4.5"
   },
   "prettier": "@knighthacks/prettier-config"
 }

@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 
 import type { R2Bucket } from "@cloudflare/workers-types";
+import type { buildDatabaseClient } from "@knighthacks/db";
 import type { Context, Input } from "hono";
-
-import type { connect } from "@knighthacks/db";
 
 export type Bindings = {
   ENV: string;
@@ -16,7 +15,7 @@ export type Bindings = {
 };
 
 export type Variables = {
-  db: ReturnType<typeof connect>;
+  db: ReturnType<typeof buildDatabaseClient>;
 };
 
 export type HonoConfig = {

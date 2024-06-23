@@ -1,14 +1,12 @@
+import type { RouterOutput } from "@knighthacks/api";
 import Image from "next/image";
-
-import type { InferSelectModel, sponsors } from "@knighthacks/db";
 
 import { trpc } from "~/trpc/server";
 import { Oscillate } from "../oscillate";
 
-type Sponsor = InferSelectModel<typeof sponsors>;
 export async function Sponsors() {
   const sponsors = await trpc.sponsor.userAll.query();
-  const getSizes = (sponsor: Sponsor) => {
+  const getSizes = (sponsor: RouterOutput["sponsor"]["userAll"][number]) => {
     const sizeMap = {
       gold: { bubbleSize: "large", cellSize: 350, imageSize: 135 },
       silver: { bubbleSize: "medium", cellSize: 275, imageSize: 100 },
@@ -16,9 +14,7 @@ export async function Sponsors() {
       other: { bubbleSize: "small", cellSize: 175, imageSize: 75 },
     };
 
-    const tier = sizeMap[sponsor.tier] ? sponsor.tier : "other";
-
-    return sizeMap[tier];
+    return sizeMap[sponsor.tier];
   };
 
   return (

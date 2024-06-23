@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 import {
   APPLICATION_STATUSES,
   COUNTRIES,
@@ -8,6 +6,7 @@ import {
   SHIRT_SIZES,
   SPONSOR_TIERS,
 } from "@knighthacks/consts";
+import { z } from "zod";
 
 export const CreateUserSchema = z.object({
   email: z.string().min(1, { message: "Required" }).email("Invalid email"),
