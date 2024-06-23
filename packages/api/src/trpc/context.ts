@@ -30,6 +30,6 @@ export function createTRPCContextFromHonoContext(c: HonoContext) {
   };
 }
 
-export type TRPCContext = inferAsyncReturnType<
+export type TRPCContext = Awaited<
   ReturnType<typeof createTRPCContextFromHonoContext>
 >;

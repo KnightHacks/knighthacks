@@ -36,6 +36,7 @@ export function CreateUserForm() {
       firstName: "",
       lastName: "",
       email: "",
+      clerkID: "",
     },
   });
 
@@ -81,6 +82,19 @@ export function CreateUserForm() {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input placeholder="Email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="clerkID"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Clerk ID</FormLabel>
+              <FormControl>
+                <Input placeholder="Clerk ID" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

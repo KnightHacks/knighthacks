@@ -18,7 +18,6 @@ jobs:
   deploy:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    environment: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
     steps:
       - uses: actions/checkout@v3
 
@@ -30,6 +29,8 @@ jobs:
         env:
           NEXT_PUBLIC_API_URL: ${{ vars.API_URL }}
           NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ vars.CLERK_PUBLISHABLE_KEY }}
+          NEXT_PUBLIC_CLERK_SIGN_IN_URL: "/sign-in"
+          NEXT_PUBLIC_CLERK_SIGN_UP_URL: "/sign-up"
 
       - name: Deploy
         id: deploy

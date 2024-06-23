@@ -14,20 +14,20 @@ const app = new Hono<HonoConfig>()
   .get("/", (c) => {
     return c.text("Hello world");
   })
-  .use("*", (c, next) => {
-    const origin =
-      c.env.ENV === "dev"
-        ? "*"
-        : [
-            "https://admin.knighthacks.org",
-            "https://2024.knighthacks.org",
-            "https://club.knighthacks.org",
-            "https://knighthacks.org",
-          ];
-    return cors({
-      origin,
-    })(c, next);
-  })
+  .use(
+    "*",
+    cors({
+      origin(origin, c) {
+        if (c.env.ENV === "development") {
+          return origin;
+        }
+
+        return origin.endsWith(".knighthacks.org")
+          ? origin
+          : "https://knighthacks.org";
+      },
+    }),
+  )
   .use("*", (c, next) => {
     const db = connect(c.env.DATABASE_URL, c.env.DATABASE_AUTH_TOKEN);
     c.set("db", db);

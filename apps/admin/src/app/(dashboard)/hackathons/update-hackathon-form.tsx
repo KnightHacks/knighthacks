@@ -47,7 +47,7 @@ export function UpdateHackathonForm({
   const form = useForm({
     schema: UpdateHackathonFormSchema,
     defaultValues: {
-      hackathonId: hackathon.id,
+      hackathonID: hackathon.id,
       name: hackathon.name,
       date: {
         from: new Date(hackathon.startDate),
@@ -62,7 +62,7 @@ export function UpdateHackathonForm({
       <form
         onSubmit={form.handleSubmit(async (data) => {
           updateHackathon.mutate({
-            hackathonId: data.hackathonId,
+            hackathonID: data.hackathonID,
             name: data.name,
             theme: data.theme,
             startDate: data.date?.from?.toISOString().split("T")[0] ?? "",

@@ -20,6 +20,7 @@ export const users = sqliteTable(
   "users",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
+    clerkID: text("clerk_id").notNull().unique(),
     email: text("email").notNull().unique(),
     firstName: text("first_name").notNull(),
     lastName: text("last_name").notNull(),
@@ -35,14 +36,14 @@ export const usersRelations = relations(users, ({ many, one }) => {
     hackers: many(hackers),
     profile: one(userProfiles, {
       fields: [users.id],
-      references: [userProfiles.userId],
+      references: [userProfiles.userID],
     }),
   };
 });
 
 export const userProfiles = sqliteTable("user_profiles", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  userId: integer("user_id")
+  userID: integer("user_id")
     .references(() => users.id, {
       onDelete: "cascade", // If the user is deleted, delete the metadata
       onUpdate: "cascade", // If the user is updated, update the metadata
@@ -77,7 +78,7 @@ export const userProfiles = sqliteTable("user_profiles", {
 export const userProfileRelations = relations(userProfiles, ({ one }) => {
   return {
     user: one(users, {
-      fields: [userProfiles.userId],
+      fields: [userProfiles.userID],
       references: [users.id],
       relationName: "profile",
     }),
@@ -88,13 +89,13 @@ export const hackers = sqliteTable(
   "hackers",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    userId: integer("user_id")
+    userID: integer("user_id")
       .references(() => users.id, {
         onDelete: "cascade", // If the user is deleted, delete the hacker
         onUpdate: "cascade", // If the user is updated, update the hacker
       })
       .notNull(),
-    hackathonId: integer("hackathon_id")
+    hackathonID: integer("hackathon_id")
       .references(() => hackathons.id, {
         onDelete: "cascade", // If the hackathon is deleted, delete the hacker
         onUpdate: "cascade", // If the hackathon is updated, update the hacker
@@ -111,7 +112,7 @@ export const hackers = sqliteTable(
     isPlinktern: integer("is_plinktern", { mode: "boolean" }).default(false),
   },
   (t) => ({
-    unq: unique().on(t.userId, t.hackathonId),
+    unq: unique().on(t.userID, t.hackathonID),
   }),
 );
 
@@ -119,11 +120,11 @@ export const hackers = sqliteTable(
 export const hackersRelations = relations(hackers, ({ one }) => {
   return {
     user: one(users, {
-      fields: [hackers.userId],
+      fields: [hackers.userID],
       references: [users.id],
     }),
     hackathon: one(hackathons, {
-      fields: [hackers.hackathonId],
+      fields: [hackers.hackathonID],
       references: [hackathons.id],
     }),
   };
@@ -157,7 +158,7 @@ export const sponsors = sqliteTable("sponsors", {
   logo: text("logo").notNull(),
   website: text("website").notNull(),
   tier: text("tier", { enum: SPONSOR_TIERS }).notNull(),
-  hackathonId: integer("hackathon_id")
+  hackathonID: integer("hackathon_id")
     .references(() => hackathons.id, {
       onDelete: "cascade", // If the hackathon is deleted, delete the hacker
       onUpdate: "cascade", // If the hackathon is updated, update the hacker
@@ -168,7 +169,7 @@ export const sponsors = sqliteTable("sponsors", {
 export const sponsorsRelations = relations(sponsors, ({ one }) => {
   return {
     hackathon: one(hackathons, {
-      fields: [sponsors.hackathonId],
+      fields: [sponsors.hackathonID],
       references: [hackathons.id],
     }),
   };

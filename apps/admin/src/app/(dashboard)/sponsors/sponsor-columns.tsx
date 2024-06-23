@@ -98,7 +98,7 @@ export const sponsorColumns: ColumnDef<
     },
   },
   {
-    accessorKey: "hackathonId",
+    accessorKey: "hackathonID",
     header: ({ column }) => {
       return (
         <Button
@@ -112,7 +112,7 @@ export const sponsorColumns: ColumnDef<
       );
     },
     cell: ({ row }) => {
-      return <p className="text-center">{row.original.hackathonId}</p>;
+      return <p className="text-center">{row.original.hackathonID}</p>;
     },
   },
   {

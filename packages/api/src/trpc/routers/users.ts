@@ -17,17 +17,18 @@ export const userRouter = createTRPCRouter({
   getProfile: authenticatedProcedure.query(async ({ ctx }) => {
     if (!ctx.user) return null;
     return ctx.db.query.userProfiles.findFirst({
-      where: eq(userProfiles.userId, ctx.user.id),
+      where: eq(userProfiles.userID, ctx.user.id),
     });
   }),
   profileApplication: authenticatedProcedure
     .input(ProfileApplicationSchema)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (db) => {
-        const userId = (
+        const userID = (
           await db
             .insert(users)
             .values({
+              clerkID: ctx.clerkUser.id,
               email: input.email,
               firstName: input.firstName,
               lastName: input.lastName,
@@ -37,7 +38,7 @@ export const userRouter = createTRPCRouter({
             })
         )[0]?.id;
 
-        if (!userId) {
+        if (!userID) {
           throw new TRPCError({
             code: "INTERNAL_SERVER_ERROR",
             message: "Failed to create user",
@@ -46,7 +47,7 @@ export const userRouter = createTRPCRouter({
 
         await db.insert(userProfiles).values({
           ...input,
-          userId,
+          userID,
           gender: input.gender,
         });
       });
@@ -64,11 +65,11 @@ export const userRouter = createTRPCRouter({
 
   adminUpdateProfile: adminProcedure
     .input(UpdateUserProfileSchema)
-    .mutation(({ ctx, input: { userId, ...userProfile } }) => {
+    .mutation(({ ctx, input: { userID, ...userProfile } }) => {
       return ctx.db
         .update(userProfiles)
         .set(userProfile)
-        .where(eq(userProfiles.userId, userId));
+        .where(eq(userProfiles.userID, userID));
     }),
   adminDelete: adminProcedure
     .input(z.number())
@@ -82,7 +83,7 @@ export const userRouter = createTRPCRouter({
     }),
   adminUpdate: adminProcedure
     .input(UpdateUserSchema)
-    .mutation(async ({ ctx, input: { userId, ...user } }) => {
-      await ctx.db.update(users).set(user).where(eq(users.id, userId));
+    .mutation(async ({ ctx, input: { userID, ...user } }) => {
+      await ctx.db.update(users).set(user).where(eq(users.id, userID));
     }),
 });

@@ -153,7 +153,7 @@ function Actions({
           {user.profile ? (
             <UpdateProfileForm userProfile={user.profile} />
           ) : (
-            <CreateUserProfileForm userId={user.id} />
+            <CreateUserProfileForm userID={user.id} />
           )}
         </SheetContent>
       </Sheet>

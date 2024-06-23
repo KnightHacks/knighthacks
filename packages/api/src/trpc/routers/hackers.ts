@@ -28,14 +28,14 @@ export const hackerRouter = createTRPCRouter({
 
         await db.insert(hackers).values({
           ...input,
-          userId: ctx.user.id,
-          hackathonId: currentHackathon.id,
+          userID: ctx.user.id,
+          hackathonID: currentHackathon.id,
         });
       });
     }),
   getApplication: profileProcedure.query(async ({ ctx }) => {
     return ctx.db.query.hackers.findFirst({
-      where: eq(hackers.userId, ctx.user.id),
+      where: eq(hackers.userID, ctx.user.id),
       with: {
         user: {
           with: {
@@ -55,8 +55,8 @@ export const hackerRouter = createTRPCRouter({
   }),
   adminUpdate: adminProcedure
     .input(UpdateHackerSchema)
-    .mutation(async ({ ctx, input: { hackerId, ...hacker } }) => {
-      await ctx.db.update(hackers).set(hacker).where(eq(hackers.id, hackerId));
+    .mutation(async ({ ctx, input: { hackerID, ...hacker } }) => {
+      await ctx.db.update(hackers).set(hacker).where(eq(hackers.id, hackerID));
     }),
   adminDelete: adminProcedure
     .input(z.number())

@@ -13,15 +13,16 @@ export const CreateUserSchema = z.object({
   email: z.string().min(1, { message: "Required" }).email("Invalid email"),
   firstName: z.string().min(1, { message: "Required" }),
   lastName: z.string().min(1, { message: "Rquired" }),
+  clerkID: z.string().min(1, { message: "Required" }),
 });
 
 export const UpdateUserSchema = CreateUserSchema.partial().extend({
-  userId: z.number(),
+  userID: z.number(),
 });
 
 export const CreateUserProfileSchema = z
   .object({
-    userId: z.number(),
+    userID: z.number(),
     phone: z
       .string()
       .min(1, { message: "Required" })
@@ -73,13 +74,16 @@ export const CreateUserProfileFormSchema = CreateUserProfileSchema.extend({
 
 export const UpdateUserProfileSchema = CreateUserProfileSchema.partial().extend(
   {
-    userId: z.number(),
+    userID: z.number(),
   },
 );
 
-export const ProfileApplicationFormSchema = CreateUserProfileFormSchema.omit({
-  userId: true,
-}).extend({
+export const ProfileApplicationSchema = CreateUserProfileSchema.omit({
+  userID: true,
+  clerkID: true,
+});
+
+export const ProfileApplicationFormSchema = ProfileApplicationSchema.extend({
   age: z
     .string()
     .min(1, { message: "Required" })
@@ -94,15 +98,12 @@ export const ProfileApplicationFormSchema = CreateUserProfileFormSchema.omit({
     .refine((age) => age <= 100, {
       message: "Erm, what the sigma?",
     }),
-});
-
-export const ProfileApplicationSchema = CreateUserProfileSchema.omit({
-  userId: true,
+  resume: z.instanceof(File).optional(),
 });
 
 export const UpdateUserProfileFormSchema =
   CreateUserProfileFormSchema.partial().extend({
-    userId: z.number(),
+    userID: z.number(),
   });
 
 export const CreateHackathonSchema = z.object({
@@ -130,17 +131,17 @@ export const CreateHackathonFormSchema = CreateHackathonSchema.omit({
 });
 
 export const UpdateHackathonSchema = CreateHackathonSchema.partial().extend({
-  hackathonId: z.number(),
+  hackathonID: z.number(),
 });
 
 export const UpdateHackathonFormSchema =
   CreateHackathonFormSchema.partial().extend({
-    hackathonId: z.number(),
+    hackathonID: z.number(),
   });
 
 export const CreateHackerSchema = z.object({
-  hackathonId: z.number(),
-  userId: z.number(),
+  hackathonID: z.number(),
+  userID: z.number(),
   survey1: z.string().min(1, { message: "This question is required" }),
   survey2: z.string().min(1, { message: "This question is required" }),
   isFirstTime: z.boolean(),
@@ -149,13 +150,13 @@ export const CreateHackerSchema = z.object({
 });
 
 export const UpdateHackerSchema = CreateHackerSchema.partial().extend({
-  hackerId: z.number(),
+  hackerID: z.number(),
 });
 
 export const HackerApplicationSchema = CreateHackerSchema.omit({
   status: true,
-  hackathonId: true,
-  userId: true,
+  hackathonID: true,
+  userID: true,
 });
 
 export const CreateSponsorSchema = z.object({
@@ -163,7 +164,7 @@ export const CreateSponsorSchema = z.object({
   logo: z.string().url({ message: "Invalid logo URL" }),
   website: z.string().url({ message: "Invalid website URL" }),
   tier: z.enum(SPONSOR_TIERS),
-  hackathonId: z.number(),
+  hackathonID: z.number(),
 });
 
 export const UpdateSponsorSchema = CreateSponsorSchema.partial().extend({

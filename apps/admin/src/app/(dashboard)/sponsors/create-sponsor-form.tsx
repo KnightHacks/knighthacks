@@ -40,7 +40,6 @@ export function CreateSponsorForm() {
       name: "",
       logo: "",
       website: "",
-      hackathonId: 1,
     },
   });
 
@@ -144,7 +143,7 @@ function HackathonSelect({
   return (
     <FormField
       control={form.control}
-      name="hackathonId"
+      name="hackathonID"
       render={({ field }) => (
         <FormItem>
           <FormLabel>Hackathon</FormLabel>

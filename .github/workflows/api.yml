@@ -12,7 +12,6 @@ jobs:
   deploy:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    environment: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -31,10 +30,8 @@ jobs:
             DATABASE_AUTH_TOKEN
             CLERK_SECRET_KEY
             CLERK_PUBLISHABLE_KEY
-            CLERK_WEBHOOK_SECRET_KEY
         env:
           DATABASE_URL: ${{ vars.DATABASE_URL }}
           DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
           CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
           CLERK_PUBLISHABLE_KEY: ${{ vars.CLERK_PUBLISHABLE_KEY }}
-          CLERK_WEBHOOK_SECRET_KEY: ${{ secrets.CLERK_WEBHOOK_SECRET_KEY }}
