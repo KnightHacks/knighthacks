@@ -6,7 +6,7 @@ import { Sponsors } from "./_components/sections/sponsors";
 
 export const runtime = "edge";
 
-export default async function Home() {
+export default function Home() {
   return (
     <main>
       <Hero />

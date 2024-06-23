@@ -8,7 +8,7 @@ import { unstable_httpBatchStreamLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
 import superjson from "superjson";
 
-import { env } from "./env";
+import { env } from "~/env";
 
 export const trpc = createTRPCReact<AppRouter>();
 

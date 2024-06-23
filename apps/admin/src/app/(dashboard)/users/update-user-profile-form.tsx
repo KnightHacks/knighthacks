@@ -37,6 +37,7 @@ import {
 import { toast } from "@knighthacks/ui/toast";
 import { UpdateUserProfileFormSchema } from "@knighthacks/validators";
 
+import { env } from "~/env";
 import { api } from "~/trpc";
 
 export function UpdateProfileForm({
@@ -183,7 +184,7 @@ export function UpdateProfileForm({
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="p-0">
-                    <MajorsComboBox value={field.value!} form={form} />
+                    <MajorsComboBox value={field.value} form={form} />
                   </PopoverContent>
                 </Popover>
                 <FormMessage />
@@ -215,7 +216,7 @@ export function UpdateProfileForm({
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="p-0">
-                    <SchoolsCombobox value={field.value!} form={form} />
+                    <SchoolsCombobox value={field.value} form={form} />
                   </PopoverContent>
                 </Popover>
                 <FormMessage />
@@ -403,7 +404,7 @@ export function UpdateProfileForm({
                       const token = await getToken();
 
                       const resume = await fetch(
-                        `${process.env.NEXT_PUBLIC_API_URL}/resume/download/${userProfile.resume}`,
+                        `${env.NEXT_PUBLIC_API_URL}/resume/download/${userProfile.resume}`,
                         {
                           method: "GET",
                           headers: {
@@ -532,7 +533,7 @@ export async function uploadResume(resume: File, token: string) {
   formData.append("resume", resume);
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/resume/upload/${resume.name}`,
+    `${env.NEXT_PUBLIC_API_URL}/resume/upload/${resume.name}`,
     {
       method: "PUT",
       body: formData,

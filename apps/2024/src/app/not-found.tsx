@@ -3,7 +3,7 @@ import { Button } from "@knighthacks/ui/button";
 
 export const runtime = "edge";
 
-export default async function NotFound() {
+export default function NotFound() {
   return (
     <div className="mx-auto flex min-h-screen flex-col justify-center">
       <h1 className="mb-2 text-3xl font-bold">Oops!</h1>

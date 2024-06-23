@@ -8,6 +8,8 @@ import { unstable_httpBatchStreamLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
 import superjson from "superjson";
 
+import { env } from "./env";
+
 export const api = createTRPCReact<AppRouter>();
 
 export function TRPCProvider(props: { children: React.ReactNode }) {
@@ -18,7 +20,7 @@ export function TRPCProvider(props: { children: React.ReactNode }) {
       links: [
         unstable_httpBatchStreamLink({
           transformer: superjson,
-          url: `${process.env.NEXT_PUBLIC_API_URL}/trpc`,
+          url: `${env.NEXT_PUBLIC_API_URL}/trpc`,
           async headers() {
             return {
               Authorization: `Bearer ${await getToken()}`,

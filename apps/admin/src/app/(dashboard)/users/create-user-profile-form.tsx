@@ -36,6 +36,7 @@ import {
 import { toast } from "@knighthacks/ui/toast";
 import { CreateUserProfileFormSchema } from "@knighthacks/validators";
 
+import { env } from "~/env";
 import { api } from "~/trpc";
 
 export function CreateUserProfileForm({ userID }: { userID: number }) {
@@ -174,14 +175,9 @@ export function CreateUserProfileForm({ userID }: { userID: number }) {
                       <Button
                         variant="outline"
                         role="combobox"
-                        className={cn(
-                          "justify-between",
-                          !field.value && "text-muted-foreground",
-                        )}
+                        className={cn("justify-between")}
                       >
-                        {field.value
-                          ? MAJORS.find((major) => major === field.value)
-                          : "Select your major"}
+                        {MAJORS.find((major) => major === field.value)}
                         <DoubleArrowUpIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
@@ -206,14 +202,9 @@ export function CreateUserProfileForm({ userID }: { userID: number }) {
                       <Button
                         variant="outline"
                         role="combobox"
-                        className={cn(
-                          "justify-between",
-                          !field.value && "text-muted-foreground",
-                        )}
+                        className={cn("justify-between")}
                       >
-                        {field.value
-                          ? SCHOOLS.find((school) => school === field.value)
-                          : "Select your school"}
+                        {SCHOOLS.find((school) => school === field.value)}
                         <DoubleArrowUpIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
@@ -512,7 +503,7 @@ export async function uploadResume(resume: File, token: string) {
   const formData = new FormData();
   formData.append("resume", resume);
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/resume/upload/${resume.name}`,
+    `${env.NEXT_PUBLIC_API_URL}/resume/upload/${resume.name}`,
     {
       method: "PUT",
       body: formData,

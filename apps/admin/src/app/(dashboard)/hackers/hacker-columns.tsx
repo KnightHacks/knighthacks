@@ -40,7 +40,7 @@ export const hackerColumns: ColumnDef<
   },
   {
     accessorKey: "hackathon",
-    accessorFn: (hacker) => hacker.hackathon?.name,
+    accessorFn: (hacker) => hacker.hackathon.name,
     header: ({ column }) => {
       return (
         <Button

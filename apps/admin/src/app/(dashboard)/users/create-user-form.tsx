@@ -43,7 +43,7 @@ export function CreateUserForm() {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(async (data) => {
+        onSubmit={form.handleSubmit((data) => {
           createUser.mutate(data);
         })}
         className="flex flex-col justify-center space-y-6"

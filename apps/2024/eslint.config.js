@@ -5,7 +5,7 @@ import reactConfig from "@knighthacks/eslint-config/react";
 /** @type {import('typescript-eslint').Config} */
 export default [
   {
-    ignores: [".next/**"],
+    ignores: [".next/**", "\/.vercel/**"],
   },
   ...baseConfig,
   ...reactConfig,

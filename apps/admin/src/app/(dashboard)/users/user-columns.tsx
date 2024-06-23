@@ -15,9 +15,7 @@ import { Sheet, SheetContent } from "@knighthacks/ui/sheet";
 import { toast } from "@knighthacks/ui/toast";
 
 import { api } from "~/trpc";
-import { CreateUserProfileForm } from "./create-user-profile-form";
 import { UpdateUserForm } from "./update-user-form";
-import { UpdateProfileForm } from "./update-user-profile-form";
 
 export const userColumns: ColumnDef<
   RouterOutput["user"]["adminAll"][number]
@@ -149,11 +147,12 @@ function Actions({
         onOpenChange={setUserProfileFormSheetOpen}
       >
         <SheetContent>
-          {user.profile ? (
+          // TODO: Fix this since users will always have a profile upon creation
+          {/* {user.profile ? (
             <UpdateProfileForm userProfile={user.profile} />
           ) : (
             <CreateUserProfileForm userID={user.id} />
-          )}
+          )} */}
         </SheetContent>
       </Sheet>
     </>
