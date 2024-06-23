@@ -438,7 +438,7 @@ function MajorsComboBox({
   value,
   form,
 }: {
-  value: (typeof MAJORS)[number] | null;
+  value?: (typeof MAJORS)[number];
   form: ReturnType<typeof useForm<typeof UpdateUserProfileFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
@@ -485,7 +485,7 @@ function SchoolsCombobox({
   value,
   form,
 }: {
-  value: (typeof SCHOOLS)[number] | null;
+  value?: (typeof SCHOOLS)[number];
   form: ReturnType<typeof useForm<typeof UpdateUserProfileFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
