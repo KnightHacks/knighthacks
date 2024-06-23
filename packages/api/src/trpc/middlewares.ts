@@ -64,7 +64,7 @@ export const hasApplied = hasProfile.unstable_pipe(async (opts) => {
   }
 
   const application = user.hackers.find(
-    (hacker) => hacker.hackathonId === hackathon.id,
+    (hacker) => hacker.hackathonID === hackathon.id,
   );
 
   if (!application) {

@@ -47,7 +47,7 @@ export function UpdateSponsorForm({
       logo: sponsor.logo,
       website: sponsor.website,
       tier: sponsor.tier,
-      hackathonId: sponsor.hackathonId,
+      hackathonID: sponsor.hackathonID,
     },
   });
 
@@ -151,7 +151,7 @@ function HackathonSelect({
   return (
     <FormField
       control={form.control}
-      name="hackathonId"
+      name="hackathonID"
       render={({ field }) => (
         <FormItem>
           <FormLabel>Hackathon</FormLabel>

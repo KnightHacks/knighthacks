@@ -39,11 +39,11 @@ export const hackathonRouter = createTRPCRouter({
     }),
   adminUpdate: adminProcedure
     .input(UpdateHackathonSchema)
-    .mutation(async ({ ctx, input: { hackathonId, ...hackathon } }) => {
+    .mutation(async ({ ctx, input: { hackathonID, ...hackathon } }) => {
       await ctx.db
         .update(hackathons)
         .set(hackathon)
-        .where(eq(hackathons.id, hackathonId));
+        .where(eq(hackathons.id, hackathonID));
     }),
 });
 z;

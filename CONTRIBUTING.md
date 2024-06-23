@@ -1,10 +1,10 @@
 # Contributing
 
-Thank you for your interest in contributing to KnightHacks! We are always looking for new contributors to help us improve our projects and make KnightHacks an even greater experience for everyone!
+Thank you for your interest in contributing to Knight Hacks! We are always looking for new contributors to help us improve our projects and make Knight Hacks an even greater experience for everyone!
 
 Please take a moment to review this document in order to make the contribution process easy and effective for everyone involved!
 
-If you need any help or have any questions, please contact Mirage on the KnightHacks Discord server!
+If you need any help or have any questions, please contact Mirage on the Knight Hacks Discord server!
 
 ## About this repository
 

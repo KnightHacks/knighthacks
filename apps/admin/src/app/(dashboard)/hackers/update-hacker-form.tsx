@@ -51,7 +51,7 @@ export function UpdateHackerForm({
       <form
         onSubmit={form.handleSubmit(async (data) => {
           createHacker.mutate({
-            hackerId: hacker.id,
+            hackerID: hacker.id,
             ...data,
           });
         })}
@@ -122,7 +122,7 @@ function HackathonSelect({
   return (
     <FormField
       control={form.control}
-      name="hackathonId"
+      name="hackathonID"
       render={({ field }) => (
         <FormItem>
           <FormLabel>Hackathon</FormLabel>
@@ -169,7 +169,7 @@ function UserSelect({
   return (
     <FormField
       control={form.control}
-      name="userId"
+      name="userID"
       render={({ field }) => (
         <FormItem>
           <FormLabel>User</FormLabel>

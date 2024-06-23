@@ -113,7 +113,7 @@ function HackathonSelect({
   return (
     <FormField
       control={form.control}
-      name="hackathonId"
+      name="hackathonID"
       render={({ field }) => (
         <FormItem>
           <FormLabel>Hackathon</FormLabel>
@@ -160,7 +160,7 @@ function UserSelect({
   return (
     <FormField
       control={form.control}
-      name="userId"
+      name="userID"
       render={({ field }) => (
         <FormItem>
           <FormLabel>User</FormLabel>

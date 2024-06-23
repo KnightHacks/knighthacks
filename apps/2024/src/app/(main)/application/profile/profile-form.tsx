@@ -805,7 +805,7 @@ function USStatesCombobox({
   );
 }
 
-export async function uploadResume(resume: File, token: string) {
+async function uploadResume(resume: File, token: string) {
   const formData = new FormData();
   formData.append("resume", resume);
   const res = await fetch(

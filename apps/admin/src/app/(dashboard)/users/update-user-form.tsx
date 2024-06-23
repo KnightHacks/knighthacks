@@ -25,7 +25,7 @@ export function UpdateUserForm({
   const form = useForm({
     schema: UpdateUserSchema,
     defaultValues: {
-      userId: user.id,
+      userID: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,

@@ -48,7 +48,7 @@ export function UpdateProfileForm({
   const form = useForm({
     schema: UpdateUserProfileFormSchema,
     defaultValues: {
-      userId: userProfile.userId,
+      userID: userProfile.userID,
       phone: userProfile.phone,
       age: userProfile.age,
       shirtSize: userProfile.shirtSize,
