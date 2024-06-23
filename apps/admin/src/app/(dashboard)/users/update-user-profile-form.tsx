@@ -1,7 +1,6 @@
+import type { RouterOutput } from "@knighthacks/api";
 import { useMemo, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
-
-import type { RouterOutput } from "@knighthacks/api";
 import { MAJORS, SCHOOLS, SHIRT_SIZES } from "@knighthacks/consts";
 import { CheckIcon, ChevronDownIcon, cn } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";

@@ -1,12 +1,3 @@
-import { relations } from "drizzle-orm";
-import {
-  integer,
-  sqliteTable,
-  text,
-  unique,
-  uniqueIndex,
-} from "drizzle-orm/sqlite-core";
-
 import {
   APPLICATION_STATUSES,
   COUNTRIES,
@@ -15,6 +6,14 @@ import {
   SHIRT_SIZES,
   SPONSOR_TIERS,
 } from "@knighthacks/consts";
+import { relations } from "drizzle-orm";
+import {
+  integer,
+  sqliteTable,
+  text,
+  unique,
+  uniqueIndex,
+} from "drizzle-orm/sqlite-core";
 
 export const users = sqliteTable(
   "users",

@@ -1,13 +1,12 @@
 "use client";
 
+import type { AppRouter } from "@knighthacks/api";
 import { useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { unstable_httpBatchStreamLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
 import superjson from "superjson";
-
-import type { AppRouter } from "@knighthacks/api";
 
 export const api = createTRPCReact<AppRouter>();
 

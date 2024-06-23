@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 import { Button } from "@knighthacks/ui/button";
 
 import { Island } from "../island";

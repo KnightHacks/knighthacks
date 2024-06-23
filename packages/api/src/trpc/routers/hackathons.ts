@@ -1,11 +1,11 @@
-import { TRPCError } from "@trpc/server";
-import { z } from "zod";
-
-import { asc, eq, hackathons } from "@knighthacks/db";
+import { asc, eq } from "@knighthacks/db";
+import { hackathons } from "@knighthacks/db/schema";
 import {
   CreateHackathonSchema,
   UpdateHackathonSchema,
 } from "@knighthacks/validators";
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
 
 import { createTRPCRouter } from "../init";
 import { adminProcedure, publicProcedure } from "../procedures";

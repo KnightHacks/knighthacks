@@ -1,16 +1,18 @@
 {
   "name": "@knighthacks/api",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "type": "module",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
+    "build": "tsc",
     "deploy": "wrangler deploy --minify",
-    "dev": "wrangler dev --port 8080",
-    "lint": "eslint .",
+    "dev": "wrangler dev --port 8080 && tsc --watch",
+    "lint": "eslint",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "clean": "rm -rf .turbo .wrangler node_modules"
   },
   "dependencies": {
@@ -24,18 +26,18 @@
     "hono": "^4.4.7",
     "superjson": "1.9.1",
     "svix": "^1.15.0",
-    "typescript": "^5.3.3",
-    "zod": "^3.22.4"
+    "typescript": "^5.4.5",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231121.0",
     "@knighthacks/eslint-config": "workspace:*",
     "@knighthacks/prettier-config": "workspace:*",
     "@knighthacks/tsconfig": "workspace:*",
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
+    "eslint": "^9.4.0",
+    "prettier": "^3.3.1",
     "tsup": "^8.0.1",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.5",
     "wrangler": "^3.22.1"
   },
   "eslintConfig": {

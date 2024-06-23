@@ -1,7 +1,7 @@
 import { getAuth } from "@hono/clerk-auth";
+import { eq } from "@knighthacks/db";
+import { users } from "@knighthacks/db/schema";
 import { Hono } from "hono";
-
-import { eq, users } from "@knighthacks/db";
 
 import type { HonoConfig } from "../config";
 

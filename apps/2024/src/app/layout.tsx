@@ -5,7 +5,6 @@ import "./globals.css";
 
 import React from "react";
 import { ClerkProvider } from "@clerk/nextjs";
-
 import { cn } from "@knighthacks/ui";
 import { ThemeProvider } from "@knighthacks/ui/theme";
 import { Toaster } from "@knighthacks/ui/toast";

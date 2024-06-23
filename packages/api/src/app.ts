@@ -1,9 +1,8 @@
 import { clerkMiddleware } from "@hono/clerk-auth";
 import { trpcServer } from "@hono/trpc-server";
+import { buildDatabaseClient } from "@knighthacks/db";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-
-import { connect } from "@knighthacks/db";
 
 import type { HonoConfig } from "./config";
 import { resume } from "./routes/resume";
@@ -29,7 +28,10 @@ const app = new Hono<HonoConfig>()
     }),
   )
   .use("*", (c, next) => {
-    const db = connect(c.env.DATABASE_URL, c.env.DATABASE_AUTH_TOKEN);
+    const db = buildDatabaseClient(
+      c.env.DATABASE_URL,
+      c.env.DATABASE_AUTH_TOKEN,
+    );
     c.set("db", db);
     return next();
   })

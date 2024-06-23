@@ -1,7 +1,6 @@
+import type { RouterOutput } from "@knighthacks/api";
 import type { ColumnDef, Row } from "@tanstack/react-table";
 import { useState } from "react";
-
-import type { RouterOutput } from "@knighthacks/api";
 import { CaretSortIcon, DotsHorizontalIcon } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";
 import {

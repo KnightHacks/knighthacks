@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
-
 import { Button } from "@knighthacks/ui/button";
 
 export function SignOutButton() {

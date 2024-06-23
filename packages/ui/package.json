@@ -1,37 +1,22 @@
 {
   "name": "@knighthacks/ui",
-  "private": true,
   "version": "0.1.0",
+  "private": true,
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./button": "./src/button.tsx",
-    "./form": "./src/form.tsx",
-    "./input": "./src/input.tsx",
-    "./label": "./src/label.tsx",
-    "./theme": "./src/theme.tsx",
-    "./toast": "./src/toast.tsx",
-    "./textarea": "./src/textarea.tsx",
-    "./navigation": "./src/navigation.tsx",
-    "./skeleton": "./src/skeleton.tsx",
-    "./dropdown-menu": "./src/dropdown-menu.tsx",
-    "./sheet": "./src/sheet.tsx",
-    "./table": "./src/table.tsx",
-    "./select": "./src/select.tsx",
-    "./dialog": "./src/dialog.tsx",
-    "./command": "./src/command.tsx",
-    "./scroll-area": "./src/scroll-area.tsx",
-    "./popover": "./src/popover.tsx",
-    "./calendar": "./src/calendar.tsx",
-    "./checkbox": "./src/checkbox.tsx"
+    "./*": [
+      "./src/*.tsx",
+      "./src/*.ts"
+    ]
   },
   "license": "MIT",
   "scripts": {
-    "add": "pnpm dlx shadcn-ui add",
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "ui-add": "pnpm dlx shadcn-ui add && prettier src --write --list-different"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -62,22 +47,16 @@
     "@knighthacks/tailwind-config": "workspace:*",
     "@knighthacks/tsconfig": "workspace:*",
     "@types/react": "^18.2.57",
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
+    "eslint": "^9.4.0",
+    "prettier": "^3.3.1",
     "react": "18.3.1",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3",
-    "zod": "^3.22.4"
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.4.5",
+    "zod": "^3.23.8"
   },
   "peerDependencies": {
-    "react": "18.2.0",
-    "zod": "^3.22.4"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@knighthacks/eslint-config/base",
-      "@knighthacks/eslint-config/react"
-    ]
+    "react": "18.3.1",
+    "zod": "^3.23.8"
   },
   "prettier": "@knighthacks/prettier-config"
 }

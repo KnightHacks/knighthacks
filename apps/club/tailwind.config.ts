@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-
 import baseConfig from "@knighthacks/tailwind-config/web";
 
 export default {

@@ -6,15 +6,6 @@ import type {
   VisibilityState,
 } from "@tanstack/react-table";
 import { useState } from "react";
-import {
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-
 import { Button } from "@knighthacks/ui/button";
 import {
   DropdownMenu,
@@ -31,6 +22,14 @@ import {
   TableHeader,
   TableRow,
 } from "@knighthacks/ui/table";
+import {
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 
 interface DataTableProps<Data, Value> {
   columns: ColumnDef<Data, Value>[];
