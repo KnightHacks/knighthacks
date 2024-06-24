@@ -20,7 +20,8 @@
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",
     "typecheck": "turbo run typecheck",
-    "ui-add": "turbo run ui-add"
+    "ui-add": "turbo run ui-add",
+    "start:2024": "turbo -F @knighthacks/2024 start"
   },
   "devDependencies": {
     "@knighthacks/prettier-config": "workspace:*",
