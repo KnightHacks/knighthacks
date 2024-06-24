@@ -27,15 +27,7 @@ export const isAdmin = isAuthenticated.unstable_pipe((opts) => {
 });
 
 export const hasProfile = isAuthenticated.unstable_pipe(async (opts) => {
-  const user = await opts.ctx.db.query.users.findFirst({
-    where: (users, { eq }) => eq(users.email, opts.ctx.clerkUser.email),
-    with: {
-      profile: true,
-      hackers: true,
-    },
-  });
-
-  if (!user?.profile) {
+  if (!opts.ctx.user?.profile) {
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
       message: "User profile not found",
@@ -45,7 +37,7 @@ export const hasProfile = isAuthenticated.unstable_pipe(async (opts) => {
   return opts.next({
     ctx: {
       ...opts.ctx,
-      user,
+      user: opts.ctx.user,
     },
   });
 });
