@@ -12,9 +12,14 @@ export function createTRPCContextFromHonoContext(c: HonoContext) {
     const db = c.get("db");
     const auth = getAuth(c);
     const clerk = c.get("clerk");
-    const user = auth?.sessionClaims
+    const clerkUser = auth?.sessionClaims;
+    const user = clerkUser
       ? await db.query.users.findFirst({
-          where: (users, { eq }) => eq(users.email, auth.sessionClaims.email),
+          where: (users, { eq }) => eq(users.clerkID, clerkUser.id),
+          with: {
+            profile: true,
+            hackers: true,
+          },
         })
       : undefined;
 
@@ -23,7 +28,7 @@ export function createTRPCContextFromHonoContext(c: HonoContext) {
       db,
       clerk,
       user,
-      clerkUser: auth?.sessionClaims,
+      clerkUser,
       env: c.env,
     };
   };
