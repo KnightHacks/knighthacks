@@ -16,6 +16,9 @@
         ".vercel/output/**"
       ]
     },
+    "start": {
+      "dependsOn": ["^start"]
+    },
     "dev": {
       "persistent": true,
       "cache": false
