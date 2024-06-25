@@ -12,7 +12,7 @@
     "clean:workspaces": "turbo run clean",
     "db:studio": "turbo -F @knighthacks/db studio --no-daemon",
     "db:push": "turbo -F @knighthacks/db push --no-daemon",
-    "dev": " turbo watch dev  --no-daemon",
+    "dev": " turbo --no-daemon watch dev",
     "format": "turbo run format --continue -- --cache --cache-location node_modules/.cache/.prettiercache --no-daemon",
     "format:fix": "turbo run format --continue -- --write --cache --cache-location node_modules/.cache/.prettiercache  --no-daemon",
     "lint": "turbo run lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
