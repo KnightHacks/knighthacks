@@ -8,7 +8,7 @@
     "with-env": "dotenv -e ../../.env --",
     "dev": "pnpm with-env next dev -p 3002",
     "build": "pnpm with-env next build",
-    "start": "next start --port ${PORT-3000} -H 0.0.0.0",
+    "start": "pnpm with-env next start -p 3002",
     "lint": "eslint",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
