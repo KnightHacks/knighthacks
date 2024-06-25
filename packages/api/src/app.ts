@@ -17,35 +17,44 @@ const app = new Hono<HonoConfig>()
     "*",
     cors({
       origin(origin, c: HonoContext) {
+        c.set('origin', origin);
         if (c.env.ENV === "dev") {
-          const db = buildDatabaseClient(
-            c.env.DATABASE_URL,
-            c.env.DATABASE_AUTH_TOKEN,
-          );
-          c.set("db", db);
           return origin;
-        }
-        else if (
+        } else if (
           origin.endsWith("2024-dxt.pages.dev") ||
           origin.endsWith("knighthacks-admin.pages.dev")
         ) {
-          const db = buildDatabaseClient(
-            c.env.DEV_DATABASE_URL,
-            c.env.DEV_DATABASE_AUTH_TOKEN,
-          );
-          c.set("db", db);
           return origin;
-        } else if (origin.endsWith("knighthacks.org")) {
-          const db = buildDatabaseClient(
-            c.env.DATABASE_URL,
-            c.env.DATABASE_AUTH_TOKEN,
-          );
-          c.set("db", db);
+        } else if (origin.endsWith(".knighthacks.org")) {
           return origin;
+        } else {
+          return "https://knighthacks.org";
         }
       },
     }),
   )
+  .use("*", (c, next) => {
+    const origin = c.get("origin");
+    if (
+      origin.endsWith("2024-dxt.pages.dev") ||
+      origin.endsWith("knighthacks-admin.pages.dev")
+    )
+      c.set(
+        "db",
+        buildDatabaseClient(
+          c.env.DEV_DATABASE_URL,
+          c.env.DEV_DATABASE_AUTH_TOKEN,
+        ),
+      );
+    else {
+      c.set(
+        "db",
+        buildDatabaseClient(c.env.DATABASE_URL, c.env.DATABASE_AUTH_TOKEN),
+      );
+    }
+
+    return next();
+  })
   .use("*", (c, next) => {
     return clerkMiddleware({
       publishableKey: c.env.CLERK_PUBLISHABLE_KEY,
