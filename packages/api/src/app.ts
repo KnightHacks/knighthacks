@@ -21,9 +21,11 @@ const app = new Hono<HonoConfig>()
           return origin;
         }
 
-        return origin.endsWith(".knighthacks.org")
-          ? origin
-          : "https://knighthacks.org";
+        if (origin.endsWith("2024-dxt.pages.dev") || origin.endsWith("knighthacks-admin.pages.dev") || origin.endsWith('knighthacks.org')) {
+          return origin;
+        }
+
+        return "https://knighthacks.org";
       },
     }),
   )
