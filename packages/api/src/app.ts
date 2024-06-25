@@ -18,35 +18,34 @@ const app = new Hono<HonoConfig>()
     cors({
       origin(origin, c: HonoContext) {
         if (c.env.ENV === "dev") {
+          const db = buildDatabaseClient(
+            c.env.DATABASE_URL,
+            c.env.DATABASE_AUTH_TOKEN,
+          );
+          c.set("db", db);
           return origin;
         }
-
-        if (
+        else if (
           origin.endsWith("2024-dxt.pages.dev") ||
-          origin.endsWith("knighthacks-admin.pages.dev") ||
-          origin.endsWith("knighthacks.org")
+          origin.endsWith("knighthacks-admin.pages.dev")
         ) {
+          const db = buildDatabaseClient(
+            c.env.DEV_DATABASE_URL,
+            c.env.DEV_DATABASE_AUTH_TOKEN,
+          );
+          c.set("db", db);
+          return origin;
+        } else if (origin.endsWith("knighthacks.org")) {
+          const db = buildDatabaseClient(
+            c.env.DATABASE_URL,
+            c.env.DATABASE_AUTH_TOKEN,
+          );
+          c.set("db", db);
           return origin;
         }
-
-        return "https://knighthacks.org";
       },
     }),
   )
-  .use("*", (c, next) => {
-    const origin = c.req.header("host");
-    if (!origin) return next();
-
-    const isPreview =
-      origin.endsWith("2024-dxt.pages.dev") ||
-      origin.endsWith("knighthacks-admin.pages.dev");
-    const db = buildDatabaseClient(
-      isPreview ? c.env.DEV_DATABASE_URL : c.env.DATABASE_URL,
-      isPreview ? c.env.DEV_DATABASE_AUTH_TOKEN : c.env.DATABASE_AUTH_TOKEN,
-    );
-    c.set("db", db);
-    return next();
-  })
   .use("*", (c, next) => {
     return clerkMiddleware({
       publishableKey: c.env.CLERK_PUBLISHABLE_KEY,
