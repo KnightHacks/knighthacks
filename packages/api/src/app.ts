@@ -17,7 +17,7 @@ const app = new Hono<HonoConfig>()
     "*",
     cors({
       origin(origin, c: HonoContext) {
-        c.set('origin', origin);
+        c.set("origin", origin);
         if (c.env.ENV === "dev") {
           return origin;
         } else if (
