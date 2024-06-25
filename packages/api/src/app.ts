@@ -38,7 +38,12 @@ const app = new Hono<HonoConfig>()
     if (
       origin.endsWith("2024-dxt.pages.dev") ||
       origin.endsWith("knighthacks-admin.pages.dev")
-    )
+    ) {
+      console.log("Using dev database: ", {
+        origin,
+        DEV_DATABASE_URL: c.env.DEV_DATABASE_URL,
+        DEV_DATABASE_AUTH_TOKEN: c.env.DEV_DATABASE_AUTH_TOKEN,
+      });
       c.set(
         "db",
         buildDatabaseClient(
@@ -46,7 +51,12 @@ const app = new Hono<HonoConfig>()
           c.env.DEV_DATABASE_AUTH_TOKEN,
         ),
       );
-    else {
+    } else {
+      console.log("Using prod database: ", {
+        origin,
+        DATABASE_URL: c.env.DATABASE_URL,
+        DATABASE_AUTH_TOKEN: c.env.DATABASE_AUTH_TOKEN,
+      });
       c.set(
         "db",
         buildDatabaseClient(c.env.DATABASE_URL, c.env.DATABASE_AUTH_TOKEN),
