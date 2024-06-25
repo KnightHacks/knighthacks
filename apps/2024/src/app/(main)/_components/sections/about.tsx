@@ -1,4 +1,4 @@
-import { Map } from "../map";
+import Image from "next/image";
 
 export function About() {
   return (
@@ -6,8 +6,12 @@ export function About() {
       id="about"
       className="relative flex h-screen items-center justify-center"
     >
-      <div className="relative">
-        <Map />
+      <div className="relative mx-auto h-[400px] w-[400px] md:h-[500px] md:w-[500px] lg:h-[600px] lg:w-[600px]">
+        <Image
+          fill
+          src="/about.svg"
+          alt="Map with Knight Hacks logo and Lenny the dragon"
+        />
       </div>
     </section>
   );
