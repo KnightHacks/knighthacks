@@ -28,10 +28,14 @@ jobs:
           secrets: |
             DATABASE_URL
             DATABASE_AUTH_TOKEN
+            DEV_DATABASE_URL
+            DEV_ DATABASE_AUTH_TOKEN
             CLERK_SECRET_KEY
             CLERK_PUBLISHABLE_KEY
         env:
           DATABASE_URL: ${{ vars.DATABASE_URL }}
           DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
+          DEV_DATABASE_URL: ${{ vars.DEV_DATABASE_URL }}
+          DEV_DATABASE_AUTH_TOKEN: ${{ secrets.DEV_DATABASE_AUTH_TOKEN }}
           CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
           CLERK_PUBLISHABLE_KEY: ${{ vars.CLERK_PUBLISHABLE_KEY }}
