@@ -18,6 +18,7 @@ jobs:
   deploy:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    environment: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
     steps:
       - uses: actions/checkout@v4
 
