@@ -9,7 +9,7 @@
   "scripts": {
     "build": "turbo run build --no-daemon",
     "clean": "git clean -xdf node_modules",
-    "clean:workspaces": "turbo run clean",
+    "clean:workspaces": "turbo run clean --no-daemon",
     "db:studio": "turbo -F @knighthacks/db studio --no-daemon",
     "db:push": "turbo -F @knighthacks/db push --no-daemon",
     "dev": " turbo --no-daemon watch dev",
