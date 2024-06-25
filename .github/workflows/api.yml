@@ -29,7 +29,7 @@ jobs:
             DATABASE_URL
             DATABASE_AUTH_TOKEN
             DEV_DATABASE_URL
-            DEV_ DATABASE_AUTH_TOKEN
+            DEV_DATABASE_AUTH_TOKEN
             CLERK_SECRET_KEY
             CLERK_PUBLISHABLE_KEY
         env:
