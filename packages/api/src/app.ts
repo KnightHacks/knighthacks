@@ -34,9 +34,15 @@ const app = new Hono<HonoConfig>()
     }),
   )
   .use("*", (c, next) => {
+    const origin = c.req.header("host");
+    if (!origin) return next();
+
+    const isPreview =
+      origin.endsWith("2024-dxt.pages.dev") ||
+      origin.endsWith("knighthacks-admin.pages.dev");
     const db = buildDatabaseClient(
-      c.env.DATABASE_URL,
-      c.env.DATABASE_AUTH_TOKEN,
+      isPreview ? c.env.DEV_DATABASE_URL : c.env.DATABASE_URL,
+      isPreview ? c.env.DEV_DATABASE_AUTH_TOKEN : c.env.DEV_DATABASE_AUTH_TOKEN,
     );
     c.set("db", db);
     return next();

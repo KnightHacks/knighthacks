@@ -12,6 +12,8 @@ export type Bindings = {
   CLERK_PUBLISHABLE_KEY: string;
   CLERK_WEBHOOK_SECRET_KEY: string;
   KNIGHT_HACKS_BUCKET: R2Bucket;
+  DEV_DATABASE_URL: string;
+  DEV_DATABASE_AUTH_TOKEN: string;
 };
 
 export type Variables = {
