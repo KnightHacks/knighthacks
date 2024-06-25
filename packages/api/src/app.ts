@@ -42,7 +42,7 @@ const app = new Hono<HonoConfig>()
       origin.endsWith("knighthacks-admin.pages.dev");
     const db = buildDatabaseClient(
       isPreview ? c.env.DEV_DATABASE_URL : c.env.DATABASE_URL,
-      isPreview ? c.env.DEV_DATABASE_AUTH_TOKEN : c.env.DEV_DATABASE_AUTH_TOKEN,
+      isPreview ? c.env.DEV_DATABASE_AUTH_TOKEN : c.env.DATABASE_AUTH_TOKEN,
     );
     c.set("db", db);
     return next();
