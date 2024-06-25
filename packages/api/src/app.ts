@@ -35,6 +35,7 @@ const app = new Hono<HonoConfig>()
   )
   .use("*", (c, next) => {
     const origin = c.get("origin");
+    console.log("Origin: ", origin);
     if (
       origin.endsWith("2024-dxt.pages.dev") ||
       origin.endsWith("knighthacks-admin.pages.dev")
