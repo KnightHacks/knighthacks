@@ -5,7 +5,7 @@ import { hackerRouter } from "./hackers";
 import { sponsorRouter } from "./sponsors";
 import { userRouter } from "./users";
 
-export const appRouter = createTRPCRouter({
+export const router = createTRPCRouter({
   hello: publicProcedure.query(() => {
     return "Hello from Hono!";
   }),
@@ -15,4 +15,4 @@ export const appRouter = createTRPCRouter({
   sponsor: sponsorRouter,
 });
 
-export type AppRouter = typeof appRouter;
+export type AppRouter = typeof router;

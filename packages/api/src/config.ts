@@ -18,7 +18,6 @@ export type Bindings = {
 
 export type Variables = {
   db: ReturnType<typeof buildDatabaseClient>;
-  origin: string;
 };
 
 export type HonoConfig = {
