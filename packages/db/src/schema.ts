@@ -109,6 +109,9 @@ export const hackers = sqliteTable(
     survey2: text("survey_2").notNull(),
     isFirstTime: integer("is_first_time", { mode: "boolean" }).default(false),
     isPlinktern: integer("is_plinktern", { mode: "boolean" }).default(false),
+    agreesToReceiveEmailsFromMLH: integer("agrees_to_receive_emails_from_mlh", {
+      mode: "boolean",
+    }).default(false),
   },
   (t) => ({
     unq: unique().on(t.userID, t.hackathonID),
