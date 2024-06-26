@@ -55,11 +55,13 @@ const app = new Hono<HonoConfig>()
       origin.endsWith(".2024-dxt.pages.dev") ||
       origin.endsWith(".knighthacks-admin.pages.dev")
     ) {
+      console.log("Using dev clerk keys");
       return clerkMiddleware({
         secretKey: c.env.DEV_CLERK_SECRET_KEY,
         publishableKey: c.env.DEV_CLERK_PUBLISHABLE_KEY,
       })(c, next);
     } else {
+      console.log("Using prod clerk keys");
       return clerkMiddleware({
         secretKey: c.env.CLERK_SECRET_KEY,
         publishableKey: c.env.CLERK_PUBLISHABLE_KEY,
@@ -72,6 +74,7 @@ const app = new Hono<HonoConfig>()
       origin.endsWith(".2024-dxt.pages.dev") ||
       origin.endsWith(".knighthacks-admin.pages.dev")
     ) {
+      console.log("Using dev database");
       c.set(
         "db",
         buildDatabaseClient(
@@ -80,6 +83,7 @@ const app = new Hono<HonoConfig>()
         ),
       );
     } else {
+      console.log("Using prod database");
       c.set(
         "db",
         buildDatabaseClient(c.env.DATABASE_URL, c.env.DATABASE_AUTH_TOKEN),
