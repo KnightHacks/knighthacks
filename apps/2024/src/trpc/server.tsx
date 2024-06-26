@@ -17,7 +17,9 @@ export const trpc = createTRPCClient<AppRouter>({
       transformer: superjson,
       url: `${env.NEXT_PUBLIC_API_URL}/trpc`,
       async headers() {
+        const nh = headers();
         const h = new Headers(headers());
+        h.append("origin", nh.get("x-forwarded-host") ?? "");
         h.append("Authorization", `Bearer ${await getToken()}`);
         return h;
       },
