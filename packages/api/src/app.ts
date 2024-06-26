@@ -1,6 +1,6 @@
 import { clerkMiddleware } from "@hono/clerk-auth";
 import { trpcServer } from "@hono/trpc-server";
-import { buildDatabaseClient, or } from "@knighthacks/db";
+import { buildDatabaseClient } from "@knighthacks/db";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { csrf } from "hono/csrf";
