@@ -4,6 +4,7 @@ import { trpc } from "~/trpc/server";
 import { SurveyForm } from "./survey-form";
 
 export const runtime = "edge";
+export const dynamic = "force-dynamic";
 
 export default async function Survey() {
   const profile = await trpc.user.getProfile.query();
