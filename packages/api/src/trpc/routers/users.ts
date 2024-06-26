@@ -14,11 +14,8 @@ import { createTRPCRouter } from "../init";
 import { adminProcedure, authenticatedProcedure } from "../procedures";
 
 export const userRouter = createTRPCRouter({
-  getProfile: authenticatedProcedure.query(async ({ ctx }) => {
-    if (!ctx.user) return null;
-    return ctx.db.query.userProfiles.findFirst({
-      where: eq(userProfiles.userID, ctx.user.id),
-    });
+  getProfile: authenticatedProcedure.query(({ ctx }) => {
+    return ctx.user?.profile;
   }),
   profileApplication: authenticatedProcedure
     .input(ProfileApplicationSchema)

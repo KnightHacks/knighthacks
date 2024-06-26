@@ -8,4 +8,3 @@ export const t = initTRPC.context<TRPCContext>().create({
 });
 
 export const createTRPCRouter = t.router;
-export const middleware = t.middleware;

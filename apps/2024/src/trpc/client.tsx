@@ -22,9 +22,9 @@ export function TRPCProvider(props: { children: React.ReactNode }) {
           transformer: superjson,
           url: `${env.NEXT_PUBLIC_API_URL}/trpc`,
           async headers() {
-            return {
-              Authorization: `Bearer ${await getToken()}`,
-            };
+            const h = new Headers();
+            h.set("Authorization", `Bearer ${await getToken()}`);
+            return h;
           },
         }),
       ],
