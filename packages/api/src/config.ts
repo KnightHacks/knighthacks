@@ -6,18 +6,20 @@ import type { Context, Input } from "hono";
 
 export type Bindings = {
   ENV: string;
-  DATABASE_URL: string;
-  DATABASE_AUTH_TOKEN: string;
+  KNIGHT_HACKS_BUCKET: R2Bucket;
   CLERK_SECRET_KEY: string;
   CLERK_PUBLISHABLE_KEY: string;
-  CLERK_WEBHOOK_SECRET_KEY: string;
-  KNIGHT_HACKS_BUCKET: R2Bucket;
+  DEV_CLERK_SECRET_KEY: string;
+  DEV_CLERK_PUBLISHABLE_KEY: string;
+  DATABASE_URL: string;
+  DATABASE_AUTH_TOKEN: string;
   DEV_DATABASE_URL: string;
   DEV_DATABASE_AUTH_TOKEN: string;
 };
 
 export type Variables = {
   db: ReturnType<typeof buildDatabaseClient>;
+  origin: string;
 };
 
 export type HonoConfig = {
