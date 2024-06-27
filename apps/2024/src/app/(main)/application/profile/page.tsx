@@ -5,6 +5,7 @@ import { trpc } from "~/trpc/server";
 import { ProfileForm } from "./profile-form";
 
 export const runtime = "edge";
+export const dynamic = "force-dynamic";
 
 export default async function Profile() {
   const profile = await trpc.user.getProfile.query();

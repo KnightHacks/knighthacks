@@ -3,11 +3,12 @@ import { trpcServer } from "@hono/trpc-server";
 import { buildDatabaseClient } from "@knighthacks/db";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import { csrf } from "hono/csrf";
 
 import type { HonoConfig, HonoContext } from "./config";
 import { resume } from "./routes/resume";
-import { createTRPCContextFromHonoContext } from "./trpc/context";
-import { appRouter } from "./trpc/routers";
+import { createContext } from "./trpc/context";
+import { router } from "./trpc/routers";
 
 const app = new Hono<HonoConfig>()
   .get("/", (c) => {
@@ -16,40 +17,90 @@ const app = new Hono<HonoConfig>()
   .use(
     "*",
     cors({
-      origin(origin, c: HonoContext) {
-        if (c.env.ENV === "dev") {
+      origin: (origin, c: HonoContext) => {
+        c.set("origin", origin);
+        if (
+          c.env.ENV === "dev" ||
+          origin.endsWith("2024-dxt.pages.dev") ||
+          origin.endsWith("knighthacks-admin.pages.dev") ||
+          origin.endsWith("knighthacks.org")
+        ) {
           return origin;
+        } else {
+          return "https://knighthacks.org";
         }
-
-        return origin.endsWith(".knighthacks.org")
-          ? origin
-          : "https://knighthacks.org";
+      },
+    }),
+  )
+  .use(
+    "*",
+    csrf({
+      origin: (origin, c: HonoContext) => {
+        if (
+          c.env.ENV === "dev" ||
+          origin.endsWith("2024-dxt.pages.dev") ||
+          origin.endsWith("knighthacks-admin.pages.dev") ||
+          origin.endsWith("knighthacks.org")
+        ) {
+          return true;
+        } else {
+          return false;
+        }
       },
     }),
   )
   .use("*", (c, next) => {
-    const db = buildDatabaseClient(
-      c.env.DATABASE_URL,
-      c.env.DATABASE_AUTH_TOKEN,
-    );
-    c.set("db", db);
-    return next();
+    const origin = c.get("origin");
+    if (
+      origin.endsWith(".2024-dxt.pages.dev") ||
+      origin.endsWith(".knighthacks-admin.pages.dev")
+    ) {
+      console.log("Using dev clerk keys");
+      return clerkMiddleware({
+        secretKey: c.env.DEV_CLERK_SECRET_KEY,
+        publishableKey: c.env.DEV_CLERK_PUBLISHABLE_KEY,
+      })(c, next);
+    } else {
+      console.log("Using prod clerk keys");
+      return clerkMiddleware({
+        secretKey: c.env.CLERK_SECRET_KEY,
+        publishableKey: c.env.CLERK_PUBLISHABLE_KEY,
+      })(c, next);
+    }
   })
   .use("*", (c, next) => {
-    return clerkMiddleware({
-      publishableKey: c.env.CLERK_PUBLISHABLE_KEY,
-      secretKey: c.env.CLERK_SECRET_KEY,
-    })(c, next);
+    const origin = c.get("origin");
+    if (
+      origin.endsWith(".2024-dxt.pages.dev") ||
+      origin.endsWith(".knighthacks-admin.pages.dev")
+    ) {
+      console.log("Using dev database");
+      c.set(
+        "db",
+        buildDatabaseClient(
+          c.env.DEV_DATABASE_URL,
+          c.env.DEV_DATABASE_AUTH_TOKEN,
+        ),
+      );
+    } else {
+      console.log("Using prod database");
+      c.set(
+        "db",
+        buildDatabaseClient(c.env.DATABASE_URL, c.env.DATABASE_AUTH_TOKEN),
+      );
+    }
+    return next();
   })
-  .use("/trpc/*", (c, next) => {
-    return trpcServer({
-      router: appRouter,
-      onError({ error }) {
-        console.error(error);
-      },
-      createContext: createTRPCContextFromHonoContext(c),
-    })(c, next);
-  })
-  .route("/resume", resume);
+  .use(
+    "/trpc/*",
+    trpcServer({
+      router,
+      createContext,
+    }),
+  )
+  .route("/resume", resume)
+  .get("/sigma", (c) => {
+    return c.json({ message: "What the sigma!" });
+  });
 
 export { app };

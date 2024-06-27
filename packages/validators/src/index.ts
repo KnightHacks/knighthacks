@@ -146,6 +146,7 @@ export const CreateHackerSchema = z.object({
   isFirstTime: z.boolean(),
   isPlinktern: z.boolean(),
   status: z.enum(APPLICATION_STATUSES).optional(),
+  agreesToReceiveEmailsFromMLH: z.boolean(),
 });
 
 export const UpdateHackerSchema = CreateHackerSchema.partial().extend({
@@ -156,6 +157,16 @@ export const HackerApplicationSchema = CreateHackerSchema.omit({
   status: true,
   hackathonID: true,
   userID: true,
+}).extend({
+  hasReadAndAgreesToMLHCodeOfConduct: z
+    .boolean()
+    .refine((value) => value === true, {
+      message: "Must be checked",
+    }),
+  consentsToSharingApplicationWithMLHAndAgreesToTheMLHPrivacyPolicyAndContestTerms:
+    z.boolean().refine((value) => value === true, {
+      message: "Must be checked",
+    }),
 });
 
 export const CreateSponsorSchema = z.object({

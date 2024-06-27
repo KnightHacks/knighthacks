@@ -28,6 +28,10 @@ export function SurveyForm() {
       survey2: "",
       isFirstTime: false,
       isPlinktern: false,
+      agreesToReceiveEmailsFromMLH: false,
+      hasReadAndAgreesToMLHCodeOfConduct: false,
+      consentsToSharingApplicationWithMLHAndAgreesToTheMLHPrivacyPolicyAndContestTerms:
+        false,
     },
   });
 
@@ -63,7 +67,7 @@ export function SurveyForm() {
             control={form.control}
             name="isFirstTime"
             render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+              <FormItem className="flex flex-row space-x-3 space-y-0">
                 <FormControl>
                   <Checkbox
                     checked={field.value}
@@ -82,7 +86,7 @@ export function SurveyForm() {
             control={form.control}
             name="isPlinktern"
             render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+              <FormItem className="flex flex-row space-x-3 space-y-0">
                 <FormControl>
                   <Checkbox
                     checked={field.value}
@@ -97,6 +101,7 @@ export function SurveyForm() {
                   <FormDescription>
                     You can learn more about Horse Plinko{" "}
                     <Link
+                      target="_blank"
                       className="font-bold underline underline-offset-4"
                       href="/#plinkno"
                     >
@@ -145,6 +150,97 @@ export function SurveyForm() {
                   />
                 </FormControl>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="hasReadAndAgreesToMLHCodeOfConduct"
+            render={({ field }) => (
+              <FormItem className="flex flex-row space-x-3 space-y-0">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>
+                    I have read and agree to the{" "}
+                    <a
+                      className="font-bold underline underline-offset-4"
+                      href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
+                    >
+                      MLH Code of Conduct
+                    </a>
+                    .
+                  </FormLabel>
+                </div>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="consentsToSharingApplicationWithMLHAndAgreesToTheMLHPrivacyPolicyAndContestTerms"
+            render={({ field }) => (
+              <FormItem className="flex flex-row space-x-3 space-y-0">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel className="leading-5">
+                    I authorize you to share my application/registration
+                    information with Major League Hacking for event
+                    administration, ranking, and MLH administration in-line with
+                    the{" "}
+                    <a
+                      target="_blank"
+                      className="font-bold underline underline-offset-4"
+                      href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
+                    >
+                      MLH Privacy Policy
+                    </a>
+                    . I further agree to the terms of both the{" "}
+                    <a
+                      target="_blank"
+                      className="font-bold underline underline-offset-4"
+                      href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
+                    >
+                      MLH Contest Terms and Conditions
+                    </a>{" "}
+                    and the{" "}
+                    <a
+                      target="_blank"
+                      className="font-bold underline underline-offset-4"
+                      href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
+                    >
+                      MLH Privacy Policy
+                    </a>
+                  </FormLabel>
+                </div>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="agreesToReceiveEmailsFromMLH"
+            render={({ field }) => (
+              <FormItem className="flex flex-row space-x-3 space-y-0">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel className="leading-5">
+                    I authorize MLH to send me occasional emails about relevant
+                    events, career opportunities, and community announcements.
+                  </FormLabel>
+                </div>
               </FormItem>
             )}
           />

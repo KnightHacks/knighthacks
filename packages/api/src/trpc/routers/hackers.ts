@@ -30,6 +30,7 @@ export const hackerRouter = createTRPCRouter({
           ...input,
           userID: ctx.user.id,
           hackathonID: currentHackathon.id,
+          agreesToReceiveEmailsFromMLH: input.agreesToReceiveEmailsFromMLH,
         });
       });
     }),
