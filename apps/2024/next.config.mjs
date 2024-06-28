@@ -8,6 +8,16 @@ createJiti(fileURLToPath(import.meta.url))("./src/env");
 const config = {
   reactStrictMode: true,
 
+  /** Allow images from all domains so sponsor images dont get blocked */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+  },
+
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: [
     "@knighthacks/api",

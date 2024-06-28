@@ -49,9 +49,8 @@ export async function Sponsors() {
                         <Image
                           width={imageSize}
                           height={imageSize}
-                          src={sponsor.logo}
+                          src={sponsor.logo}g
                           alt={sponsor.name}
-                          className="rounded-full"
                         />
                       </a>
                     </section>
