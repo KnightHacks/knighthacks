@@ -18,12 +18,15 @@ export async function Sponsors() {
   };
 
   return (
-    <section id="sponsors" className="flex items-center justify-center">
+    <section
+      id="sponsors"
+      className="flex items-center justify-center overflow-hidden pt-44 md:pt-96"
+    >
       <div className="flex flex-col">
-        <h1 className="font-k2d w-[405px]text-center h-[125px] text-center text-[96px] font-bold leading-[125px] text-[#FFD166]">
+        <h1 className="font-k2d h-[125px] w-full pb-14 text-center text-7xl font-bold leading-[125px] text-[#FFD166] md:text-[96px]">
           Sponsors
         </h1>
-        <div className="grid h-auto max-w-full auto-rows-auto grid-cols-1 gap-4 overflow-hidden sm:grid-cols-2 md:auto-rows-[275px] md:grid-cols-4">
+        <div className="grid max-w-full auto-rows-auto grid-cols-1 gap-4 overflow-hidden sm:grid-cols-2 md:h-screen md:auto-rows-[275px] md:grid-cols-4">
           {sponsors.map((sponsor, index) => {
             const { bubbleSize, imageSize, cellSize } = getSizes(sponsor);
             const delay = Math.random() * 2;
