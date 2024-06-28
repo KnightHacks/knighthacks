@@ -49,7 +49,7 @@ export async function Sponsors() {
                         <Image
                           width={imageSize}
                           height={imageSize}
-                          src={sponsor.logo}g
+                          src={sponsor.logo}
                           alt={sponsor.name}
                         />
                       </a>
