@@ -5,7 +5,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "../ui/accordion";
+} from "@knighthacks/ui/accordion";
 
 export function FAQ() {
   const FAQs: Record<string, string> = {
