@@ -24,17 +24,17 @@ export function FAQ() {
   return (
     <section
       id="faq"
-      className="flex h-auto flex-col items-center justify-center"
+      className="flex h-auto w-full flex-col items-center justify-center"
     >
       <h1 className="font-k2d text-center text-5xl font-semibold text-black">
         Frequently Asked Questions
       </h1>
-      <div className="p-5">
+      <div className="flex w-full flex-col items-center justify-center p-5">
         {Object.entries(FAQs).map(([key, value]) => (
-          <Accordion type="single" collapsible key={key}>
+          <Accordion type="single" collapsible key={key} className="w-full">
             <AccordionItem
               value="item-1"
-              className="mb-6 w-[250px] flex-col items-start rounded-[20px] bg-[#7CCCFF] p-5  sm:w-[500px] md:w-[1000px]"
+              className="mx-auto mb-6 w-full flex-col items-start rounded-[20px] bg-[#7CCCFF] p-5 md:w-[1000px]"
             >
               <AccordionTrigger className=" w-full  rounded-t-xl  p-4 text-black hover:no-underline">
                 <h3 className="text-xl font-bold">{key}</h3>
