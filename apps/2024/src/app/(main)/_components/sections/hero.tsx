@@ -6,7 +6,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex h-screen flex-col items-center justify-center pt-16"
+      className="relative flex h-screen flex-col items-center justify-center bg-[url('/sky.svg')]"
     >
       <h1 className="mb-2 text-4xl font-bold md:text-5xl lg:text-6xl">
         KnightHacks 2024

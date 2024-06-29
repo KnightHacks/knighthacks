@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";
@@ -28,35 +29,47 @@ export function Navbar({ userId }: { userId: string | null }) {
       animate={{ y: hidden ? "-100%" : 0 }}
       transition={{ type: "tween", duration: 0.2 }}
       className={cn(
-        "fixed z-50 flex h-16 w-full items-center justify-between bg-background px-8",
+        "fixed z-50 flex h-16 w-full items-center justify-between bg-background bg-[url('/sky.svg')] px-8",
       )}
     >
       <div>
         <Link href="/#hero" passHref legacyBehavior>
-          <Button variant="ghost" className="text-xl font-bold">
-            KnightHacks
+          <Button
+            variant="ghost"
+            className="relative right-10 -z-10 mx-0 text-xl font-bold"
+          >
+            <Image src="/kh-logo.svg" alt="kh-logo" width={200} height={300} />
+            {/* Knight Hacks */}
           </Button>
         </Link>
       </div>
       <ul className="hidden items-center md:flex">
         <li>
           <Link href="/#about" passHref legacyBehavior>
-            <Button variant="ghost">About</Button>
+            <Button variant="ghost" className=" text-white">
+              About
+            </Button>
           </Link>
         </li>
         <li>
           <Link href="/#faq" passHref legacyBehavior>
-            <Button variant="ghost">FAQ</Button>
+            <Button variant="ghost" className=" text-white">
+              FAQ
+            </Button>
           </Link>
         </li>
         <li>
           <Link href="/#sponsors" passHref legacyBehavior>
-            <Button variant="ghost">Sponsors</Button>
+            <Button variant="ghost" className=" text-white">
+              Sponsors
+            </Button>
           </Link>
         </li>
         <li>
           <Link href="/#contact" passHref legacyBehavior>
-            <Button variant="ghost">Contact</Button>
+            <Button variant="ghost" className=" text-white">
+              Contact
+            </Button>
           </Link>
         </li>
       </ul>
