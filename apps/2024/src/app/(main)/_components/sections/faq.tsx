@@ -1,7 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@knighthacks/ui/accordion";
 
 export function FAQ() {
   const FAQs: Record<string, string> = {
@@ -17,61 +21,29 @@ export function FAQ() {
       "None! We welcome students from all academic backgrounds and skill levels, so don’t be afraid to come and join us! We’ll have introductory workshops for you to learn new skills, industry mentors to help you out, and great tools to build your projects. Whether you’ve never coded before or have lots of experience, there’s a place for you at KnightHacks!",
   };
 
-  const initialDropStates: Record<string, boolean> = Object.keys(FAQs).reduce(
-    (acc: Record<string, boolean>, key: string) => {
-      acc[key] = false;
-      return acc;
-    },
-    {},
-  );
-
-  const [dropStates, setDropStates] =
-    useState<Record<string, boolean>>(initialDropStates);
-
-  const handleToggle = (key: string) => {
-    setDropStates((prevState) => ({
-      ...prevState,
-      [key]: !prevState[key],
-    }));
-  };
-
   return (
     <section
       id="faq"
-      className="flex h-auto flex-col items-center justify-center"
+      className="flex h-auto w-full flex-col items-center justify-center"
     >
       <h1 className="font-k2d text-center text-5xl font-semibold text-black">
         Frequently Asked Questions
       </h1>
-      <div className="p-5">
+      <div className="flex w-full flex-col items-center justify-center p-5">
         {Object.entries(FAQs).map(([key, value]) => (
-          <div key={key}>
-            <div
-              key={key}
-              className="flex w-[250px] flex-col items-start rounded-[20px] bg-[#7CCCFF] p-5 sm:w-[500px] md:w-[1000px]"
+          <Accordion type="single" collapsible key={key} className="w-full">
+            <AccordionItem
+              value="item-1"
+              className="mx-auto mb-6 w-full flex-col items-start rounded-[20px] bg-[#7CCCFF] p-5 md:w-[1000px]"
             >
-              <div className="flex flex-row items-center">
-                <button
-                  onClick={() => handleToggle(key)}
-                  className="focus:outline-none"
-                >
-                  <Image
-                    width={50}
-                    height={50}
-                    src="/arrow.svg"
-                    alt="arrow"
-                    className={`transition-transform duration-100 ${dropStates[key] ? "rotate-90" : ""}`}
-                  />
-                </button>
-                <p className="font-k2d text-lg font-semibold sm:text-xl md:text-2xl">
-                  {key}
-                </p>
-              </div>
-              <p>{dropStates[key] ? value : ""}</p>
-              <p className="p-2"></p>
-            </div>
-            <p className="p-1"></p>
-          </div>
+              <AccordionTrigger className=" w-full  rounded-t-xl  p-4 text-black hover:no-underline">
+                <h3 className="text-xl font-bold">{key}</h3>
+              </AccordionTrigger>
+              <AccordionContent className="rounded-b-xl px-4 py-3 text-black md:text-lg">
+                {value}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         ))}
       </div>
     </section>
