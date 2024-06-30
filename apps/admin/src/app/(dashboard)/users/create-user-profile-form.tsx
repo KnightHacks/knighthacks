@@ -1,6 +1,11 @@
 import { useMemo, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
-import { MAJORS, SCHOOLS, SHIRT_SIZES } from "@knighthacks/consts";
+import {
+  LEVELS_OF_STUDY,
+  MAJORS,
+  SCHOOLS,
+  SHIRT_SIZES,
+} from "@knighthacks/consts";
 import { CheckIcon, cn, DoubleArrowUpIcon } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";
 import {
@@ -50,6 +55,7 @@ export function CreateUserProfileForm({ userID }: { userID: number }) {
       major: "Computer Science",
       school: "The University of Central Florida",
       gradYear: (new Date().getFullYear() + 4).toString(),
+      levelOfStudy: "Undergraduate University (3+ year)",
       address1: "",
       address2: "",
       city: "",
@@ -242,6 +248,30 @@ export function CreateUserProfileForm({ userID }: { userID: number }) {
                     ).map((year) => (
                       <SelectItem key={year} value={String(year)}>
                         {year}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="levelOfStudy"
+            render={({ field }) => (
+              <FormItem className="sm:max-w-[200px]">
+                <FormLabel>Level of Study</FormLabel>
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your level of study" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {LEVELS_OF_STUDY.map((levelOfStudy) => (
+                      <SelectItem key={levelOfStudy} value={levelOfStudy}>
+                        {levelOfStudy}
                       </SelectItem>
                     ))}
                   </SelectContent>

@@ -1,7 +1,12 @@
 import type { RouterOutput } from "@knighthacks/api";
 import { useMemo, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
-import { MAJORS, SCHOOLS, SHIRT_SIZES } from "@knighthacks/consts";
+import {
+  LEVELS_OF_STUDY,
+  MAJORS,
+  SCHOOLS,
+  SHIRT_SIZES,
+} from "@knighthacks/consts";
 import { CheckIcon, ChevronDownIcon, cn } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";
 import {
@@ -55,6 +60,7 @@ export function UpdateProfileForm({
       major: userProfile.major,
       school: userProfile.school,
       gradYear: userProfile.gradYear,
+      levelOfStudy: userProfile.levelOfStudy,
       address1: userProfile.address1,
       address2: userProfile.address2 ?? "",
       city: userProfile.city,
@@ -248,6 +254,30 @@ export function UpdateProfileForm({
                     ).map((year) => (
                       <SelectItem key={year} value={String(year)}>
                         {year}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="levelOfStudy"
+            render={({ field }) => (
+              <FormItem className="sm:max-w-[200px]">
+                <FormLabel>Level of Study</FormLabel>
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your level of study" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {LEVELS_OF_STUDY.map((levelOfStudy) => (
+                      <SelectItem key={levelOfStudy} value={levelOfStudy}>
+                        {levelOfStudy}
                       </SelectItem>
                     ))}
                   </SelectContent>
