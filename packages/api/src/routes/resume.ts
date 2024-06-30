@@ -38,7 +38,7 @@ export const resume = new Hono<HonoConfig>()
 
     // Get user from session
     const user = await db.query.users.findFirst({
-      where: eq(users.email, auth.sessionClaims.email),
+      where: eq(users.clerkID, auth.sessionClaims.id),
       with: {
         profile: true,
       },
