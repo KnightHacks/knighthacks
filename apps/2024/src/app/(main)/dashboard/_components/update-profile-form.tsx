@@ -52,40 +52,21 @@ import { env } from "~/env";
 import { trpc } from "~/trpc/client";
 
 export function UpdateProfileForm({
-  profile,
+  user,
 }: {
-  profile: RouterOutput["user"]["getUser"];
+  user: NonNullable<RouterOutput["user"]["getUser"]>;
 }) {
   const form = useForm({
     schema: UpdateProfileApplicationFormSchema,
     defaultValues: {
-      firstName: profile.user,
-      lastName: "",
-      email: "",
-      phone: "",
-      age: "18",
-      shirtSize: "SM",
-      major: "Computer Science",
-      school: "The University of Central Florida",
-      gradYear: (new Date().getFullYear() + 4).toString(),
-      address1: "",
-      address2: "",
-      city: "",
-      state: "Florida",
-      zip: "",
-      country: "United States",
-      github: "",
-      personalWebsite: "",
-      linkedin: "",
-      discord: "",
-      userID: user?.id,
+      ...user,
     },
   });
 
   const { getToken } = useAuth();
 
   const router = useRouter();
-  const createProfile = trpc.user.profileApplication.useMutation({
+  const createProfile = trpc.user.updateProfileApplication.useMutation({
     onSuccess: () => {
       toast("Success!", {
         description: "Created user profile",
@@ -114,7 +95,7 @@ export function UpdateProfileForm({
             let resumeKey = "";
             if (data.resume && token) {
               try {
-                resumeKey = await uploadResume(data.resume, token);
+                resumeKey = await uploadResume(data.resume as unknown as File, token);
               } catch {
                 toast("Error!", {
                   description: "Failed to upload resume",
@@ -610,7 +591,7 @@ function MajorsComboBox({
   value,
   form,
 }: {
-  value: (typeof MAJORS)[number];
+  value?: (typeof MAJORS)[number];
   form: ReturnType<typeof useForm<typeof UpdateProfileApplicationFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
@@ -657,7 +638,7 @@ function SchoolsCombobox({
   value,
   form,
 }: {
-  value: (typeof SCHOOLS)[number];
+  value?: (typeof SCHOOLS)[number];
   form: ReturnType<typeof useForm<typeof UpdateProfileApplicationFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
@@ -704,7 +685,7 @@ function CountriesCombobox({
   value,
   form,
 }: {
-  value: (typeof COUNTRIES)[number];
+  value?: (typeof COUNTRIES)[number];
   form: ReturnType<typeof useForm<typeof UpdateProfileApplicationFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
@@ -753,7 +734,7 @@ function USStatesCombobox({
   value,
   form,
 }: {
-  value: (typeof US_STATES)[number];
+  value?: (typeof US_STATES)[number];
   form: ReturnType<typeof useForm<typeof UpdateProfileApplicationFormSchema>>;
 }) {
   const [search, setSearch] = useState("");

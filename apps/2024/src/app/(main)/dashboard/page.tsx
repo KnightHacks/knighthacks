@@ -21,7 +21,7 @@ export default async function Dashboard() {
           <TabsTrigger value="application">Application</TabsTrigger>
         </TabsList>
         <TabsContent value="profile" asChild>
-          <UpdateProfileForm profile={user.profile} />
+          <UpdateProfileForm user={user} />
         </TabsContent>
         <TabsContent value="application">Application content</TabsContent>
       </Tabs>
