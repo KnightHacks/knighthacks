@@ -90,7 +90,10 @@ export function UpdateProfileForm({
             console.log(data.resume, token);
             if (data.resume && token) {
               try {
-                resumeKey = await uploadResume(data.resume, token);
+                resumeKey = await uploadResume(
+                  data.resume as unknown as File,
+                  token,
+                );
                 console.log(resumeKey);
               } catch {
                 toast("Error!", {
