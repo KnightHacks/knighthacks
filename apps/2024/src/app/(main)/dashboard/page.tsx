@@ -15,7 +15,7 @@ export default async function Dashboard() {
   if (!application) redirect("/application/survey");
 
   return (
-    <div className="px-8 pt-20">
+    <div className="bg-[url('/sky-register.svg')] bg-cover px-8 pt-20">
       <Tabs defaultValue="profile">
         <TabsList>
           <TabsTrigger value="profile">Profile</TabsTrigger>

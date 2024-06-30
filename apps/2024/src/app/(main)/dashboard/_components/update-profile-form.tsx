@@ -105,7 +105,7 @@ export function UpdateProfileForm({
   });
 
   return (
-    <div className="mx-auto w-full max-w-screen-sm px-8 pb-8">
+    <div className="mx-auto mb-8 w-full max-w-screen-sm rounded-xl bg-white p-8 pb-8">
       <h1 className="mb-4 text-center text-2xl font-bold">
         Update Your Profile!
       </h1>

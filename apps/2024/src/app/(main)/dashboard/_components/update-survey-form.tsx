@@ -52,7 +52,7 @@ export function UpdateSurveyForm({
   });
 
   return (
-    <div className="mx-auto w-full max-w-screen-sm px-8 pb-8 pt-20">
+    <div className="mx-auto mb-8 h-screen w-full max-w-screen-sm rounded-lg bg-white p-8 px-8 pb-8 pt-20">
       <h1 className="mb-4 text-center text-2xl font-bold">
         KnightHacks 2024 Application
       </h1>
