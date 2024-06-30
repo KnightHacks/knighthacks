@@ -33,10 +33,10 @@ export function Contact() {
       <h1 className="font-k2d z-50 text-center text-5xl font-semibold text-black">
         Get in Touch!
       </h1>
-      <p className="z-50 px-2 text-sm md:text-base">
+      <p className="z-10 px-2 text-sm md:text-base">
         Care to learn more about Knight Hacks?
       </p>
-      <p className="z-50 mb-36 px-2 text-sm md:mb-0 md:text-base">
+      <p className="z-10 px-2 pb-72 text-sm md:mb-0 md:text-base">
         Email our organizers at{" "}
         <a href="mailto:hackteam@knighthacks.org" className="underline">
           hackteam@knighthacks.org
