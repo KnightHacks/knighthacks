@@ -1,3 +1,4 @@
+import type { TRPCRouterRecord } from "@trpc/server";
 import { asc, eq } from "@knighthacks/db";
 import { hackathons } from "@knighthacks/db/schema";
 import {
@@ -7,10 +8,9 @@ import {
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import { createTRPCRouter } from "../init";
 import { adminProcedure, publicProcedure } from "../procedures";
 
-export const hackathonRouter = createTRPCRouter({
+export const hackathonRouter = {
   current: publicProcedure.query(async ({ ctx }) => {
     const hackathon = await ctx.db.query.hackathons.findFirst({
       orderBy: [asc(hackathons.startDate)],
@@ -45,4 +45,4 @@ export const hackathonRouter = createTRPCRouter({
         .set(hackathon)
         .where(eq(hackathons.id, hackathonID));
     }),
-});
+} satisfies TRPCRouterRecord;
