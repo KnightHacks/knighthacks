@@ -7,4 +7,3 @@ main = 'src/worker.ts'
 [[r2_buckets]]
 binding = "KNIGHT_HACKS_BUCKET"
 bucket_name = "prod"
-preview_bucket_name = "dev"
