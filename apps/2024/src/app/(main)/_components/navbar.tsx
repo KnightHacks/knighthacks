@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@knighthacks/ui";
@@ -11,6 +11,27 @@ import { MobileSheet } from "./navbar-sheet";
 import { SignOutButton } from "./sign-out-button";
 
 export function Navbar({ userId }: { userId: string | null }) {
+  const [screenWidth, setScreenWidth] = useState<number>(0);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    // Add event listener to update the screen width on resize
+    window.addEventListener("resize", handleResize);
+
+    // Initial screen width
+    setScreenWidth(window.innerWidth);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const isMobile = screenWidth < 768;
+
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
 
@@ -30,10 +51,11 @@ export function Navbar({ userId }: { userId: string | null }) {
         animate={{ y: hidden ? "-100%" : 0 }}
         transition={{ type: "tween", duration: 0.2 }}
         className={cn(
-          "fixed z-50 flex h-16 w-full items-center bg-slate-950 px-2 md:px-4",
+          "fixed z-50 flex h-16 w-full items-center bg-[#0D3047] px-2 md:px-4",
         )}
       >
         <MobileSheet userId={userId} />
+
         <div className="flex items-center">
           <Link href="/#hero" passHref legacyBehavior>
             <Button
@@ -99,9 +121,9 @@ export function Navbar({ userId }: { userId: string | null }) {
             <Image
               src="/mlh-badge.svg"
               alt="MLH Badge"
-              width={100}
-              height={200}
-              className="-mb-24 object-contain md:-mb-28"
+              width={isMobile ? 50 : 100}
+              height={isMobile ? 100 : 200}
+              className="-mb-6 object-contain md:-mb-28"
             />
           </motion.div>
         </div>

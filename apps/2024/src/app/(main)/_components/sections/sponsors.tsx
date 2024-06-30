@@ -20,7 +20,7 @@ export async function Sponsors() {
   return (
     <section
       id="sponsors"
-      className="flex items-center justify-center overflow-hidden pt-44 md:pt-96"
+      className="mb-56 flex items-center justify-center overflow-hidden pt-44 md:pt-96"
     >
       <div className="flex flex-col">
         <h1 className="font-k2d h-[125px] w-full pb-14 text-center text-7xl font-bold leading-[125px] text-[#FFD166] md:text-[96px]">
