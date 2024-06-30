@@ -15,7 +15,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "turso dev --db-file db.sqlite -p 8081 && tsc --watch",
+    "build:watch": "tsc --watch",
+    "dev": "turso dev --db-file db.sqlite -p 8081",
     "with-env": "dotenv -e ../../.env --",
     "push": "pnpm with-env drizzle-kit push",
     "studio": "pnpm with-env drizzle-kit studio",
