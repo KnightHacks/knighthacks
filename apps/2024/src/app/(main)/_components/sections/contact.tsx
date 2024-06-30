@@ -78,7 +78,16 @@ export function Contact() {
           className="object-contain"
         />
       </div>
-      <div className="absolute bottom-0 right-[20%] translate-y-[-10%] transform md:right-[30%]">
+      <div className="absolute bottom-10 md:bottom-0 md:right-[45%]">
+        <Image
+          src="/scuba.svg"
+          alt="Scuba diving Lenny"
+          width={isMobile ? screenWidth * 0.3 : screenWidth * 0.15}
+          height={isMobile ? screenWidth * 0.45 : screenWidth * 0.3}
+          className="object-contain"
+        />
+      </div>
+      <div className="absolute bottom-0 right-[15%] translate-y-[-10%] transform md:right-[30%]">
         <Image
           src="/skull.svg"
           alt="Skull"
