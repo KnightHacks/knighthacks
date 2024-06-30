@@ -6,7 +6,7 @@ export function About() {
       id="about"
       className="relative flex h-screen items-center justify-center bg-[url('/ocean.svg')] bg-cover"
     >
-      <div className="relative mx-auto h-[400px] w-[400px] md:h-[500px] md:w-[500px] lg:h-[600px] lg:w-[600px]">
+      <div className="relative mx-auto h-[400px] w-[400px] md:h-[500px] md:w-[500px] lg:h-[900px] lg:w-[900px]">
         <Image
           fill
           src="/about.svg"
