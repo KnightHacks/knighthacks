@@ -11,12 +11,27 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { createTRPCRouter } from "../init";
-import { adminProcedure, authenticatedProcedure } from "../procedures";
+import {
+  adminProcedure,
+  authenticatedProcedure,
+  profileProcedure,
+} from "../procedures";
 
 export const userRouter = createTRPCRouter({
+  getUser: authenticatedProcedure.query(({ ctx }) => {
+    return ctx.user;
+  }),
   getProfile: authenticatedProcedure.query(({ ctx }) => {
     return ctx.user?.profile;
   }),
+  updateProfileApplication: profileProcedure
+    .input(UpdateUserProfileSchema)
+    .mutation(({ ctx, input: { userID, ...userProfile } }) => {
+      return ctx.db
+        .update(userProfiles)
+        .set(userProfile)
+        .where(eq(userProfiles.userID, userID));
+    }),
   profileApplication: authenticatedProcedure
     .input(ProfileApplicationSchema)
     .mutation(async ({ ctx, input }) => {
