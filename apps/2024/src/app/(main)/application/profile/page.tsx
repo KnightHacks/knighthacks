@@ -14,5 +14,9 @@ export default async function Profile() {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
 
-  return <ProfileForm />;
+  return (
+    <div className="bg-[url('/sky-register.svg')] bg-cover bg-no-repeat">
+      <ProfileForm />
+    </div>
+  );
 }

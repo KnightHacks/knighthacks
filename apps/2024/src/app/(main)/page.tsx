@@ -11,8 +11,8 @@ export default function Home() {
     <main className="w-screen overflow-hidden bg-[#3d97d1]">
       <Hero />
       <About />
-      <Sponsors />
-      <div className="bg-gradient-to-t from-[#3d97d1] to-[#2596be]">
+      <div className="bg-[url('/bottom-ocean.svg')] bg-cover bg-no-repeat">
+        <Sponsors />
         <FAQ />
         <Contact />
       </div>
