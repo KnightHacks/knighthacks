@@ -20,10 +20,10 @@ export async function Sponsors() {
   return (
     <section
       id="sponsors"
-      className="mb-56 flex items-center justify-center overflow-hidden pt-44 md:pt-96"
+      className="flex items-center justify-center  bg-[url('/sponsors.svg')] bg-cover pt-64 "
     >
       <div className="flex flex-col">
-        <h1 className="font-k2d h-[125px] w-full pb-14 text-center text-7xl font-bold leading-[125px] text-[#FFD166] md:text-[96px]">
+        <h1 className="font-k2d h-[125px] w-full text-center text-7xl font-bold leading-[125px] text-[#FFD166] md:pb-56 md:text-[96px]">
           Sponsors
         </h1>
         <div className="grid max-w-full auto-rows-auto grid-cols-1 gap-4 overflow-hidden sm:grid-cols-2 md:h-screen md:auto-rows-[275px] md:grid-cols-4">
