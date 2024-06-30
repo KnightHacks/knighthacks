@@ -3,7 +3,7 @@ import { Button } from "@knighthacks/ui/button";
 
 export function Footer() {
   return (
-    <footer className="flex items-center justify-between gap-5 bg-[#0D3047] px-3 pb-2 pt-5 md:px-12">
+    <footer className="mt-auto flex items-center justify-between gap-5 bg-[#0D3047] px-3 pb-2 pt-5 md:px-12">
       <div className="flex flex-col items-center gap-5 md:flex-row">
         <a
           className="flex h-20 items-center"
