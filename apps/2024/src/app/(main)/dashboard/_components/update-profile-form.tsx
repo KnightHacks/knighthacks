@@ -45,7 +45,10 @@ import {
   SelectValue,
 } from "@knighthacks/ui/select";
 import { toast } from "@knighthacks/ui/toast";
-import { UpdateProfileApplicationFormSchema } from "@knighthacks/validators";
+import {
+  set,
+  UpdateProfileApplicationFormSchema,
+} from "@knighthacks/validators";
 
 import { env } from "~/env";
 import { trpc } from "~/trpc/client";
@@ -55,6 +58,7 @@ export function UpdateProfileForm({
 }: {
   user: NonNullable<RouterOutput["user"]["getUser"]>;
 }) {
+  const [newResume, setNewResume] = useState<string | null>(null);
   const form = useForm({
     schema: UpdateProfileApplicationFormSchema,
     defaultValues: {
@@ -86,10 +90,13 @@ export function UpdateProfileForm({
   const { getToken } = useAuth();
 
   const createProfile = trpc.user.updateProfileApplication.useMutation({
-    onSuccess: () => {
+    onSuccess: (_, { resume }) => {
       toast("Success!", {
         description: "Updated user profile",
       });
+      if (resume) {
+        setNewResume(resume);
+      }
     },
     onError: (error) => {
       toast("Error!", {
@@ -97,7 +104,6 @@ export function UpdateProfileForm({
       });
     },
   });
-  console.log(form.formState.errors);
 
   return (
     <div className="mx-auto w-full max-w-screen-sm px-8 pb-8">
@@ -595,7 +601,7 @@ export function UpdateProfileForm({
                     onChange={(e) => field.onChange(e.target.files?.[0])}
                   />
                 </FormControl>
-                {user.profile.resume && (
+                {(user.profile.resume || newResume) && (
                   <Button
                     variant="link"
                     type="button"
@@ -604,7 +610,7 @@ export function UpdateProfileForm({
                       const token = await getToken();
 
                       const resume = await fetch(
-                        `${env.NEXT_PUBLIC_API_URL}/resume/download/${user.profile.resume}`,
+                        `${env.NEXT_PUBLIC_API_URL}/resume/download/${newResume ?? user.profile.resume}`,
                         {
                           method: "GET",
                           headers: {
@@ -619,7 +625,7 @@ export function UpdateProfileForm({
                       URL.revokeObjectURL(url);
                     }}
                   >
-                    {user.profile.resume}
+                    {newResume || user.profile.resume}
                   </Button>
                 )}
                 <FormMessage />
