@@ -30,10 +30,5 @@
     "prettier": "^3.3.1",
     "typescript": "^5.4.5"
   },
-  "eslintConfig": {
-    "extends": [
-      "@knighthacks/eslint-config/base"
-    ]
-  },
   "prettier": "@knighthacks/prettier-config"
 }
