@@ -83,7 +83,7 @@ export function Hero() {
           <a href="mailto:sponsorship@knighthacks.org">Sponsor Us</a>
         </Button>
       </div>
-      <div className="relative mx-auto h-[400px] w-[400px] md:h-[500px] md:w-[500px] lg:h-[600px] lg:w-[600px]">
+      <div className="relative mx-auto h-[300px] w-[300px] md:h-[500px] md:w-[500px] lg:h-[600px] lg:w-[600px]">
         <Image fill src="/island.svg" alt="Knight Hacks island" />
       </div>
     </section>
