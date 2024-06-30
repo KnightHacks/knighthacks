@@ -28,6 +28,7 @@ export const metadata: Metadata = {
     url: "https://2024.knighthacks.org",
     siteName: "KnightHacks 2024",
   },
+  icons: [{ rel: "icon", url: "/logo.svg" }],
 };
 
 export const viewport: Viewport = {
@@ -46,7 +47,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body
         className={cn(
-          "flex min-h-screen flex-col bg-background font-sans text-foreground antialiased",
+          "flex min-h-screen w-screen flex-col overflow-x-hidden bg-background font-sans text-foreground antialiased",
           inter.className,
         )}
       >
