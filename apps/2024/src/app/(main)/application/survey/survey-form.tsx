@@ -103,7 +103,7 @@ export function SurveyForm() {
                     <Link
                       target="_blank"
                       className="font-bold underline underline-offset-4"
-                      href="/#plinkno"
+                      href="https://plinko.horse/"
                     >
                       here
                     </Link>
@@ -144,7 +144,7 @@ export function SurveyForm() {
                 </FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="What do you hope to learn at KnightHacks?"
+                    placeholder="What animal would you choose?"
                     {...field}
                     value={field.value}
                   />
