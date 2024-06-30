@@ -100,6 +100,11 @@ export const ProfileApplicationFormSchema = ProfileApplicationSchema.extend({
   resume: z.instanceof(File).optional(),
 });
 
+export const UpdateProfileApplicationFormSchema =
+  ProfileApplicationFormSchema.partial().extend({
+    userID: z.number(),
+  });
+
 export const UpdateUserProfileFormSchema =
   CreateUserProfileFormSchema.partial().extend({
     userID: z.number(),
