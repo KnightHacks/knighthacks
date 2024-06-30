@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@knighthacks/ui/tabs";
 
 import { trpc } from "~/trpc/server";
 import { UpdateProfileForm } from "./_components/update-profile-form";
+import { UpdateSurveyForm } from "./_components/update-survey-form";
 
 export const runtime = "edge";
 
@@ -23,7 +24,9 @@ export default async function Dashboard() {
         <TabsContent value="profile">
           <UpdateProfileForm user={user} />
         </TabsContent>
-        <TabsContent value="application">Application content</TabsContent>
+        <TabsContent value="application">
+          <UpdateSurveyForm application={application} />
+        </TabsContent>
       </Tabs>
     </div>
   );

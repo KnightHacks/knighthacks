@@ -4,6 +4,7 @@ import { hackathons, hackers } from "@knighthacks/db/schema";
 import {
   CreateHackerSchema,
   HackerApplicationSchema,
+  UpdateHackerApplicationSchema,
   UpdateHackerSchema,
 } from "@knighthacks/validators";
 import { TRPCError } from "@trpc/server";
@@ -33,6 +34,14 @@ export const hackerRouter = {
           agreesToReceiveEmailsFromMLH: input.agreesToReceiveEmailsFromMLH,
         });
       });
+    }),
+  updateApplication: profileProcedure
+    .input(UpdateHackerApplicationSchema)
+    .mutation(async ({ ctx, input: { hackerID, ...application } }) => {
+      await ctx.db
+        .update(hackers)
+        .set(application)
+        .where(eq(hackers.id, hackerID));
     }),
   getApplication: profileProcedure.query(async ({ ctx }) => {
     return ctx.db.query.hackers.findFirst({

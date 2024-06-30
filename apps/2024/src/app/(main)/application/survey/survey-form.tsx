@@ -39,7 +39,7 @@ export function SurveyForm() {
   const registerHacker = trpc.hacker.application.useMutation({
     onSuccess: () => {
       toast("Success!", {
-        description: "Created user profile",
+        description: "Your application has been received!",
       });
       router.refresh();
     },
@@ -246,7 +246,7 @@ export function SurveyForm() {
           />
 
           <Button type="submit" className="w-full">
-            Submit
+            Submit Application
           </Button>
         </form>
       </Form>

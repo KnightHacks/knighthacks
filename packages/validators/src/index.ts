@@ -174,6 +174,16 @@ export const HackerApplicationSchema = CreateHackerSchema.omit({
     }),
 });
 
+export const UpdateHackerApplicationSchema = HackerApplicationSchema.partial()
+  .extend({
+    hackerID: z.number(),
+  })
+  .omit({
+    hasReadAndAgreesToMLHCodeOfConduct: true,
+    consentsToSharingApplicationWithMLHAndAgreesToTheMLHPrivacyPolicyAndContestTerms:
+      true,
+  });
+
 export const CreateSponsorSchema = z.object({
   name: z.string().min(1, { message: "Sponsor name is required" }),
   logo: z.string().url({ message: "Invalid logo URL" }),
