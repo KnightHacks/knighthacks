@@ -29,51 +29,50 @@ export function Navbar({ userId }: { userId: string | null }) {
       animate={{ y: hidden ? "-100%" : 0 }}
       transition={{ type: "tween", duration: 0.2 }}
       className={cn(
-        "fixed z-50 flex h-16 w-full items-center justify-between bg-background bg-[url('/sky.svg')] px-8",
+        "fixed z-50 flex h-16 w-full items-center justify-between bg-background bg-[url('/sky.svg')] px-2 md:px-4",
       )}
     >
-      <div>
+      <div className="flex items-center md:absolute md:left-4">
         <Link href="/#hero" passHref legacyBehavior>
           <Button
             variant="ghost"
-            className="relative right-10 -z-10 mx-0 text-xl font-bold"
+            className="relative flex items-center text-xl font-bold"
           >
             <Image src="/kh-logo.svg" alt="kh-logo" width={200} height={300} />
-            {/* Knight Hacks */}
           </Button>
         </Link>
       </div>
-      <ul className="hidden items-center md:flex">
+      <ul className="hidden flex-1 items-center justify-center space-x-4 md:flex">
         <li>
           <Link href="/#about" passHref legacyBehavior>
-            <Button variant="ghost" className=" text-white">
+            <Button variant="ghost" className="text-white">
               About
             </Button>
           </Link>
         </li>
         <li>
           <Link href="/#faq" passHref legacyBehavior>
-            <Button variant="ghost" className=" text-white">
+            <Button variant="ghost" className="text-white">
               FAQ
             </Button>
           </Link>
         </li>
         <li>
           <Link href="/#sponsors" passHref legacyBehavior>
-            <Button variant="ghost" className=" text-white">
+            <Button variant="ghost" className="text-white">
               Sponsors
             </Button>
           </Link>
         </li>
         <li>
           <Link href="/#contact" passHref legacyBehavior>
-            <Button variant="ghost" className=" text-white">
+            <Button variant="ghost" className="text-white">
               Contact
             </Button>
           </Link>
         </li>
       </ul>
-      <div className="hidden md:block">
+      <div className="hidden items-center md:absolute md:right-4 md:flex">
         {userId ? (
           <SignOutButton />
         ) : (

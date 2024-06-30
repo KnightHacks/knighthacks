@@ -24,7 +24,7 @@ export function FAQ() {
   return (
     <section
       id="faq"
-      className="flex h-auto w-full flex-col items-center justify-center"
+      className="mt-56 flex h-auto w-full flex-col items-center justify-center md:mt-72"
     >
       <h1 className="font-k2d text-center text-5xl font-semibold text-black">
         Frequently Asked Questions
