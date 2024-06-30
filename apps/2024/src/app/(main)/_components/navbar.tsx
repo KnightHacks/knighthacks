@@ -56,19 +56,20 @@ export function Navbar({ userId }: { userId: string | null }) {
       >
         <MobileSheet userId={userId} />
 
-        <div className="flex items-center">
-          <Link href="/#hero" passHref legacyBehavior>
-            <Button
-              variant="ghost"
-              className="relative flex items-center text-xl font-bold"
-            >
-              <Image
-                src="/kh-logo.svg"
-                alt="kh-logo"
-                width={200}
-                height={300}
-              />
-            </Button>
+        <div className="flex items-center hover:cursor-pointer">
+          <Link
+            href="/#hero"
+            passHref
+            legacyBehavior
+            className="hover:cursor-pointer"
+          >
+            <Image
+              src="/kh-logo.svg"
+              alt="kh-logo"
+              width={200}
+              height={300}
+              className="hover:cursor-pointer"
+            />
           </Link>
         </div>
         <div className="hidden flex-1 justify-center md:flex">

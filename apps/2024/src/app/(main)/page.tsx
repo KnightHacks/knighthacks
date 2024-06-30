@@ -8,10 +8,7 @@ export const runtime = "edge";
 
 export default function Home() {
   return (
-    <main
-      className="w-screen overflow-hidden
-bg-[#3d97d1]"
-    >
+    <main className="w-screen overflow-hidden bg-[#3d97d1]">
       <Hero />
       <About />
       <Sponsors />
