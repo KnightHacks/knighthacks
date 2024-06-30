@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc",
     "deploy": "wrangler deploy --minify",
-    "dev": "tsc --watch && wrangler dev --port 8080",
+    "dev": "wrangler dev --port 8080 && tsc --watch",
     "lint": "eslint",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
