@@ -16,6 +16,10 @@
         ".vercel/output/**"
       ]
     },
+    "build:watch":{
+      "persistent": true,
+      "cache": false
+    },
     "start": {
       "dependsOn": ["^start"]
     },
