@@ -24,12 +24,12 @@ export function FAQ() {
   return (
     <section
       id="faq"
-      className="mb-32 flex h-auto w-full flex-col items-center justify-center"
+      className="flex h-auto w-full flex-col items-center justify-center "
     >
-      <h1 className="font-k2d text-center text-5xl font-semibold text-black">
+      <h1 className="font-k2d text-center text-5xl font-semibold text-[#FFD166]">
         Frequently Asked Questions
       </h1>
-      <div className="flex h-screen w-full flex-col items-center justify-start p-5">
+      <div className="flex w-full flex-col items-center justify-center p-5">
         {Object.entries(FAQs).map(([key, value]) => (
           <Accordion type="single" collapsible key={key} className="w-full">
             <AccordionItem

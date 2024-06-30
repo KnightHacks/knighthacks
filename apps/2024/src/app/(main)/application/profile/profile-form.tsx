@@ -94,7 +94,7 @@ export function ProfileForm() {
   });
 
   return (
-    <div className="mx-auto w-full max-w-screen-sm px-8 pb-8 pt-20">
+    <div className="mx-auto mb-8 mt-20 w-full max-w-screen-sm rounded-lg bg-white p-8 ">
       <h1 className="mb-4 text-center text-2xl font-bold">
         Create Your Profile!
       </h1>

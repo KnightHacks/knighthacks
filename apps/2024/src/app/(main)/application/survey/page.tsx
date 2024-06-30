@@ -12,5 +12,9 @@ export default async function Survey() {
 
   const application = await trpc.hacker.getApplication.query();
   if (application) redirect("/dashboard");
-  return <SurveyForm />;
+  return (
+    <div className=" flex-grow bg-[url('/sky-register.svg')] bg-cover bg-no-repeat">
+      <SurveyForm />
+    </div>
+  );
 }

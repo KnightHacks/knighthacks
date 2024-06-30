@@ -30,13 +30,13 @@ export function Contact() {
       id="contact"
       className="relative flex h-screen flex-col items-center justify-center space-y-2 text-center md:text-left"
     >
-      <h1 className="font-k2d z-50 text-center text-5xl font-semibold text-black">
+      <h1 className="font-k2d z-50 text-center text-5xl font-semibold text-[#FFD166]">
         Get in Touch!
       </h1>
-      <p className="z-10 px-2 text-sm md:text-base">
+      <p className="z-50 px-2 text-sm text-[#FFD166] md:text-base">
         Care to learn more about Knight Hacks?
       </p>
-      <p className="z-10 px-2 pb-72 text-sm md:mb-0 md:text-base">
+      <p className="z-50 px-2 text-sm text-[#FFD166] md:text-base">
         Email our organizers at{" "}
         <a href="mailto:hackteam@knighthacks.org" className="underline">
           hackteam@knighthacks.org
