@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { HamburgerMenuIcon } from "@knighthacks/ui";
 import { Button } from "@knighthacks/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@knighthacks/ui/sheet";
 
@@ -14,7 +15,9 @@ export function MobileSheet({ userId }: { userId: string | null }) {
     <div className="md:hidden">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <Button>Menu</Button>
+          <Button>
+            <HamburgerMenuIcon />{" "}
+          </Button>
         </SheetTrigger>
         <SheetContent>
           <Link href="/#hero" passHref legacyBehavior>
