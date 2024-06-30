@@ -409,8 +409,8 @@ export function UpdateProfileForm({
                     </FormControl>
                     <SelectContent>
                       {Array.from(
-                        { length: 5 },
-                        (_, i) => new Date().getFullYear() + i,
+                        { length: 6 },
+                        (_, i) => new Date().getFullYear() - 1 + i,
                       ).map((year) => (
                         <SelectItem key={year} value={String(year)}>
                           {year}
