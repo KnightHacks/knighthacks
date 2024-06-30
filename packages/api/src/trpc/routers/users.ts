@@ -26,12 +26,25 @@ export const userRouter = {
   }),
   updateProfileApplication: profileProcedure
     .input(UpdateUserProfileSchema)
-    .mutation(({ ctx, input: { userID, ...userProfile } }) => {
-      return ctx.db
-        .update(userProfiles)
-        .set(userProfile)
-        .where(eq(userProfiles.userID, userID));
-    }),
+    .mutation(
+      async ({
+        ctx,
+        input: { userID, firstName, lastName, email, ...userProfile },
+      }) => {
+        await ctx.db
+          .update(users)
+          .set({
+            firstName,
+            lastName,
+            email,
+          })
+          .where(eq(users.id, userID));
+        await ctx.db
+          .update(userProfiles)
+          .set(userProfile)
+          .where(eq(userProfiles.userID, userID));
+      },
+    ),
   profileApplication: authenticatedProcedure
     .input(ProfileApplicationSchema)
     .mutation(async ({ ctx, input }) => {

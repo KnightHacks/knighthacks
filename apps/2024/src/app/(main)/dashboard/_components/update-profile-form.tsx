@@ -2,7 +2,6 @@
 
 import type { RouterOutput } from "@knighthacks/api";
 import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 import {
   COUNTRIES,
@@ -59,19 +58,38 @@ export function UpdateProfileForm({
   const form = useForm({
     schema: UpdateProfileApplicationFormSchema,
     defaultValues: {
-      ...user,
+      userID: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      address1: user.profile.address1,
+      address2: user.profile.address2 ?? "",
+      age: String(user.profile.age),
+      city: user.profile.city,
+      country: user.profile.country,
+      discord: user.profile.discord,
+      email: user.email,
+      ethnicity: user.profile.ethnicity,
+      gender: user.profile.gender,
+      github: user.profile.github ?? "",
+      gradYear: user.profile.gradYear,
+      linkedin: user.profile.linkedin ?? "",
+      major: user.profile.major,
+      personalWebsite: user.profile.personalWebsite ?? "",
+      phone: user.profile.phone,
+      school: user.profile.school,
+      shirtSize: user.profile.shirtSize,
+      state: user.profile.state,
+      zip: user.profile.zip,
     },
   });
 
   const { getToken } = useAuth();
 
-  const router = useRouter();
   const createProfile = trpc.user.updateProfileApplication.useMutation({
     onSuccess: () => {
       toast("Success!", {
-        description: "Created user profile",
+        description: "Updated user profile",
       });
-      router.refresh();
     },
     onError: (error) => {
       toast("Error!", {
@@ -79,6 +97,7 @@ export function UpdateProfileForm({
       });
     },
   });
+  console.log(form.formState.errors);
 
   return (
     <div className="mx-auto w-full max-w-screen-sm px-8 pb-8">
@@ -168,10 +187,7 @@ export function UpdateProfileForm({
               render={({ field }) => (
                 <FormItem className="sm:w-[80px]">
                   <FormLabel>Shirt Size</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your shirt size" />
@@ -238,7 +254,7 @@ export function UpdateProfileForm({
               render={({ field }) => (
                 <FormItem className="flex-1">
                   <FormLabel>Ethnicity</FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select value={field.value} onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your ethnicity" />
@@ -262,7 +278,7 @@ export function UpdateProfileForm({
               render={({ field }) => (
                 <FormItem className="flex-1">
                   <FormLabel>Gender</FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select value={field.value} onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your gender" />
@@ -306,7 +322,10 @@ export function UpdateProfileForm({
                       </FormControl>
                     </PopoverTrigger>
                     <PopoverContent className="p-0">
-                      <SchoolsCombobox value={field.value} form={form} />
+                      <SchoolsCombobox
+                        value={field.value ?? user.profile.school}
+                        form={form}
+                      />
                     </PopoverContent>
                   </Popover>
                   <FormMessage />
@@ -582,7 +601,7 @@ export function UpdateProfileForm({
           />
 
           <Button type="submit" className="w-full">
-            Create User Profile
+            Update User Profile
           </Button>
         </form>
       </Form>
