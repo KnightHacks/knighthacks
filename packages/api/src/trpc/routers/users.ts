@@ -1,3 +1,4 @@
+import type { TRPCRouterRecord } from "@trpc/server";
 import { eq } from "@knighthacks/db";
 import { userProfiles, users } from "@knighthacks/db/schema";
 import {
@@ -10,14 +11,13 @@ import {
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import { createTRPCRouter } from "../init";
 import {
   adminProcedure,
   authenticatedProcedure,
   profileProcedure,
 } from "../procedures";
 
-export const userRouter = createTRPCRouter({
+export const userRouter = {
   getUser: authenticatedProcedure.query(({ ctx }) => {
     return ctx.user;
   }),
@@ -98,4 +98,4 @@ export const userRouter = createTRPCRouter({
     .mutation(async ({ ctx, input: { userID, ...user } }) => {
       await ctx.db.update(users).set(user).where(eq(users.id, userID));
     }),
-});
+} satisfies TRPCRouterRecord;

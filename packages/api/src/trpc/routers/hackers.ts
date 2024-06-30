@@ -1,3 +1,4 @@
+import type { TRPCRouterRecord } from "@trpc/server";
 import { asc, eq } from "@knighthacks/db";
 import { hackathons, hackers } from "@knighthacks/db/schema";
 import {
@@ -8,10 +9,9 @@ import {
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import { createTRPCRouter } from "../init";
 import { adminProcedure, profileProcedure } from "../procedures";
 
-export const hackerRouter = createTRPCRouter({
+export const hackerRouter = {
   application: profileProcedure
     .input(HackerApplicationSchema)
     .mutation(async ({ ctx, input }) => {
@@ -69,4 +69,4 @@ export const hackerRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       await ctx.db.insert(hackers).values(input);
     }),
-});
+} satisfies TRPCRouterRecord;

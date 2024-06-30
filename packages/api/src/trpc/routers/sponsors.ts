@@ -1,3 +1,4 @@
+import type { TRPCRouterRecord } from "@trpc/server";
 import { eq } from "@knighthacks/db";
 import { sponsors } from "@knighthacks/db/schema";
 import {
@@ -6,10 +7,9 @@ import {
 } from "@knighthacks/validators";
 import { z } from "zod";
 
-import { createTRPCRouter } from "../init";
 import { adminProcedure, publicProcedure } from "../procedures";
 
-export const sponsorRouter = createTRPCRouter({
+export const sponsorRouter = {
   adminCreate: adminProcedure
     .input(CreateSponsorSchema)
     .mutation(async ({ ctx, input }) => {
@@ -31,4 +31,4 @@ export const sponsorRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       await ctx.db.delete(sponsors).where(eq(sponsors.id, input));
     }),
-});
+} satisfies TRPCRouterRecord;
