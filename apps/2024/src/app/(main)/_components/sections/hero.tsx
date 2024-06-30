@@ -14,13 +14,10 @@ export function Hero() {
         backgroundPosition: "top 10%", // Adjust this value as needed
       }}
     >
-      <h1 className="z-20 mb-2 text-4xl font-bold md:text-5xl lg:text-6xl">
-        KnightHacks 2024
-      </h1>
-      <div className="z-20 mb-4 flex gap-2">
-        <div>Engineering 1</div> • <div>Oct 4-6</div>
+      <div className="relative z-20 mb-4 h-24 w-72 md:h-64 md:w-[32rem] lg:h-80 lg:w-[40rem]">
+        <Image src="/header.svg" fill alt="Header" className="object-contain" />
       </div>
-      <div className="z-20 flex gap-2">
+      <div className="z-20 mb-4 flex gap-2">
         <Link href="/application/profile" passHref legacyBehavior>
           <Button>Apply</Button>
         </Link>
