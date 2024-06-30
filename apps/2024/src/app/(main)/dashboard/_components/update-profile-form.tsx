@@ -95,7 +95,10 @@ export function UpdateProfileForm({
             let resumeKey = "";
             if (data.resume && token) {
               try {
-                resumeKey = await uploadResume(data.resume as unknown as File, token);
+                resumeKey = await uploadResume(
+                  data.resume as unknown as File,
+                  token,
+                );
               } catch {
                 toast("Error!", {
                   description: "Failed to upload resume",

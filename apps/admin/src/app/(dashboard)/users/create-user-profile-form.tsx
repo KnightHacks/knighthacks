@@ -94,7 +94,10 @@ export function CreateUserProfileForm({ userID }: { userID: number }) {
             let resumeKey = "";
             if (data.resume && token) {
               try {
-                resumeKey = await uploadResume(data.resume, token);
+                resumeKey = await uploadResume(
+                  data.resume as unknown as File,
+                  token,
+                );
                 console.log(resumeKey);
               } catch {
                 toast("Error!", {
