@@ -7,6 +7,7 @@ import {
   COUNTRIES,
   ETHNICITIES,
   GENDERS,
+  LEVELS_OF_STUDY,
   MAJORS,
   SCHOOLS,
   SHIRT_SIZES,
@@ -72,7 +73,7 @@ export function UpdateProfileForm({
       ethnicity: user.profile.ethnicity,
       gender: user.profile.gender,
       github: user.profile.github ?? "",
-      gradYear: user.profile.gradYear,
+      levelOfStudy: user.profile.levelOfStudy,
       linkedin: user.profile.linkedin ?? "",
       major: user.profile.major,
       personalWebsite: user.profile.personalWebsite ?? "",
@@ -81,6 +82,7 @@ export function UpdateProfileForm({
       shirtSize: user.profile.shirtSize,
       state: user.profile.state,
       zip: user.profile.zip,
+      gradYear: user.profile.gradYear,
     },
   });
 
@@ -360,6 +362,32 @@ export function UpdateProfileForm({
                       <MajorsComboBox value={field.value} form={form} />
                     </PopoverContent>
                   </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <FormField
+              control={form.control}
+              name="levelOfStudy"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Level of Study</FormLabel>
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your level of study" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {LEVELS_OF_STUDY.map((levelOfStudy) => (
+                        <SelectItem key={levelOfStudy} value={levelOfStudy}>
+                          {levelOfStudy}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

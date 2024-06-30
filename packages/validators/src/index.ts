@@ -1,6 +1,7 @@
 import {
   APPLICATION_STATUSES,
   COUNTRIES,
+  LEVELS_OF_STUDY,
   MAJORS,
   SCHOOLS,
   SHIRT_SIZES,
@@ -59,6 +60,7 @@ export const CreateUserProfileSchema = z
     major: z.enum(MAJORS),
     school: z.enum(SCHOOLS),
     gradYear: z.string().min(4, { message: "Required" }),
+    levelOfStudy: z.enum(LEVELS_OF_STUDY),
     shirtSize: z.enum(SHIRT_SIZES),
     resume: z.string().optional(),
     gender: z.string().min(1, { message: "Required" }),

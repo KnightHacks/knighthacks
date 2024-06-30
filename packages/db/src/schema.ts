@@ -1,6 +1,7 @@
 import {
   APPLICATION_STATUSES,
   COUNTRIES,
+  LEVELS_OF_STUDY,
   MAJORS,
   SCHOOLS,
   SHIRT_SIZES,
@@ -60,6 +61,9 @@ export const userProfiles = sqliteTable("user_profiles", {
   major: text("major", { enum: MAJORS }).notNull(),
   school: text("school", { enum: SCHOOLS }).notNull(),
   gradYear: text("grad_year").notNull(),
+  levelOfStudy: text("level_of_study", {
+    enum: LEVELS_OF_STUDY,
+  }).notNull(),
   address1: text("address1").notNull(),
   address2: text("address2"),
   city: text("city").notNull(),

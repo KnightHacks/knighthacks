@@ -7,6 +7,7 @@ import {
   COUNTRIES,
   ETHNICITIES,
   GENDERS,
+  LEVELS_OF_STUDY,
   MAJORS,
   SCHOOLS,
   SHIRT_SIZES,
@@ -351,6 +352,32 @@ export function ProfileForm() {
                       <MajorsComboBox value={field.value} form={form} />
                     </PopoverContent>
                   </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <FormField
+              control={form.control}
+              name="levelOfStudy"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Level of Study</FormLabel>
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your level of study" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {LEVELS_OF_STUDY.map((levelOfStudy) => (
+                        <SelectItem key={levelOfStudy} value={levelOfStudy}>
+                          {levelOfStudy}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
