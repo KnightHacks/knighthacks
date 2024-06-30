@@ -23,7 +23,7 @@
     "generate": "pnpm with-env drizzle-kit generate",
     "lint": "eslint",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "clean": "rm -rf .turbo node_modules"
   },
   "license": "MIT",

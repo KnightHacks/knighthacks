@@ -45,10 +45,7 @@ import {
   SelectValue,
 } from "@knighthacks/ui/select";
 import { toast } from "@knighthacks/ui/toast";
-import {
-  set,
-  UpdateProfileApplicationFormSchema,
-} from "@knighthacks/validators";
+import { UpdateProfileApplicationFormSchema } from "@knighthacks/validators";
 
 import { env } from "~/env";
 import { trpc } from "~/trpc/client";
@@ -601,7 +598,7 @@ export function UpdateProfileForm({
                     onChange={(e) => field.onChange(e.target.files?.[0])}
                   />
                 </FormControl>
-                {(user.profile.resume || newResume) && (
+                {(user.profile.resume ?? newResume) && (
                   <Button
                     variant="link"
                     type="button"
@@ -625,7 +622,7 @@ export function UpdateProfileForm({
                       URL.revokeObjectURL(url);
                     }}
                   >
-                    {newResume || user.profile.resume}
+                    {newResume ?? user.profile.resume}
                   </Button>
                 )}
                 <FormMessage />
