@@ -43,7 +43,7 @@ export function Footer() {
             </p>
             <p>
               <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
-                MLH
+                Code of Conduct
               </a>
             </p>
           </div>
