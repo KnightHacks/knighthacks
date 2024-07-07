@@ -518,7 +518,7 @@ function SchoolsCombobox({
   value,
   form,
 }: {
-  value?: (typeof SCHOOLS)[number];
+  value?: string;
   form: ReturnType<typeof useForm<typeof UpdateUserProfileFormSchema>>;
 }) {
   const [search, setSearch] = useState("");
