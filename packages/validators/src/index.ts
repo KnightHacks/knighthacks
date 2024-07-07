@@ -3,7 +3,6 @@ import {
   COUNTRIES,
   LEVELS_OF_STUDY,
   MAJORS,
-  SCHOOLS,
   SHIRT_SIZES,
   SPONSOR_TIERS,
 } from "@knighthacks/consts";
@@ -58,7 +57,7 @@ export const CreateUserProfileSchema = z
       })
       .max(100, { message: "Erm, what the sigma?" }),
     major: z.enum(MAJORS),
-    school: z.enum(SCHOOLS),
+    school: z.string().min(1, { message: "Required" }),
     gradYear: z.string().min(4, { message: "Required" }),
     levelOfStudy: z.enum(LEVELS_OF_STUDY),
     shirtSize: z.enum(SHIRT_SIZES),

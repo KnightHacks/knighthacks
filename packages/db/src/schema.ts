@@ -3,7 +3,6 @@ import {
   COUNTRIES,
   LEVELS_OF_STUDY,
   MAJORS,
-  SCHOOLS,
   SHIRT_SIZES,
   SPONSOR_TIERS,
 } from "@knighthacks/consts";
@@ -59,7 +58,7 @@ export const userProfiles = sqliteTable("user_profiles", {
   ethnicity: text("ethnicity").notNull(),
   discord: text("discord").notNull(),
   major: text("major", { enum: MAJORS }).notNull(),
-  school: text("school", { enum: SCHOOLS }).notNull(),
+  school: text("school").notNull(),
   gradYear: text("grad_year").notNull(),
   levelOfStudy: text("level_of_study", {
     enum: LEVELS_OF_STUDY,
