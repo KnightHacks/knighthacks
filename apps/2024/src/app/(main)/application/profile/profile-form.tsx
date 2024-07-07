@@ -700,7 +700,7 @@ function SchoolsCombobox({
       />
       <CommandEmpty>
         <div className="mb-2 p-2 text-sm">
-          No school found. Please enter your school below instead.
+          No school found. Please enter your school below.
           <Input
             className="t-2"
             onChange={(e) =>
