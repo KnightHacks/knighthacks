@@ -703,24 +703,15 @@ function SchoolsCombobox({
           No school found. Please enter your school below.
           <Input
             className="t-2"
-            onChange={(e) =>
-              form.setValue(
-                "school",
-                e.target.value
-                  .split(" ")
-                  .map((word) => {
-                    if (
-                      word.toLowerCase() === "of" ||
-                      word.toLowerCase() === "for"
-                    ) {
-                      return word.toLowerCase();
-                    } else {
-                      return word.charAt(0).toUpperCase() + word.slice(1);
-                    }
-                  })
-                  .join(" "),
-              )
-            }
+            onChange={(e) => {
+              const pattern = /\b(?!for\b|of\b)(\w+)\b/gi;
+              const result = e.target.value.replace(
+                pattern,
+                (match) =>
+                  match.charAt(0).toUpperCase() + match.slice(1).toLowerCase(),
+              );
+              form.setValue("school", result);
+            }}
           />
         </div>
       </CommandEmpty>
