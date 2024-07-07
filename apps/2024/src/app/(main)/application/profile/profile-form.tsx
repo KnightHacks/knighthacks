@@ -313,7 +313,7 @@ export function ProfileForm() {
                           )}
                         >
                           <span className="truncate">
-                            {SCHOOLS.find((school) => school === field.value)}
+                            {form.watch("school")}
                           </span>
                           <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
@@ -698,7 +698,32 @@ function SchoolsCombobox({
         onValueChange={setSearch}
         placeholder="Search for more schools..."
       />
-      <CommandEmpty>No school found.</CommandEmpty>
+      <CommandEmpty>
+        <div className="mb-2 p-2 text-sm">
+          No school found. Please enter your school below instead.
+          <Input
+            className="t-2"
+            onChange={(e) =>
+              form.setValue(
+                "school",
+                e.target.value
+                  .split(" ")
+                  .map((word) => {
+                    if (
+                      word.toLowerCase() === "of" ||
+                      word.toLowerCase() === "for"
+                    ) {
+                      return word.toLowerCase();
+                    } else {
+                      return word.charAt(0).toUpperCase() + word.slice(1);
+                    }
+                  })
+                  .join(" "),
+              )
+            }
+          />
+        </div>
+      </CommandEmpty>
       <ScrollArea>
         <CommandGroup>
           {filteredSchools.map((school) => (
