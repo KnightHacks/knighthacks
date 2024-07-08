@@ -62,7 +62,7 @@ export const userProfiles = sqliteTable("user_profiles", {
   gradYear: text("grad_year").notNull(),
   levelOfStudy: text("level_of_study", {
     enum: LEVELS_OF_STUDY,
-  }).notNull(),
+  }).default("Undergraduate University (3+ year)"),
   address1: text("address1").notNull(),
   address2: text("address2"),
   city: text("city").notNull(),
