@@ -442,7 +442,7 @@ export const APPLICATION_STATUSES = [
   "accepted",
   "waitlisted",
   "checkedin",
-  "confirmed"
+  "confirmed",
 ] as const;
 
 export const SCHOOLS = [
