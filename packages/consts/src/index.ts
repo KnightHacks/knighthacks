@@ -437,10 +437,12 @@ export const COUNTRIES = [
 ] as const;
 
 export const APPLICATION_STATUSES = [
+  "withdrawn",
   "pending",
   "accepted",
   "waitlisted",
   "checkedin",
+  "confirmed"
 ] as const;
 
 export const SCHOOLS = [
