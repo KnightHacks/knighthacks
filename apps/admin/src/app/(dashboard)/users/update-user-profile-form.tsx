@@ -60,7 +60,8 @@ export function UpdateProfileForm({
       major: userProfile.major,
       school: userProfile.school,
       gradYear: userProfile.gradYear,
-      levelOfStudy: userProfile.levelOfStudy,
+      levelOfStudy:
+        userProfile.levelOfStudy ?? "Undergraduate University (3+ year)",
       address1: userProfile.address1,
       address2: userProfile.address2 ?? "",
       city: userProfile.city,

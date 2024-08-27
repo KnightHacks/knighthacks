@@ -73,7 +73,8 @@ export function UpdateProfileForm({
       ethnicity: user.profile.ethnicity,
       gender: user.profile.gender,
       github: user.profile.github ?? "",
-      levelOfStudy: user.profile.levelOfStudy,
+      levelOfStudy:
+        user.profile.levelOfStudy ?? "Undergraduate University (3+ year)",
       linkedin: user.profile.linkedin ?? "",
       major: user.profile.major,
       personalWebsite: user.profile.personalWebsite ?? "",
