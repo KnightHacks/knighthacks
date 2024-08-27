@@ -15,27 +15,29 @@ export default async function Dashboard() {
   const application = await trpc.hacker.getApplication.query();
   if (!application) redirect("/application/survey");
 
+  const hacker = user.hackers.find((hacker) => hacker.hackathonID === 1);
+
   return (
-    <div className="bg-[url('/sky-register.svg')] bg-cover px-8 pt-20">
+    <div className="h-auto bg-[url('/sky-register.svg')] bg-cover px-8 pt-20">
       <Tabs defaultValue="profile">
         <TabsList>
           <TabsTrigger value="profile">Profile</TabsTrigger>
-          {user.hackers[0]?.status !== "accepted" ? (
-            <TabsTrigger value="application">Application</TabsTrigger>
-          ) : (
+          {hacker?.status === "accepted" || hacker?.status === "confirmed" ? (
             <TabsTrigger value="confirmation">Confirmation</TabsTrigger>
+          ) : (
+            <TabsTrigger value="application">Application</TabsTrigger>
           )}
         </TabsList>
         <TabsContent value="profile">
           <UpdateProfileForm user={user} />
         </TabsContent>
-        {user.hackers[0]?.status !== "accepted" ? (
-          <TabsContent value="application">
-            <UpdateSurveyForm application={application} />
+        {hacker?.status === "accepted" || hacker?.status === "confirmed" ? (
+          <TabsContent value="confirmation">
+            <ConfirmStatusForm hacker={hacker} />
           </TabsContent>
         ) : (
-          <TabsContent value="confirmation">
-            <ConfirmStatusForm />
+          <TabsContent value="application">
+            <UpdateSurveyForm application={application} />
           </TabsContent>
         )}
       </Tabs>
