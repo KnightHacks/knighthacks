@@ -105,8 +105,6 @@ export function UpdateProfileForm({
     },
   });
 
-  console.log("user: ", user);
-
   return (
     <div className="mx-auto mb-8 w-full max-w-screen-sm rounded-xl bg-white p-8 pb-8">
       <h1 className="mb-4 text-center text-2xl font-bold">

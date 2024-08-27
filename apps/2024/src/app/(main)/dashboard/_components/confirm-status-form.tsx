@@ -23,10 +23,15 @@ import { UpdateHackerSchema } from "@knighthacks/validators";
 
 import { trpc } from "~/trpc/client";
 
+type HackerWithoutUserAndHackathon = Omit<
+  RouterOutput["hacker"]["adminAll"][number],
+  "user" | "hackathon"
+>;
+
 export function ConfirmStatusForm({
   hacker,
 }: {
-  hacker: RouterOutput["hacker"]["adminAll"][number];
+  hacker: HackerWithoutUserAndHackathon;
 }) {
   const form = useForm({
     schema: UpdateHackerSchema,
