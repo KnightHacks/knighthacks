@@ -14,7 +14,7 @@ export function FAQ() {
     "How long is Knight Hacks?":
       "Knighthacks is a 36-hour hackathon, beginning at 5pm on Friday (check-in runs from 5-8pm, with the opening ceremony starting at 8pm) and ending at 6pm on Sunday. We encourage you to work on your project for as long as you can during this time.",
     "Who can attend Knight Hacks?":
-      "If you’re currently a college student or have graduated in the past year, you're more than welcome to attend!",
+      "If you’re currently a college student(18+) or have graduated in the past year, you're more than welcome to attend!",
     "Do I need to have a team?":
       "Not at all! You can be a lone wolf, come with a team (no more than four people), or join some teams at KnightHacks. We’ll also have team building activities to help you find the right teammates!",
     "How much experience do I need?":
