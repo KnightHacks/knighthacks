@@ -19,6 +19,8 @@ export function FAQ() {
       "Not at all! You can be a lone wolf, come with a team (no more than four people), or join some teams at KnightHacks. We’ll also have team building activities to help you find the right teammates!",
     "How much experience do I need?":
       "None! We welcome students from all academic backgrounds and skill levels, so don’t be afraid to come and join us! We’ll have introductory workshops for you to learn new skills, industry mentors to help you out, and great tools to build your projects. Whether you’ve never coded before or have lots of experience, there’s a place for you at KnightHacks!",
+    "Will there be travel assistance?":
+      "No we do not offer reimbursements or busses this year",
   };
 
   return (
