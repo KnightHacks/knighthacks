@@ -21,8 +21,10 @@ interface Counts {
   accepted: number;
   waitlisted: number;
   denied: number;
-  applied: number;
+  pending: number;
   checkedin: number;
+  confirmed: number;
+  withdrawn: number;
   total: number;
 }
 
@@ -36,8 +38,10 @@ export default function Hackers() {
     accepted: 0,
     waitlisted: 0,
     denied: 0,
-    applied: 0,
+    confirmed: 0,
+    pending: 0,
     checkedin: 0,
+    withdrawn: 0,
     total: 0,
   });
 
@@ -51,9 +55,11 @@ export default function Hackers() {
         waitlisted: hackers.filter((hacker) => hacker.status === "waitlisted")
           .length,
         denied: hackers.filter((hacker) => hacker.status === "denied").length,
-        applied: hackers.filter((hacker) => hacker.status === "applied").length,
+        pending: hackers.filter((hacker) => hacker.status === "pending").length,
         checkedin: hackers.filter((hacker) => hacker.status === "checkedin")
           .length,
+        withdrawn: hackers.filter((hacker) => hacker.status === "withdrawn").length,
+        confirmed: hackers.filter((hacker) => hacker.status === "confirmed").length,
         total: hackers.length,
       });
     }
@@ -76,9 +82,13 @@ export default function Hackers() {
                 <Separator orientation="vertical" />
                 <div>Denied: {counts.denied}</div>
                 <Separator orientation="vertical" />
-                <div>Applied: {counts.applied}</div>
+                <div>Applied: {counts.pending}</div>
                 <Separator orientation="vertical" />
                 <div>Checked In: {counts.checkedin}</div>
+                <Separator orientation="vertical" />
+                <div>Withdrawn: {counts.withdrawn}</div>
+                <Separator orientation="vertical"/>
+                <div>Confirmed: {counts.confirmed}</div>
                 <Separator orientation="vertical" />
                 <div>Total: {counts.total}</div>
               </div>
@@ -141,7 +151,7 @@ export function ManageTable({ updateCounts }: ManageTableProps) {
 
   useEffect(() => {
     const filteredHackers = hackers?.filter(
-      (hacker) => hacker.status === "applied",
+      (hacker) => hacker.status === "pending",
     );
     setAllHackers(filteredHackers);
     if (filteredHackers) {
@@ -174,7 +184,7 @@ export function ManageTable({ updateCounts }: ManageTableProps) {
     }
   };
 
-  type Status = "applied" | "accepted" | "waitlisted" | "checkedin" | "denied";
+  type Status = "withdrawn" | "pending" | "accepted" | "waitlisted" | "checkedin" | "confirmed" |"denied";
 
   const handleStatusChange = (
     status: Status,
