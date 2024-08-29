@@ -69,6 +69,7 @@ export const hackerColumns: ColumnDef<
   },
   {
     accessorKey: "whyAttend",
+    accessorFn: (hacker) => hacker.survey1,
     header: ({ column }) => {
       return (
         <Button
@@ -83,6 +84,7 @@ export const hackerColumns: ColumnDef<
   },
   {
     accessorKey: "whatLearn",
+    accessorFn: (hacker) => hacker.survey2,
     header: ({ column }) => {
       return (
         <Button
