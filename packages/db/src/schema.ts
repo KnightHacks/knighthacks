@@ -106,7 +106,7 @@ export const hackers = sqliteTable(
     status: text("status", {
       enum: APPLICATION_STATUSES,
     })
-      .default("applied")
+      .default("pending")
       .notNull(),
     survey1: text("survey_1").notNull(),
     survey2: text("survey_2").notNull(),
