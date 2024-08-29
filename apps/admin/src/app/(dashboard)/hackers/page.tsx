@@ -7,7 +7,6 @@ import { Checkbox } from "@knighthacks/ui/checkbox";
 import { Input } from "@knighthacks/ui/input";
 import { Label } from "@knighthacks/ui/label";
 import { ScrollArea } from "@knighthacks/ui/scroll-area";
-import { Separator } from "@knighthacks/ui/Separator";
 import { Sheet, SheetContent } from "@knighthacks/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@knighthacks/ui/tabs";
 import { toast } from "@knighthacks/ui/toast";
@@ -79,19 +78,12 @@ export default function Hackers() {
               <CardTitle>Attendance Summary</CardTitle>
               <div className="text-md flex flex-row space-x-1 text-gray-500">
                 <div>Accepted: {counts.accepted}</div>
-                <Separator orientation="vertical" />
                 <div>Waitlisted: {counts.waitlisted}</div>
-                <Separator orientation="vertical" />
                 <div>Denied: {counts.denied}</div>
-                <Separator orientation="vertical" />
                 <div>Applied: {counts.pending}</div>
-                <Separator orientation="vertical" />
                 <div>Checked In: {counts.checkedin}</div>
-                <Separator orientation="vertical" />
                 <div>Withdrawn: {counts.withdrawn}</div>
-                <Separator orientation="vertical" />
                 <div>Confirmed: {counts.confirmed}</div>
-                <Separator orientation="vertical" />
                 <div>Total: {counts.total}</div>
               </div>
             </CardHeader>
