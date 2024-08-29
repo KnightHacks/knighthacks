@@ -58,8 +58,10 @@ export default function Hackers() {
         pending: hackers.filter((hacker) => hacker.status === "pending").length,
         checkedin: hackers.filter((hacker) => hacker.status === "checkedin")
           .length,
-        withdrawn: hackers.filter((hacker) => hacker.status === "withdrawn").length,
-        confirmed: hackers.filter((hacker) => hacker.status === "confirmed").length,
+        withdrawn: hackers.filter((hacker) => hacker.status === "withdrawn")
+          .length,
+        confirmed: hackers.filter((hacker) => hacker.status === "confirmed")
+          .length,
         total: hackers.length,
       });
     }
@@ -87,7 +89,7 @@ export default function Hackers() {
                 <div>Checked In: {counts.checkedin}</div>
                 <Separator orientation="vertical" />
                 <div>Withdrawn: {counts.withdrawn}</div>
-                <Separator orientation="vertical"/>
+                <Separator orientation="vertical" />
                 <div>Confirmed: {counts.confirmed}</div>
                 <Separator orientation="vertical" />
                 <div>Total: {counts.total}</div>
@@ -184,7 +186,14 @@ export function ManageTable({ updateCounts }: ManageTableProps) {
     }
   };
 
-  type Status = "withdrawn" | "pending" | "accepted" | "waitlisted" | "checkedin" | "confirmed" |"denied";
+  type Status =
+    | "withdrawn"
+    | "pending"
+    | "accepted"
+    | "waitlisted"
+    | "checkedin"
+    | "confirmed"
+    | "denied";
 
   const handleStatusChange = (
     status: Status,
