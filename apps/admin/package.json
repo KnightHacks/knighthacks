@@ -20,6 +20,7 @@
     "@knighthacks/consts": "workspace:*",
     "@knighthacks/ui": "workspace:*",
     "@knighthacks/validators": "workspace:*",
+    "@knighthacks/utils": "workspace:*",
     "@tanstack/react-query": "^5.25.0",
     "@tanstack/react-table": "^8.11.2",
     "@trpc/client": "11.0.0-rc.351",
