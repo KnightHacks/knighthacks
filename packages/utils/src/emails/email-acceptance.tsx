@@ -1,10 +1,10 @@
 import * as React from "react";
 
-interface EmailConfirmationProps {
+interface EmailAcceptanceProps {
   firstName: string;
 }
 
-export const EmailConfirmation: React.FC<Readonly<EmailConfirmationProps>> = ({
+export const EmailAcceptance: React.FC<Readonly<EmailAcceptanceProps>> = ({
   firstName,
 }) => (
   <div>
@@ -12,4 +12,4 @@ export const EmailConfirmation: React.FC<Readonly<EmailConfirmationProps>> = ({
   </div>
 );
 
-export default EmailConfirmation;
+export default EmailAcceptance;

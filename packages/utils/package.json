@@ -16,7 +16,7 @@
     },
     "dependencies": {
       "@react-email/components": "^0.0.15",
-      "react": "18.2.0",
+      "react": "18.3.1",
       "react-email": "^2.1.0",
       "resend": "^3.2.0"
     },
@@ -25,8 +25,8 @@
       "@knighthacks/prettier-config": "workspace:*",
       "@knighthacks/tsconfig": "workspace:*",
       "eslint": "^9.4.0",
-      "prettier": "^3.2.5",
-      "typescript": "^5.3.3"
+      "prettier": "^3.3.1",
+      "typescript": "^5.4.5"
     },
     "prettier": "@knighthacks/prettier-config"
-  }
+}

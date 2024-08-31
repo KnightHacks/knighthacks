@@ -1,5 +1,6 @@
 "use client";
 
+import type { RouterOutput } from "@knighthacks/api";
 import { useEffect, useState } from "react";
 import { Button } from "@knighthacks/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@knighthacks/ui/card";
@@ -11,10 +12,13 @@ import { Sheet, SheetContent } from "@knighthacks/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@knighthacks/ui/tabs";
 import { toast } from "@knighthacks/ui/toast";
 
+import { sendAcceptanceEmail } from "~/app/emails/send-acceptance-email";
 import { api } from "~/trpc";
 import { DataTable } from "../_components/data-table";
 import { CreateHackerForm } from "./create-hacker-form";
 import { hackerColumns } from "./hacker-columns";
+
+type HackerType = RouterOutput["hacker"]["adminAll"][number];
 
 interface Counts {
   accepted: number;
@@ -187,28 +191,35 @@ export function ManageTable({ updateCounts }: ManageTableProps) {
     | "confirmed"
     | "denied";
 
-  const handleStatusChange = (
-    status: Status,
-    hacker: typeof selectedHacker,
-  ) => {
-    if (hacker) {
-      updateHacker.mutate(
-        {
-          hackerID: hacker.id,
-          status,
+  const handleStatusChange = async (status: Status, hacker: HackerType) => {
+    updateHacker.mutate(
+      {
+        hackerID: hacker.id,
+        status,
+      },
+      {
+        onSuccess: () => {
+          setAllHackers((prev) => prev?.filter((h) => h.id !== hacker.id));
+          moveToNextApplicant();
         },
-        {
-          onSuccess: () => {
-            setAllHackers((prev) => prev?.filter((h) => h.id !== hacker.id));
-            moveToNextApplicant();
-          },
-        },
-      );
-      updateCounts((prevCounts) => ({
-        ...prevCounts,
-        [hacker.status]: prevCounts[hacker.status] - 1,
-        [status]: prevCounts[status] + 1,
-      }));
+      },
+    );
+    updateCounts((prevCounts) => ({
+      ...prevCounts,
+      [hacker.status]: prevCounts[hacker.status] - 1,
+      [status]: prevCounts[status] + 1,
+    }));
+
+    if (status === "accepted") {
+      console.log("hacker: ", hacker);
+      try {
+        const result = await sendAcceptanceEmail(hacker);
+        if (result.success) {
+          console.log("success: ", result.success);
+        }
+      } catch (error) {
+        console.error("Failed to send email:", error);
+      }
     }
   };
 
@@ -319,7 +330,7 @@ export function ManageTable({ updateCounts }: ManageTableProps) {
                   <Button
                     onClick={(event) => {
                       event.preventDefault();
-                      handleStatusChange("accepted", selectedHacker);
+                      void handleStatusChange("accepted", selectedHacker);
                     }}
                     className="h-16 w-32 bg-green-500 text-lg font-bold text-white hover:bg-green-600"
                   >
@@ -328,7 +339,7 @@ export function ManageTable({ updateCounts }: ManageTableProps) {
                   <Button
                     onClick={(event) => {
                       event.preventDefault();
-                      handleStatusChange("waitlisted", selectedHacker);
+                      void handleStatusChange("waitlisted", selectedHacker);
                     }}
                     className="h-16 w-32 bg-yellow-500 text-lg font-bold text-white hover:bg-green-600"
                   >
@@ -337,7 +348,7 @@ export function ManageTable({ updateCounts }: ManageTableProps) {
                   <Button
                     onClick={(event) => {
                       event.preventDefault();
-                      handleStatusChange("denied", selectedHacker);
+                      void handleStatusChange("denied", selectedHacker);
                     }}
                     className="h-16 w-32 bg-red-500 text-lg font-bold text-white hover:bg-red-600"
                   >
