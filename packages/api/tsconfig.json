@@ -2,6 +2,7 @@
   "extends": "@knighthacks/tsconfig/internal-package.json",
   "compilerOptions": {
     "outDir": "dist",
+    "jsx": "react",
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "include": ["src"],
