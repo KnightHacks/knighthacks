@@ -12,7 +12,7 @@ import { Sheet, SheetContent } from "@knighthacks/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@knighthacks/ui/tabs";
 import { toast } from "@knighthacks/ui/toast";
 
-import { sendAcceptanceEmail } from "~/app/emails/send-acceptance-email";
+// import { sendAcceptanceEmail } from "~/app/emails/send-acceptance-email";
 import { api } from "~/trpc";
 import { DataTable } from "../_components/data-table";
 import { CreateHackerForm } from "./create-hacker-form";
@@ -128,7 +128,7 @@ interface ManageTableProps {
 export function ManageTable({ updateCounts }: ManageTableProps) {
   const { data: hackers, isPending, error } = api.hacker.adminAll.useQuery();
 
-  const sendEmail = api.email.sendAcceptanceEmail.useMutation();
+  const sendEmail = api.email.sendAcceptanceEmail.useMutation({});
   const updateHacker = api.hacker.adminUpdate.useMutation({
     onSuccess: () => {
       toast("Success!", {
@@ -192,7 +192,7 @@ export function ManageTable({ updateCounts }: ManageTableProps) {
     | "confirmed"
     | "denied";
 
-  const handleStatusChange = async (status: Status, hacker: HackerType) => {
+  const handleStatusChange = (status: Status, hacker: HackerType) => {
     updateHacker.mutate(
       {
         hackerID: hacker.id,
@@ -214,7 +214,7 @@ export function ManageTable({ updateCounts }: ManageTableProps) {
     if (status === "accepted") {
       console.log("hacker: ", hacker);
       try {
-        const result = sendEmail.mutate(hacker.user);
+        sendEmail.mutate(hacker.user);
       } catch (error) {
         console.error("Failed to send email:", error);
       }
@@ -328,7 +328,7 @@ export function ManageTable({ updateCounts }: ManageTableProps) {
                   <Button
                     onClick={(event) => {
                       event.preventDefault();
-                      void handleStatusChange("accepted", selectedHacker);
+                      handleStatusChange("accepted", selectedHacker);
                     }}
                     className="h-16 w-32 bg-green-500 text-lg font-bold text-white hover:bg-green-600"
                   >
@@ -337,7 +337,7 @@ export function ManageTable({ updateCounts }: ManageTableProps) {
                   <Button
                     onClick={(event) => {
                       event.preventDefault();
-                      void handleStatusChange("waitlisted", selectedHacker);
+                      handleStatusChange("waitlisted", selectedHacker);
                     }}
                     className="h-16 w-32 bg-yellow-500 text-lg font-bold text-white hover:bg-green-600"
                   >
@@ -346,7 +346,7 @@ export function ManageTable({ updateCounts }: ManageTableProps) {
                   <Button
                     onClick={(event) => {
                       event.preventDefault();
-                      void handleStatusChange("denied", selectedHacker);
+                      handleStatusChange("denied", selectedHacker);
                     }}
                     className="h-16 w-32 bg-red-500 text-lg font-bold text-white hover:bg-red-600"
                   >
