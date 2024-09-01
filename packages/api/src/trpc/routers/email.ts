@@ -7,7 +7,6 @@ import { publicProcedure } from "../procedures";
 
 const user = z.object({
   id: z.number(),
-  userId: z.number(),
   email: z.string().min(1, { message: "Required" }).email("Invalid email"),
   firstName: z.string().min(1, { message: "Required" }),
   lastName: z.string().min(1, { message: "Rquired" }),
