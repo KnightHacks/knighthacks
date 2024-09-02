@@ -128,7 +128,20 @@ interface ManageTableProps {
 export function ManageTable({ updateCounts }: ManageTableProps) {
   const { data: hackers, isPending, error } = api.hacker.adminAll.useQuery();
 
-  const sendEmail = api.email.sendAcceptanceEmail.useMutation({});
+  // eslint-disable-next-line
+  const sendEmail = api.email.sendAcceptanceEmail.useMutation({
+    onSuccess: () => {
+      toast("Success!", {
+        description: "Email Sent to Hacker",
+      });
+    },
+    onError: (error) => {
+      toast("Error!", {
+        // eslint-disable-next-line
+        description: error.message,
+      });
+    },
+  });
   const updateHacker = api.hacker.adminUpdate.useMutation({
     onSuccess: () => {
       toast("Success!", {
