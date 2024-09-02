@@ -8,7 +8,7 @@ type HackerType = RouterOutput["hacker"]["adminAll"][number];
 
 export async function sendAcceptanceEmail(hacker: HackerType) {
   try {
-    const resend = new Resend(env.NEXT_PUBLIC_RESEND_API_KEY);
+    const resend = new Resend(env.RESEND_API_KEY);
     await resend.emails.send({
       from: "status@knighthacks.org",
       to: hacker.user.email,
