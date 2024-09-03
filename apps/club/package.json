@@ -4,19 +4,20 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "with-env": "dotenv -e ../../.env --",
-    "dev": "pnpm with-env next dev -p 3001",
     "build": "pnpm with-env next build",
-    "start": "pnpm with-env next start -p 3001",
-    "lint": "eslint",
+    "clean": "git clean -xdf dist .turbo node_modules .wrangler .next .vercel",
+    "dev": "pnpm with-env next dev -p 3001",
     "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "start": "pnpm with-env next start -p 3001",
     "typecheck": "tsc --noEmit",
-    "clean": "git clean -xdf dist .turbo node_modules .wrangler .next .vercel"
+    "with-env": "dotenv -e ../../.env --"
   },
+  "prettier": "@knighthacks/prettier-config",
   "dependencies": {
-    "@knighthacks/api": "workspace:*",
     "@clerk/nextjs": "^5.0.1",
     "@clerk/themes": "^1.7.9",
+    "@knighthacks/api": "workspace:*",
     "@knighthacks/consts": "workspace:*",
     "@knighthacks/ui": "workspace:*",
     "@knighthacks/validators": "workspace:*",
@@ -48,6 +49,5 @@
     "prettier": "^3.3.1",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5"
-  },
-  "prettier": "@knighthacks/prettier-config"
+  }
 }
