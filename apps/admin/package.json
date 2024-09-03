@@ -14,9 +14,9 @@
     "clean": "git clean -xdf dist .turbo node_modules .wrangler .next .vercel"
   },
   "dependencies": {
-    "@knighthacks/api": "workspace:*",
     "@clerk/nextjs": "^5.0.1",
     "@clerk/themes": "^1.7.9",
+    "@knighthacks/api": "workspace:*",
     "@knighthacks/consts": "workspace:*",
     "@knighthacks/ui": "workspace:*",
     "@knighthacks/validators": "workspace:*",
@@ -32,6 +32,7 @@
     "react": "18.3.1",
     "react-day-picker": "^8.10.0",
     "react-dom": "^18.2.0 ",
+    "resend": "^3.2.0",
     "superjson": "1.9.1"
   },
   "devDependencies": {
