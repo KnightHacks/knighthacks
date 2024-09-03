@@ -9,8 +9,12 @@ import { UpdateSurveyForm } from "./_components/update-survey-form";
 export const runtime = "edge";
 
 export default async function Dashboard() {
-  const user = await trpc.user.getUser.query();
-  if (!user) redirect("/application/profile");
+  try {
+    const user = await trpc.user.getUser.query();
+    if (!user) redirect("/application/profile");
+  } catch {
+    redirect("/");
+  }
 
   const application = await trpc.hacker.getApplication.query();
   if (!application) redirect("/application/survey");
