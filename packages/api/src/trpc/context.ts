@@ -8,7 +8,7 @@ export async function createContext(
   opts: FetchCreateContextFnOptions,
   c: HonoContext,
 ) {
-  const resend = new Resend(c.env.RESEND_API_KEY)
+  const resend = new Resend(c.env.RESEND_API_KEY);
   const db = c.get("db");
   const auth = getAuth(c);
   const clerk = c.get("clerk");
