@@ -30,7 +30,6 @@
     "@trpc/server": "11.0.0-rc.351",
     "cors": "^2.8.5",
     "hono": "^4.4.7",
-    "resend": "^3.2.0",
     "superjson": "1.9.1",
     "svix": "^1.15.0",
     "typescript": "^5.4.5",
