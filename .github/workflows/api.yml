@@ -33,6 +33,7 @@ jobs:
             DEV_DATABASE_AUTH_TOKEN
             CLERK_SECRET_KEY
             CLERK_PUBLISHABLE_KEY
+            RESEND_API_KEY
         env:
           DATABASE_URL: ${{ vars.DATABASE_URL }}
           DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
@@ -40,3 +41,4 @@ jobs:
           DEV_DATABASE_AUTH_TOKEN: ${{ secrets.DEV_DATABASE_AUTH_TOKEN }}
           CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
           CLERK_PUBLISHABLE_KEY: ${{ vars.CLERK_PUBLISHABLE_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
