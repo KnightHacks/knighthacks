@@ -15,7 +15,7 @@ const user = z.object({
 });
 
 export async function POST(request: Request) {
-  const body = await request.json();
+  const body = await request.json() as Response;
   const input = user.parse(body);
 
   try {
