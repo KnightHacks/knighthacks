@@ -12,9 +12,6 @@ export default async function Dashboard() {
   try {
     const user = await trpc.user.getUser.query();
     if (!user) redirect("/application/profile");
-  } catch {
-    redirect("/");
-  }
 
   const application = await trpc.hacker.getApplication.query();
   if (!application) redirect("/application/survey");
@@ -47,4 +44,7 @@ export default async function Dashboard() {
       </Tabs>
     </div>
   );
+  } catch {
+    redirect("/");
+  }
 }
