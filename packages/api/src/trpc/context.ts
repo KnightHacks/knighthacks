@@ -23,7 +23,6 @@ export async function createContext(
     clerk,
     clerkUser,
     user,
-    resend,
   };
 }
 export type TRPCContext = Awaited<ReturnType<typeof createContext>>;
