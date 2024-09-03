@@ -15,7 +15,6 @@ export type Bindings = {
   DATABASE_AUTH_TOKEN: string;
   DEV_DATABASE_URL: string;
   DEV_DATABASE_AUTH_TOKEN: string;
-  RESEND_API_KEY: string;
 };
 
 export type Variables = {
