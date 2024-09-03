@@ -13,37 +13,37 @@ export default async function Dashboard() {
     const user = await trpc.user.getUser.query();
     if (!user) redirect("/application/profile");
 
-  const application = await trpc.hacker.getApplication.query();
-  if (!application) redirect("/application/survey");
+    const application = await trpc.hacker.getApplication.query();
+    if (!application) redirect("/application/survey");
 
-  const hacker = user.hackers.find((hacker) => hacker.hackathonID === 1);
+    const hacker = user.hackers.find((hacker) => hacker.hackathonID === 1);
 
-  return (
-    <div className="h-auto bg-[url('/sky-register.svg')] bg-cover px-8 pt-20">
-      <Tabs defaultValue="profile">
-        <TabsList>
-          <TabsTrigger value="profile">Profile</TabsTrigger>
+    return (
+      <div className="h-auto bg-[url('/sky-register.svg')] bg-cover px-8 pt-20">
+        <Tabs defaultValue="profile">
+          <TabsList>
+            <TabsTrigger value="profile">Profile</TabsTrigger>
+            {hacker?.status === "accepted" || hacker?.status === "confirmed" ? (
+              <TabsTrigger value="confirmation">Confirmation</TabsTrigger>
+            ) : (
+              <TabsTrigger value="application">Application</TabsTrigger>
+            )}
+          </TabsList>
+          <TabsContent value="profile">
+            <UpdateProfileForm user={user} />
+          </TabsContent>
           {hacker?.status === "accepted" || hacker?.status === "confirmed" ? (
-            <TabsTrigger value="confirmation">Confirmation</TabsTrigger>
+            <TabsContent value="confirmation">
+              <ConfirmStatusForm hacker={hacker} />
+            </TabsContent>
           ) : (
-            <TabsTrigger value="application">Application</TabsTrigger>
+            <TabsContent value="application">
+              <UpdateSurveyForm application={application} />
+            </TabsContent>
           )}
-        </TabsList>
-        <TabsContent value="profile">
-          <UpdateProfileForm user={user} />
-        </TabsContent>
-        {hacker?.status === "accepted" || hacker?.status === "confirmed" ? (
-          <TabsContent value="confirmation">
-            <ConfirmStatusForm hacker={hacker} />
-          </TabsContent>
-        ) : (
-          <TabsContent value="application">
-            <UpdateSurveyForm application={application} />
-          </TabsContent>
-        )}
-      </Tabs>
-    </div>
-  );
+        </Tabs>
+      </div>
+    );
   } catch {
     redirect("/");
   }
