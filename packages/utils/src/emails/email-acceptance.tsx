@@ -45,8 +45,8 @@ export const EmailAcceptance: React.FC<Readonly<EmailAcceptanceProps>> = ({
         Congratulations {firstName}!
       </Text>
       <Text className="mb-4 text-gray-700">
-        We are thrilled to inform you that you have been accepted to
-        Knight Hacks! Your application stood out, and we can't wait to see the
+        We are thrilled to inform you that you have been accepted to Knight
+        Hacks! Your application stood out, and we can't wait to see the
         innovative ideas you'll bring to the event.
       </Text>
     </Section>
