@@ -10,7 +10,7 @@ export async function sendAcceptanceEmail(hacker: HackerType) {
   try {
     const resend = new Resend(env.RESEND_API_KEY);
     await resend.emails.send({
-      from: "status@knighthacks.org",
+      from: "no-reply@knighthacks.org",
       to: hacker.user.email,
       subject: "Knighthacks Acceptance",
       html: renderEmailAcceptance(hacker.user.firstName),
