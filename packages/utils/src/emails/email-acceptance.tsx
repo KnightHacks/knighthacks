@@ -7,6 +7,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
 // import { saveAs } from "file-saver";
 
 interface EmailAcceptanceProps {
