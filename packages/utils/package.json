@@ -1,32 +1,33 @@
 {
-    "name": "@knighthacks/utils",
-    "private": true,
-    "version": "0.0.0",
-    "type": "module",
-    "license": "MIT",
-    "exports": {
-      ".": "./src/index.tsx"
-    },
-    "scripts": {
-      "dev": "email dev --port 3003 --dir ./src/emails",
-      "clean": "rm -rf .turbo node_modules",
-      "format": "prettier --check . --ignore-path ../../.gitignore",
-      "lint": "eslint .",
-      "typecheck": "tsc --noEmit"
-    },
-    "dependencies": {
-      "@react-email/components": "^0.0.15",
-      "react": "18.3.1",
-      "react-email": "^2.1.0",
-      "resend": "^3.2.0"
-    },
-    "devDependencies": {
-      "@knighthacks/eslint-config": "workspace:*",
-      "@knighthacks/prettier-config": "workspace:*",
-      "@knighthacks/tsconfig": "workspace:*",
-      "eslint": "^9.4.0",
-      "prettier": "^3.3.1",
-      "typescript": "^5.4.5"
-    },
-    "prettier": "@knighthacks/prettier-config"
+  "name": "@knighthacks/utils",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.tsx"
+  },
+  "scripts": {
+    "dev": "email dev --port 3003 --dir ./src/emails",
+    "clean": "rm -rf .turbo node_modules",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@react-email/components": "^0.0.15",
+    "file-saver": "^2.0.5",
+    "react": "18.3.1",
+    "react-email": "^2.1.0",
+    "resend": "^3.2.0"
+  },
+  "devDependencies": {
+    "@knighthacks/eslint-config": "workspace:*",
+    "@knighthacks/prettier-config": "workspace:*",
+    "@knighthacks/tsconfig": "workspace:*",
+    "eslint": "^9.4.0",
+    "prettier": "^3.3.1",
+    "typescript": "^5.4.5"
+  },
+  "prettier": "@knighthacks/prettier-config"
 }
