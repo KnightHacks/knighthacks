@@ -12,20 +12,21 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
+    "clean": "rm -rf .turbo .wrangler node_modules",
     "deploy": "wrangler deploy --minify",
     "dev": "wrangler dev --port 8080 || lsof -i :8787 | awk 'NR!=1 {print $2}' | xargs kill",
-    "lint": "eslint",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
-    "clean": "rm -rf .turbo .wrangler node_modules"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
+  "prettier": "@knighthacks/prettier-config",
   "dependencies": {
     "@clerk/backend": "^1.2.4",
     "@hono/clerk-auth": "^2.0.0",
     "@hono/trpc-server": "*",
     "@knighthacks/db": "workspace:*",
-    "@knighthacks/validators": "workspace:*",
     "@knighthacks/utils": "workspace:*",
+    "@knighthacks/validators": "workspace:*",
     "@trpc/server": "11.0.0-rc.351",
     "cors": "^2.8.5",
     "hono": "^4.4.7",
@@ -45,6 +46,5 @@
     "tsup": "^8.0.1",
     "typescript": "^5.4.5",
     "wrangler": "^3.62.0"
-  },
-  "prettier": "@knighthacks/prettier-config"
+  }
 }

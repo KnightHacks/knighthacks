@@ -7,8 +7,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
-
-import acceptance from "../assets/Acceptance.jpg";
+import { saveAs } from "file-saver";
 
 interface EmailAcceptanceProps {
   firstName: string;
@@ -41,7 +40,6 @@ export const EmailAcceptance: React.FC<Readonly<EmailAcceptanceProps>> = ({
   <Tailwind>
     <Preview>Thank you for your interest in KnightHacks!</Preview>
     <Section>
-      <Img src="https://imgur.com/a/3P7aXuc" alt="ocean" />
       <Text className="mb-4 text-[24px] font-bold text-[#8E3B46]">
         Congratulations {firstName}!
       </Text>
@@ -86,7 +84,7 @@ export const EmailAcceptance: React.FC<Readonly<EmailAcceptanceProps>> = ({
         </Text>
         <Button
           style={buttonStyle}
-          href={acceptance}
+          href={"https://i.imgur.com/XQXmUvb.png"}
           download="Knighthacks-graphic.png"
         >
           Download Graphics
@@ -101,5 +99,9 @@ export const EmailAcceptance: React.FC<Readonly<EmailAcceptanceProps>> = ({
     <Text className="text-gray-700">The KnightHacks Team</Text>
   </Tailwind>
 );
+
+const downloadImg = () => {
+  saveAs("https://i.imgur.com/XQXmUvb.png", "knighthacks_attendee.png");
+};
 
 export default EmailAcceptance;
