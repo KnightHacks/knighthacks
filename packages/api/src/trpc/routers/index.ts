@@ -1,5 +1,4 @@
 import { createTRPCRouter } from "../init";
-import { emailRouter } from "./email";
 import { hackathonRouter } from "./hackathons";
 import { hackerRouter } from "./hackers";
 import { sponsorRouter } from "./sponsors";
@@ -10,7 +9,6 @@ export const router = createTRPCRouter({
   hackathon: hackathonRouter,
   hacker: hackerRouter,
   sponsor: sponsorRouter,
-  email: emailRouter,
 });
 
 export type AppRouter = typeof router;
