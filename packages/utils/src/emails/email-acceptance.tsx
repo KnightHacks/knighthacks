@@ -1,13 +1,13 @@
 import * as React from "react";
 import {
   Button,
-  Img,
+  // Img,
   Preview,
   Section,
   Tailwind,
   Text,
 } from "@react-email/components";
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
 
 interface EmailAcceptanceProps {
   firstName: string;
@@ -100,8 +100,8 @@ export const EmailAcceptance: React.FC<Readonly<EmailAcceptanceProps>> = ({
   </Tailwind>
 );
 
-const downloadImg = () => {
-  saveAs("https://i.imgur.com/XQXmUvb.png", "knighthacks_attendee.png");
-};
+// const downloadImg = () => {
+//   saveAs("https://i.imgur.com/XQXmUvb.png", "knighthacks_attendee.png");
+// };
 
 export default EmailAcceptance;
