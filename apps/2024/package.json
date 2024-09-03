@@ -4,15 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "clean": "git clean -xdf .next .turbo node_modules",
-    "with-env": "dotenv -e ../../.env --",
-    "dev": "pnpm with-env next dev -p 3002",
     "build": "pnpm with-env next build",
-    "start": "pnpm with-env next start -p 3002",
-    "lint": "eslint",
+    "clean": "git clean -xdf .next .turbo node_modules",
+    "dev": "pnpm with-env next dev -p 3002",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "typecheck": "tsc --noEmit"
+    "lint": "eslint",
+    "start": "pnpm with-env next start -p 3002",
+    "typecheck": "tsc --noEmit",
+    "with-env": "dotenv -e ../../.env --"
   },
+  "prettier": "@knighthacks/prettier-config",
   "dependencies": {
     "@clerk/nextjs": "^5.0.1",
     "@clerk/themes": "^1.7.9",
@@ -20,6 +21,7 @@
     "@knighthacks/db": "workspace:*",
     "@knighthacks/ui": "workspace:*",
     "@knighthacks/validators": "workspace:*",
+    "@t3-oss/env-nextjs": "^0.10.1",
     "@tanstack/react-query": "^5.25.0",
     "@trpc/client": "11.0.0-rc.351",
     "@trpc/next": "11.0.0-rc.351",
@@ -31,7 +33,6 @@
     "react": "18.3.1",
     "react-dom": "^18.2.0 ",
     "superjson": "1.9.1",
-    "@t3-oss/env-nextjs": "^0.10.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -49,6 +50,5 @@
     "prettier": "^3.3.1",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5"
-  },
-  "prettier": "@knighthacks/prettier-config"
+  }
 }
