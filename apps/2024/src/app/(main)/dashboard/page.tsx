@@ -11,23 +11,27 @@ export const runtime = "edge";
 export default async function Dashboard() {
   try {
     const user = await trpc.user.getUser.query();
-    if (!user) redirect("/application/profile");
+    if (!user) redirect("/application/sign-in");
 
     const application = await trpc.hacker.getApplication.query();
-    if (!application) redirect("/application/survey");
+    if (!application) redirect("/application/profile");
 
     const hacker = user.hackers.find((hacker) => hacker.hackathonID === 1);
+    const defaultTab =
+      hacker?.status === "accepted" || hacker?.status === "confirmed"
+        ? "confirmation"
+        : "profile";
 
     return (
       <div className="h-auto bg-[url('/sky-register.svg')] bg-cover px-8 pt-20">
-        <Tabs defaultValue="profile">
+        <Tabs defaultValue={defaultTab}>
           <TabsList>
-            <TabsTrigger value="profile">Profile</TabsTrigger>
             {hacker?.status === "accepted" || hacker?.status === "confirmed" ? (
               <TabsTrigger value="confirmation">Confirmation</TabsTrigger>
             ) : (
               <TabsTrigger value="application">Application</TabsTrigger>
             )}
+            <TabsTrigger value="profile">Profile</TabsTrigger>
           </TabsList>
           <TabsContent value="profile">
             <UpdateProfileForm user={user} />

@@ -55,6 +55,11 @@ export const hackerRouter = {
       },
     });
   }),
+  userUpdate: profileProcedure
+    .input(UpdateHackerSchema)
+    .mutation(async ({ ctx, input: { hackerID, ...hacker } }) => {
+      await ctx.db.update(hackers).set(hacker).where(eq(hackers.id, hackerID));
+    }),
   adminAll: adminProcedure.query(async ({ ctx }) => {
     return ctx.db.query.hackers.findMany({
       with: {

@@ -48,7 +48,7 @@ export function ConfirmStatusForm({
     },
   });
 
-  const updateHacker = trpc.hacker.adminUpdate.useMutation({
+  const updateHacker = trpc.hacker.userUpdate.useMutation({
     onSuccess: () => {
       toast("Success!", {
         description: "Updated your status!",
