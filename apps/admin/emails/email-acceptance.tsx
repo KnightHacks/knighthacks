@@ -1,108 +1,236 @@
 import * as React from "react";
 import {
-  Button,
-  // Img,
+  Body,
+  Container,
+  Head,
+  Heading,
+  Html,
+  Img,
+  Link,
   Preview,
   Section,
   Tailwind,
   Text,
 } from "@react-email/components";
 
-// import { saveAs } from "file-saver";
-
 interface EmailAcceptanceProps {
   firstName: string;
 }
 
-const buttonStyle = {
-  backgroundColor: "#7CCCFF",
-  color: "black",
-  border: "2px solid #7CCCFF",
-  padding: "10px 20px",
-  borderRadius: "0.375rem",
-  fontWeight: "bold",
-  fontSize: "16px",
-  cursor: "pointer",
-  textDecoration: "none",
-};
-
-const sectionStyle = {
-  backgroundColor: "#164460",
-  color: "#FFD166",
-  border: "2px solid #164460",
-  padding: "20px",
-  borderRadius: "0.375rem",
-  marginBottom: "20px", // Add white space between sections
-};
-
-export const EmailAcceptance: React.FC<Readonly<EmailAcceptanceProps>> = ({
+const EmailAcceptance: React.FC<Readonly<EmailAcceptanceProps>> = ({
   firstName,
 }) => (
-  <Tailwind>
-    <Preview>Thank you for your interest in KnightHacks!</Preview>
-    <Section>
-      <Text className="mb-4 text-[24px] font-bold text-[#8E3B46]">
-        Congratulations {firstName}!
-      </Text>
-      <Text className="mb-4 text-gray-700">
-        We are thrilled to inform you that you have been accepted to Knight
-        Hacks! Your application stood out, and we can't wait to see the
-        innovative ideas you'll bring to the event.
-      </Text>
-    </Section>
-    <Text className="text-[24px] font-bold text-[#8E3B46]">Next Steps:</Text>
-    <div className="space-y-6">
-      <Section style={sectionStyle}>
-        <h1 className="mb-2 text-xl font-semibold ">
-          1. Confirm your Attendance
-        </h1>
-        <Text>
-          You've been accepted to KnightHacks! But you're not quite done. Please
-          click the link below to confirm your attendance and let us know you're
-          going.
-        </Text>
-        <Button
-          style={buttonStyle}
-          href="https://2024.knighthacks.org/dashboard"
-        >
-          Confirm Your Attendance
-        </Button>
-        <br />
-      </Section>
-      <Section style={sectionStyle}>
-        <h1 className="text-xl">2. Join Our Discord Channel:</h1>
-        <Text className="mt-2">
-          Connect with fellow hackers, get updates, and collaborate.
-        </Text>
-        <Button style={buttonStyle} href="https://discord.com/invite/Kv5g9vf">
-          Join our Discord!
-        </Button>
-      </Section>
-      <Section style={sectionStyle}>
-        <h1 className="text-xl ">3. Post on Social Media</h1>
-        <Text className="mt-2 ">
-          Let everyone know you will be at KnightHacks.
-        </Text>
-        <Button
-          style={buttonStyle}
-          href={"https://i.imgur.com/XQXmUvb.png"}
-          download="Knighthacks-graphic.png"
-        >
-          Download Graphics
-        </Button>
-      </Section>
-    </div>
-    <Text className="mt-6 text-gray-700">
-      We're excited to have you on board, {firstName}. If you have any
-      questions, don't hesitate to reach out to us.
-    </Text>
-    <Text className="mt-6 text-gray-700">Best regards,</Text>
-    <Text className="text-gray-700">The KnightHacks Crew</Text>
-  </Tailwind>
-);
+  <Html>
+    <Head />
+    <Preview>
+      🎉 Congratulations! You've been accepted to Knight Hacks! 🚀
+    </Preview>
+    <Tailwind>
+      <Body className="m-0 bg-[#f6f9fc] bg-[url('https://storage.googleapis.com/knighthacks-email/background%20(6).png')] bg-cover bg-no-repeat p-0 font-sans">
+        <Container className="relative mx-auto my-8 w-[600px] bg-white px-5 pb-0 pt-0 shadow-lg">
+          <table cellPadding="0" cellSpacing="0" width="100%">
+            <tr>
+              <td align="center" style={{ paddingBottom: "10px" }}>
+                <table cellPadding="0" cellSpacing="0">
+                  <tr>
+                    <td style={{ height: "60px" }}></td>
+                  </tr>
+                  <tr>
+                    <td align="center">
+                      <Img
+                        src="https://storage.googleapis.com/knighthacks-email/lenny%20(1).png"
+                        width="120"
+                        height="120"
+                        alt="Knight Hacks Mascot"
+                      />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+          <Heading className="mb-2.5 mt-8 text-center text-4xl font-bold leading-tight text-[#1C5699]">
+            Congrats, {firstName}! 🎊
+          </Heading>
+          <Heading className="m-0 mb-5 text-center text-2xl font-bold leading-tight text-[#4782C6]">
+            You've been accepted to Knight Hacks 2024!
+          </Heading>
+          <Text className="mb-6 text-center text-lg leading-relaxed text-gray-700">
+            We can't wait to see you on UCF Campus on October 4th - 6th.
+          </Text>
 
-// const downloadImg = () => {
-//   saveAs("https://i.imgur.com/XQXmUvb.png", "knighthacks_attendee.png");
-// };
+          <Section className="relative -mx-5 -mb-5">
+            <div className="h-30 flex items-center justify-center bg-[url('https://storage.googleapis.com/knighthacks-email/sand.png')] bg-cover">
+              <Heading className="text-shadow mt-14 pl-5 text-center text-2xl font-bold leading-tight text-[#633F07]">
+                Next Steps
+              </Heading>
+            </div>
+
+            <div className="py-7.5 bg-gradient-to-b from-[rgba(46,144,255,0.08)] to-[rgba(28,86,153,0.32)] px-5">
+              <Section className="mb-7.5 mt-12">
+                <Heading className="m-0 mb-2.5 text-xl font-bold leading-tight text-[#1C5699]">
+                  1. Confirm Your Spot
+                  <Text className="mt-1.25 mb-0 text-base font-medium text-[#4782C6]">
+                    (Required by October 3rd)
+                  </Text>
+                </Heading>
+                <Text className="mb-6 text-lg leading-relaxed text-gray-700">
+                  You applied and have been accepted to Knight Hacks 2024, but
+                  there is one more step. Click the button below, sign in, and
+                  confirm your attendance to be able to attend the event.
+                </Text>
+                <Link
+                  href="https://2024.knighthacks.org/sign-in"
+                  className="inline-block rounded-lg bg-[#4782C6] px-6 py-3 text-center text-lg font-bold leading-relaxed text-white no-underline shadow-md transition duration-300 ease-in-out hover:bg-[#3671B5]"
+                >
+                  🚀 Confirm Attendance
+                </Link>
+              </Section>
+
+              <Img
+                src="https://storage.googleapis.com/knighthacks-email/seperator%20(1).png"
+                alt="Divider"
+                className="my-7.5 -ml-5 mt-12 w-[calc(100%)]"
+              />
+
+              <Section className="mb-7.5 mt-12">
+                <Heading className="m-0 mb-2.5 text-xl font-bold leading-tight text-[#1C5699]">
+                  2. Join Our Discord Community
+                </Heading>
+                <Text className="mb-6 text-lg leading-relaxed text-gray-700">
+                  Connect with fellow hackers, mentors, and organizers on our
+                  Discord server. Stay updated on announcements, find teammates,
+                  and get your questions answered. Remember to set your Discord
+                  handle in the Knight Hacks portal!
+                </Text>
+                <Link
+                  href="https://discord.com/invite/Kv5g9vf"
+                  className="inline-block rounded-lg bg-[#4782C6] px-6 py-3 text-center text-lg font-bold leading-relaxed text-white no-underline shadow-md transition duration-300 ease-in-out hover:bg-[#3671B5]"
+                >
+                  💬 Join Discord
+                </Link>
+              </Section>
+
+              <Img
+                src="https://storage.googleapis.com/knighthacks-email/seperator%20(1).png"
+                alt="Divider"
+                className="my-7.5 -ml-5 mt-12 w-[calc(100%)]"
+              />
+
+              <Section className="mb-7.5 mt-12">
+                <Heading className="m-0 mb-2.5 text-xl font-bold leading-tight text-[#1C5699]">
+                  3. Spread the Excitement
+                </Heading>
+                <Text className="mb-6 text-lg leading-relaxed text-gray-700">
+                  You've earned your spot at Knight Hacks 2024 – it's time to
+                  celebrate! Share your achievement on social media and inspire
+                  others. Plus, it's a great way to catch the eye of potential
+                  recruiters!
+                </Text>
+                <Link
+                  href="https://i.imgur.com/XQXmUvb.png"
+                  className="inline-block rounded-lg bg-[#4782C6] px-6 py-3 text-center text-lg font-bold leading-relaxed text-white no-underline shadow-md transition duration-300 ease-in-out hover:bg-[#3671B5]"
+                >
+                  🎨 Get Social Graphics
+                </Link>
+              </Section>
+            </div>
+          </Section>
+
+          <Section className="-mt-0">
+            <table cellPadding="0" cellSpacing="0" border={0} width="100%">
+              <tr>
+                <td align="right" style={{ paddingTop: "20px" }}>
+                  <Img
+                    src="https://storage.googleapis.com/knighthacks-email/tk.png"
+                    width="150"
+                    alt="Pirate Knight"
+                  />
+                </td>
+              </tr>
+            </table>
+            <table
+              cellPadding="0"
+              cellSpacing="0"
+              border={0}
+              width="100%"
+              className="-mt-32"
+              style={{ backgroundColor: "#f0f7ff" }}
+            >
+              <tr>
+                <td
+                  align="center"
+                  style={{ paddingTop: "30px", paddingBottom: "24px" }}
+                >
+                  <Heading className="text-center text-2xl font-bold leading-tight text-[#1C5699]">
+                    Essential Resources
+                  </Heading>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <table
+                    cellPadding="0"
+                    cellSpacing="0"
+                    border={0}
+                    width="100%"
+                  >
+                    <tr>
+                      <td
+                        width="50%"
+                        align="center"
+                        valign="top"
+                        style={{ paddingBottom: "30px" }}
+                      >
+                        <Link
+                          href="https://2024.knighthacks.org"
+                          className="inline-block text-center no-underline"
+                        >
+                          <Text className="block text-lg font-semibold text-[#1C5699]">
+                            Official Website
+                          </Text>
+                        </Link>
+                      </td>
+                      <td
+                        width="50%"
+                        align="center"
+                        valign="top"
+                        style={{ paddingBottom: "30px" }}
+                      >
+                        <Link
+                          href="https://knight-hacks.notion.site/Hackers-Guide-Knight-Hacks-VII-9e103bd7de114151887e0da523076ecd"
+                          className="inline-block text-center no-underline"
+                        >
+                          <Text className="block text-lg font-semibold text-[#1C5699]">
+                            Hacker's Guide
+                          </Text>
+                        </Link>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </Section>
+
+          <Section className="bg-[#1C5699] p-5 text-center">
+            <Text className="my-1.25 text-sm text-white">
+              Questions? Reach out to us at{" "}
+              <Link
+                href="mailto:team@knighthacks.org"
+                className="text-[#FFD700] underline"
+              >
+                hackteam@knighthacks.org
+              </Link>
+            </Text>
+            <Text className="my-1.25 text-sm text-white">
+              We can't wait to see what you'll create at Knight Hacks 2024!
+            </Text>
+          </Section>
+        </Container>
+      </Body>
+    </Tailwind>
+  </Html>
+);
 
 export default EmailAcceptance;
