@@ -6,6 +6,8 @@ import { env } from "~/env";
 
 const resend = new Resend(env.RESEND_API_KEY);
 
+export const runtime = "edge";
+
 const user = z.object({
   id: z.number(),
   email: z.string().min(1, { message: "Required" }).email("Invalid email"),
