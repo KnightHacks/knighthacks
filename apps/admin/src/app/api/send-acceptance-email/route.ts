@@ -1,5 +1,5 @@
-import { renderEmailAcceptance } from "@knighthacks/utils";
 import { z } from "@knighthacks/validators";
+import { renderEmailAcceptance } from "emails/render-email-acceptance";
 import { Resend } from "resend";
 
 import { env } from "~/env";
