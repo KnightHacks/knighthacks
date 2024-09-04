@@ -7,8 +7,7 @@ import { trpc } from "~/trpc/server";
 export async function Hero() {
   let hacker = null;
   try {
-   hacker = await trpc.hacker.getApplication.query();
-
+    hacker = await trpc.hacker.getApplication.query();
   } catch (err) {
     console.error(err);
   }
@@ -22,7 +21,7 @@ export async function Hero() {
         backgroundSize: "cover",
         backgroundPosition: "top 10%", // Adjust this value as needed
       }}
-        >
+    >
       <div className="relative z-20 mb-4 h-24 w-72 md:h-64 md:w-[32rem] lg:h-80 lg:w-[40rem]">
         <Image src="/header.svg" fill alt="Header" className="object-contain" />
       </div>
@@ -55,9 +54,6 @@ export async function Hero() {
       <div className="absolute left-12 top-96 z-10 hidden h-[200px] w-[200px] md:h-[500px] md:w-[500px] lg:block">
         <Image fill src="/ship.svg" alt="Ship" />
       </div>
-      {/* <div className="absolute left-32 top-[30rem] h-[200px] w-[200px] md:h-[450px] md:w-[450px]">
-        <Image fill src="/cloud.svg" alt="Cloud" className="opacity-50" />
-      </div> */}}
     </section>
   );
 }
