@@ -97,11 +97,17 @@ const EmailAcceptance: React.FC<Readonly<EmailAcceptanceProps>> = ({
                 <Heading className="m-0 mb-2.5 text-xl font-bold leading-tight text-[#1C5699]">
                   2. Join Our Discord Community
                 </Heading>
+                <Text className="mt-1.25 mb-0 text-base font-medium text-[#4782C6]">
+                  (Required by October 3rd)
+                </Text>
                 <Text className="mb-6 text-lg leading-relaxed text-gray-700">
                   Connect with fellow hackers, mentors, and organizers on our
                   Discord server. Stay updated on announcements, find teammates,
-                  and get your questions answered. Remember to set your Discord
-                  handle in the Knight Hacks portal!
+                  and get your questions answered.{" "}
+                  <span className="font-bold">
+                    Remember to set your correct Discord handle in the Knight
+                    Hacks portal, as joining the Discord is required this year.
+                  </span>
                 </Text>
                 <Link
                   href="https://discord.com/invite/Kv5g9vf"
