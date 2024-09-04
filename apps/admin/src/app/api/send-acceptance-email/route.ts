@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 
   try {
     const { data, error } = await resend.emails.send({
-      from: "status@knighthacks.org",
+      from: "no-reply-status@knighthacks.org",
       to: input.email,
       subject: "Knighthacks Acceptance",
       html: renderEmailAcceptance(input.firstName),
