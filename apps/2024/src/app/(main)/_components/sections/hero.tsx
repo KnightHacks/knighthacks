@@ -2,7 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@knighthacks/ui/button";
 
-export function Hero() {
+import { trpc } from "~/trpc/server";
+
+export async function Hero() {
+  let hacker = null;
+  try {
+   hacker = await trpc.hacker.getApplication.query();
+
+  } catch (err) {
+    console.error(err);
+  }
   return (
     <section
       id="hero"
@@ -13,13 +22,13 @@ export function Hero() {
         backgroundSize: "cover",
         backgroundPosition: "top 10%", // Adjust this value as needed
       }}
-    >
+        >
       <div className="relative z-20 mb-4 h-24 w-72 md:h-64 md:w-[32rem] lg:h-80 lg:w-[40rem]">
         <Image src="/header.svg" fill alt="Header" className="object-contain" />
       </div>
       <div className="z-20 mb-4 flex gap-2">
         <Link href="/application/profile" passHref legacyBehavior>
-          <Button>Apply</Button>
+          <Button>{hacker ? "Dashboard" : "Apply"}</Button>
         </Link>
         <Button variant="secondary" asChild>
           <a href="mailto:sponsorship@knighthacks.org">Sponsor Us</a>
@@ -48,7 +57,7 @@ export function Hero() {
       </div>
       {/* <div className="absolute left-32 top-[30rem] h-[200px] w-[200px] md:h-[450px] md:w-[450px]">
         <Image fill src="/cloud.svg" alt="Cloud" className="opacity-50" />
-      </div> */}
+      </div> */}}
     </section>
   );
 }
