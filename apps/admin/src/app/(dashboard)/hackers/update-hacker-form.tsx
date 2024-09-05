@@ -29,11 +29,16 @@ export function UpdateHackerForm({
   hacker: RouterOutput["hacker"]["adminAll"][number];
 }) {
   const utils = api.useUtils();
-  const createHacker = api.hacker.adminUpdate.useMutation({
+  const updateHacker = api.hacker.adminUpdate.useMutation({
     onSuccess: async () => {
       await utils.hacker.adminAll.invalidate();
       toast("Success!", {
-        description: "User added",
+        description: "Hacker Status Updated.",
+      });
+    },
+    onError: (error) => {
+      toast("Error!", {
+        description: error.message,
       });
     },
   });
@@ -41,8 +46,16 @@ export function UpdateHackerForm({
   const form = useForm({
     schema: CreateHackerSchema,
     defaultValues: {
+      hackathonID: hacker.hackathonID,
+      userID: hacker.userID,
       survey1: hacker.survey1,
       survey2: hacker.survey2,
+      isFirstTime: hacker.isFirstTime as boolean | undefined,
+      isPlinktern: hacker.isPlinktern as boolean | undefined,
+      status: hacker.status,
+      agreesToReceiveEmailsFromMLH: hacker.agreesToReceiveEmailsFromMLH as
+        | boolean
+        | undefined,
     },
   });
 
@@ -50,7 +63,9 @@ export function UpdateHackerForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit((data) => {
-          createHacker.mutate({
+          console.log("Form Data:", data);
+          console.log("Form Errors:", form.formState.errors);
+          updateHacker.mutate({
             hackerID: hacker.id,
             ...data,
           });
@@ -65,6 +80,7 @@ export function UpdateHackerForm({
               <FormLabel>Why do you want to attend Knight Hacks?</FormLabel>
               <FormControl>
                 <Textarea
+                  readOnly
                   placeholder="Why do you want to attend Knight Hacks?"
                   className="resize-none"
                   {...field}
@@ -82,6 +98,7 @@ export function UpdateHackerForm({
               <FormLabel>What do you want to learn at Knight Hacks?</FormLabel>
               <FormControl>
                 <Textarea
+                  readOnly
                   placeholder="What do you want to learn at Knight Hacks?"
                   className="resize-none"
                   {...field}
@@ -94,6 +111,7 @@ export function UpdateHackerForm({
         <HackathonSelect form={form} />
         <UserSelect form={form} />
         <StatusSelect form={form} />
+        <PlinkternSelect form={form} />
         <Button type="submit">Update Hacker</Button>
       </form>
     </Form>
@@ -127,6 +145,7 @@ function HackathonSelect({
         <FormItem>
           <FormLabel>Hackathon</FormLabel>
           <Select
+            defaultValue={field.value.toString()}
             onValueChange={(value) => {
               field.onChange(parseInt(value));
             }}
@@ -173,7 +192,10 @@ function UserSelect({
       render={({ field }) => (
         <FormItem>
           <FormLabel>User</FormLabel>
-          <Select onValueChange={field.onChange}>
+          <Select
+            defaultValue={field.value.toString()}
+            onValueChange={(value) => field.onChange(parseInt(value))}
+          >
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder="Select a user" />
@@ -206,7 +228,7 @@ function StatusSelect({
       render={({ field }) => (
         <FormItem>
           <FormLabel>Status</FormLabel>
-          <Select onValueChange={field.onChange}>
+          <Select defaultValue={field.value} onValueChange={field.onChange}>
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder="Select a status" />
@@ -218,6 +240,46 @@ function StatusSelect({
                   {status}
                 </SelectItem>
               ))}
+            </SelectContent>
+          </Select>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+}
+
+function PlinkternSelect({
+  form,
+}: {
+  form: ReturnType<typeof useForm<typeof CreateHackerSchema>>;
+}) {
+  return (
+    <FormField
+      control={form.control}
+      name="isPlinktern"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Plinktern</FormLabel>
+          <Select
+            onValueChange={(value) => {
+              // Convert the string value to a boolean
+              const boolValue = value === "true";
+              // Call the original onChange with the boolean value
+              field.onChange(boolValue);
+            }}
+            value={field.value ? "true" : "false"}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select a boolean value" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem key="true" value="true">
+                True
+              </SelectItem>
+              <SelectItem key="false" value="false">
+                False
+              </SelectItem>
             </SelectContent>
           </Select>
           <FormMessage />
