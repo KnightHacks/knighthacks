@@ -2,6 +2,7 @@
 
 import type { RouterOutput } from "@knighthacks/api";
 import { useEffect, useState } from "react";
+import { APPLICATION_STATUSES } from "@knighthacks/consts";
 import { Button } from "@knighthacks/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@knighthacks/ui/card";
 import { Checkbox } from "@knighthacks/ui/checkbox";
@@ -191,14 +192,7 @@ export function AcceptTable({ updateCounts }: TableProps) {
     }
   };
 
-  type Status =
-    | "withdrawn"
-    | "pending"
-    | "accepted"
-    | "waitlisted"
-    | "checkedin"
-    | "confirmed"
-    | "denied";
+  type Status = (typeof APPLICATION_STATUSES)[number];
 
   const handleStatusChange = (status: Status, hacker: HackerType) => {
     updateHacker.mutate(
@@ -444,14 +438,7 @@ export function ConfirmTable({ updateCounts }: TableProps) {
     }
   };
 
-  type Status =
-    | "withdrawn"
-    | "pending"
-    | "accepted"
-    | "waitlisted"
-    | "checkedin"
-    | "confirmed"
-    | "denied";
+  type Status = (typeof APPLICATION_STATUSES)[number];
 
   const handleStatusChange = (status: Status, hacker: HackerType) => {
     updateHacker.mutate(
