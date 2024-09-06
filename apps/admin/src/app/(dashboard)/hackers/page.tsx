@@ -30,6 +30,7 @@ interface Counts {
   confirmed: number;
   withdrawn: number;
   plinktern: number;
+  plinktern_confirmed: number;
   total: number;
 }
 
@@ -48,6 +49,7 @@ export default function Hackers() {
     checkedin: 0,
     withdrawn: 0,
     plinktern: 0,
+    plinktern_confirmed: 0,
     total: 0,
   });
 
@@ -70,6 +72,7 @@ export default function Hackers() {
           .length,
         plinktern: hackers.filter((hacker) => hacker.isPlinktern === true)
           .length,
+        plinktern_confirmed: hackers.filter((hacker) => hacker.isPlinktern === true && hacker.status === "confirmed").length,
         total: hackers.length,
       });
     }
@@ -94,6 +97,7 @@ export default function Hackers() {
                 <div>Withdrawn: {counts.withdrawn}</div>
                 <div>Confirmed: {counts.confirmed}</div>
                 <div>Plinktern: {counts.plinktern}</div>
+                <div>Confirmed Plinkterns: {counts.plinktern_confirmed}</div>
                 <div>Total: {counts.total}</div>
               </div>
             </CardHeader>
