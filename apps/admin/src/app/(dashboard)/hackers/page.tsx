@@ -100,7 +100,8 @@ export default function Hackers() {
           <Tabs defaultValue="view">
             <TabsList>
               <TabsTrigger value="view">View</TabsTrigger>
-              <TabsTrigger value="manage">Manage</TabsTrigger>
+              <TabsTrigger value="accept">Accept</TabsTrigger>
+              <TabsTrigger value="confirm">Confirm</TabsTrigger>
             </TabsList>
             <TabsContent value="view">
               <Button onClick={() => setCreateHackathonFormSheetOpen(true)}>
@@ -108,8 +109,11 @@ export default function Hackers() {
               </Button>
               <HackathonsTable />
             </TabsContent>
-            <TabsContent value="manage">
-              <ManageTable updateCounts={setCounts} />
+            <TabsContent value="accept">
+              <AcceptTable updateCounts={setCounts} />
+            </TabsContent>
+            <TabsContent value="confirm">
+              <ConfirmTable updateCounts={setCounts} />
             </TabsContent>
           </Tabs>
         </div>
@@ -126,11 +130,11 @@ export default function Hackers() {
   );
 }
 
-interface ManageTableProps {
+interface TableProps {
   updateCounts: React.Dispatch<React.SetStateAction<Counts>>;
 }
 
-export function ManageTable({ updateCounts }: ManageTableProps) {
+export function AcceptTable({ updateCounts }: TableProps) {
   const { data: hackers, isPending, error } = api.hacker.adminAll.useQuery();
 
   const updateHacker = api.hacker.adminUpdate.useMutation({
@@ -239,7 +243,7 @@ export function ManageTable({ updateCounts }: ManageTableProps) {
         <CardHeader>
           <CardTitle>Hackers</CardTitle>
           <div className="text-sm text-gray-500">
-            Applied Count: {appliedCount}
+            Applied Remaining: {appliedCount}
           </div>
         </CardHeader>
         <CardContent className="p-0">
@@ -381,4 +385,215 @@ export function HackathonsTable() {
   if (error) return <div>Error: {error.message}</div>;
 
   return <DataTable columns={hackerColumns} data={hackers} />;
+}
+
+export function ConfirmTable({ updateCounts }: TableProps) {
+  const { data: hackers, isPending, error } = api.hacker.adminAll.useQuery();
+
+  const updateHacker = api.hacker.adminUpdate.useMutation({
+    onSuccess: () => {
+      toast("Success!", {
+        description: "Hacker Status Updated.",
+      });
+      // Refetch hackers data after updating
+    },
+    onError: (error) => {
+      toast("Error!", {
+        description: error.message,
+      });
+    },
+  });
+
+  const [allHackers, setAllHackers] = useState<typeof hackers>([]);
+  const [selectedHacker, setSelectedHacker] = useState(
+    hackers ? hackers[0] : null,
+  );
+
+  useEffect(() => {
+    const filteredHackers = hackers?.filter(
+      (hacker) => hacker.status === "confirmed",
+    );
+    setAllHackers(filteredHackers);
+    if (filteredHackers) {
+      if (filteredHackers.length > 0) {
+        setSelectedHacker(filteredHackers[0]);
+      } else {
+        setSelectedHacker(null);
+      }
+    }
+  }, [hackers]);
+
+  if (isPending) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  const confirmedCount = allHackers?.length;
+
+  const moveToNextApplicant = () => {
+    const currentIndex = allHackers?.findIndex(
+      (h) => h.id === selectedHacker?.id,
+    );
+    if (
+      allHackers &&
+      currentIndex &&
+      currentIndex > -1 &&
+      currentIndex < allHackers.length - 1
+    ) {
+      setSelectedHacker(allHackers[currentIndex + 1]);
+    } else {
+      setSelectedHacker(null); // No more applicants
+    }
+  };
+
+  type Status =
+    | "withdrawn"
+    | "pending"
+    | "accepted"
+    | "waitlisted"
+    | "checkedin"
+    | "confirmed"
+    | "denied";
+
+  const handleStatusChange = (status: Status, hacker: HackerType) => {
+    updateHacker.mutate(
+      {
+        hackerID: hacker.id,
+        status,
+      },
+      {
+        onSuccess: () => {
+          setAllHackers((prev) => prev?.filter((h) => h.id !== hacker.id));
+          moveToNextApplicant();
+        },
+      },
+    );
+    updateCounts((prevCounts) => ({
+      ...prevCounts,
+      [hacker.status]: prevCounts[hacker.status] - 1,
+      [status]: prevCounts[status] + 1,
+    }));
+  };
+
+  if (!hackers.length) return <div>No Hackers available</div>;
+
+  return (
+    <div className="flex h-full">
+      <Card className="mr-4 w-1/4">
+        <CardHeader>
+          <CardTitle>Hackers</CardTitle>
+          <div className="text-sm text-gray-500">
+            Confirmed Remaining: {confirmedCount}
+          </div>
+        </CardHeader>
+        <CardContent className="p-0">
+          <ScrollArea className="h-[calc(100vh-200px)]">
+            {allHackers?.map((hacker) => (
+              <Button
+                key={hacker.id}
+                variant="ghost"
+                className={`w-full justify-between font-normal ${
+                  selectedHacker?.id === hacker.id ? "bg-secondary" : ""
+                }`}
+                onClick={() => setSelectedHacker(hacker)}
+              >
+                <h1>{`${hacker.user.firstName} ${hacker.user.lastName}`}</h1>
+                <h1>{hacker.status}</h1>
+              </Button>
+            ))}
+          </ScrollArea>
+        </CardContent>
+      </Card>
+      <Card className="flex-1">
+        <CardHeader>
+          <CardTitle>Hacker Details</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ScrollArea className="h-full">
+            {selectedHacker ? (
+              <form className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Name</Label>
+                    <Input
+                      id="name"
+                      value={`${selectedHacker.user.firstName} ${selectedHacker.user.lastName}`}
+                      readOnly
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      value={selectedHacker.user.email}
+                      readOnly
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="status">Application Status</Label>
+                  <Input id="status" value={selectedHacker.status} readOnly />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="hackathon">Hackathon</Label>
+                  <Input
+                    id="hackathon"
+                    value={selectedHacker.hackathon.name}
+                    readOnly
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="survey1">Survey Question 1</Label>
+                  <Input id="survey1" value={selectedHacker.survey1} readOnly />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="survey2">Survey Question 2</Label>
+                  <Input id="survey2" value={selectedHacker.survey2} readOnly />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="isFirstTime"
+                    checked={selectedHacker.isFirstTime ? true : false}
+                    disabled
+                  />
+                  <Label htmlFor="isFirstTime">First-time Hacker</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="isPlinktern"
+                    checked={selectedHacker.isPlinktern ? true : false}
+                    disabled
+                  />
+                  <Label htmlFor="isPlinktern">Plinktern</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="agreesToReceiveEmails"
+                    checked={
+                      selectedHacker.agreesToReceiveEmailsFromMLH ? true : false
+                    }
+                    disabled
+                  />
+                  <Label htmlFor="agreesToReceiveEmails">
+                    Agrees to Receive Emails from MLH
+                  </Label>
+                </div>
+                <div className="flex w-full items-center justify-center space-x-2">
+                  <Button
+                    onClick={(event) => {
+                      event.preventDefault();
+                      handleStatusChange("checkedin", selectedHacker);
+                    }}
+                    className="h-16 w-32 bg-green-500 text-lg font-bold text-white hover:bg-green-600"
+                  >
+                    Check In
+                  </Button>
+                </div>
+              </form>
+            ) : (
+              <p>No Hackers left to Review</p>
+            )}
+          </ScrollArea>
+        </CardContent>
+      </Card>
+    </div>
+  );
 }
