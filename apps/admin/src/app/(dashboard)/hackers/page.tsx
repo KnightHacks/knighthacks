@@ -2,7 +2,7 @@
 
 import type { RouterOutput } from "@knighthacks/api";
 import { useEffect, useState } from "react";
-import { APPLICATION_STATUSES } from "@knighthacks/consts";
+import type { APPLICATION_STATUSES } from "@knighthacks/consts";
 import { Button } from "@knighthacks/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@knighthacks/ui/card";
 import { Checkbox } from "@knighthacks/ui/checkbox";
