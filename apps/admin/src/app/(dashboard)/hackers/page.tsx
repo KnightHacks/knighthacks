@@ -259,7 +259,6 @@ export function AcceptTable({ updateCounts }: TableProps) {
                 onClick={() => setSelectedHacker(hacker)}
               >
                 <h1>{`${hacker.user.firstName} ${hacker.user.lastName}`}</h1>
-                <h1>{hacker.status}</h1>
               </Button>
             ))}
           </ScrollArea>
