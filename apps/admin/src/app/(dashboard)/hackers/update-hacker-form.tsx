@@ -63,8 +63,6 @@ export function UpdateHackerForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit((data) => {
-          console.log("Form Data:", data);
-          console.log("Form Errors:", form.formState.errors);
           updateHacker.mutate({
             hackerID: hacker.id,
             ...data,
