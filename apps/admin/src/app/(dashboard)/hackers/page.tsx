@@ -72,7 +72,10 @@ export default function Hackers() {
           .length,
         plinktern: hackers.filter((hacker) => hacker.isPlinktern === true)
           .length,
-        plinktern_confirmed: hackers.filter((hacker) => hacker.isPlinktern === true && hacker.status === "confirmed").length,
+        plinktern_confirmed: hackers.filter(
+          (hacker) =>
+            hacker.isPlinktern === true && hacker.status === "confirmed",
+        ).length,
         total: hackers.length,
       });
     }
