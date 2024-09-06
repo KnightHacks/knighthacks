@@ -241,7 +241,7 @@ export function AcceptTable({ updateCounts }: TableProps) {
     <div className="flex h-full">
       <Card className="mr-4 w-1/4">
         <CardHeader>
-          <CardTitle>Hackers</CardTitle>
+          <CardTitle>Accept Hackers</CardTitle>
           <div className="text-sm text-gray-500">
             Applied Remaining: {appliedCount}
           </div>
@@ -479,7 +479,7 @@ export function ConfirmTable({ updateCounts }: TableProps) {
     <div className="flex h-full">
       <Card className="mr-4 w-1/4">
         <CardHeader>
-          <CardTitle>Hackers</CardTitle>
+          <CardTitle>Check in Hackers</CardTitle>
           <div className="text-sm text-gray-500">
             Confirmed Remaining: {confirmedCount}
           </div>
