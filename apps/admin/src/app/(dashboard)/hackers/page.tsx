@@ -485,7 +485,7 @@ export function ConfirmTable({ updateCounts }: TableProps) {
           </div>
         </CardHeader>
         <CardContent className="p-0">
-          <ScrollArea className="h-[calc(100vh-200px)]">
+          <ScrollArea className="h-full">
             {allHackers?.map((hacker) => (
               <Button
                 key={hacker.id}
@@ -539,14 +539,6 @@ export function ConfirmTable({ updateCounts }: TableProps) {
                     value={selectedHacker.hackathon.name}
                     readOnly
                   />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="survey1">Survey Question 1</Label>
-                  <Input id="survey1" value={selectedHacker.survey1} readOnly />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="survey2">Survey Question 2</Label>
-                  <Input id="survey2" value={selectedHacker.survey2} readOnly />
                 </div>
                 <div className="flex items-center space-x-2">
                   <Checkbox
