@@ -21,6 +21,7 @@
     "@knighthacks/ui": "workspace:*",
     "@knighthacks/validators": "workspace:*",
     "@react-email/components": "^0.0.25",
+    "@react-email/render": "^1.0.1",
     "@tanstack/react-query": "^5.25.0",
     "@tanstack/react-table": "^8.11.2",
     "@trpc/client": "11.0.0-rc.351",
@@ -34,7 +35,7 @@
     "react-day-picker": "^8.10.0",
     "react-dom": "^18.2.0 ",
     "react-email": "^3.0.1",
-    "resend": "^3.2.0",
+    "resend": "^3.5.0",
     "superjson": "1.9.1"
   },
   "devDependencies": {
