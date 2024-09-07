@@ -17,7 +17,7 @@ interface EmailAcceptanceProps {
   firstName: string;
 }
 
-const EmailAcceptance: React.FC<Readonly<EmailAcceptanceProps>> = ({
+export const EmailAcceptance: React.FC<Readonly<EmailAcceptanceProps>> = ({
   firstName,
 }) => (
   <Html>
