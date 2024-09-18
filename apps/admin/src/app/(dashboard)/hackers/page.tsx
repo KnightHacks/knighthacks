@@ -13,7 +13,6 @@ import { Sheet, SheetContent } from "@knighthacks/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@knighthacks/ui/tabs";
 import { toast } from "@knighthacks/ui/toast";
 
-// import { sendAcceptanceEmail } from "~/app/emails/send-acceptance-email";
 import { api } from "~/trpc";
 import { DataTable } from "../_components/data-table";
 import { CreateHackerForm } from "./create-hacker-form";
@@ -224,6 +223,20 @@ export function AcceptTable({ updateCounts }: TableProps) {
       console.log("hacker: ", hacker);
       try {
         void fetch("/api/send-acceptance-email", {
+          method: "POST",
+          body: JSON.stringify(hacker.user),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      } catch (error) {
+        console.error("Failed to send email:", error);
+      }
+    }
+
+    if (status === "waitlisted") {
+      try {
+        void fetch("/api/send-waitlist-email", {
           method: "POST",
           body: JSON.stringify(hacker.user),
           headers: {
