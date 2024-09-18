@@ -17,6 +17,8 @@ export default async function Dashboard() {
     const application = await trpc.hacker.getApplication.query();
     if (!application) redirect("/application/profile");
 
+    const CONFIRMATION_CAP = 740;
+
     const confirmedHackerCount =
       await trpc.hacker.getConfirmedHackerCount.query();
 
@@ -44,7 +46,8 @@ export default async function Dashboard() {
           </TabsContent>
           {hacker?.status === "accepted" || hacker?.status === "confirmed" ? (
             <TabsContent value="confirmation">
-              {confirmedHackerCount > 175 && hacker.status !== "confirmed" ? (
+              {confirmedHackerCount > CONFIRMATION_CAP &&
+              hacker.status !== "confirmed" ? (
                 <CapacityReached />
               ) : (
                 <ConfirmStatusForm hacker={hacker} />
