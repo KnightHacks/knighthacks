@@ -83,4 +83,19 @@ export const hackerRouter = {
     .mutation(async ({ ctx, input }) => {
       await ctx.db.insert(hackers).values(input);
     }),
+  getConfirmedHackerCount: profileProcedure.query(async ({ ctx }) => {
+    const hackers = await ctx.db.query.hackers.findMany({
+      with: {
+        hackathon: true,
+        user: true,
+      },
+    });
+    let confirmedHackerCount = 0;
+    for (const hacker of hackers) {
+      if (hacker.status === "confirmed") {
+        confirmedHackerCount += 1;
+      }
+    }
+    return confirmedHackerCount;
+  }),
 } satisfies TRPCRouterRecord;

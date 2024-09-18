@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@knighthacks/ui/tabs";
 
 import { trpc } from "~/trpc/server";
+import { CapacityReached } from "./_components/capacity-reached";
 import { ConfirmStatusForm } from "./_components/confirm-status-form";
 import { UpdateProfileForm } from "./_components/update-profile-form";
 import { UpdateSurveyForm } from "./_components/update-survey-form";
@@ -15,6 +16,11 @@ export default async function Dashboard() {
 
     const application = await trpc.hacker.getApplication.query();
     if (!application) redirect("/application/profile");
+
+    const confirmedHackerCount =
+      await trpc.hacker.getConfirmedHackerCount.query();
+
+    console.log("count: ", confirmedHackerCount);
 
     const hacker = user.hackers.find((hacker) => hacker.hackathonID === 1);
     const defaultTab =
@@ -38,7 +44,11 @@ export default async function Dashboard() {
           </TabsContent>
           {hacker?.status === "accepted" || hacker?.status === "confirmed" ? (
             <TabsContent value="confirmation">
-              <ConfirmStatusForm hacker={hacker} />
+              {confirmedHackerCount > 175 && hacker.status !== "confirmed" ? (
+                <CapacityReached />
+              ) : (
+                <ConfirmStatusForm hacker={hacker} />
+              )}
             </TabsContent>
           ) : (
             <TabsContent value="application">
