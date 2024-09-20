@@ -77,7 +77,10 @@ const EmailAcceptance: React.FC<Readonly<EmailAcceptanceProps>> = ({
                 <Text className="mb-6 text-lg leading-relaxed text-gray-700">
                   You applied and have been accepted to Knight Hacks 2024, but
                   there is one more step. Click the button below, sign in, and
-                  confirm your attendance to be able to attend the event.
+                  confirm your attendance to be able to attend the event. Even
+                  if you have been accepted, there is a chance to lose the
+                  ability to confirm if you wait too long. So please confirm
+                  ASAP spots are filling quickly
                 </Text>
                 <Link
                   href="https://2024.knighthacks.org/sign-in"
