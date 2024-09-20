@@ -17,12 +17,10 @@ export default async function Dashboard() {
     const application = await trpc.hacker.getApplication.query();
     if (!application) redirect("/application/profile");
 
-    const CONFIRMATION_CAP = 740;
+    const CONFIRMATION_CAP = 720;
 
     const confirmedHackerCount =
       await trpc.hacker.getConfirmedHackerCount.query();
-
-    console.log("count: ", confirmedHackerCount);
 
     const hacker = user.hackers.find((hacker) => hacker.hackathonID === 1);
     const defaultTab =
