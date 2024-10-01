@@ -19,7 +19,6 @@
     "@knighthacks/api": "workspace:*",
     "@knighthacks/consts": "workspace:*",
     "@knighthacks/ui": "workspace:*",
-    "@knighthacks/utils": "workspace:*",
     "@knighthacks/validators": "workspace:*",
     "@tanstack/react-query": "^5.25.0",
     "@tanstack/react-table": "^8.11.2",
