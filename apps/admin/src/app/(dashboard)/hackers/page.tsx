@@ -594,4 +594,3 @@ export function ConfirmTable({ updateCounts }: TableProps) {
     </div>
   );
 }
-
