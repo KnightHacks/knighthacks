@@ -1,5 +1,5 @@
 import { z } from "@knighthacks/validators";
-import { renderEmailAcceptance } from "emails/render-email-acceptance";
+import EmailAcceptance from "emails/email-acceptance";
 import { Resend } from "resend";
 
 import { env } from "~/env";
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
       from: "no-reply-status@knighthacks.org",
       to: input.email,
       subject: "Knighthacks Acceptance",
-      html: renderEmailAcceptance(input.firstName),
+      react: EmailAcceptance({firstName: input.firstName}),
     });
 
     if (error) {
