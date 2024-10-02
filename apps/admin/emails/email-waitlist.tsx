@@ -13,7 +13,7 @@ interface EmailAcceptanceProps {
   firstName: string;
 }
 
-const EmailWaitlist: React.FC<Readonly<EmailAcceptanceProps>> = ({
+export const EmailWaitlist: React.FC<Readonly<EmailAcceptanceProps>> = ({
   firstName,
 }) => (
   <Html>
