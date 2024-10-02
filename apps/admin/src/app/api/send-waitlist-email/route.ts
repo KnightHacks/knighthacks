@@ -1,5 +1,5 @@
 import { z } from "@knighthacks/validators";
-import { renderEmailWaitlist } from "emails/render-email-acceptance";
+import EmailWaitlist from "emails/email-waitlist";
 import { Resend } from "resend";
 
 import { env } from "~/env";
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
       from: "no-reply-status@knighthacks.org",
       to: input.email,
       subject: "Knighthacks Waitlist",
-      html: renderEmailWaitlist(input.firstName),
+      react: EmailWaitlist({ firstName: input.firstName }),
     });
 
     if (error) {
