@@ -108,7 +108,7 @@ export default function Hackers() {
             <TabsList>
               <TabsTrigger value="view">View</TabsTrigger>
               <TabsTrigger value="accept">Accept</TabsTrigger>
-              <TabsTrigger value="confirm">Confirm</TabsTrigger>
+              <TabsTrigger value="confirm">Check In</TabsTrigger>
               <TabsTrigger value="waitlist">Waitlist</TabsTrigger>
             </TabsList>
             <TabsContent value="view">
