@@ -25,7 +25,7 @@ export async function POST(request: Request) {
       from: "no-reply-status@knighthacks.org",
       to: input.email,
       subject: "Knighthacks Waitlist",
-      react: EmailWaitlist({firstName: input.firstName}),
+      react: EmailWaitlist({ firstName: input.firstName }),
     });
 
     if (error) {

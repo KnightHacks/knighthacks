@@ -25,7 +25,7 @@ export async function POST(request: Request) {
       from: "no-reply-status@knighthacks.org",
       to: input.email,
       subject: "Knighthacks Acceptance",
-      react: EmailAcceptance({firstName: input.firstName}),
+      react: EmailAcceptance({ firstName: input.firstName }),
     });
 
     if (error) {
