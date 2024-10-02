@@ -67,8 +67,9 @@ export default async function Dashboard() {
                   )}
                   {hacker?.status === "accepted" && (
                     <p className="mt-2 text-sm text-muted-foreground">
-                      Congratulations! Your application has been accepted.
-                      Please confirm your attendance in the Confirmation tab.
+                      You have been accepted for Knight Hacks, but unfortunately you
+                      did not confirm in time, and our Ship has sailed without you. 
+                      We hope to see you next year!
                     </p>
                   )}
                   {hacker?.status === "confirmed" && (
