@@ -32,7 +32,7 @@ export default async function Dashboard() {
     const hacker = user.hackers.find((hacker) => hacker.hackathonID === 1);
 
     if (hacker?.status === "pending" || hacker?.status === "waitlisted") {
-        hacker.status = "denied";
+      hacker.status = "denied";
     }
 
     return (
