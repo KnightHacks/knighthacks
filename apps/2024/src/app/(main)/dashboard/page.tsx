@@ -31,6 +31,10 @@ export default async function Dashboard() {
 
     const hacker = user.hackers.find((hacker) => hacker.hackathonID === 1);
 
+    if (hacker?.status === "pending" || hacker?.status === "waitlisted") {
+        hacker.status = "denied";
+    }
+
     return (
       <div className="h-auto bg-[url('/sky-register.svg')] bg-cover px-8 pt-20">
         <Tabs defaultValue="status">
@@ -59,12 +63,6 @@ export default async function Dashboard() {
                         hacker.status.slice(1)
                       : "Not Applied"}
                   </p>
-                  {hacker?.status === "pending" && (
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      Your application is currently under review. We'll notify
-                      you once a decision has been made.
-                    </p>
-                  )}
                   {hacker?.status === "accepted" && (
                     <p className="mt-2 text-sm text-muted-foreground">
                       You have been accepted for Knight Hacks, but 
@@ -83,12 +81,6 @@ export default async function Dashboard() {
                     <p className="mt-2 text-sm text-muted-foreground">
                       We're sorry, but your application was not accepted this
                       time. We encourage you to apply for future events!
-                    </p>
-                  )}
-                  {hacker?.status === "waitlisted" && (
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      Your application has been waitlisted. We'll notify you if
-                      a spot opens up.
                     </p>
                   )}
                   {hacker?.status === "withdrawn" && (
